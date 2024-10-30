@@ -142,7 +142,7 @@ const patients = [
     lastMessage: "Generalmente solo café.",
     time: "10:22 AM",
     unread: 0,
-    avatar: "/placeholder.svg",
+    avatar: "/images/marialy.webp",
   },
   {
     id: 2,
@@ -150,7 +150,7 @@ const patients = [
     lastMessage: "He perdido un poco de peso, pero me siento cansada.",
     time: "09:45 AM",
     unread: 2,
-    avatar: "/placeholder.svg",
+    avatar: "/images/marialy.webp",
   },
   {
     id: 3,
@@ -158,7 +158,7 @@ const patients = [
     lastMessage: "No olvides tus suplementos.",
     time: "Yesterday",
     unread: 0,
-    avatar: "/placeholder.svg",
+    avatar: "/images/marialy.webp",
   },
   {
     id: 4,
@@ -166,7 +166,7 @@ const patients = [
     lastMessage: "¿Qué tal están mis resultados?",
     time: "Yesterday",
     unread: 1,
-    avatar: "/placeholder.svg",
+    avatar: "/images/marialy.webp",
   },
   {
     id: 5,
@@ -174,7 +174,7 @@ const patients = [
     lastMessage: "Por favor, confírmame la hora.",
     time: "Monday",
     unread: 0,
-    avatar: "/placeholder.svg",
+    avatar: "/images/marialy.webp",
   },
 ];
 
