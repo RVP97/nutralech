@@ -20,6 +20,7 @@ import {
   Users,
   Video,
 } from "lucide-react";
+import Link from "next/link";
 import React, { useEffect, useRef, useState } from "react";
 
 // Mock conversations for each patient
@@ -95,9 +96,16 @@ const initialConversations = {
     {
       id: 3,
       sender: "You",
-      message: "No olvides tus suplementos.",
+      message: "¿Cómo te fue con las recetas nuevas?",
       time: "Yesterday",
       read: true,
+    },
+    {
+      id: 4,
+      sender: "Marialy",
+      message: "¡Excelentes! Especialmente la de quinoa.",
+      time: "10:30 AM",
+      read: false,
     },
   ],
   4: [
@@ -115,64 +123,102 @@ const initialConversations = {
       time: "Yesterday",
       read: false,
     },
+    {
+      id: 3,
+      sender: "You",
+      message: "Todo está mejorando, el colesterol bajó significativamente.",
+      time: "11:15 AM",
+      read: true,
+    },
   ],
   5: [
     {
       id: 1,
       sender: "You",
-      message: "Tenemos una cita disponible la próxima semana.",
+      message: "¿Cómo vas con los ejercicios recomendados?",
       time: "Monday",
       read: true,
     },
     {
       id: 2,
       sender: "Marialy",
-      message: "Por favor, confírmame la hora.",
+      message: "Me está costando mantener la rutina matutina.",
       time: "Monday",
       read: true,
+    },
+    {
+      id: 3,
+      sender: "You",
+      message: "Podemos ajustar el horario, ¿qué te parece por la tarde?",
+      time: "09:20 AM",
+      read: true,
+    },
+  ],
+  6: [
+    {
+      id: 1,
+      sender: "Marialy",
+      message: "¿Puedo tomar batidos proteicos después de cenar?",
+      time: "Yesterday",
+      read: true,
+    },
+    {
+      id: 2,
+      sender: "You",
+      message: "Es mejor tomarlos post-entrenamiento o en el desayuno",
+      time: "08:45 AM",
+      read: true,
+    },
+  ],
+  7: [
+    {
+      id: 1,
+      sender: "You",
+      message: "¿Cómo te sientes después de una semana con el nuevo plan?",
+      time: "Monday",
+      read: true,
+    },
+    {
+      id: 2,
+      sender: "Marialy",
+      message: "¡Tengo mucha más energía! Gracias por los ajustes.",
+      time: "11:30 AM",
+      read: false,
     },
   ],
 };
 
-// Mock patient list
-const patients = [
+// Update the patients array to be a function that gets the last message
+const getPatients = (conversations) => [
   {
     id: 1,
     name: "Juan Pérez",
-    lastMessage: "Generalmente solo café.",
-    time: "10:22 AM",
+    lastMessage: conversations[1][conversations[1].length - 1].message,
+    time: conversations[1][conversations[1].length - 1].time,
     unread: 0,
     avatar: "/images/marialy.webp",
   },
   {
     id: 2,
     name: "Ana Gómez",
-    lastMessage: "He perdido un poco de peso, pero me siento cansada.",
-    time: "09:45 AM",
+    lastMessage: conversations[2][conversations[2].length - 1].message,
+    time: conversations[2][conversations[2].length - 1].time,
     unread: 2,
     avatar: "/images/marialy.webp",
   },
   {
     id: 3,
-    name: "Luis Martínez",
-    lastMessage: "No olvides tus suplementos.",
-    time: "Yesterday",
-    unread: 0,
-    avatar: "/images/marialy.webp",
-  },
-  {
-    id: 4,
-    name: "Sofía López",
-    lastMessage: "¿Qué tal están mis resultados?",
-    time: "Yesterday",
+    name: "Carlos Ruiz",
+    lastMessage: conversations[3][conversations[3].length - 1].message,
+    time: conversations[3][conversations[3].length - 1].time,
     unread: 1,
     avatar: "/images/marialy.webp",
   },
   {
-    id: 5,
-    name: "David Wilson",
-    lastMessage: "Por favor, confírmame la hora.",
-    time: "Monday",
+    id: 4,
+    name: "María Sánchez",
+    lastMessage: conversations[4][conversations[4].length - 1].message,
+    time: conversations[4][conversations[4].length - 1].time,
     unread: 0,
     avatar: "/images/marialy.webp",
   },
@@ -193,6 +239,14 @@ function Iphone15ProWhatsappLightSmaller() {
       hour12: false,
     });
   });
+  const [patientsList, setPatientsList] = useState(
+    getPatients(initialConversations)
+  );
+
+  // Update patientsList when conversations change
+  useEffect(() => {
+    setPatientsList(getPatients(conversations));
+  }, [conversations]);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -296,7 +350,7 @@ function Iphone15ProWhatsappLightSmaller() {
                 {/* Patient list */}
                 <ScrollArea className="h-[calc(100%-120px)] bg-white">
                   <div>
-                    {patients.map((patient) => (
+                    {patientsList.map((patient) => (
                       <div
                         key={patient.id}
                         className="flex items-center px-3 py-2 hover:bg-gray-100 cursor-pointer border-b border-gray-200"
@@ -384,15 +438,16 @@ function Iphone15ProWhatsappLightSmaller() {
                   <Avatar className="w-8 h-8">
                     <AvatarImage
                       src={
-                        patients.find((p) => p.id === activeConversation)
+                        patientsList.find((p) => p.id === activeConversation)
                           ?.avatar
                       }
                       alt={
-                        patients.find((p) => p.id === activeConversation)?.name
+                        patientsList.find((p) => p.id === activeConversation)
+                          ?.name
                       }
                     />
                     <AvatarFallback>
-                      {patients
+                      {patientsList
                         .find((p) => p.id === activeConversation)
                         ?.name.split(" ")
                         .map((n) => n[0])
@@ -401,24 +456,31 @@ function Iphone15ProWhatsappLightSmaller() {
                   </Avatar>
                   <div className="flex-1">
                     <h2 className="font-semibold text-sm">
-                      {patients.find((p) => p.id === activeConversation)?.name}
+                      {
+                        patientsList.find((p) => p.id === activeConversation)
+                          ?.name
+                      }
                     </h2>
                     <p className="text-[10px]">online</p>
                   </div>
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    className="text-white hover:text-white hover:bg-[#006e5a] p-1"
+                  <Link
+                    prefetch={false}
+                    href="https://wa.me/message/BLYZCVYW2MOAJ1"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-white hover:text-white hover:bg-[#006e5a] p-1 rounded-md"
                   >
                     <Video className="h-4 w-4" />
-                  </Button>
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    className="text-white hover:text-white hover:bg-[#006e5a] p-1"
+                  </Link>
+                  <Link
+                    prefetch={false}
+                    href="https://wa.me/message/BLYZCVYW2MOAJ1"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-white hover:text-white hover:bg-[#006e5a] p-1 rounded-md"
                   >
                     <Phone className="h-4 w-4" />
-                  </Button>
+                  </Link>
                   <Button
                     variant="ghost"
                     size="icon"

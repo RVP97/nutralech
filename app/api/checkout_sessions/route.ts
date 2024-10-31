@@ -60,10 +60,28 @@ export async function GET(request: Request) {
     }
 
     const session = await stripe.checkout.sessions.retrieve(sessionId);
+    const lineItems = await stripe.checkout.sessions.listLineItems(sessionId);
+
+    const paymentIntent = session.payment_intent
+      ? await stripe.paymentIntents.retrieve(session.payment_intent.toString())
+      : null;
+
+    const charge = paymentIntent?.latest_charge
+      ? await stripe.charges.retrieve(paymentIntent.latest_charge.toString())
+      : null;
 
     return NextResponse.json({
+      paymentIntentID: session.payment_intent,
+      paymentIntentDetails: paymentIntent,
+      chargeDetails: charge,
+      receiptUrl: charge?.receipt_url,
+      receiptNumber: charge?.receipt_number,
       status: session.status,
       customer_email: session.customer_details?.email,
+      total: session.amount_total,
+      paymentStatus: session.payment_status,
+      currency: session.currency,
+      line_items: lineItems.data,
     });
   } catch (err) {
     const error = err as Stripe.StripeRawError;

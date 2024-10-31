@@ -12,7 +12,6 @@ import {
   Heart,
   Instagram,
   Star,
-  Twitter,
   Youtube,
 } from "lucide-react";
 import Image from "next/image";
@@ -57,7 +56,7 @@ export default function AboutMeComponent() {
 
               <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-white rounded-full py-2 px-4 shadow-lg flex items-center gap-2">
                 <Star className="w-4 h-4 text-[#DA5F6F]" />
-                <span className="text-sm font-medium">710K+ Seguidores</span>
+                <span className="text-sm font-medium">780K+ Seguidores</span>
               </div>
             </div>
           </div>
@@ -65,14 +64,14 @@ export default function AboutMeComponent() {
           {/* Content */}
           <div className="space-y-8">
             <div>
-              <h3 className="text-3xl font-medium mb-4">Marialy Rodríguez</h3>
+              <h3 className="text-3xl font-medium mb-4">Marialy Alonso</h3>
               <p className="text-xl text-muted-foreground mb-4">
-                Nutricionista Clínica & Educadora en Salud
+                Nutrióloga Certificada & Educadora en Salud
               </p>
               <div className="flex items-center space-x-2">
                 <GraduationCap className="w-5 h-5 text-[#DA5F6F]" />
                 <span className="text-sm text-muted-foreground">
-                  Universidad Central de Venezuela
+                  Universidad Iberoamericana - Mención Honorífica
                 </span>
               </div>
             </div>
@@ -124,7 +123,7 @@ export default function AboutMeComponent() {
               </p>
               <div className="flex space-x-4">
                 <a
-                  href="https://instagram.com/marialy"
+                  href="https://www.instagram.com/nutralech/"
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="Instagram"
@@ -134,7 +133,7 @@ export default function AboutMeComponent() {
                   </Button>
                 </a>
                 <a
-                  href="https://facebook.com/marialy"
+                  href="https://www.facebook.com/nutralech/"
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="Facebook"
@@ -144,7 +143,7 @@ export default function AboutMeComponent() {
                   </Button>
                 </a>
                 <a
-                  href="https://youtube.com/marialy"
+                  href="https://www.youtube.com/@Nutralech"
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="YouTube"
@@ -154,13 +153,25 @@ export default function AboutMeComponent() {
                   </Button>
                 </a>
                 <a
-                  href="https://twitter.com/marialy"
+                  href="https://www.tiktok.com/@nutralech"
                   target="_blank"
                   rel="noopener noreferrer"
-                  aria-label="Twitter"
+                  aria-label="TikTok"
                 >
                   <Button variant="outline" size="icon">
-                    <Twitter className="h-4 w-4" />
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      <path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5" />
+                    </svg>
                   </Button>
                 </a>
               </div>

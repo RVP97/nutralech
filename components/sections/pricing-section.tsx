@@ -160,6 +160,29 @@ export default function PricingSection() {
         { name: "Análisis de composición corporal", cross: false },
       ],
     },
+    {
+      name: "Test",
+      originalPrice: "2,800",
+      discountedPrice: "2,380",
+      priceId: "price_1Mvmc2BoTKroQtb9Kz0QKe6B",
+      description:
+        "Ideal para una transformación profunda para quien quiere un buen cambio.",
+      features: [
+        { name: "1 Consulta Inicial", cross: false },
+        { name: "2 Consulta de Seguimiento", cross: false },
+        { name: "Video llamada de 1 hora con Marialy", cross: false },
+        { name: "Evaluación nutricional completa", cross: false },
+        { name: "Plan alimenticio personalizado", cross: false },
+        { name: "Recomendaciones de suplementación", cross: false },
+        { name: "Seguimiento recomendado cada 3 semanas", cross: false },
+        {
+          name: "Soporte por chat ilimitado (directamente con Marialy)",
+          cross: false,
+        },
+        { name: "Soporte prioritario 24/7", cross: false },
+        { name: "Análisis de composición corporal", cross: false },
+      ],
+    },
   ];
 
   const handlePlanSelection = async (priceId: string) => {
@@ -187,11 +210,11 @@ export default function PricingSection() {
         open={!!selectedPriceId}
         onOpenChange={() => setSelectedPriceId(null)}
       >
-        <DialogContent className="sm:max-w-[90vw] w-[90vw] h-[90vh] max-h-[90vh]">
-          <DialogHeader>
+        <DialogContent className="sm:max-w-[90vw] w-[90vw] h-[90vh] max-h-[90vh] flex flex-col">
+          <DialogHeader className="flex-shrink-0">
             <DialogTitle>Completar Pago</DialogTitle>
           </DialogHeader>
-          <div className="h-[calc(90vh-80px)] overflow-hidden">
+          <div className="flex-1 overflow-y-auto">
             {selectedPriceId && StripeCheckout && (
               <StripeCheckout priceId={selectedPriceId} />
             )}
@@ -212,18 +235,18 @@ export default function PricingSection() {
             </p>
           </div>
 
-          <div className="flex flex-col overflow-scroll items-center justify-center mb-8">
+          <div className="flex flex-col items-center justify-center mb-8">
             <p className="text-sm text-muted-foreground mb-4">
               Métodos de pago aceptados
             </p>
-            <div className="flex items-center gap-6">
+            <div className="grid grid-cols-5 sm:flex items-center gap-6 md:gap-6">
               <Image
                 unoptimized
                 src="/images/logos/oxxo-logo.svg"
                 alt="OXXO"
                 width={80}
                 height={40}
-                className="h-8 w-auto object-contain"
+                className="h-8 w-auto object-contain justify-self-center"
               />
               <Image
                 unoptimized
@@ -231,7 +254,7 @@ export default function PricingSection() {
                 alt="American Express"
                 width={80}
                 height={40}
-                className="h-12 w-auto object-contain"
+                className="h-12 w-auto object-contain justify-self-center"
               />
               <Image
                 unoptimized
@@ -239,7 +262,7 @@ export default function PricingSection() {
                 alt="Mastercard"
                 width={80}
                 height={40}
-                className="h-8 w-auto object-contain"
+                className="h-8 w-auto object-contain justify-self-center"
               />
               <Image
                 unoptimized
@@ -247,7 +270,7 @@ export default function PricingSection() {
                 alt="Visa"
                 width={80}
                 height={40}
-                className="h-8 w-auto object-contain"
+                className="h-8 w-auto object-contain justify-self-center"
               />
               <Image
                 unoptimized
@@ -255,9 +278,8 @@ export default function PricingSection() {
                 alt="SPEI"
                 width={80}
                 height={40}
-                className="h-8 w-auto object-contain"
+                className="h-8 w-auto object-contain justify-self-center"
               />
-              {/* Add other payment logos here */}
             </div>
           </div>
 
