@@ -76,12 +76,13 @@ export async function GET(request: Request) {
       chargeDetails: charge,
       receiptUrl: charge?.receipt_url,
       receiptNumber: charge?.receipt_number,
+      time: charge?.created,
       status: session.status,
       customer_email: session.customer_details?.email,
       total: session.amount_total,
       paymentStatus: session.payment_status,
       currency: session.currency,
-      line_items: lineItems.data,
+      lineItems: lineItems.data,
     });
   } catch (err) {
     const error = err as Stripe.StripeRawError;

@@ -7,12 +7,14 @@ interface LineItem {
   description: string;
   amount_total: number;
   amount_discount: number;
+  quantity: number;
   currency: string;
 }
 
 interface CheckoutSession {
   status: string;
   customer_email: string | undefined;
+  time: number | null;
   total: number | null;
   paymentStatus: string;
   currency: string;
@@ -57,7 +59,8 @@ export default async function Return({
       <Confetti />
 
       <SuccessfulPayment
-        lineItems={session.line_items ?? []}
+        time={session.time ?? 0}
+        lineItems={session.lineItems ?? []}
         email={session.customer_email ?? ""}
         receiptNumber={session.receiptNumber ?? ""}
         receiptUrl={session.receiptUrl ?? ""}

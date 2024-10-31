@@ -14,13 +14,48 @@ import {
   DialogContent,
   DialogHeader,
   DialogTitle,
+  DialogTrigger,
 } from "@/components/ui/dialog";
 import { Switch } from "@/components/ui/switch";
 import { sendGTMEvent } from "@next/third-parties/google";
-import { Check, Percent, Star, X } from "lucide-react";
+import { Check, Copy, Percent, Star, X } from "lucide-react";
 import dynamic from "next/dynamic";
 import Image from "next/image";
+import Link from "next/link";
 import { lazy, Suspense, useCallback, useState } from "react";
+
+interface IndividualPlan {
+  name: string;
+  price: string;
+  priceId: string;
+  description: string;
+  features: { name: string; cross: boolean }[];
+  popular?: boolean;
+}
+
+interface Package {
+  name: string;
+  originalPrice: string;
+  discountedPrice: string;
+  priceId: string;
+  description: string;
+  features: { name: string; cross: boolean }[];
+  popular?: boolean;
+}
+
+function copyToClipboard(text: string, buttonId: string) {
+  navigator.clipboard.writeText(text);
+
+  // Get the text span element and update text
+  const textSpan = document.querySelector(`#${buttonId} span`);
+  if (textSpan) {
+    const originalText = textSpan.textContent;
+    textSpan.textContent = "Copiado";
+    setTimeout(() => {
+      textSpan.textContent = originalText;
+    }, 1500);
+  }
+}
 
 export default function PricingSection() {
   const [showPackages, setShowPackages] = useState(false);
@@ -210,7 +245,7 @@ export default function PricingSection() {
         open={!!selectedPriceId}
         onOpenChange={() => setSelectedPriceId(null)}
       >
-        <DialogContent className="sm:max-w-[90vw] w-[90vw] h-[90vh] max-h-[90vh] flex flex-col">
+        <DialogContent className="sm:max-w-[90vw] w-[90vw] h-[90vh] max-h-[90vh] flex flex-col rounded-lg">
           <DialogHeader className="flex-shrink-0">
             <DialogTitle>Completar Pago</DialogTitle>
           </DialogHeader>
@@ -281,6 +316,133 @@ export default function PricingSection() {
                 className="h-8 w-auto object-contain justify-self-center"
               />
             </div>
+
+            <Dialog>
+              <DialogTrigger asChild>
+                <Button
+                  variant="outline"
+                  className="mt-4 text-muted-foreground hover:text-[#DA5F6F] hover:border-[#DA5F6F] flex items-center gap-2"
+                >
+                  <Image
+                    unoptimized
+                    src="/images/logos/spei.svg"
+                    alt="SPEI"
+                    width={24}
+                    height={24}
+                    className="h-5 w-auto object-contain"
+                  />
+                  Instrucciones para Transferencia
+                </Button>
+              </DialogTrigger>
+              <DialogContent className="sm:max-w-[425px] rounded-lg">
+                <DialogHeader>
+                  <DialogTitle>
+                    Información para Transferencia Bancaria
+                  </DialogTitle>
+                </DialogHeader>
+                <div className="space-y-4">
+                  <div>
+                    <h4 className="font-medium mb-2">Datos Bancarios:</h4>
+                    <ul className="space-y-2 text-sm">
+                      <li className="flex items-center justify-between">
+                        <div>
+                          <span className="font-medium">Banco:</span> BBVA
+                          Bancomer
+                        </div>
+                        <Button
+                          id="copy-bank"
+                          variant="ghost"
+                          size="sm"
+                          className="flex items-center gap-1"
+                          onClick={() =>
+                            copyToClipboard("BBVA Bancomer", "copy-bank")
+                          }
+                        >
+                          <Copy className="h-4 w-4" />
+                          <span>Copiar</span>
+                        </Button>
+                      </li>
+                      <li className="flex items-center justify-between">
+                        <div>
+                          <span className="font-medium">Titular:</span> Marialy
+                          Alonso Echenique
+                        </div>
+                        <Button
+                          id="copy-name"
+                          variant="ghost"
+                          size="sm"
+                          className="flex items-center gap-1"
+                          onClick={() =>
+                            copyToClipboard(
+                              "Marialy Alonso Echenique",
+                              "copy-name"
+                            )
+                          }
+                        >
+                          <Copy className="h-4 w-4" />
+                          <span>Copiar</span>
+                        </Button>
+                      </li>
+                      <li className="flex items-center justify-between">
+                        <div>
+                          <span className="font-medium">Cuenta:</span> 159 382
+                          7239
+                        </div>
+                        <Button
+                          id="copy-cuenta"
+                          variant="ghost"
+                          size="sm"
+                          className="flex items-center gap-1"
+                          onClick={() =>
+                            copyToClipboard("1593827239", "copy-cuenta")
+                          }
+                        >
+                          <Copy className="h-4 w-4" />
+                          <span>Copiar</span>
+                        </Button>
+                      </li>
+                      <li className="flex items-center justify-between">
+                        <div>
+                          <span className="font-medium">CLABE:</span> 0121 8001
+                          5938 272395
+                        </div>
+                        <Button
+                          id="copy-clabe"
+                          variant="ghost"
+                          size="sm"
+                          className="flex items-center gap-1"
+                          onClick={() =>
+                            copyToClipboard("012180015938272395", "copy-clabe")
+                          }
+                        >
+                          <Copy className="h-4 w-4" />
+                          <span>Copiar</span>
+                        </Button>
+                      </li>
+                    </ul>
+                  </div>
+                  <p className="text-sm text-muted-foreground">
+                    Una vez realizada la transferencia, por favor envía el
+                    comprobante a{" "}
+                    <Link
+                      prefetch={false}
+                      href="mailto:pagos@nutralech.com"
+                      className="font-bold"
+                    >
+                      pagos@nutralech.com
+                    </Link>{" "}
+                    o a través de WhatsApp al{" "}
+                    <Link
+                      prefetch={false}
+                      href="https://wa.me/message/BLYZCVYW2MOAJ1"
+                      className="font-bold"
+                    >
+                      +52 744 346 8252
+                    </Link>
+                  </p>
+                </div>
+              </DialogContent>
+            </Dialog>
           </div>
 
           <div className="flex flex-col items-center justify-center space-y-4 mb-12">
@@ -347,14 +509,14 @@ export default function PricingSection() {
                     {showPackages ? (
                       <>
                         <span className="text-2xl line-through text-muted-foreground mr-2">
-                          ${plan.originalPrice}
+                          ${(plan as Package).originalPrice}
                         </span>
                         <span className="text-[#DA5F6F]">
-                          ${plan.discountedPrice}
+                          ${(plan as Package).discountedPrice}
                         </span>
                       </>
                     ) : (
-                      <>${plan.price}</>
+                      <>${(plan as IndividualPlan).price}</>
                     )}
                     <span className="text-lg font-normal text-muted-foreground">
                       {" "}

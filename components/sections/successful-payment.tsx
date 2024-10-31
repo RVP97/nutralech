@@ -7,7 +7,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { ArrowRight, AtSign, CheckCircle, Download } from "lucide-react";
+import { ArrowRight, CheckCircle, Download } from "lucide-react";
 import Link from "next/link";
 
 interface LineItem {
@@ -23,6 +23,7 @@ interface SuccessfulPaymentProps {
   receiptUrl?: string;
   receiptNumber?: string;
   email: string;
+  time: number;
   lineItems: LineItem[];
 }
 
@@ -30,17 +31,18 @@ export default function SuccessfulPayment({
   receiptUrl,
   receiptNumber,
   email,
+  time,
   lineItems,
 }: SuccessfulPaymentProps) {
   const total = lineItems.reduce((sum, item) => sum + item.amount_total, 0);
 
   const orderDetails = {
-    date: new Date().toLocaleDateString("es-ES", {
+    date: new Date(time * 1000).toLocaleDateString("es-ES", {
       year: "numeric",
       month: "long",
       day: "numeric",
     }),
-    time: new Date().toLocaleTimeString("es-ES", {
+    time: new Date(time * 1000).toLocaleTimeString("es-ES", {
       hour: "2-digit",
       minute: "2-digit",
     }),
@@ -64,13 +66,13 @@ export default function SuccessfulPayment({
               Número de Orden: {receiptNumber}
             </p>
             <div className="flex items-center text-sm text-muted-foreground">
-              <AtSign className="mr-2 h-4 w-4" />
+              {/* <AtSign className="mr-2 h-4 w-4" /> */}
               Email: {email}
             </div>
           </div>
           <div className="bg-white border border-gray-200 rounded-lg p-4 font-mono text-sm">
             <div className="text-center mb-4">
-              <h3 className="font-bold text-lg">Marialy Nutrición</h3>
+              <h3 className="font-bold text-lg">Marialy Alonso: Nutralech</h3>
               <p>Recibo de Compra</p>
             </div>
             <div className="mb-4">
