@@ -16,6 +16,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Switch } from "@/components/ui/switch";
+import { sendGTMEvent } from "@next/third-parties/google";
 import { Check, Percent, Star, X } from "lucide-react";
 import dynamic from "next/dynamic";
 import Image from "next/image";
@@ -211,7 +212,7 @@ export default function PricingSection() {
             </p>
           </div>
 
-          <div className="flex flex-col items-center justify-center mb-8">
+          <div className="flex flex-col overflow-scroll items-center justify-center mb-8">
             <p className="text-sm text-muted-foreground mb-4">
               Métodos de pago aceptados
             </p>

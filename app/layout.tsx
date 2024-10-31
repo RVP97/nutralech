@@ -1,4 +1,5 @@
 import Navbar from "@/components/sections/navbar";
+import { GoogleTagManager } from "@next/third-parties/google";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 
@@ -17,7 +18,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="es">
+      {/* <GoogleTagManager gtmId="GTM-WQGRBVZW" /> */}
       <body className={`${inter.className} flex flex-col min-h-screen`}>
         <Navbar />
         {children}

@@ -30,6 +30,7 @@ export async function POST(request: Request) {
             "Esta consulta es el inicio de un nuevo camino hacia una vida más saludable y plena.",
         },
       },
+      allow_promotion_codes: true,
       mode: "payment",
       return_url: `${request.headers.get(
         "origin"
