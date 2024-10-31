@@ -24,6 +24,12 @@ export async function POST(request: Request) {
           quantity: 1,
         },
       ],
+      custom_text: {
+        after_submit: {
+          message:
+            "Esta consulta es el inicio de un nuevo camino hacia una vida más saludable y plena.",
+        },
+      },
       mode: "payment",
       return_url: `${request.headers.get(
         "origin"
