@@ -7,43 +7,34 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { ArrowRight, CheckCircle, CreditCard, Download } from "lucide-react";
+import { ArrowRight, AtSign, CheckCircle, Download } from "lucide-react";
 import Link from "next/link";
 
-function generateOrderNumber() {
-  return `ORD-${Math.random().toString(36).substr(2, 9).toUpperCase()}`;
-}
-
-function getCardIcon(type: string) {
-  switch (type.toLowerCase()) {
-    case "visa":
-      return "💳";
-    case "mastercard":
-      return "💳";
-    case "american express":
-      return "💳";
-    default:
-      return "💳";
-  }
+interface LineItem {
+  id: string;
+  description: string;
+  amount_total: number;
+  amount_discount: number;
+  currency: string;
+  quantity: number;
 }
 
 interface SuccessfulPaymentProps {
   receiptUrl?: string;
+  receiptNumber?: string;
+  email: string;
+  lineItems: LineItem[];
 }
 
 export default function SuccessfulPayment({
   receiptUrl,
+  receiptNumber,
+  email,
+  lineItems,
 }: SuccessfulPaymentProps) {
-  const orderNumber = generateOrderNumber();
-  const lastFourDigits = "1234"; // This would typically come from your payment processing system
-  const cardType = "Visa"; // This would also come from your payment processing system
+  const total = lineItems.reduce((sum, item) => sum + item.amount_total, 0);
 
   const orderDetails = {
-    items: [
-      { name: "Consulta Nutricional Inicial", price: 75 },
-      { name: "Plan Nutricional Personalizado", price: 100 },
-    ],
-    total: 175,
     date: new Date().toLocaleDateString("es-ES", {
       year: "numeric",
       month: "long",
@@ -70,12 +61,11 @@ export default function SuccessfulPayment({
         <CardContent className="space-y-6">
           <div className="rounded-lg bg-muted p-4 space-y-2">
             <p className="text-sm font-medium">
-              Número de Orden: {orderNumber}
+              Número de Orden: {receiptNumber}
             </p>
             <div className="flex items-center text-sm text-muted-foreground">
-              <CreditCard className="mr-2 h-4 w-4" />
-              Tarjeta utilizada: {getCardIcon(cardType)} {cardType} ****{" "}
-              {lastFourDigits}
+              <AtSign className="mr-2 h-4 w-4" />
+              Email: {email}
             </div>
           </div>
           <div className="bg-white border border-gray-200 rounded-lg p-4 font-mono text-sm">
@@ -86,30 +76,52 @@ export default function SuccessfulPayment({
             <div className="mb-4">
               <p>Fecha: {orderDetails.date}</p>
               <p>Hora: {orderDetails.time}</p>
-              <p>Orden: {orderNumber}</p>
+              <p>Orden: {receiptNumber}</p>
             </div>
             <div className="border-t border-b border-dashed border-gray-300 py-2 mb-4">
-              {orderDetails.items.map((item, index) => (
-                <div key={index} className="flex justify-between">
-                  <span>{item.name}</span>
-                  <span>${item.price.toFixed(2)}</span>
+              {lineItems.map((item) => (
+                <div key={item.id} className="space-y-1">
+                  <div className="flex justify-between">
+                    <span>{item.description}</span>
+                    <div className="text-right">
+                      {item.amount_discount > 0 && (
+                        <span className="block text-gray-500 line-through">
+                          $
+                          {(
+                            (item.amount_total + item.amount_discount) /
+                            100
+                          ).toFixed(2)}{" "}
+                          {item.currency.toUpperCase()}
+                        </span>
+                      )}
+                      <span>
+                        ${(item.amount_total / 100).toFixed(2)}{" "}
+                        {item.currency.toUpperCase()}
+                      </span>
+                    </div>
+                  </div>
                 </div>
               ))}
             </div>
             <div className="flex justify-between font-bold">
               <span>Total</span>
-              <span>${orderDetails.total.toFixed(2)}</span>
+              <span>
+                ${(total / 100).toFixed(2)}{" "}
+                {lineItems[0]?.currency.toUpperCase()}
+              </span>
             </div>
             <div className="mt-4 text-center text-xs">
               <p>Gracias por tu compra</p>
-              <p>www.marialynutricion.com</p>
+              <p>www.nutralech.com</p>
             </div>
           </div>
           <div className="space-y-2">
             <h3 className="font-semibold">Próximos Pasos:</h3>
             <ul className="list-disc list-inside space-y-1 text-sm">
               <li>
-                Recibirás un email de confirmación con los detalles de tu orden.
+                Recibirás un email de confirmación a{" "}
+                <span className="font-semibold">{email}</span> con los detalles
+                de tu orden.
               </li>
               <li>
                 Nuestro equipo se pondrá en contacto contigo para agendar tu

@@ -1,5 +1,14 @@
 import SuccessfulPayment from "@/components/sections/successful-payment";
+import Confetti from "@/components/ui/confetti";
 import { redirect } from "next/navigation";
+
+interface LineItem {
+  id: string;
+  description: string;
+  amount_total: number;
+  amount_discount: number;
+  currency: string;
+}
 
 interface CheckoutSession {
   status: string;
@@ -8,6 +17,8 @@ interface CheckoutSession {
   paymentStatus: string;
   currency: string;
   receiptUrl: string | null;
+  receiptNumber: string | null;
+  lineItems: LineItem[];
 }
 
 async function getCheckoutSession(sessionId: string): Promise<CheckoutSession> {
@@ -43,7 +54,14 @@ export default async function Return({
 
   return (
     <div className="container mx-auto p-6">
-      <SuccessfulPayment receiptUrl={session.receiptUrl ?? undefined} />
+      <Confetti />
+
+      <SuccessfulPayment
+        lineItems={session.line_items ?? []}
+        email={session.customer_email ?? ""}
+        receiptNumber={session.receiptNumber ?? ""}
+        receiptUrl={session.receiptUrl ?? ""}
+      />
     </div>
   );
 }
