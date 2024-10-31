@@ -55,7 +55,7 @@ export default async function Return({
   }
 
   return (
-    <div className="container mx-auto p-6">
+    <div className="">
       <Confetti />
 
       <SuccessfulPayment

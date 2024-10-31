@@ -7,7 +7,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { ArrowRight, CheckCircle, Download } from "lucide-react";
+import { Calendar, CheckCircle, Download } from "lucide-react";
 import Link from "next/link";
 
 interface LineItem {
@@ -119,17 +119,24 @@ export default function SuccessfulPayment({
           </div>
           <div className="space-y-2">
             <h3 className="font-semibold">Próximos Pasos:</h3>
-            <ul className="list-disc list-inside space-y-1 text-sm">
-              <li>
+            <ul className="list-disc ml-6 space-y-1 text-sm">
+              <li className="pl-2">
                 Recibirás un email de confirmación a{" "}
                 <span className="font-semibold">{email}</span> con los detalles
                 de tu orden.
               </li>
-              <li>
-                Nuestro equipo se pondrá en contacto contigo para agendar tu
-                consulta.
+              <li className="pl-2">
+                Para agendar tu sesión, por favor usa el botón de abajo o
+                envíame un mensaje a{" "}
+                <Link
+                  prefetch={false}
+                  href="https://wa.me/message/BLYZCVYW2MOAJ1"
+                  className="font-bold whitespace-nowrap"
+                >
+                  +52 744 346 8252
+                </Link>
               </li>
-              <li>
+              <li className="pl-2">
                 Prepara cualquier pregunta o inquietud que tengas para tu
                 sesión.
               </li>
@@ -138,8 +145,12 @@ export default function SuccessfulPayment({
         </CardContent>
         <CardFooter className="flex flex-col space-y-2 sm:flex-row sm:justify-between sm:space-x-2 sm:space-y-0">
           <Button asChild>
-            <Link href="/">
-              Ir a Inicio <ArrowRight className="ml-2 h-4 w-4" />
+            <Link
+              prefetch={false}
+              target="_blank"
+              href="https://cal.com/nutralech/inicial"
+            >
+              Agendar Sesión <Calendar className="ml-2 h-4 w-4" />
             </Link>
           </Button>
           {receiptUrl && (
