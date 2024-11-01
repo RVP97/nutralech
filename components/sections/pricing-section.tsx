@@ -274,7 +274,7 @@ export default function PricingSection() {
             <p className="text-sm text-muted-foreground mb-4">
               Métodos de pago aceptados
             </p>
-            <div className="grid grid-cols-5 sm:flex items-center gap-6 md:gap-6">
+            <div className="grid grid-cols-4 sm:flex items-center gap-6 md:gap-6">
               <Image
                 unoptimized
                 src="/images/logos/oxxo-logo.svg"
@@ -307,14 +307,14 @@ export default function PricingSection() {
                 height={40}
                 className="h-8 w-auto object-contain justify-self-center"
               />
-              <Image
+              {/* <Image
                 unoptimized
                 src="/images/logos/spei.svg"
                 alt="SPEI"
                 width={80}
                 height={40}
                 className="h-8 w-auto object-contain justify-self-center"
-              />
+              /> */}
             </div>
 
             <Dialog>

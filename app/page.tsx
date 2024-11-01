@@ -1,4 +1,6 @@
 import AboutMeComponent from "@/components/sections/about-me";
+import FaqSection from "@/components/sections/faq-section";
+import GlobalConsultations from "@/components/sections/global-consultations";
 import Hero from "@/components/sections/hero";
 import PersonalizedAttention from "@/components/sections/personalized-attention";
 import PricingSectionComponent from "@/components/sections/pricing-section";
@@ -16,6 +18,8 @@ export default function Home() {
       <Whatsapp />
       <PricingSectionComponent />
       <AboutMeComponent />
+      <GlobalConsultations />
+      <FaqSection />
     </div>
   );
 }
