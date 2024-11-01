@@ -2,6 +2,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import Iphone15Pro from "@/components/ui/iphone-15-pro";
+import Marquee from "@/components/ui/marquee";
 import {
   ArrowRight,
   Instagram,
@@ -44,9 +45,24 @@ const collaborationTypes = [
 ];
 
 const statistics = [
-  { number: "500K+", label: "Seguidores" },
-  { number: "10%", label: "Tasa de Engagement" },
+  { number: "780K+", label: "Seguidores" },
+  { number: "2", label: "Canales Activos" },
   { number: "25-34", label: "Edad Principal" },
+];
+
+const brandLogos = [
+  { src: "/images/brandLogos/birdman.webp", alt: "Birdman logo" },
+  { src: "/images/brandLogos/innata.webp", alt: "Innata logo" },
+  { src: "/images/brandLogos/adecoco.webp", alt: "Adecoco logo" },
+  { src: "/images/brandLogos/habits.webp", alt: "Habits logo" },
+  { src: "/images/brandLogos/justo.webp", alt: "Justo logo" },
+  { src: "/images/brandLogos/nopalia.webp", alt: "Nopalia logo" },
+  { src: "/images/brandLogos/tuny.webp", alt: "Tuny logo" },
+  { src: "/images/brandLogos/nucolato.webp", alt: "Nucolato logo" },
+  { src: "/images/brandLogos/casetify.webp", alt: "Casetify logo" },
+  { src: "/images/brandLogos/susalia.webp", alt: "Susalia logo" },
+  { src: "/images/brandLogos/foodnews.webp", alt: "Foodnews logo" },
+  { src: "/images/brandLogos/chilito.webp", alt: "Chilito logo" },
 ];
 
 export default function CollaboratePage() {
@@ -56,7 +72,7 @@ export default function CollaboratePage() {
       <div className="absolute top-20 right-0 w-96 h-96 rounded-full bg-[#DA5F6F]/20 blur-[128px]" />
       <div className="absolute bottom-0 right-20 w-96 h-96 rounded-full bg-yellow-200/30 blur-[128px]" />
 
-      <div className="container relative mx-auto py-16 px-4 sm:px-6 lg:px-8">
+      <div className=" relative mx-auto py-16 max-w-[95%]">
         <section className="text-center mb-24">
           <h1 className="font-serif text-5xl font-medium tracking-tight sm:text-6xl md:text-7xl text-gray-900 mb-6">
             Colabora con <span className="text-[#DA5F6F]">Marialy</span>
@@ -65,17 +81,17 @@ export default function CollaboratePage() {
             Creemos contenido impactante juntos e inspiremos a millones hacia un
             estilo de vida más saludable.
           </p>
-          <Button
+          {/* <Button
             size="lg"
             className="bg-[#DA5F6F] hover:bg-[#C54E5E] text-white text-lg px-8 py-6 rounded-full transition-all duration-300 shadow-lg hover:shadow-xl"
           >
             Iniciar Colaboración
             <ArrowRight className="ml-2 h-5 w-5" />
-          </Button>
+          </Button> */}
         </section>
 
-        <section className="mb-24">
-          <div className="grid md:grid-cols-2 gap-12 items-center">
+        <section className="md:mb-24 mb-12">
+          <div className="grid xl:grid-cols-2 gap-12 items-center">
             <div className="space-y-8">
               <h2 className="text-4xl font-serif font-medium text-gray-900">
                 ¿Por Qué Colaborar Conmigo?
@@ -139,11 +155,30 @@ export default function CollaboratePage() {
           </div>
         </section>
 
+        <section className="md:mb-24 mb-12">
+          <h2 className="text-4xl font-serif font-medium text-center md:mb-12 mb-6">
+            Han Confiado en Mí
+          </h2>
+          <Marquee className="py-8">
+            {brandLogos.map((logo, index) => (
+              <div key={index} className="mx-8">
+                <Image
+                  src={logo.src}
+                  alt={logo.alt}
+                  width={120}
+                  height={60}
+                  className="opacity-100 hover:opacity-100 transition-opacity duration-300"
+                />
+              </div>
+            ))}
+          </Marquee>
+        </section>
+
         <section className="mb-24">
           <Card className="bg-white overflow-hidden shadow-2xl">
             <CardContent className="p-0">
               <div className="grid md:grid-cols-2">
-                <div className="p-12 bg-gradient-to-br from-[#DA5F6F] to-[#FF8C94] text-white relative overflow-hidden">
+                <div className="md:p-12 p-4 bg-gradient-to-br from-[#DA5F6F] to-[#FF8C94] text-white relative overflow-hidden">
                   <div className="absolute top-0 right-0 w-64 h-64 bg-white opacity-10 rounded-full -mr-32 -mt-32 transform rotate-45"></div>
                   <div className="absolute bottom-0 left-0 w-48 h-48 bg-white opacity-10 rounded-full -ml-24 -mb-24"></div>
                   <h2 className="text-4xl font-serif font-medium mb-8 relative z-10">
@@ -156,35 +191,35 @@ export default function CollaboratePage() {
                   </p>
                   <div className="space-y-8 relative z-10">
                     <a
-                      href="https://wa.me/1234567890"
+                      href="https://wa.me/message/BLYZCVYW2MOAJ1"
                       className="flex items-center group"
                     >
                       <div className="bg-white text-[#DA5F6F] rounded-full p-3 mr-4 group-hover:bg-[#DA5F6F] group-hover:text-white transition-colors duration-300">
                         <Phone className="h-6 w-6" />
                       </div>
-                      <span className="text-xl group-hover:underline">
-                        +1 (234) 567-890
+                      <span className="md:text-xl text-lg group-hover:underline">
+                        +52 744 346 8252
                       </span>
                     </a>
                     <a
-                      href="mailto:marialy@example.com"
+                      href="mailto:colaboraciones@nutralech.com"
                       className="flex items-center group"
                     >
                       <div className="bg-white text-[#DA5F6F] rounded-full p-3 mr-4 group-hover:bg-[#DA5F6F] group-hover:text-white transition-colors duration-300">
                         <Mail className="h-6 w-6" />
                       </div>
-                      <span className="text-xl group-hover:underline">
-                        marialy@example.com
+                      <span className="md:text-xl text-lg group-hover:underline">
+                        colaboraciones@nutralech.com
                       </span>
                     </a>
                   </div>
                 </div>
                 <div className="relative h-96 md:h-auto">
                   <Image
-                    src="/placeholder.svg?height=600&width=800"
+                    unoptimized
+                    src="/images/walking.svg"
                     alt="Marialy working"
-                    layout="fill"
-                    objectFit="cover"
+                    fill
                   />
                 </div>
               </div>

@@ -86,7 +86,10 @@ export default function GlobalConsultations() {
   }, []);
 
   const getLocalTime = (offset: number) => {
-    const localTime = new Date(currentTime.getTime() + offset * 3600000);
+    const utcTime = new Date(
+      currentTime.getTime() + currentTime.getTimezoneOffset() * 60000
+    );
+    const localTime = new Date(utcTime.getTime() + offset * 3600000);
     return localTime.toLocaleTimeString("es-ES", {
       hour: "2-digit",
       minute: "2-digit",
@@ -94,9 +97,10 @@ export default function GlobalConsultations() {
   };
 
   const isDaytime = (offset: number) => {
-    const localHour = new Date(
-      currentTime.getTime() + offset * 3600000
-    ).getHours();
+    const utcTime = new Date(
+      currentTime.getTime() + currentTime.getTimezoneOffset() * 60000
+    );
+    const localHour = new Date(utcTime.getTime() + offset * 3600000).getHours();
     return localHour >= 6 && localHour < 18;
   };
 
