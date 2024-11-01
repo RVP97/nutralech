@@ -7,16 +7,16 @@ export interface Iphone15ProProps extends SVGProps<SVGSVGElement> {
 }
 
 export default function Iphone15Pro({
-  width = 433,
-  height = 882,
-  src,
+  width = 300,
+  height = 600,
+  src = "/instagram.webp",
   ...props
 }: Iphone15ProProps) {
   return (
     <svg
       width={width}
       height={height}
-      viewBox={`0 0 ${width} ${height}`}
+      viewBox="0 0 433 882"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       {...props}
