@@ -20,7 +20,9 @@ export default function RootLayout({
   return (
     <html lang="es">
       {/* <GoogleTagManager gtmId="GTM-WQGRBVZW" /> */}
-      <body className={`${inter.className} flex flex-col min-h-screen`}>
+      <body
+        className={`${inter.className} mt-8 md:mt-16 flex flex-col min-h-screen`}
+      >
         <Navbar />
         {children}
       </body>

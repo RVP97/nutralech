@@ -1,3 +1,8 @@
+"use client";
+
+import { Bell, Home, Menu, Phone, Search, User } from "lucide-react";
+import * as React from "react";
+
 import { Button } from "@/components/ui/button";
 import {
   NavigationMenu,
@@ -7,215 +12,160 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
-import Link from "next/link";
 
-export default function Navbar() {
+export default function ExpandableNavbarMobileSubmenu() {
+  const [activeItem, setActiveItem] = React.useState("home");
+  const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+
+  const NavItems = React.useCallback(
+    ({ isMobile = false }: { isMobile?: boolean }) => (
+      <>
+        {[
+          { id: "home", icon: Home, label: "Home" },
+          { id: "search", icon: Search, label: "Search" },
+          {
+            id: "notifications",
+            icon: Bell,
+            label: "Notifications",
+            expandable: true,
+            subItems: [
+              { id: "all", label: "All Notifications" },
+              { id: "mentions", label: "Mentions" },
+              { id: "unread", label: "Unread" },
+            ],
+          },
+          { id: "profile", icon: User, label: "Profile" },
+        ].map(({ id, icon: Icon, label, expandable, subItems }) => (
+          <div key={id} className="relative">
+            {isMobile ? (
+              <div>
+                <Button
+                  variant="ghost"
+                  size="default"
+                  className={`w-full justify-start rounded-full transition-all duration-300 ${
+                    activeItem === id
+                      ? "bg-primary text-primary-foreground"
+                      : "hover:bg-primary/20 hover:text-primary"
+                  }`}
+                  onClick={() => setActiveItem(id)}
+                >
+                  <Icon className="h-5 w-5 mr-2" />
+                  <span>{label}</span>
+                </Button>
+              </div>
+            ) : (
+              <NavigationMenu>
+                <NavigationMenuList>
+                  <NavigationMenuItem>
+                    {expandable ? (
+                      <>
+                        <NavigationMenuTrigger
+                          className={`rounded-full transition-all duration-300 ${
+                            activeItem === id
+                              ? "bg-primary text-primary-foreground"
+                              : "hover:bg-primary/20 hover:text-primary"
+                          }`}
+                        >
+                          <Icon className="h-5 w-5 md:mr-2" />
+                          <span className="hidden md:inline">{label}</span>
+                        </NavigationMenuTrigger>
+                        <NavigationMenuContent>
+                          <div className="p-4 w-64">
+                            <h3 className="font-semibold mb-2">{label}</h3>
+                            <ul className="space-y-2">
+                              {subItems?.map((subItem) => (
+                                <li key={subItem.id}>
+                                  <NavigationMenuLink asChild>
+                                    <Button
+                                      variant="ghost"
+                                      className="w-full justify-start"
+                                      onClick={() => setActiveItem(subItem.id)}
+                                    >
+                                      {subItem.label}
+                                    </Button>
+                                  </NavigationMenuLink>
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                        </NavigationMenuContent>
+                      </>
+                    ) : (
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        className={`rounded-full transition-all duration-300 ${
+                          activeItem === id
+                            ? "bg-primary text-primary-foreground"
+                            : "hover:bg-primary/20 hover:text-primary"
+                        }`}
+                        onClick={() => setActiveItem(id)}
+                      >
+                        <Icon className="h-5 w-5 md:mr-2" />
+                        <span className="hidden md:inline">{label}</span>
+                      </Button>
+                    )}
+                  </NavigationMenuItem>
+                </NavigationMenuList>
+              </NavigationMenu>
+            )}
+          </div>
+        ))}
+      </>
+    ),
+    [activeItem]
+  );
+
+  const handlePhoneClick = () => {
+    // Replace with your actual phone action
+    console.log("Phone button clicked");
+  };
+
   return (
-    <header className="w-full bg-white shadow-sm dark:bg-gray-950">
-      <div className="container flex h-16 items-center justify-between px-4 md:px-6">
-        <Link href="#" className="flex items-center gap-2" prefetch={false}>
-          <MountainIcon className="h-6 w-6" />
-          <span className="font-semibold">Acme Inc</span>
-        </Link>
-        <nav className="hidden items-center gap-6 lg:flex">
-          <NavigationMenu>
-            <NavigationMenuList>
-              <NavigationMenuItem>
-                <NavigationMenuTrigger>Products</NavigationMenuTrigger>
-                <NavigationMenuContent>
-                  <div className="grid w-[800px] grid-cols-4 gap-4 p-4">
-                    <NavigationMenuLink asChild>
-                      <Link
-                        href="#"
-                        className="group grid h-auto w-full items-center justify-start gap-1 rounded-md bg-white p-4 text-sm font-medium transition-colors hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none disabled:pointer-events-none disabled:opacity-50 dark:bg-gray-950 dark:hover:bg-gray-800 dark:hover:text-gray-50 dark:focus:bg-gray-800 dark:focus:text-gray-50 dark:data-[active]:bg-gray-800/50 dark:data-[state=open]:bg-gray-800/50"
-                        prefetch={false}
-                      >
-                        <div className="text-sm font-medium leading-none group-hover:underline">
-                          Laptops
-                        </div>
-                        <div className="line-clamp-2 text-sm leading-snug text-gray-500 dark:text-gray-400">
-                          Our latest laptop models.
-                        </div>
-                      </Link>
-                    </NavigationMenuLink>
-                    <NavigationMenuLink asChild>
-                      <Link
-                        href="#"
-                        className="group grid h-auto w-full items-center justify-start gap-1 rounded-md bg-white p-4 text-sm font-medium transition-colors hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none disabled:pointer-events-none disabled:opacity-50 dark:bg-gray-950 dark:hover:bg-gray-800 dark:hover:text-gray-50 dark:focus:bg-gray-800 dark:focus:text-gray-50 dark:data-[active]:bg-gray-800/50 dark:data-[state=open]:bg-gray-800/50"
-                        prefetch={false}
-                      >
-                        <div className="text-sm font-medium leading-none group-hover:underline">
-                          Desktops
-                        </div>
-                        <div className="line-clamp-2 text-sm leading-snug text-gray-500 dark:text-gray-400">
-                          Our latest desktop models.
-                        </div>
-                      </Link>
-                    </NavigationMenuLink>
-                    <NavigationMenuLink asChild>
-                      <Link
-                        href="#"
-                        className="group grid h-auto w-full items-center justify-start gap-1 rounded-md bg-white p-4 text-sm font-medium transition-colors hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none disabled:pointer-events-none disabled:opacity-50 dark:bg-gray-950 dark:hover:bg-gray-800 dark:hover:text-gray-50 dark:focus:bg-gray-800 dark:focus:text-gray-50 dark:data-[active]:bg-gray-800/50 dark:data-[state=open]:bg-gray-800/50"
-                        prefetch={false}
-                      >
-                        <div className="text-sm font-medium leading-none group-hover:underline">
-                          Tablets
-                        </div>
-                        <div className="line-clamp-2 text-sm leading-snug text-gray-500 dark:text-gray-400">
-                          Our latest tablet models.
-                        </div>
-                      </Link>
-                    </NavigationMenuLink>
-                    <NavigationMenuLink asChild>
-                      <Link
-                        href="#"
-                        className="group grid h-auto w-full items-center justify-start gap-1 rounded-md bg-white p-4 text-sm font-medium transition-colors hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none disabled:pointer-events-none disabled:opacity-50 dark:bg-gray-950 dark:hover:bg-gray-800 dark:hover:text-gray-50 dark:focus:bg-gray-800 dark:focus:text-gray-50 dark:data-[active]:bg-gray-800/50 dark:data-[state=open]:bg-gray-800/50"
-                        prefetch={false}
-                      >
-                        <div className="text-sm font-medium leading-none group-hover:underline">
-                          Smartphones
-                        </div>
-                        <div className="line-clamp-2 text-sm leading-snug text-gray-500 dark:text-gray-400">
-                          Our latest smartphone models.
-                        </div>
-                      </Link>
-                    </NavigationMenuLink>
-                    <NavigationMenuLink asChild>
-                      <Link
-                        href="#"
-                        className="group grid h-auto w-full items-center justify-start gap-1 rounded-md bg-white p-4 text-sm font-medium transition-colors hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none disabled:pointer-events-none disabled:opacity-50 dark:bg-gray-950 dark:hover:bg-gray-800 dark:hover:text-gray-50 dark:focus:bg-gray-800 dark:focus:text-gray-50 dark:data-[active]:bg-gray-800/50 dark:data-[state=open]:bg-gray-800/50"
-                        prefetch={false}
-                      >
-                        <div className="text-sm font-medium leading-none group-hover:underline">
-                          Accessories
-                        </div>
-                        <div className="line-clamp-2 text-sm leading-snug text-gray-500 dark:text-gray-400">
-                          Our latest accessory models.
-                        </div>
-                      </Link>
-                    </NavigationMenuLink>
-                    <NavigationMenuLink asChild>
-                      <Link
-                        href="#"
-                        className="group grid h-auto w-full items-center justify-start gap-1 rounded-md bg-white p-4 text-sm font-medium transition-colors hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none disabled:pointer-events-none disabled:opacity-50 dark:bg-gray-950 dark:hover:bg-gray-800 dark:hover:text-gray-50 dark:focus:bg-gray-800 dark:focus:text-gray-50 dark:data-[active]:bg-gray-800/50 dark:data-[state=open]:bg-gray-800/50"
-                        prefetch={false}
-                      >
-                        <div className="text-sm font-medium leading-none group-hover:underline">
-                          Wearables
-                        </div>
-                        <div className="line-clamp-2 text-sm leading-snug text-gray-500 dark:text-gray-400">
-                          Our latest wearable models.
-                        </div>
-                      </Link>
-                    </NavigationMenuLink>
-                    <NavigationMenuLink asChild>
-                      <Link
-                        href="#"
-                        className="group grid h-auto w-full items-center justify-start gap-1 rounded-md bg-white p-4 text-sm font-medium transition-colors hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none disabled:pointer-events-none disabled:opacity-50 dark:bg-gray-950 dark:hover:bg-gray-800 dark:hover:text-gray-50 dark:focus:bg-gray-800 dark:focus:text-gray-50 dark:data-[active]:bg-gray-800/50 dark:data-[state=open]:bg-gray-800/50"
-                        prefetch={false}
-                      >
-                        <div className="text-sm font-medium leading-none group-hover:underline">
-                          Smart Home
-                        </div>
-                        <div className="line-clamp-2 text-sm leading-snug text-gray-500 dark:text-gray-400">
-                          Our latest smart home devices.
-                        </div>
-                      </Link>
-                    </NavigationMenuLink>
-                    <NavigationMenuLink asChild>
-                      <Link
-                        href="#"
-                        className="group grid h-auto w-full items-center justify-start gap-1 rounded-md bg-white p-4 text-sm font-medium transition-colors hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none disabled:pointer-events-none disabled:opacity-50 dark:bg-gray-950 dark:hover:bg-gray-800 dark:hover:text-gray-50 dark:focus:bg-gray-800 dark:focus:text-gray-50 dark:data-[active]:bg-gray-800/50 dark:data-[state=open]:bg-gray-800/50"
-                        prefetch={false}
-                      >
-                        <div className="text-sm font-medium leading-none group-hover:underline">
-                          Gaming
-                        </div>
-                        <div className="line-clamp-2 text-sm leading-snug text-gray-500 dark:text-gray-400">
-                          Our latest gaming products.
-                        </div>
-                      </Link>
-                    </NavigationMenuLink>
-                  </div>
-                </NavigationMenuContent>
-              </NavigationMenuItem>
-              <NavigationMenuLink asChild>
-                <Link
-                  href="#"
-                  className="group inline-flex h-9 w-max items-center justify-center rounded-md bg-white px-4 py-2 text-sm font-medium transition-colors hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none disabled:pointer-events-none disabled:opacity-50 dark:bg-gray-950 dark:hover:bg-gray-800 dark:hover:text-gray-50 dark:focus:bg-gray-800 dark:focus:text-gray-50 dark:data-[active]:bg-gray-800/50 dark:data-[state=open]:bg-gray-800/50"
-                  prefetch={false}
-                >
-                  Services
-                </Link>
-              </NavigationMenuLink>
-              <NavigationMenuLink asChild>
-                <Link
-                  href="#"
-                  className="group inline-flex h-9 w-max items-center justify-center rounded-md bg-white px-4 py-2 text-sm font-medium transition-colors hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none disabled:pointer-events-none disabled:opacity-50 dark:bg-gray-950 dark:hover:bg-gray-800 dark:hover:text-gray-50 dark:focus:bg-gray-800 dark:focus:text-gray-50 dark:data-[active]:bg-gray-800/50 dark:data-[state=open]:bg-gray-800/50"
-                  prefetch={false}
-                >
-                  Company
-                </Link>
-              </NavigationMenuLink>
-              <NavigationMenuLink asChild>
-                <Link
-                  href="#"
-                  className="group inline-flex h-9 w-max items-center justify-center rounded-md bg-white px-4 py-2 text-sm font-medium transition-colors hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none disabled:pointer-events-none disabled:opacity-50 dark:bg-gray-950 dark:hover:bg-gray-800 dark:hover:text-gray-50 dark:focus:bg-gray-800 dark:focus:text-gray-50 dark:data-[active]:bg-gray-800/50 dark:data-[state=open]:bg-gray-800/50"
-                  prefetch={false}
-                >
-                  Resources
-                </Link>
-              </NavigationMenuLink>
-            </NavigationMenuList>
-          </NavigationMenu>
-        </nav>
-        <div className="flex items-center gap-4">
-          <Button variant="outline" size="icon">
-            <SearchIcon className="h-5 w-5" />
-            <span className="sr-only">Search</span>
-          </Button>
-          <Button>Contact Us</Button>
+    <div className="fixed top-4 left-0 right-0 z-50 flex justify-center px-4">
+      <nav className="w-full max-w-[90%] bg-background/80 backdrop-blur-lg shadow-lg border rounded-3xl">
+        <div className="mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between h-16">
+            <div className="flex items-center flex-1">
+              <span className="text-2xl font-bold text-primary mr-4">Logo</span>
+              <div className="hidden md:flex space-x-1 justify-center flex-1">
+                <NavItems />
+              </div>
+            </div>
+            <div className="flex items-center space-x-2">
+              <Button
+                variant="ghost"
+                size="icon"
+                className="rounded-full"
+                onClick={handlePhoneClick}
+              >
+                <Phone className="h-5 w-5 text-black" />
+                <span className="sr-only">Call</span>
+              </Button>
+              <Button
+                variant="ghost"
+                size="icon"
+                className="md:hidden rounded-full"
+                onClick={() => setIsMenuOpen(!isMenuOpen)}
+              >
+                <Menu className="h-5 w-5" />
+                <span className="sr-only">Toggle menu</span>
+              </Button>
+            </div>
+          </div>
+          <div
+            className={`md:hidden overflow-hidden transition-all duration-300 ease-in-out ${
+              isMenuOpen
+                ? "max-h-[500px] opacity-100 pb-4"
+                : "max-h-0 opacity-0 pb-0"
+            }`}
+          >
+            <nav className="flex flex-col space-y-2 pt-2">
+              <NavItems isMobile />
+            </nav>
+          </div>
         </div>
-      </div>
-    </header>
-  );
-}
-
-function MountainIcon(props) {
-  return (
-    <svg
-      {...props}
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="m8 3 4 8 5-5 5 15H2L8 3z" />
-    </svg>
-  );
-}
-
-function SearchIcon(props) {
-  return (
-    <svg
-      {...props}
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <circle cx="11" cy="11" r="8" />
-      <path d="m21 21-4.3-4.3" />
-    </svg>
+      </nav>
+    </div>
   );
 }
