@@ -220,6 +220,8 @@ export default function CollaboratePage() {
                     src="/images/walking.svg"
                     alt="Marialy working"
                     fill
+                    className="object-contain p-8"
+                    priority
                   />
                 </div>
               </div>
