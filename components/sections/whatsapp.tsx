@@ -558,7 +558,7 @@ function Iphone15ProWhatsappLightSmaller() {
                     className="flex-1 bg-white text-gray-800 placeholder-gray-500 rounded-full mx-1 text-xs h-8 focus:outline-none border-none"
                     value={newMessage}
                     onChange={(e) => setNewMessage(e.target.value)}
-                    onKeyPress={(e) => {
+                    onKeyDown={(e) => {
                       if (e.key === "Enter") {
                         e.preventDefault();
                         sendMessage();
@@ -621,9 +621,12 @@ export default function PersonalizedCommunicationSection() {
       <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-white to-transparent" />
 
       <div className="container px-4 mx-auto">
-        <h2 className="text-4xl font-serif font-medium tracking-tight text-center sm:text-5xl md:text-6xl mb-16">
-          Comunicación Personalizada
-        </h2>
+        <div className="text-center mb-16">
+          <span className="text-lg text-[#DA5F6F]">Acceso Directo</span>
+          <h2 className="mt-4 text-4xl font-serif font-medium tracking-tight sm:text-5xl">
+            Comunicación Personalizada
+          </h2>
+        </div>
 
         <div className="grid gap-12 lg:grid-cols-2 items-center">
           <div className="space-y-8">

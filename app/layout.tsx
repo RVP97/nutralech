@@ -1,5 +1,4 @@
 import Navbar from "@/components/sections/navbar";
-import Navbar2 from "@/components/sections/navbar-2";
 import { GoogleTagManager } from "@next/third-parties/google";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";

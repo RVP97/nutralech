@@ -245,7 +245,7 @@ export default function PricingSection() {
         open={!!selectedPriceId}
         onOpenChange={() => setSelectedPriceId(null)}
       >
-        <DialogContent className="sm:max-w-[90vw] w-[90vw] h-[90vh] max-h-[90vh] flex flex-col rounded-lg">
+        <DialogContent className="sm:max-w-[90vw] w-[95vw] h-[90vh] max-h-[90vh] flex flex-col rounded-lg">
           <DialogHeader className="flex-shrink-0">
             <DialogTitle>Completar Pago</DialogTitle>
           </DialogHeader>
@@ -259,7 +259,7 @@ export default function PricingSection() {
 
       <section
         id="precios"
-        className="py-24 md:py-8 bg-gradient-to-b from-white to-pink-50/50"
+        className="py-12 md:py-8 bg-gradient-to-b from-white to-pink-50/50"
       >
         <div className="container px-4 mx-auto">
           <div className="text-center mb-10">

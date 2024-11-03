@@ -19,17 +19,20 @@ import Link from "next/link";
 
 export default function AboutMeComponent() {
   const expertise = [
-    { icon: Apple, text: "Nutrición Clínica" },
+    { icon: Apple, text: "Nutrición Sostenible" },
     { icon: Heart, text: "Bienestar Integral" },
     { icon: Book, text: "Educación Nutricional" },
   ];
 
   return (
-    <section className="py-24 bg-gradient-to-b from-white to-pink-50/50">
+    <section className="py-12 bg-gradient-to-b from-white to-pink-50/50">
       <div className="container px-4 mx-auto">
-        <h2 className="text-4xl font-serif font-medium tracking-tight sm:text-5xl text-center mb-16">
-          Sobre Mí
-        </h2>
+        <div className="text-center mb-16">
+          <span className="text-lg text-[#DA5F6F]">Conóceme</span>
+          <h2 className="mt-4 text-4xl font-serif font-medium tracking-tight sm:text-5xl">
+            Acerca de Mí
+          </h2>
+        </div>
 
         <div className="grid gap-12 lg:grid-cols-2 items-start">
           {/* Image - Sticky on desktop */}
@@ -67,7 +70,7 @@ export default function AboutMeComponent() {
             <div>
               <h3 className="text-3xl font-medium mb-4">Marialy Alonso</h3>
               <p className="text-xl text-muted-foreground mb-4">
-                Nutrióloga Certificada & Educadora en Salud
+                Nutrióloga Certificada
               </p>
               <div className="flex items-center space-x-2">
                 <GraduationCap className="w-5 h-5 text-[#DA5F6F]" />
@@ -78,10 +81,10 @@ export default function AboutMeComponent() {
             </div>
 
             <p className="text-lg text-muted-foreground">
-              Con más de una década de experiencia, me dedico a transformar
-              vidas a través de la nutrición personalizada. Mi enfoque va más
-              allá de las dietas restrictivas; creo en crear hábitos sostenibles
-              que mejoren tu salud y calidad de vida a largo plazo.
+              Con cientos de pacientes transformados, me dedico a cambiar vidas
+              a través de la nutrición personalizada. Mi enfoque va más allá de
+              las dietas restrictivas; creo en crear hábitos sostenibles que
+              mejoren tu salud y calidad de vida a largo plazo.
             </p>
 
             <div className="space-y-4">

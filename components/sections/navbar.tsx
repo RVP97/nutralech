@@ -25,7 +25,7 @@ export default function Component() {
       <>
         {[
           { id: "inicio", icon: Home, label: "Inicio", href: "/" },
-          { id: "planes", icon: Search, label: "Planes", href: "/planes" },
+          { id: "planes", icon: Search, label: "Planes", href: "/#precios" },
           {
             id: "blog",
             icon: Bell,

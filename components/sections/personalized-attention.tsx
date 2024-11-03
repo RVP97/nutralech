@@ -51,16 +51,22 @@ export default function PersonalizedAttention() {
   ];
 
   return (
-    <section className="py-12 bg-gradient-to-b from-white to-white">
+    <section
+      id="servicios"
+      className="py-12 bg-gradient-to-b from-white to-white"
+    >
       <div className="container px-4 mx-auto">
-        <h2 className="mt-4 text-4xl font-serif font-medium tracking-tight sm:text-5xl text-center mb-16">
-          Atención Personalizada para Ti
-        </h2>
+        <div className="text-center mb-16">
+          <span className="text-lg text-[#DA5F6F]">Cada Plan es Único</span>
+          <h2 className="mt-4 text-4xl font-serif font-medium tracking-tight sm:text-5xl">
+            Atención Personalizada para Ti
+          </h2>
+        </div>
 
         <div className="grid gap-12 lg:grid-cols-2 items-center">
           <div className="space-y-8">
             <p className="text-lg text-muted-foreground">
-              En mi práctica, cada cliente recibe una atención completamente
+              En mis servicios, cada cliente recibe una atención completamente
               personalizada. Entiendo que cada persona es única, con sus propias
               necesidades, desafíos y objetivos. Mi enfoque se adapta
               específicamente a ti, asegurando que recibas el apoyo exacto que

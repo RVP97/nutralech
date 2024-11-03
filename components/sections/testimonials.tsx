@@ -8,21 +8,21 @@ export default function TestimonialsComponent() {
     {
       name: "Rodrigo Valle",
       handle: "@rodrigo.vallep",
-      image: "/images/marialy.webp",
+      image: "/images/testimonial-profile/rodrigo.webp",
       quote:
         "Gracias a Marialy, he logrado mis objetivos de salud con facilidad y eficacia. Su conocimiento y enfoque personalizado son excepcionales. ¡Totalmente recomendado!",
     },
     {
       name: "Emma Pinto",
       handle: "@chefeemmapinto",
-      image: "/images/marialy.webp",
+      image: "/images/testimonial-profile/emma.webp",
       quote:
         "¡La mejor nutrióloga! Obtuve súper buenos resultados sin hacer nada extremo ni estando en dietas restrictivas. Me encanta que todo mi plan fue muy balanceado y que diario me apoya en todas mis dudas.",
     },
     {
       name: "Helena Molina",
       handle: "@helenamolinar",
-      image: "/images/marialy.webp",
+      image: "/images/testimonial-profile/helena.webp",
       quote:
         "¡Increíble lo que he logrado con la ayuda de Marialy! No solo me ayuda a cumplir mis metas sino que tengo una mejor relación con la comida. La recomiendo 100% a quien sea que esté buscando a una nutrióloga.",
     },
@@ -47,6 +47,7 @@ export default function TestimonialsComponent() {
                     src={testimonial.image}
                     alt={testimonial.name}
                     fill
+                    quality={50}
                     className="rounded-full object-cover"
                   />
                 </div>

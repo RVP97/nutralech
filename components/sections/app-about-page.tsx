@@ -65,7 +65,7 @@ export default function AboutPage() {
 
               <div className="flex flex-wrap gap-4 items-center">
                 <Link
-                  href="#consulta"
+                  href="/#precios"
                   className="inline-flex h-14 items-center justify-center gap-2 rounded-full bg-[#DA5F6F] px-8 font-medium text-white transition-colors hover:bg-[#DA5F6F]/90 text-lg"
                 >
                   <CalendarCheck className="h-5 w-5" />
@@ -73,7 +73,7 @@ export default function AboutPage() {
                 </Link>
 
                 <Link
-                  href="#servicios"
+                  href="/#precios"
                   className="inline-flex h-14 items-center justify-center gap-2 rounded-full border-2 border-[#DA5F6F] bg-transparent px-8 font-medium text-[#DA5F6F] transition-colors hover:bg-[#DA5F6F]/5 text-lg"
                 >
                   Explora Mis Servicios
@@ -108,9 +108,15 @@ export default function AboutPage() {
         </section>
 
         <section className="py-16" id="servicios">
-          <h2 className="text-3xl font-serif font-medium text-center mb-8">
-            Mis Servicios
-          </h2>
+          <div className="text-center mb-8">
+            <h2 className="mt-4 text-4xl font-serif font-medium tracking-tight sm:text-5xl">
+              Mis Servicios
+            </h2>
+            <p className="mt-4 text-base text-muted-foreground max-w-2xl mx-auto">
+              Conoce los servicios que ofrezco para ayudarte a alcanzar tus
+              objetivos
+            </p>
+          </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {services.map((service, index) => (
               <Card
@@ -124,12 +130,12 @@ export default function AboutPage() {
                   <p className="text-gray-600 mb-4 flex-grow">
                     {service.description}
                   </p>
-                  <Button
-                    variant="link"
-                    className="text-[#DA5F6F] hover:text-[#C54E5E] p-0 h-auto font-semibold mt-auto"
+                  <Link
+                    href="/#precios"
+                    className="text-[#DA5F6F] hover:text-[#C54E5E] p-0 h-auto font-semibold mt-auto inline-flex items-center"
                   >
                     Saber más <ArrowRight className="ml-1 h-4 w-4" />
-                  </Button>
+                  </Link>
                 </CardContent>
               </Card>
             ))}
@@ -137,9 +143,14 @@ export default function AboutPage() {
         </section>
 
         <section className="py-8">
-          <h2 className="text-3xl font-serif font-medium text-center mb-8">
-            Mi Enfoque
-          </h2>
+          <div className="text-center mb-8">
+            <h2 className="mt-4 text-4xl font-serif font-medium tracking-tight sm:text-5xl">
+              Mi Enfoque
+            </h2>
+            <p className="mt-4 text-base text-muted-foreground max-w-2xl mx-auto">
+              Conoce mi enfoque para ayudarte a alcanzar tus objetivos
+            </p>
+          </div>
           <div className="grid md:grid-cols-2 gap-8">
             <Card className="bg-white">
               <CardContent className="p-8">
@@ -218,15 +229,19 @@ export default function AboutPage() {
                 futuro más saludable y equilibrado.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-                <Button className="bg-white text-[#DA5F6F] hover:bg-gray-100 text-lg px-8 py-6 rounded-full transition-colors duration-300 shadow-lg hover:shadow-xl">
-                  Comienza Tu Viaje Nutricional
-                </Button>
-                <Button
-                  variant="outline"
-                  className="bg-transparent hover:text-white border-2 border-white text-white hover:bg-white/10 text-lg px-8 py-6 rounded-full transition-colors duration-300"
-                >
-                  Conoce Más
-                </Button>
+                <Link href="/#precios">
+                  <Button className="bg-white text-[#DA5F6F] hover:bg-gray-100 text-lg px-8 py-6 rounded-full transition-colors duration-300 shadow-lg hover:shadow-xl">
+                    Comienza Tu Viaje Nutricional
+                  </Button>
+                </Link>
+                <Link href="/#servicios">
+                  <Button
+                    variant="outline"
+                    className="bg-transparent hover:text-white border-2 border-white text-white hover:bg-white/10 text-lg px-8 py-6 rounded-full transition-colors duration-300"
+                  >
+                    Conoce Más
+                  </Button>
+                </Link>
               </div>
             </div>
             <div className="absolute bottom-0 left-0 w-24 h-24 bg-white/20 rounded-full -mb-12 -ml-12"></div>

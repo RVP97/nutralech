@@ -10,17 +10,17 @@ export default function WhatIOfferComponent() {
     {
       icon: <Laptop className="h-12 w-12 text-[#DA5F6F]" />,
       title: "Consultas en Línea",
-      href: "#consultas",
+      href: "#precios",
     },
     {
       icon: <Globe className="h-12 w-12 text-[#DA5F6F]" />,
       title: "Planes a Distancia",
-      href: "#planes",
+      href: "#precios",
     },
     {
       icon: <Instagram className="h-12 w-12 text-[#DA5F6F]" />,
       title: "Ve mis Consejos en Instagram",
-      href: "https://instagram.com",
+      href: "https://www.instagram.com/nutralech/",
     },
     {
       icon: <Rss className="h-12 w-12 text-[#DA5F6F]" />,
@@ -52,7 +52,11 @@ export default function WhatIOfferComponent() {
         <div className="mt-16 grid gap-8 lg:grid-cols-2">
           <div className="grid gap-6 sm:grid-cols-2">
             {services.map((service, index) => (
-              <Link key={index} href={service.href}>
+              <Link
+                key={index}
+                href={service.href}
+                target={service.href.startsWith("https") ? "_blank" : undefined}
+              >
                 <Card className="h-full transition-all hover:shadow-lg hover:-translate-y-1">
                   <CardContent className="p-6 flex flex-col items-center text-center justify-center h-full">
                     <div className="mb-4">{service.icon}</div>
@@ -69,7 +73,7 @@ export default function WhatIOfferComponent() {
                 Áreas de Enfoque
               </h3>
               <p className="mt-4 text-lg text-muted-foreground">
-                Mis ofertas consisten en servicios de coaching nutricional de
+                Mis ofertas consisten en servicios de asesoría nutricional de
                 alta calidad, personalizados según tus necesidades únicas. Mi
                 enfoque integral se fundamenta en el conocimiento científico y
                 una profunda dedicación a tu bienestar.

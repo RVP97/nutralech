@@ -27,8 +27,28 @@ const faqItems = [
   },
   {
     question: "¿Puedo contactarte entre sesiones si tengo preguntas?",
-    answer:
-      "¡Absolutamente! Ofrezco soporte por correo electrónico entre sesiones para preguntas rápidas. Para consultas más extensas, podemos programar una mini-sesión.",
+    answer: (
+      <>
+        ¡Absolutamente! Puedes contactarme por{" "}
+        <a
+          href="mailto:dudas@nutralech.com"
+          className="text-primary font-medium hover:underline"
+        >
+          correo electrónico
+        </a>{" "}
+        o{" "}
+        <a
+          href="https://wa.me/message/BLYZCVYW2MOAJ1"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-primary font-medium hover:underline"
+        >
+          WhatsApp
+        </a>{" "}
+        entre sesiones para preguntas rápidas. Para consultas más extensas,
+        podemos programar una mini-sesión.
+      </>
+    ),
   },
   {
     question: "¿Trabajas con condiciones médicas específicas?",
@@ -40,11 +60,19 @@ const faqItems = [
     answer:
       "Sí, proporciono planes de comidas personalizados y una selección de recetas adaptadas a tus preferencias y necesidades nutricionales como parte de tu plan.",
   },
+  {
+    question: "¿En qué eres diferente a otras nutricionistas?",
+    answer:
+      "Soy una nutricionista con un enfoque centrado en la salud y el bienestar, con un enfoque en la nutrición sostenible y el equilibrio entre cuerpo y mente. Mi objetivo es guiarte hacia un estilo de vida más saludable y sostenible, no solo en términos nutricionales, sino también en términos de valores y prácticas. Todo mi trabajo es personalizado para adaptarse a tus necesidades y objetivos específicos.",
+  },
 ];
 
 export default function FaqSection() {
   return (
-    <section className="py-12 bg-gradient-to-b from-white to-pink-50/50">
+    <section
+      id="faq"
+      className="py-12 bg-gradient-to-b from-white to-pink-50/50"
+    >
       <div className=" px-4 mx-auto">
         <div className="text-center mb-8">
           <span className="text-lg text-[#DA5F6F]">

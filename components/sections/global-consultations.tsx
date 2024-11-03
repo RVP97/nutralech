@@ -108,13 +108,16 @@ export default function GlobalConsultations() {
   return (
     <section className="py-12 bg-gradient-to-b from-pink-50/50 to-white overflow-hidden">
       <div className="container px-4 mx-auto">
-        <h2 className="text-4xl font-serif font-medium tracking-tight sm:text-5xl text-center mb-8">
-          Nutrición Sin Fronteras
-        </h2>
-        <p className="text-xl text-center text-muted-foreground mb-12 max-w-2xl mx-auto">
-          Transformando vidas a través de la nutrición personalizada, sin
-          importar dónde te encuentres en el mundo.
-        </p>
+        <div className="text-center mb-10">
+          <span className="text-lg text-[#DA5F6F]">Alcance Global</span>
+          <h2 className="mt-4 text-4xl font-serif font-medium tracking-tight sm:text-5xl">
+            Nutrición Sin Fronteras
+          </h2>
+          <p className="mt-4 text-base text-muted-foreground max-w-2xl mx-auto">
+            Transformando vidas a través de la nutrición personalizada, sin
+            importar dónde te encuentres en el mundo.
+          </p>
+        </div>
 
         <div className="bg-white rounded-3xl shadow-lg overflow-hidden mb-12">
           <div className="p-6">
@@ -158,7 +161,7 @@ export default function GlobalConsultations() {
                 </AnimatePresence>
                 <div>
                   <h4 className="text-lg font-semibold mb-3">
-                    Explora Otras Localizaciones
+                    Explora Otras Ubicaciones
                   </h4>
                   <div className="grid grid-cols-2 gap-2 sm:grid-cols-none sm:flex sm:flex-wrap">
                     {locations.map((location, index) => (
@@ -181,7 +184,7 @@ export default function GlobalConsultations() {
               </div>
               <div>
                 <h3 className="text-2xl font-semibold mb-6">
-                  Nuestros Servicios Globales
+                  Mis Servicios Globales
                 </h3>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   {features.map((feature, index) => (
@@ -214,7 +217,7 @@ export default function GlobalConsultations() {
         <div className="text-center">
           <p className="text-lg text-muted-foreground mb-6 max-w-3xl mx-auto">
             Desde consultas en línea hasta planes de nutrición adaptados a tu
-            zona horaria y cultura local, estamos aquí para apoyarte en tu viaje
+            zona horaria y cultura local, estoy aquí para apoyarte en tu viaje
             hacia una vida más saludable, estés donde estés.
           </p>
           <Link href="#precios">

@@ -10,23 +10,23 @@ export default function ContactPageComponent() {
     {
       title: "Pacientes Existentes",
       description:
-        "¿Ya eres paciente? Nuestro equipo de soporte estará encantado de ayudarte con cualquier consulta.",
+        "¿Ya eres paciente? Estaré encantada de personalmente ayudarte con cualquier consulta.",
       icon: CreditCard,
-      link: "/contacto/existente",
+      link: "#contact-form",
     },
     {
       title: "Nuevos Pacientes",
       description:
-        "¿Interesado en comenzar tu viaje hacia una mejor salud? Habla con nuestro equipo de nuevos pacientes.",
+        "¿Interesado en comenzar tu viaje hacia una mejor salud? Habla conmigo para resolver cualquier duda.",
       icon: PiggyBank,
-      link: "/contacto/nuevo",
+      link: "#contact-form",
     },
     {
       title: "Consultas Profesionales",
       description:
-        "¿Eres un profesional de la salud interesado en colaborar? Conéctate con nuestro equipo de relaciones profesionales.",
+        "¿Eres un profesional de la salud interesado en colaborar? Conéctate conmigo para ver cómo podemos trabajar juntos.",
       icon: Building2,
-      link: "/contacto/profesional",
+      link: "#contact-form",
     },
   ];
 
@@ -41,22 +41,21 @@ export default function ContactPageComponent() {
                 Contacta con Marialy
               </h1>
               <p className="text-base md:text-xl text-white/90">
-                ¿Tienes alguna pregunta? Puedes encontrar la respuesta en
-                nuestro{" "}
+                ¿Tienes alguna pregunta? Puedes encontrar la respuesta en mis{" "}
                 <Link
-                  href="/ayuda"
+                  href="/#faq"
                   className="underline underline-offset-4 hover:text-white"
                 >
-                  centro de ayuda
+                  preguntas frecuentes
                 </Link>
                 , o consulta todas las formas de contactarnos a continuación.
               </p>
               <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm rounded-full px-4 py-2">
                 <div className="flex -space-x-2">
                   {[
-                    "/images/marialy.webp",
-                    "/images/marialy.webp",
-                    "/images/marialy.webp",
+                    "/images/testimonial-profile/rodrigo.webp",
+                    "/images/testimonial-profile/emma.webp",
+                    "/images/testimonial-profile/helena.webp",
                   ].map((src, i) => (
                     <div
                       key={i}
@@ -73,7 +72,7 @@ export default function ContactPageComponent() {
                   ))}
                 </div>
                 <p className="text-sm font-medium">
-                  +2,000 pacientes satisfechos nos avalan
+                  +500 pacientes felices me avalan
                 </p>
               </div>
               <div className="inline-block bg-white/5 border border-white/10 rounded-xl backdrop-blur-sm">
@@ -174,14 +173,14 @@ export default function ContactPageComponent() {
               <HelpCircle className="w-8 h-8 text-[#DA5F6F]" />
             </div>
             <div className="space-y-2 text-center sm:text-left">
-              <h2 className="text-xl font-medium">Centro de Ayuda</h2>
+              <h2 className="text-xl font-medium">Preguntas Frecuentes</h2>
               <p className="text-muted-foreground">
-                Encuentra respuestas rápidas a preguntas comunes en nuestro
-                centro de ayuda.
+                Encuentra respuestas rápidas a preguntas comunes en mis
+                preguntas frecuentes.
               </p>
             </div>
-            <Link href="/ayuda" className="sm:ml-auto mt-4 sm:mt-0">
-              <Button variant="outline">Visitar Centro de Ayuda</Button>
+            <Link href="/#faq" className="sm:ml-auto mt-4 sm:mt-0">
+              <Button variant="outline">Visitar Preguntas Frecuentes</Button>
             </Link>
           </CardContent>
         </Card>
