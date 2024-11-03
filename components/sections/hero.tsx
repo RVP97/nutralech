@@ -95,6 +95,9 @@ export default function Hero() {
         </AnimatedList>
       </div> */}
 
+      {/* Add this new div for the bottom fade effect */}
+      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-white to-transparent" />
+
       <div className="container relative px-4 mx-auto">
         <div className="grid min-h-screen items-center gap-12 lg:grid-cols-2">
           <div className="space-y-10 pt-20 lg:pt-0 animate-fade-in">
@@ -129,7 +132,7 @@ export default function Hero() {
 
             <div className="flex flex-wrap gap-4">
               <Link
-                href="#consulta"
+                href="#precios"
                 className="inline-flex h-14 items-center justify-center gap-2 rounded-full bg-[#DA5F6F] px-8 font-medium text-white transition-colors hover:bg-[#DA5F6F]/90"
               >
                 <CalendarCheck className="h-5 w-5" />
@@ -137,7 +140,7 @@ export default function Hero() {
               </Link>
 
               <Link
-                href="#conoceme"
+                href="/acerca-de-mi"
                 className="inline-flex h-14 items-center justify-center gap-2 rounded-full border border-[#DA5F6F]/20 bg-white px-8 font-medium text-[#DA5F6F] transition-colors hover:bg-[#DA5F6F]/5"
               >
                 Conóceme

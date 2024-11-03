@@ -257,9 +257,12 @@ export default function PricingSection() {
         </DialogContent>
       </Dialog>
 
-      <section className="py-24 bg-gradient-to-b from-white to-pink-50/50">
+      <section
+        id="precios"
+        className="py-24 md:py-8 bg-gradient-to-b from-white to-pink-50/50"
+      >
         <div className="container px-4 mx-auto">
-          <div className="text-center mb-16">
+          <div className="text-center mb-10">
             <span className="text-lg text-[#DA5F6F]">Precios</span>
             <h2 className="mt-4 text-4xl font-serif font-medium tracking-tight sm:text-5xl">
               Planes Diseñados para Ti
@@ -471,11 +474,12 @@ export default function PricingSection() {
                 Paquetes
               </span>
             </div>
-            <div
+            <button
+              onClick={() => setShowPackages(true)}
               className={`flex items-center ${
                 showPackages
                   ? "text-[#DA5F6F] bg-[#DA5F6F]/10"
-                  : "text-zinc-700 bg-zinc-100"
+                  : "text-zinc-700 bg-zinc-100 hover:bg-zinc-200"
               } px-4 py-2 rounded-full transition-colors duration-300`}
             >
               <Percent className="w-5 h-5 mr-2" />
@@ -484,7 +488,7 @@ export default function PricingSection() {
                   ? "Ahorras hasta un 15% con los paquetes"
                   : "Cambia a paquetes y ahorra hasta un 15%"}
               </span>
-            </div>
+            </button>
           </div>
 
           <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">

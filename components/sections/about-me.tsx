@@ -15,6 +15,7 @@ import {
   Youtube,
 } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function AboutMeComponent() {
   const expertise = [
@@ -38,8 +39,8 @@ export default function AboutMeComponent() {
               <Image
                 src="/images/marialy.webp"
                 alt="Marialy, Nutricionista"
-                layout="fill"
-                objectFit="cover"
+                fill
+                className="object-cover"
               />
               {/* Badge Overlays */}
               <div className="absolute top-4 left-4 hidden md:flex bg-white rounded-full py-2 px-4 shadow-lg items-center gap-2">
@@ -177,10 +178,14 @@ export default function AboutMeComponent() {
               </div>
             </div>
 
-            <Button className="bg-[#DA5F6F] hover:bg-[#DA5F6F]/90 text-white">
-              <Calendar className="w-4 h-4 mr-2" />
-              Agenda una Consulta
-            </Button>
+            <div>
+              <Link href="#precios">
+                <Button className="bg-[#DA5F6F] hover:bg-[#DA5F6F]/90 text-white">
+                  <Calendar className="w-4 h-4 mr-2" />
+                  Agenda una Consulta
+                </Button>
+              </Link>
+            </div>
           </div>
         </div>
       </div>

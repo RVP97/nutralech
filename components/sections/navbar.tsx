@@ -1,125 +1,171 @@
 "use client";
 
-import { Bell, Home, Menu, Phone, Search, User } from "lucide-react";
+import {
+  Bell,
+  ChevronDown,
+  ChevronUp,
+  Home,
+  Menu,
+  Phone,
+  Search,
+  User,
+} from "lucide-react";
+import Link from "next/link";
 import * as React from "react";
 
 import { Button } from "@/components/ui/button";
-import {
-  NavigationMenu,
-  NavigationMenuContent,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList,
-  NavigationMenuTrigger,
-} from "@/components/ui/navigation-menu";
+import { Card, CardContent } from "@/components/ui/card";
 
-export default function ExpandableNavbarMobileSubmenu() {
-  const [activeItem, setActiveItem] = React.useState("home");
+export default function Component() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+  const [expandedItem, setExpandedItem] = React.useState<string | null>(null);
 
   const NavItems = React.useCallback(
     ({ isMobile = false }: { isMobile?: boolean }) => (
       <>
         {[
-          { id: "home", icon: Home, label: "Home" },
-          { id: "search", icon: Search, label: "Search" },
+          { id: "inicio", icon: Home, label: "Inicio", href: "/" },
+          { id: "planes", icon: Search, label: "Planes", href: "/planes" },
           {
-            id: "notifications",
+            id: "blog",
             icon: Bell,
-            label: "Notifications",
+            label: "Blog",
+            href: "/blog",
             expandable: true,
             subItems: [
-              { id: "all", label: "All Notifications" },
-              { id: "mentions", label: "Mentions" },
-              { id: "unread", label: "Unread" },
+              {
+                id: "nutricion",
+                label: "Nutrición",
+                href: "/blog/nutricion",
+              },
+              {
+                id: "recetas",
+                label: "Recetas",
+                href: "/blog/recetas",
+              },
+              {
+                id: "bienestar",
+                label: "Bienestar",
+                href: "/blog/bienestar",
+              },
             ],
           },
-          { id: "profile", icon: User, label: "Profile" },
-        ].map(({ id, icon: Icon, label, expandable, subItems }) => (
+          {
+            id: "collabs",
+            icon: User,
+            label: "Collabs",
+            href: "/colaboraciones",
+          },
+          { id: "contacto", icon: Phone, label: "Contacto", href: "/contacto" },
+        ].map(({ id, icon: Icon, label, href, expandable, subItems }) => (
           <div key={id} className="relative">
-            {isMobile ? (
+            {isMobile && expandable ? (
               <div>
-                <Button
-                  variant="ghost"
-                  size="default"
-                  className={`w-full justify-start rounded-full transition-all duration-300 ${
-                    activeItem === id
-                      ? "bg-primary text-primary-foreground"
-                      : "hover:bg-primary/20 hover:text-primary"
-                  }`}
-                  onClick={() => setActiveItem(id)}
-                >
-                  <Icon className="h-5 w-5 mr-2" />
-                  <span>{label}</span>
-                </Button>
+                <Link href={href} className="w-full">
+                  <Button
+                    variant="ghost"
+                    size="default"
+                    className="w-full justify-start rounded-full transition-all duration-300 hover:bg-primary/20 hover:text-primary"
+                    onClick={(e) => {
+                      if (expandable) {
+                        e.preventDefault();
+                        setExpandedItem(expandedItem === id ? null : id);
+                      }
+                    }}
+                  >
+                    <Icon className="h-5 w-5 mr-2" />
+                    <span>{label}</span>
+                    {expandedItem === id ? (
+                      <ChevronUp className="ml-auto h-4 w-4" />
+                    ) : (
+                      <ChevronDown className="ml-auto h-4 w-4" />
+                    )}
+                  </Button>
+                </Link>
+                {expandedItem === id && (
+                  <div className="pl-7 mt-2 space-y-2">
+                    {subItems?.map((subItem) => (
+                      <Link
+                        key={subItem.id}
+                        href={subItem.href}
+                        className="w-full"
+                      >
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          className="w-full justify-start"
+                        >
+                          {subItem.label}
+                        </Button>
+                      </Link>
+                    ))}
+                  </div>
+                )}
               </div>
             ) : (
-              <NavigationMenu>
-                <NavigationMenuList>
-                  <NavigationMenuItem>
-                    {expandable ? (
-                      <>
-                        <NavigationMenuTrigger
-                          className={`rounded-full transition-all duration-300 ${
-                            activeItem === id
-                              ? "bg-primary text-primary-foreground"
-                              : "hover:bg-primary/20 hover:text-primary"
-                          }`}
-                        >
-                          <Icon className="h-5 w-5 md:mr-2" />
-                          <span className="hidden md:inline">{label}</span>
-                        </NavigationMenuTrigger>
-                        <NavigationMenuContent>
-                          <div className="p-4 w-64">
-                            <h3 className="font-semibold mb-2">{label}</h3>
-                            <ul className="space-y-2">
-                              {subItems?.map((subItem) => (
-                                <li key={subItem.id}>
-                                  <NavigationMenuLink asChild>
-                                    <Button
-                                      variant="ghost"
-                                      className="w-full justify-start"
-                                      onClick={() => setActiveItem(subItem.id)}
-                                    >
-                                      {subItem.label}
-                                    </Button>
-                                  </NavigationMenuLink>
-                                </li>
-                              ))}
-                            </ul>
-                          </div>
-                        </NavigationMenuContent>
-                      </>
-                    ) : (
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        className={`rounded-full transition-all duration-300 ${
-                          activeItem === id
-                            ? "bg-primary text-primary-foreground"
-                            : "hover:bg-primary/20 hover:text-primary"
-                        }`}
-                        onClick={() => setActiveItem(id)}
-                      >
-                        <Icon className="h-5 w-5 md:mr-2" />
-                        <span className="hidden md:inline">{label}</span>
-                      </Button>
+              <div
+                onMouseEnter={() =>
+                  expandable && !isMobile && setExpandedItem(id)
+                }
+                onMouseLeave={() =>
+                  expandable && !isMobile && setExpandedItem(null)
+                }
+              >
+                <Link href={href} className="w-full">
+                  <Button
+                    variant="ghost"
+                    size={isMobile ? "default" : "sm"}
+                    className={`rounded-full transition-all duration-300 hover:bg-[#DA5F6F]/20 hover:text-[#DA5F6F] ${
+                      isMobile ? "w-full justify-start" : ""
+                    }`}
+                    onClick={(e) => {
+                      if (expandable && !isMobile) {
+                        e.preventDefault();
+                      }
+                    }}
+                  >
+                    <Icon
+                      className={`h-5 w-5 ${isMobile ? "mr-2" : "md:mr-2"}`}
+                    />
+                    <span className={isMobile ? "inline" : "hidden md:inline"}>
+                      {label}
+                    </span>
+                    {expandable && !isMobile && (
+                      <ChevronDown className="ml-1 h-4 w-4" />
                     )}
-                  </NavigationMenuItem>
-                </NavigationMenuList>
-              </NavigationMenu>
+                  </Button>
+                </Link>
+                {expandable && !isMobile && expandedItem === id && (
+                  <Card className="absolute top-full left-0 mt-2 w-64 z-50">
+                    <CardContent className="p-4">
+                      <h3 className="font-semibold mb-2">{label}</h3>
+                      <ul className="space-y-2">
+                        {subItems?.map((subItem) => (
+                          <Link
+                            key={subItem.id}
+                            href={subItem.href}
+                            className="w-full"
+                          >
+                            <Button
+                              variant="ghost"
+                              className="w-full justify-start"
+                            >
+                              {subItem.label}
+                            </Button>
+                          </Link>
+                        ))}
+                      </ul>
+                    </CardContent>
+                  </Card>
+                )}
+              </div>
             )}
           </div>
         ))}
       </>
     ),
-    [activeItem]
+    [expandedItem]
   );
-
-  const handlePhoneClick = () => {
-    // Replace with your actual phone action
-    console.log("Phone button clicked");
-  };
 
   return (
     <div className="fixed top-4 left-0 right-0 z-50 flex justify-center px-4">
@@ -127,21 +173,82 @@ export default function ExpandableNavbarMobileSubmenu() {
         <div className="mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             <div className="flex items-center flex-1">
-              <span className="text-2xl font-bold text-primary mr-4">Logo</span>
+              <Link href="/" className="flex items-center">
+                <svg viewBox="0 0 49 34" className="w-8 h-8 mr-2">
+                  <path
+                    d="M 4.071 11.084 C 4.071 11.084 2.168 26.266 18.051 26.266 C 18.051 26.266 22.01 11.084 4.071 11.084 Z"
+                    fill="#FF756D"
+                  />
+                  <path
+                    d="M 44.429 4.722 C 22.823 4.722 20.824 18.311 21.221 25.288 C 24.871 14.76 34.822 12.436 34.822 12.436 C 25.322 18.179 23.374 28.546 23.247 29.278 C 47.374 28.347 44.429 4.722 44.429 4.722 Z"
+                    fill="#FF756D"
+                  />
+                </svg>
+                <span
+                  className="text-2xl font-bold"
+                  style={{ color: "#DA5F6F" }}
+                >
+                  Nutralech
+                </span>
+              </Link>
               <div className="hidden md:flex space-x-1 justify-center flex-1">
                 <NavItems />
               </div>
             </div>
             <div className="flex items-center space-x-2">
-              <Button
-                variant="ghost"
-                size="icon"
-                className="rounded-full"
-                onClick={handlePhoneClick}
+              <Link
+                href="https://wa.me/message/BLYZCVYW2MOAJ1"
+                target="_blank"
+                rel="noopener noreferrer"
               >
-                <Phone className="h-5 w-5 text-black" />
-                <span className="sr-only">Call</span>
-              </Button>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 175.216 175.552"
+                  className="h-8 w-8 cursor-pointer hover:opacity-80 transition-opacity duration-300"
+                >
+                  <defs>
+                    <linearGradient
+                      id="b"
+                      x1="85.915"
+                      x2="86.535"
+                      y1="32.567"
+                      y2="137.092"
+                      gradientUnits="userSpaceOnUse"
+                    >
+                      <stop offset="0" stopColor="#57d163" />
+                      <stop offset="1" stopColor="#23b33a" />
+                    </linearGradient>
+                    <filter
+                      id="a"
+                      width="1.115"
+                      height="1.114"
+                      x="-.057"
+                      y="-.057"
+                      colorInterpolationFilters="sRGB"
+                    >
+                      <feGaussianBlur stdDeviation="3.531" />
+                    </filter>
+                  </defs>
+                  <path
+                    fill="#b3b3b3"
+                    d="m54.532 138.45 2.235 1.324c9.387 5.571 20.15 8.518 31.126 8.523h.023c33.707 0 61.139-27.426 61.153-61.135.006-16.335-6.349-31.696-17.895-43.251A60.75 60.75 0 0 0 87.94 25.983c-33.733 0-61.166 27.423-61.178 61.13a60.98 60.98 0 0 0 9.349 32.535l1.455 2.312-6.179 22.558zm-40.811 23.544L24.16 123.88c-6.438-11.154-9.825-23.808-9.821-36.772.017-40.556 33.021-73.55 73.578-73.55 19.681.01 38.154 7.669 52.047 21.572s21.537 32.383 21.53 52.037c-.018 40.553-33.027 73.553-73.578 73.553h-.032c-12.313-.005-24.412-3.094-35.159-8.954zm0 0"
+                    filter="url(#a)"
+                  />
+                  <path
+                    fill="#fff"
+                    d="m12.966 161.238 10.439-38.114a73.42 73.42 0 0 1-9.821-36.772c.017-40.556 33.021-73.55 73.578-73.55 19.681.01 38.154 7.669 52.047 21.572s21.537 32.383 21.53 52.037c-.018 40.553-33.027 73.553-73.578 73.553h-.032c-12.313-.005-24.412-3.094-35.159-8.954z"
+                  />
+                  <path
+                    fill="url(#b)"
+                    d="M87.184 25.227c-33.733 0-61.166 27.423-61.178 61.13a60.98 60.98 0 0 0 9.349 32.535l1.455 2.313-6.179 22.558 23.146-6.069 2.235 1.324c9.387 5.571 20.15 8.517 31.126 8.523h.023c33.707 0 61.14-27.426 61.153-61.135a60.75 60.75 0 0 0-17.895-43.251 60.75 60.75 0 0 0-43.235-17.928z"
+                  />
+                  <path
+                    fill="#fff"
+                    fillRule="evenodd"
+                    d="M68.772 55.603c-1.378-3.061-2.828-3.123-4.137-3.176l-3.524-.043c-1.226 0-3.218.46-4.902 2.3s-6.435 6.287-6.435 15.332 6.588 17.785 7.506 19.013 12.718 20.381 31.405 27.75c15.529 6.124 18.689 4.906 22.061 4.6s10.877-4.447 12.408-8.74 1.532-7.971 1.073-8.74-1.685-1.226-3.525-2.146-10.877-5.367-12.562-5.981-2.91-.919-4.137.921-4.746 5.979-5.819 7.206-2.144 1.381-3.984.462-7.76-2.861-14.784-9.124c-5.465-4.873-9.154-10.891-10.228-12.73s-.114-2.835.808-3.751c.825-.824 1.838-2.147 2.759-3.22s1.224-1.84 1.836-3.065.307-2.301-.153-3.22-4.032-10.011-5.666-13.647"
+                  />
+                </svg>
+              </Link>
               <Button
                 variant="ghost"
                 size="icon"

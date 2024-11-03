@@ -44,7 +44,7 @@ const faqItems = [
 
 export default function FaqSection() {
   return (
-    <section className="py-24 bg-gradient-to-b from-white to-pink-50/50">
+    <section className="py-12 bg-gradient-to-b from-white to-pink-50/50">
       <div className=" px-4 mx-auto">
         <div className="text-center mb-8">
           <span className="text-lg text-[#DA5F6F]">

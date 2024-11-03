@@ -51,7 +51,7 @@ export default function PersonalizedAttention() {
   ];
 
   return (
-    <section className="py-24 bg-gradient-to-b from-pink-50/50 to-white">
+    <section className="py-12 bg-gradient-to-b from-white to-white">
       <div className="container px-4 mx-auto">
         <h2 className="mt-4 text-4xl font-serif font-medium tracking-tight sm:text-5xl text-center mb-16">
           Atención Personalizada para Ti

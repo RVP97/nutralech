@@ -67,13 +67,13 @@ const brandLogos = [
 
 export default function CollaboratePage() {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-white to-pink-50/50">
+    <div className="mt-6 bg-gradient-to-b from-white to-pink-50/50">
       <div className="pointer-events-none absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMSIgY3k9IjEiIHI9IjEiIGZpbGw9InJnYmEoMjE4LCA5NSwgMTExLCAwLjA3KSIvPjwvc3ZnPg==')] opacity-40" />
       <div className="absolute top-20 right-0 w-96 h-96 rounded-full bg-[#DA5F6F]/20 blur-[128px]" />
       <div className="absolute bottom-0 right-20 w-96 h-96 rounded-full bg-yellow-200/30 blur-[128px]" />
 
       <div className=" relative mx-auto py-16 max-w-[95%]">
-        <section className="text-center mb-24">
+        <section className="text-center mb-12">
           <h1 className="font-serif text-5xl font-medium tracking-tight sm:text-6xl md:text-7xl text-gray-900 mb-6">
             Colabora con <span className="text-[#DA5F6F]">Marialy</span>
           </h1>
@@ -81,13 +81,6 @@ export default function CollaboratePage() {
             Creemos contenido impactante juntos e inspiremos a millones hacia un
             estilo de vida más saludable.
           </p>
-          {/* <Button
-            size="lg"
-            className="bg-[#DA5F6F] hover:bg-[#C54E5E] text-white text-lg px-8 py-6 rounded-full transition-all duration-300 shadow-lg hover:shadow-xl"
-          >
-            Iniciar Colaboración
-            <ArrowRight className="ml-2 h-5 w-5" />
-          </Button> */}
         </section>
 
         <section className="md:mb-24 mb-12">

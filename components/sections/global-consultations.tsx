@@ -2,6 +2,7 @@
 
 import { AnimatePresence, motion } from "framer-motion";
 import { Clock, Globe, MessageCircle, Moon, Sun, Video } from "lucide-react";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 
 const locations = [
@@ -105,7 +106,7 @@ export default function GlobalConsultations() {
   };
 
   return (
-    <section className="py-24 bg-gradient-to-b from-pink-50/50 to-white overflow-hidden">
+    <section className="py-12 bg-gradient-to-b from-pink-50/50 to-white overflow-hidden">
       <div className="container px-4 mx-auto">
         <h2 className="text-4xl font-serif font-medium tracking-tight sm:text-5xl text-center mb-8">
           Nutrición Sin Fronteras
@@ -216,14 +217,16 @@ export default function GlobalConsultations() {
             zona horaria y cultura local, estamos aquí para apoyarte en tu viaje
             hacia una vida más saludable, estés donde estés.
           </p>
-          <motion.button
-            className="bg-[#DA5F6F] text-white px-8 py-4 rounded-full font-semibold text-lg shadow-lg"
-            whileHover={{ scale: 1.05, backgroundColor: "#C54E5E" }}
-            whileTap={{ scale: 0.95 }}
-            transition={{ type: "spring", stiffness: 400, damping: 10 }}
-          >
-            Agenda tu Consulta Internacional
-          </motion.button>
+          <Link href="#precios">
+            <motion.button
+              className="bg-[#DA5F6F] text-white px-8 py-4 rounded-full font-semibold text-lg shadow-lg"
+              whileHover={{ scale: 1.05, backgroundColor: "#C54E5E" }}
+              whileTap={{ scale: 0.95 }}
+              transition={{ type: "spring", stiffness: 400, damping: 10 }}
+            >
+              Agenda tu Consulta Internacional
+            </motion.button>
+          </Link>
         </div>
       </div>
     </section>

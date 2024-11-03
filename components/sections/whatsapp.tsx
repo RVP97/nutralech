@@ -23,6 +23,18 @@ import {
 import Link from "next/link";
 import React, { useEffect, useRef, useState } from "react";
 
+interface Message {
+  id: number;
+  sender: string;
+  message: string;
+  time: string;
+  read: boolean;
+}
+
+interface Conversations {
+  [key: number]: Message[];
+}
+
 // Mock conversations for each patient
 const initialConversations = {
   1: [
@@ -189,7 +201,7 @@ const initialConversations = {
 };
 
 // Update the patients array to be a function that gets the last message
-const getPatients = (conversations) => [
+const getPatients = (conversations: Conversations) => [
   {
     id: 1,
     name: "Juan Pérez",
@@ -226,11 +238,11 @@ const getPatients = (conversations) => [
 
 function Iphone15ProWhatsappLightSmaller() {
   const [activeView, setActiveView] = useState("main");
-  const [activeConversation, setActiveConversation] = useState(null);
+  const [activeConversation, setActiveConversation] = useState<number>(1);
   const [conversations, setConversations] = useState(initialConversations);
   const [newMessage, setNewMessage] = useState("");
   const [activeTab, setActiveTab] = useState("chats");
-  const scrollAreaRef = useRef(null);
+  const scrollAreaRef = useRef<HTMLDivElement | null>(null);
   const messagesEndRef = useRef(null);
   const [currentTime, setCurrentTime] = useState(() => {
     return new Date().toLocaleTimeString("en-US", {
@@ -268,9 +280,9 @@ function Iphone15ProWhatsappLightSmaller() {
 
   const scrollToBottom = () => {
     if (scrollAreaRef.current) {
-      const scrollContainer = scrollAreaRef.current.querySelector(
-        "[data-radix-scroll-area-viewport]"
-      );
+      const scrollContainer = (
+        scrollAreaRef.current as HTMLDivElement
+      ).querySelector("[data-radix-scroll-area-viewport]");
       if (scrollContainer) {
         scrollContainer.scrollTop = scrollContainer.scrollHeight;
       }
@@ -599,7 +611,15 @@ export default function PersonalizedCommunicationSection() {
   ];
 
   return (
-    <section className="py-24 bg-gradient-to-b from-white to-pink-50/50">
+    <section className="relative py-12 bg-gradient-to-b from-white to-pink-50/50">
+      {/* Add decorative elements from hero.tsx */}
+      <div className="pointer-events-none absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMSIgY3k9IjEiIHI9IjEiIGZpbGw9InJnYmEoMjE4LCA5NSwgMTExLCAwLjA3KSIvPjwvc3ZnPg==')] opacity-40" />
+      <div className="absolute top-20 right-0 w-96 h-96 rounded-full bg-[#DA5F6F]/20 blur-[128px] animate-pulse" />
+      <div className="absolute bottom-0 right-20 w-96 h-96 rounded-full bg-yellow-200/30 blur-[128px] animate-pulse [animation-delay:1000ms]" />
+
+      {/* Add bottom fade effect */}
+      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-white to-transparent" />
+
       <div className="container px-4 mx-auto">
         <h2 className="text-4xl font-serif font-medium tracking-tight text-center sm:text-5xl md:text-6xl mb-16">
           Comunicación Personalizada

@@ -90,7 +90,7 @@ export default function WhatIOfferComponent() {
               size="lg"
               className="rounded-full bg-[#DA5F6F] hover:bg-[#DA5F6F]/90 text-white px-8"
             >
-              <Link href="#agendar">Agendar Consulta</Link>
+              <Link href="#precios">Agendar Consulta</Link>
             </Button>
           </div>
         </div>
