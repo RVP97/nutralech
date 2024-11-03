@@ -1,3 +1,4 @@
+import Footer from "@/components/sections/footer";
 import Navbar from "@/components/sections/navbar";
 import { GoogleTagManager } from "@next/third-parties/google";
 import type { Metadata } from "next";
@@ -181,6 +182,7 @@ export default function RootLayout({
       >
         <Navbar />
         {children}
+        <Footer />
       </body>
     </html>
   );
