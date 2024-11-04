@@ -12,17 +12,17 @@ export async function generateMetadata(): Promise<Metadata> {
   return {
     metadataBase: new URL("https://www.nutralech.com"),
     title: {
-      default: "Nutralech: Marialy Alonso",
+      default: "Nutrición y Bienestar con Marialy Alonso: Nutralech",
       template: "%s | Nutralech",
     },
     description:
-      "Descubre la excelencia culinaria y eventos excepcionales con Grupo Cassatt en la Ciudad de México.",
+      "Mejora tu salud con Nutralech y Marialy Alonso. Asesoría nutricional personalizada, recetas y consejos para un bienestar equilibrado y sostenible.",
     keywords:
-      "restaurantes, eventos, gastronomía, Ciudad de México, experiencias culinarias",
-    applicationName: "Grupo Cassatt",
-    authors: [{ name: "Grupo Cassatt" }],
-    creator: "Grupo Cassatt",
-    publisher: "Grupo Cassatt",
+      "salud, bienestar, nutrición, consejos, recetas, asesoría, personalizada",
+    applicationName: "Nutralech",
+    authors: [{ name: "Nutralech" }],
+    creator: "Nutralech",
+    publisher: "Nutralech",
     formatDetection: {
       email: false,
       address: false,
@@ -31,28 +31,28 @@ export async function generateMetadata(): Promise<Metadata> {
     openGraph: {
       type: "website",
       locale: "es_MX",
-      url: "https://www.cassatt.mx/",
-      siteName: "Grupo Cassatt",
-      title: "Grupo Cassatt - Restaurantes y Eventos en la Ciudad de México",
+      url: "https://www.nutralech.com/",
+      siteName: "Nutralech",
+      title: "Nutrición y Bienestar con Marialy Alonso: Nutralech",
       description:
-        "Experimenta la mejor gastronomía y eventos inolvidables con Grupo Cassatt en la Ciudad de México.",
+        "Mejora tu salud con Nutralech y Marialy Alonso. Asesoría nutricional personalizada, recetas y consejos para un bienestar equilibrado y sostenible.",
       images: [
         {
-          url: "/assets/images/platillos/pescado.webp",
+          url: "/images/marialy.webp",
           width: 1200,
           height: 630,
-          alt: "Platillo de pescado de Grupo Cassatt",
+          alt: "Fotografia de Marialy Alonso, también conocida como Nutralech",
         },
       ],
     },
     twitter: {
       card: "summary_large_image",
       site: "@grupocassatt",
-      creator: "@grupocassatt",
-      title: "Grupo Cassatt - Restaurantes y Eventos en la Ciudad de México",
+      creator: "@nutralech",
+      title: "Nutrición y Bienestar con Marialy Alonso: Nutralech",
       description:
-        "Experimenta la mejor gastronomía y eventos inolvidables con Grupo Cassatt en la Ciudad de México.",
-      images: "/assets/images/platillos/pescado.webp",
+        "Mejora tu salud con Nutralech y Marialy Alonso. Asesoría nutricional personalizada, recetas y consejos para un bienestar equilibrado y sostenible.",
+      images: "/images/marialy.webp",
     },
     icons: {
       icon: [
@@ -166,7 +166,7 @@ export async function generateMetadata(): Promise<Metadata> {
         "max-snippet": -1,
       },
     },
-    category: "Food & Drink",
+    category: "Health & Fitness",
   };
 }
 export default function RootLayout({
