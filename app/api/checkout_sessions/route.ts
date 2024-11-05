@@ -32,6 +32,7 @@ export async function POST(request: Request) {
       },
       allow_promotion_codes: true,
       mode: "payment",
+      submit_type: "book",
       return_url: `${request.headers.get(
         "origin"
       )}/confirmacion?session_id={CHECKOUT_SESSION_ID}`,
