@@ -34,7 +34,7 @@ export async function POST(request: Request) {
       mode: "payment",
       return_url: `${request.headers.get(
         "origin"
-      )}/return?session_id={CHECKOUT_SESSION_ID}`,
+      )}/confirmacion?session_id={CHECKOUT_SESSION_ID}`,
     });
 
     return NextResponse.json({ clientSecret: session.client_secret });

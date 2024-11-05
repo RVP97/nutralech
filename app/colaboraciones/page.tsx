@@ -5,12 +5,12 @@ export async function generateMetadata() {
   return generatePageMetadata({
     title: "Colaboraciones con Marialy Alonso",
     description:
-      "¿Interesado en colaborar con Nutralech? Trabajos realizados en eventos y con diferentes marcas para mejorar tu salud y bienestar.",
+      "¿Interesado en colaborar con Nutralech? Impulsa tu marca y alcanza un público objetivo con mi audiencia de más de 780k seguidores en Instagram y TikTok.",
     keywords: [
       "salud, bienestar, colaboraciones, nutrición, consejos, recetas, asesoría, personalizada, nutralech, marialy alonso, nutriologa",
     ],
     openGraph: {
-      url: "https://www.nutralech.com/contacto",
+      url: "https://www.nutralech.com/colaboraciones",
     },
   });
 }

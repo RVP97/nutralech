@@ -181,7 +181,7 @@ export default function PricingSection() {
         "Ideal para una transformación profunda para quien quiere un buen cambio.",
       features: [
         { name: "1 Consulta Inicial", cross: false },
-        { name: "2 Consulta de Seguimiento", cross: false },
+        { name: "2 Consultas de Seguimiento", cross: false },
         { name: "Video llamada de 1 hora con Marialy", cross: false },
         { name: "Evaluación nutricional completa", cross: false },
         { name: "Plan alimenticio personalizado", cross: false },
@@ -204,7 +204,7 @@ export default function PricingSection() {
         "Ideal para una transformación profunda para quien quiere un buen cambio.",
       features: [
         { name: "1 Consulta Inicial", cross: false },
-        { name: "2 Consulta de Seguimiento", cross: false },
+        { name: "2 Consultas de Seguimiento", cross: false },
         { name: "Video llamada de 1 hora con Marialy", cross: false },
         { name: "Evaluación nutricional completa", cross: false },
         { name: "Plan alimenticio personalizado", cross: false },

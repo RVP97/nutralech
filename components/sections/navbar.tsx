@@ -18,7 +18,6 @@ import { Card, CardContent } from "@/components/ui/card";
 
 export default function Component() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
-  const [expandedItem, setExpandedItem] = React.useState<string | null>(null);
 
   const NavItems = React.useCallback(
     ({ isMobile = false }: { isMobile?: boolean }) => (
@@ -27,144 +26,37 @@ export default function Component() {
           { id: "inicio", icon: Home, label: "Inicio", href: "/" },
           { id: "planes", icon: Search, label: "Planes", href: "/#precios" },
           {
-            id: "blog",
-            icon: Bell,
-            label: "Blog",
-            href: "/blog",
-            expandable: true,
-            subItems: [
-              {
-                id: "nutricion",
-                label: "Nutrición",
-                href: "/blog/nutricion",
-              },
-              {
-                id: "recetas",
-                label: "Recetas",
-                href: "/blog/recetas",
-              },
-              {
-                id: "bienestar",
-                label: "Bienestar",
-                href: "/blog/bienestar",
-              },
-            ],
-          },
-          {
             id: "collabs",
             icon: User,
             label: "Collabs",
             href: "/colaboraciones",
           },
           { id: "contacto", icon: Phone, label: "Contacto", href: "/contacto" },
-        ].map(({ id, icon: Icon, label, href, expandable, subItems }) => (
+        ].map(({ id, icon: Icon, label, href }) => (
           <div key={id} className="relative">
-            {isMobile && expandable ? (
-              <div>
-                <Link href={href} className="w-full">
-                  <Button
-                    variant="ghost"
-                    size="default"
-                    className="w-full justify-start rounded-full transition-all duration-300 hover:bg-primary/20 hover:text-primary"
-                    onClick={(e) => {
-                      if (expandable) {
-                        e.preventDefault();
-                        setExpandedItem(expandedItem === id ? null : id);
-                      }
-                    }}
-                  >
-                    <Icon className="h-5 w-5 mr-2" />
-                    <span>{label}</span>
-                    {expandedItem === id ? (
-                      <ChevronUp className="ml-auto h-4 w-4" />
-                    ) : (
-                      <ChevronDown className="ml-auto h-4 w-4" />
-                    )}
-                  </Button>
-                </Link>
-                {expandedItem === id && (
-                  <div className="pl-7 mt-2 space-y-2">
-                    {subItems?.map((subItem) => (
-                      <Link
-                        key={subItem.id}
-                        href={subItem.href}
-                        className="w-full"
-                      >
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          className="w-full justify-start"
-                        >
-                          {subItem.label}
-                        </Button>
-                      </Link>
-                    ))}
-                  </div>
-                )}
-              </div>
-            ) : (
-              <div
-                onMouseEnter={() =>
-                  expandable && !isMobile && setExpandedItem(id)
-                }
-                onMouseLeave={() =>
-                  expandable && !isMobile && setExpandedItem(null)
-                }
+            <Link
+              href={href}
+              className="w-full"
+              onClick={() => isMobile && setIsMenuOpen(false)}
+            >
+              <Button
+                variant="ghost"
+                size={isMobile ? "default" : "sm"}
+                className={`rounded-full transition-all duration-300 hover:bg-[#DA5F6F]/20 hover:text-[#DA5F6F] ${
+                  isMobile ? "w-full justify-start" : ""
+                }`}
               >
-                <Link href={href} className="w-full">
-                  <Button
-                    variant="ghost"
-                    size={isMobile ? "default" : "sm"}
-                    className={`rounded-full transition-all duration-300 hover:bg-[#DA5F6F]/20 hover:text-[#DA5F6F] ${
-                      isMobile ? "w-full justify-start" : ""
-                    }`}
-                    onClick={(e) => {
-                      if (expandable && !isMobile) {
-                        e.preventDefault();
-                      }
-                    }}
-                  >
-                    <Icon
-                      className={`h-5 w-5 ${isMobile ? "mr-2" : "md:mr-2"}`}
-                    />
-                    <span className={isMobile ? "inline" : "hidden md:inline"}>
-                      {label}
-                    </span>
-                    {expandable && !isMobile && (
-                      <ChevronDown className="ml-1 h-4 w-4" />
-                    )}
-                  </Button>
-                </Link>
-                {expandable && !isMobile && expandedItem === id && (
-                  <Card className="absolute top-full left-0 mt-2 w-64 z-50">
-                    <CardContent className="p-4">
-                      <h3 className="font-semibold mb-2">{label}</h3>
-                      <ul className="space-y-2">
-                        {subItems?.map((subItem) => (
-                          <Link
-                            key={subItem.id}
-                            href={subItem.href}
-                            className="w-full"
-                          >
-                            <Button
-                              variant="ghost"
-                              className="w-full justify-start"
-                            >
-                              {subItem.label}
-                            </Button>
-                          </Link>
-                        ))}
-                      </ul>
-                    </CardContent>
-                  </Card>
-                )}
-              </div>
-            )}
+                <Icon className={`h-5 w-5 ${isMobile ? "mr-2" : "md:mr-2"}`} />
+                <span className={isMobile ? "inline" : "hidden md:inline"}>
+                  {label}
+                </span>
+              </Button>
+            </Link>
           </div>
         ))}
       </>
     ),
-    [expandedItem]
+    [setIsMenuOpen]
   );
 
   return (

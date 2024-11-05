@@ -33,12 +33,12 @@ export default function ContactPageComponent() {
   return (
     <section className="relative">
       {/* Hero Section */}
-      <div className="bg-[#DA5F6F] text-white">
+      <div className="bg-[#DA5F6F] py-12 text-white">
         <div className="container px-4 mx-auto">
           <div className="grid lg:grid-cols-2 gap-12 items-center py-16 md:py-24">
             <div className="space-y-6">
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif font-medium tracking-tight">
-                Contacta con Marialy
+                Contacta a Marialy
               </h1>
               <p className="text-base md:text-xl text-white/90">
                 ¿Tienes alguna pregunta? Puedes encontrar la respuesta en mis{" "}

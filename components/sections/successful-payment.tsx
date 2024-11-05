@@ -7,6 +7,12 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { Calendar, CheckCircle, Download } from "lucide-react";
 import Link from "next/link";
 
@@ -25,7 +31,17 @@ interface SuccessfulPaymentProps {
   email: string;
   time: number;
   lineItems: LineItem[];
+  calendarUrl?: string;
+  calendarButtonText?: string;
+  consultaDistancia?: boolean;
 }
+
+const CLINICAL_FORMS = {
+  hombres:
+    "https://emghocojucownsmpmrii.supabase.co/storage/v1/object/public/formulario/historia/Historia%20Clinica%20Hombres.pdf",
+  mujeres:
+    "https://emghocojucownsmpmrii.supabase.co/storage/v1/object/public/formulario/historia/Historia%20Clinica%20Mujeres.pdf",
+} as const;
 
 export default function SuccessfulPayment({
   receiptUrl,
@@ -33,6 +49,9 @@ export default function SuccessfulPayment({
   email,
   time,
   lineItems,
+  calendarUrl = "https://cal.com/nutralech/inicial",
+  calendarButtonText = "Agendar Sesión",
+  consultaDistancia = false,
 }: SuccessfulPaymentProps) {
   const total = lineItems.reduce((sum, item) => sum + item.amount_total, 0);
 
@@ -125,17 +144,37 @@ export default function SuccessfulPayment({
                 <span className="font-semibold">{email}</span> con los detalles
                 de tu orden.
               </li>
-              <li className="pl-2">
-                Para agendar tu sesión, por favor usa el botón de abajo o
-                envíame un mensaje a{" "}
-                <Link
-                  prefetch={false}
-                  href="https://wa.me/message/BLYZCVYW2MOAJ1"
-                  className="font-bold whitespace-nowrap"
-                >
-                  +52 744 346 8252
-                </Link>
-              </li>
+              {consultaDistancia && (
+                <li className="pl-2">
+                  Por favor llena la historia clínica y envíamela por correo a{" "}
+                  <span className="font-semibold">marialyalonso@gmail.com</span>{" "}
+                  o por WhatsApp al{" "}
+                  <Link
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    prefetch={false}
+                    href="https://wa.me/message/BLYZCVYW2MOAJ1"
+                    className="font-bold whitespace-nowrap"
+                  >
+                    +52 744 346 8252
+                  </Link>
+                </li>
+              )}
+              {!consultaDistancia && (
+                <li className="pl-2">
+                  Para agendar tu sesión, por favor usa el botón de abajo o
+                  envíame un mensaje a{" "}
+                  <Link
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    prefetch={false}
+                    href="https://wa.me/message/BLYZCVYW2MOAJ1"
+                    className="font-bold whitespace-nowrap"
+                  >
+                    +52 744 346 8252
+                  </Link>
+                </li>
+              )}
               <li className="pl-2">
                 Prepara cualquier pregunta o inquietud que tengas para tu
                 sesión.
@@ -144,15 +183,43 @@ export default function SuccessfulPayment({
           </div>
         </CardContent>
         <CardFooter className="flex flex-col space-y-2 sm:flex-row sm:justify-between sm:space-x-2 sm:space-y-0">
-          <Button asChild>
-            <Link
-              prefetch={false}
-              target="_blank"
-              href="https://cal.com/nutralech/inicial"
-            >
-              Agendar Sesión <Calendar className="ml-2 h-4 w-4" />
-            </Link>
-          </Button>
+          {consultaDistancia ? (
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button>
+                  Descargar Formulario <Download className="ml-2 h-4 w-4" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent>
+                <DropdownMenuItem asChild>
+                  <Link
+                    prefetch={false}
+                    href={CLINICAL_FORMS.hombres}
+                    target="_blank"
+                    className="w-full"
+                  >
+                    Hombres
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link
+                    prefetch={false}
+                    href={CLINICAL_FORMS.mujeres}
+                    target="_blank"
+                    className="w-full"
+                  >
+                    Mujeres
+                  </Link>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          ) : (
+            <Button asChild>
+              <Link prefetch={false} target="_blank" href={calendarUrl}>
+                {calendarButtonText} <Calendar className="ml-2 h-4 w-4" />
+              </Link>
+            </Button>
+          )}
           {receiptUrl && (
             <Link prefetch={false} target="_blank" href={receiptUrl}>
               <Button variant="outline">
