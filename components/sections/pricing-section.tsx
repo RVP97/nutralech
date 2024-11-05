@@ -195,29 +195,29 @@ export default function PricingSection() {
         { name: "Análisis de composición corporal", cross: false },
       ],
     },
-    // {
-    //   name: "Test",
-    //   originalPrice: "2,800",
-    //   discountedPrice: "2,380",
-    //   priceId: "price_1Mvmc2BoTKroQtb9Kz0QKe6B",
-    //   description:
-    //     "Ideal para una transformación profunda para quien quiere un buen cambio.",
-    //   features: [
-    //     { name: "1 Consulta Inicial", cross: false },
-    //     { name: "2 Consultas de Seguimiento", cross: false },
-    //     { name: "Video llamada de 1 hora con Marialy", cross: false },
-    //     { name: "Evaluación nutricional completa", cross: false },
-    //     { name: "Plan alimenticio personalizado", cross: false },
-    //     { name: "Recomendaciones de suplementación", cross: false },
-    //     { name: "Seguimiento recomendado cada 3 semanas", cross: false },
-    //     {
-    //       name: "Soporte por chat ilimitado (directamente con Marialy)",
-    //       cross: false,
-    //     },
-    //     { name: "Soporte prioritario 24/7", cross: false },
-    //     { name: "Análisis de composición corporal", cross: false },
-    //   ],
-    // },
+    {
+      name: "Test",
+      originalPrice: "2,800",
+      discountedPrice: "2,380",
+      priceId: "price_1Mvmc2BoTKroQtb9Kz0QKe6B",
+      description:
+        "Ideal para una transformación profunda para quien quiere un buen cambio.",
+      features: [
+        { name: "1 Consulta Inicial", cross: false },
+        { name: "2 Consultas de Seguimiento", cross: false },
+        { name: "Video llamada de 1 hora con Marialy", cross: false },
+        { name: "Evaluación nutricional completa", cross: false },
+        { name: "Plan alimenticio personalizado", cross: false },
+        { name: "Recomendaciones de suplementación", cross: false },
+        { name: "Seguimiento recomendado cada 3 semanas", cross: false },
+        {
+          name: "Soporte por chat ilimitado (directamente con Marialy)",
+          cross: false,
+        },
+        { name: "Soporte prioritario 24/7", cross: false },
+        { name: "Análisis de composición corporal", cross: false },
+      ],
+    },
   ];
 
   const handlePlanSelection = async (priceId: string) => {

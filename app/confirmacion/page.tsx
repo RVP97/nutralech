@@ -2,6 +2,7 @@ import SuccessfulPayment from "@/components/sections/successful-payment";
 import Confetti from "@/components/ui/confetti";
 import { Metadata } from "next";
 import { redirect } from "next/navigation";
+import Script from "next/script";
 
 interface LineItem {
   id: string;
@@ -25,12 +26,13 @@ interface CheckoutSession {
   receiptUrl: string | null;
   receiptNumber: string | null;
   lineItems: LineItem[];
+  paymentIntentID: string | null;
 }
 
 async function getCheckoutSession(sessionId: string): Promise<CheckoutSession> {
   try {
     const response = await fetch(
-      `https://nutralech.vercel.app/api/checkout_sessions?session_id=${sessionId}`,
+      `http://localhost:3000/api/checkout_sessions?session_id=${sessionId}`,
       {
         method: "GET",
         cache: "no-store",
@@ -83,9 +85,30 @@ export default async function Return({
     );
 
     return (
-      <div className="">
+      <div className="mt-14 md:mt-0">
+        <Script id="gtm-purchase-script" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            window.dataLayer.push({
+              'event': 'purchase',
+              'ecommerce': {
+                'transaction_id': '${session.paymentIntentID}',
+                'value': ${session.total ? session.total / 100 : 0},
+                'currency': '${session.currency}',
+                'items': ${JSON.stringify(
+                  session.lineItems.map((item) => ({
+                    item_id: item.id,
+                    item_name: item.description,
+                    price: item.amount_total / 100,
+                    currency: item.currency,
+                    quantity: item.quantity,
+                  }))
+                )}
+              }
+            });
+          `}
+        </Script>
         <Confetti />
-
         <SuccessfulPayment
           consultaDistancia={consultaDistancia}
           calendarButtonText={calendarButtonText}

@@ -176,7 +176,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es">
-      {/* <GoogleTagManager gtmId="GTM-WQGRBVZW" /> */}
+      <GoogleTagManager gtmId="GTM-WQGRBVZW" />
       <body
         className={`${inter.className} mt-8 md:mt-16 flex flex-col min-h-screen`}
       >
