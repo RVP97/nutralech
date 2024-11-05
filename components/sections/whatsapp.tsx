@@ -208,7 +208,7 @@ const getPatients = (conversations: Conversations) => [
     lastMessage: conversations[1][conversations[1].length - 1].message,
     time: conversations[1][conversations[1].length - 1].time,
     unread: 0,
-    avatar: "/images/marialy.webp",
+    avatar: "/images/avatar/gabriel.webp",
   },
   {
     id: 2,
@@ -216,15 +216,15 @@ const getPatients = (conversations: Conversations) => [
     lastMessage: conversations[2][conversations[2].length - 1].message,
     time: conversations[2][conversations[2].length - 1].time,
     unread: 2,
-    avatar: "/images/marialy.webp",
+    avatar: "/images/avatar/luisa.webp",
   },
   {
     id: 3,
-    name: "Carlos Ruiz",
+    name: "Carla Allens",
     lastMessage: conversations[3][conversations[3].length - 1].message,
     time: conversations[3][conversations[3].length - 1].time,
     unread: 1,
-    avatar: "/images/marialy.webp",
+    avatar: "/images/avatar/maria.webp",
   },
   {
     id: 4,
@@ -232,7 +232,7 @@ const getPatients = (conversations: Conversations) => [
     lastMessage: conversations[4][conversations[4].length - 1].message,
     time: conversations[4][conversations[4].length - 1].time,
     unread: 0,
-    avatar: "/images/marialy.webp",
+    avatar: "/images/avatar/sandra.webp",
   },
 ];
 
