@@ -9,6 +9,7 @@ import {
   Phone,
   Search,
   User,
+  Utensils,
 } from "lucide-react";
 import Link from "next/link";
 import * as React from "react";
@@ -24,7 +25,7 @@ export default function Component() {
       <>
         {[
           { id: "inicio", icon: Home, label: "Inicio", href: "/" },
-          { id: "planes", icon: Search, label: "Planes", href: "/#precios" },
+          { id: "planes", icon: Utensils, label: "Planes", href: "/#precios" },
           {
             id: "collabs",
             icon: User,
