@@ -66,7 +66,7 @@ export default function PricingSection() {
     {
       name: "Consulta de Seguimiento",
       price: "800",
-      priceId: "price_1OnRiLBoTKroQtb9a7nJ4Ngs",
+      priceId: "price_1QHcX3BoTKroQtb9iezs2h2q",
       description:
         "Ideal para quienes quieren dar seguimiento al progreso del plan alimenticio y nutricional.",
       features: [
@@ -86,7 +86,7 @@ export default function PricingSection() {
     {
       name: "Consulta Inicial",
       price: "1,200",
-      priceId: "price_1OXswiBoTKroQtb9waoDv2Uc",
+      priceId: "price_1QHcWHBoTKroQtb9yXjxvnMg",
       description:
         "Perfecto para quienes buscan un cambio sostenible con seguimiento continuo y personalizado.",
       features: [
@@ -107,7 +107,7 @@ export default function PricingSection() {
     {
       name: "Plan a Distancia",
       price: "600",
-      priceId: "price_1OlfqUBoTKroQtb9SILPRluq",
+      priceId: "price_1QHcXYBoTKroQtb9Fm9BzAij",
       description:
         "La opción más económica para resultados a largo plazo. No incluye seguimiento.",
       features: [
@@ -129,7 +129,7 @@ export default function PricingSection() {
       name: "Paquete Básico",
       originalPrice: "2,000",
       discountedPrice: "1,700",
-      priceId: "price_1OnRkMBoTKroQtb99t7ogi4v",
+      priceId: "price_1QHcY3BoTKroQtb9oY63GCl3",
       description:
         "Perfecto para empezar a cambiar tu estilo de vida y alimentación.",
       features: [
@@ -152,7 +152,7 @@ export default function PricingSection() {
       name: "Paquete Transformación",
       originalPrice: "3,600",
       discountedPrice: "3,060",
-      priceId: "price_1OnRnhBoTKroQtb9ASAfjfzP",
+      priceId: "price_1QHcYLBoTKroQtb9bjxsrz4x",
       description:
         "El plan ideal para quienes buscan transformar su vida por completo.",
       features: [
@@ -176,7 +176,7 @@ export default function PricingSection() {
       name: "Paquete Profesional",
       originalPrice: "2,800",
       discountedPrice: "2,380",
-      priceId: "price_1OnRpiBoTKroQtb900K1PuWY",
+      priceId: "price_1QHcYeBoTKroQtb9zJO7l4lD",
       description:
         "Ideal para una transformación profunda para quien quiere un buen cambio.",
       features: [
