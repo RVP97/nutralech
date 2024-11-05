@@ -150,9 +150,9 @@ export default function SuccessfulPayment({
                   <span className="font-semibold">marialyalonso@gmail.com</span>{" "}
                   o por WhatsApp al{" "}
                   <Link
+                    prefetch={false}
                     target="_blank"
                     rel="noopener noreferrer"
-                    prefetch={false}
                     href="https://wa.me/message/BLYZCVYW2MOAJ1"
                     className="font-bold whitespace-nowrap"
                   >
@@ -165,9 +165,9 @@ export default function SuccessfulPayment({
                   Para agendar tu sesión, por favor usa el botón de abajo o
                   envíame un mensaje a{" "}
                   <Link
+                    prefetch={false}
                     target="_blank"
                     rel="noopener noreferrer"
-                    prefetch={false}
                     href="https://wa.me/message/BLYZCVYW2MOAJ1"
                     className="font-bold whitespace-nowrap"
                   >

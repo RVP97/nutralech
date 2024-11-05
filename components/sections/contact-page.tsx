@@ -43,6 +43,7 @@ export default function ContactPageComponent() {
               <p className="text-base md:text-xl text-white/90">
                 ¿Tienes alguna pregunta? Puedes encontrar la respuesta en mis{" "}
                 <Link
+                  prefetch={false}
                   href="/#faq"
                   className="underline underline-offset-4 hover:text-white"
                 >
@@ -134,7 +135,7 @@ export default function ContactPageComponent() {
                   <h2 className="text-xl font-medium">{option.title}</h2>
                   <p className="text-muted-foreground">{option.description}</p>
                 </div>
-                <Link href="#contact-form" className="mt-4">
+                <Link prefetch={false} href="#contact-form" className="mt-4">
                   <Button
                     variant="link"
                     className="p-0 h-auto text-[#DA5F6F] hover:text-[#DA5F6F]/80"
@@ -179,7 +180,11 @@ export default function ContactPageComponent() {
                 preguntas frecuentes.
               </p>
             </div>
-            <Link href="/#faq" className="sm:ml-auto mt-4 sm:mt-0">
+            <Link
+              prefetch={false}
+              href="/#faq"
+              className="sm:ml-auto mt-4 sm:mt-0"
+            >
               <Button variant="outline">Visitar Preguntas Frecuentes</Button>
             </Link>
           </CardContent>

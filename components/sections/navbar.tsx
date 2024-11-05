@@ -36,6 +36,7 @@ export default function Component() {
         ].map(({ id, icon: Icon, label, href }) => (
           <div key={id} className="relative">
             <Link
+              prefetch={false}
               href={href}
               className="w-full"
               onClick={() => isMobile && setIsMenuOpen(false)}
@@ -66,7 +67,7 @@ export default function Component() {
         <div className="mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             <div className="flex items-center flex-1">
-              <Link href="/" className="flex items-center">
+              <Link prefetch={false} href="/" className="flex items-center">
                 <svg viewBox="0 0 49 34" className="w-8 h-8 mr-2">
                   <path
                     d="M 4.071 11.084 C 4.071 11.084 2.168 26.266 18.051 26.266 C 18.051 26.266 22.01 11.084 4.071 11.084 Z"
@@ -90,6 +91,7 @@ export default function Component() {
             </div>
             <div className="flex items-center space-x-2">
               <Link
+                prefetch={false}
                 href="https://wa.me/message/BLYZCVYW2MOAJ1"
                 target="_blank"
                 rel="noopener noreferrer"

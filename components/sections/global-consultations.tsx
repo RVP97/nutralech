@@ -220,7 +220,7 @@ export default function GlobalConsultations() {
             zona horaria y cultura local, estoy aquí para apoyarte en tu viaje
             hacia una vida más saludable, estés donde estés.
           </p>
-          <Link href="#precios">
+          <Link prefetch={false} href="#precios">
             <motion.button
               className="bg-[#DA5F6F] text-white px-8 py-4 rounded-full font-semibold text-lg shadow-lg"
               whileHover={{ scale: 1.05, backgroundColor: "#C54E5E" }}

@@ -18,6 +18,7 @@ export default function NotFound() {
 
           <div className="flex items-center mt-6 gap-x-3">
             <Link
+              prefetch={false}
               href="/#precios"
               className="flex items-center justify-center w-1/2 px-5 py-2 text-sm text-gray-700 transition-colors duration-200 bg-white border rounded-lg gap-x-2 sm:w-auto dark:hover:bg-gray-800 dark:bg-gray-900 hover:bg-gray-100 dark:text-gray-200 dark:border-gray-700"
             >
@@ -39,6 +40,7 @@ export default function NotFound() {
             </Link>
 
             <Link
+              prefetch={false}
               href="/"
               className="w-1/2 px-5 py-2 text-sm tracking-wide text-white transition-colors duration-200 bg-[#DA5F6F] rounded-lg shrink-0 sm:w-auto hover:bg-[#DA5F6F]/90 dark:hover:bg-[#DA5F6F]/90 dark:bg-[#DA5F6F]"
             >
@@ -49,6 +51,7 @@ export default function NotFound() {
           <div className="mt-10 space-y-6">
             <div>
               <Link
+                prefetch={false}
                 href="/#precios"
                 className="inline-flex items-center text-sm text-[#DA5F6F] gap-x-2 dark:text-[#DA5F6F] hover:underline"
               >
@@ -75,6 +78,7 @@ export default function NotFound() {
 
             <div>
               <Link
+                prefetch={false}
                 href="/acerca-de-mi"
                 className="inline-flex items-center text-sm text-[#DA5F6F] gap-x-2 dark:text-[#DA5F6F] hover:underline"
               >
@@ -101,6 +105,7 @@ export default function NotFound() {
 
             <div>
               <Link
+                prefetch={false}
                 href="/contacto"
                 className="inline-flex items-center text-sm text-[#DA5F6F] gap-x-2 dark:text-[#DA5F6F] hover:underline"
               >

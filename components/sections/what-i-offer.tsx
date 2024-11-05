@@ -53,6 +53,7 @@ export default function WhatIOfferComponent() {
           <div className="grid gap-6 sm:grid-cols-2">
             {services.map((service, index) => (
               <Link
+                prefetch={false}
                 key={index}
                 href={service.href}
                 target={service.href.startsWith("https") ? "_blank" : undefined}
@@ -94,7 +95,9 @@ export default function WhatIOfferComponent() {
               size="lg"
               className="rounded-full bg-[#DA5F6F] hover:bg-[#DA5F6F]/90 text-white px-8"
             >
-              <Link href="#precios">Agendar Consulta</Link>
+              <Link prefetch={false} href="#precios">
+                Agendar Consulta
+              </Link>
             </Button>
           </div>
         </div>

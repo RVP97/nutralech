@@ -65,6 +65,7 @@ export default function AboutPage() {
 
               <div className="flex flex-wrap gap-4 items-center">
                 <Link
+                  prefetch={false}
                   href="/#precios"
                   className="inline-flex h-14 items-center justify-center gap-2 rounded-full bg-[#DA5F6F] px-8 font-medium text-white transition-colors hover:bg-[#DA5F6F]/90 text-lg"
                 >
@@ -73,6 +74,7 @@ export default function AboutPage() {
                 </Link>
 
                 <Link
+                  prefetch={false}
                   href="/#precios"
                   className="inline-flex h-14 items-center justify-center gap-2 rounded-full border-2 border-[#DA5F6F] bg-transparent px-8 font-medium text-[#DA5F6F] transition-colors hover:bg-[#DA5F6F]/5 text-lg"
                 >
@@ -131,6 +133,7 @@ export default function AboutPage() {
                     {service.description}
                   </p>
                   <Link
+                    prefetch={false}
                     href="/#precios"
                     className="text-[#DA5F6F] hover:text-[#C54E5E] p-0 h-auto font-semibold mt-auto inline-flex items-center"
                   >
@@ -229,12 +232,12 @@ export default function AboutPage() {
                 futuro más saludable y equilibrado.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-                <Link href="/#precios">
+                <Link prefetch={false} href="/#precios">
                   <Button className="bg-white text-[#DA5F6F] hover:bg-gray-100 text-lg px-8 py-6 rounded-full transition-colors duration-300 shadow-lg hover:shadow-xl">
                     Comienza Tu Viaje Nutricional
                   </Button>
                 </Link>
-                <Link href="/#servicios">
+                <Link prefetch={false} href="/#servicios">
                   <Button
                     variant="outline"
                     className="bg-transparent hover:text-white border-2 border-white text-white hover:bg-white/10 text-lg px-8 py-6 rounded-full transition-colors duration-300"

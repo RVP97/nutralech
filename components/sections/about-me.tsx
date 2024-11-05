@@ -182,7 +182,7 @@ export default function AboutMeComponent() {
             </div>
 
             <div>
-              <Link href="#precios">
+              <Link prefetch={false} href="#precios">
                 <Button className="bg-[#DA5F6F] hover:bg-[#DA5F6F]/90 text-white">
                   <Calendar className="w-4 h-4 mr-2" />
                   Agenda una Consulta

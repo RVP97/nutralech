@@ -132,6 +132,7 @@ export default function Hero() {
 
             <div className="flex flex-wrap gap-4">
               <Link
+                prefetch={false}
                 href="#precios"
                 className="inline-flex h-14 items-center justify-center gap-2 rounded-full bg-[#DA5F6F] px-8 font-medium text-white transition-colors hover:bg-[#DA5F6F]/90"
               >
@@ -140,6 +141,7 @@ export default function Hero() {
               </Link>
 
               <Link
+                prefetch={false}
                 href="/acerca-de-mi"
                 className="inline-flex h-14 items-center justify-center gap-2 rounded-full border border-[#DA5F6F]/20 bg-white px-8 font-medium text-[#DA5F6F] transition-colors hover:bg-[#DA5F6F]/5"
               >

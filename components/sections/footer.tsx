@@ -30,7 +30,11 @@ export default function Footer() {
         <div className="grid grid-cols-1 gap-8 md:grid-cols-4">
           {/* Logo Section */}
           <div className="flex items-start">
-            <Link href="/" className="group flex items-center space-x-2">
+            <Link
+              prefetch={false}
+              href="/"
+              className="group flex items-center space-x-2"
+            >
               <svg
                 viewBox="0 0 49 34"
                 className="w-10 h-10 transition-transform duration-300 group-hover:scale-110"
@@ -55,18 +59,21 @@ export default function Footer() {
             <h3 className="mb-4 text-lg font-medium">Mis Links</h3>
             <nav className="flex flex-col space-y-3">
               <Link
+                prefetch={false}
                 href="/"
                 className="text-muted-foreground hover:text-[#FF756D] transition-colors"
               >
                 Inicio
               </Link>
               <Link
+                prefetch={false}
                 href="/contacto"
                 className="text-muted-foreground hover:text-[#FF756D] transition-colors"
               >
                 Contacto
               </Link>
               <Link
+                prefetch={false}
                 href="/#precios"
                 className="text-muted-foreground hover:text-[#FF756D] transition-colors"
               >
@@ -90,6 +97,7 @@ export default function Footer() {
             <div className="space-y-3 mb-4">
               <div className="flex items-center space-x-2 text-muted-foreground">
                 <Link
+                  prefetch={false}
                   target="_blank"
                   rel="noopener noreferrer"
                   href="https://wa.me/message/BLYZCVYW2MOAJ1"
@@ -147,6 +155,7 @@ export default function Footer() {
               </div>
               <div className="flex items-center space-x-2 text-muted-foreground">
                 <Link
+                  prefetch={false}
                   href="mailto:contacto@nutralech.com"
                   className="flex items-center space-x-2 text-muted-foreground hover:text-[#FF756D] transition-colors"
                 >
@@ -159,10 +168,13 @@ export default function Footer() {
               asChild
               className="bg-gradient-to-r from-[#FF756D] to-[#FF9B9B] text-white hover:from-[#FF9B9B] hover:to-[#FF756D] transition-all duration-300 transform hover:scale-105 w-full md:w-auto"
             >
-              <Link href="/contacto">Contáctame</Link>
+              <Link prefetch={false} href="/contacto">
+                Contáctame
+              </Link>
             </Button>
             <div className="mt-6 flex space-x-4">
               <Link
+                prefetch={false}
                 target="_blank"
                 rel="noopener noreferrer"
                 href="https://www.instagram.com/nutralech/"
@@ -172,6 +184,7 @@ export default function Footer() {
                 <Instagram className="h-6 w-6" />
               </Link>
               <Link
+                prefetch={false}
                 target="_blank"
                 rel="noopener noreferrer"
                 href="https://www.tiktok.com/@nutralech"
@@ -192,6 +205,7 @@ export default function Footer() {
                 </svg>
               </Link>
               <Link
+                prefetch={false}
                 target="_blank"
                 rel="noopener noreferrer"
                 href="https://www.facebook.com/nutralech/"
@@ -201,6 +215,7 @@ export default function Footer() {
                 <Facebook className="h-6 w-6" />
               </Link>
               <Link
+                prefetch={false}
                 target="_blank"
                 rel="noopener noreferrer"
                 href="https://www.youtube.com/@Nutralech"
