@@ -86,7 +86,7 @@ export default function PricingSection() {
     {
       name: "Consulta Inicial",
       price: "1,200",
-      priceId: "price_1QHcWHBoTKroQtb9yXjxvnMg",
+      priceId: "price_1QHce0BoTKroQtb9h5n0NyT7",
       description:
         "Perfecto para quienes buscan un cambio sostenible con seguimiento continuo y personalizado.",
       features: [
