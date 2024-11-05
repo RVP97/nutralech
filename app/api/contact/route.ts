@@ -28,7 +28,7 @@ export async function POST(request: NextRequest) {
       // Send email using Resend
       const { data, error } = await resend.emails.send({
         from: `${name} <reservaciones@contacto.hotelcatedral.com>`,
-        to: ["rovapin@gmail.com"],
+        to: ["rovapin@gmail.com", "marialyalonso@gmail.com"],
         replyTo: email,
         subject: `Nuevo contacto: ${inquiryType}: ${name}`,
         react: EmailTemplate(emailData),
