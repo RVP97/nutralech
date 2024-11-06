@@ -6,9 +6,24 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { generatePageMetadata } from "@/lib/generateMetadata";
 import { Activity, Apple, Book, Calendar, Info } from "lucide-react";
 import Link from "next/link";
 import { CalorieCalculator } from "./calorie-calculator";
+
+export async function generateMetadata() {
+  return generatePageMetadata({
+    title: "Calculadora de Calorías",
+    description:
+      "Calcula tus necesidades calóricas diarias y ajusta tu dieta para alcanzar tus objetivos.",
+    keywords: [
+      "salud, bienestar, calculadora, imc, nutrición, consejos, recetas, asesoría, personalizada, nutralech, marialy alonso, nutriologa",
+    ],
+    openGraph: {
+      url: "https://www.nutralech.com/herramientas/calculadora-calorias",
+    },
+  });
+}
 
 export default function CalorieCalculatorPage() {
   return (

@@ -18,49 +18,17 @@ const allTools = [
     title: "Calculadora de IMC",
     description:
       "Calcula tu Índice de Masa Corporal y descubre tu rango de peso saludable.",
-    link: "/tools/bmi-calculator",
+    link: "/herramientas/calculadora-imc",
     category: "Mediciones",
     tags: ["Peso", "Salud"],
   },
   {
     title: "Contador de Calorías",
     description:
-      "Registra tus comidas y lleva un control de tu ingesta calórica diaria.",
-    link: "/tools/calorie-counter",
+      "Calcula tus necesidades calóricas diarias y ajusta tu dieta para alcanzar tus objetivos.",
+    link: "/herramientas/calculadora-calorias",
     category: "Nutrición",
     tags: ["Calorías", "Dieta"],
-  },
-  {
-    title: "Planificador de Comidas",
-    description:
-      "Crea planes de comidas personalizados basados en tus objetivos nutricionales.",
-    link: "/tools/meal-planner",
-    category: "Planificación",
-    tags: ["Menú", "Organización"],
-  },
-  {
-    title: "Seguimiento de Peso",
-    description:
-      "Monitorea tu progreso y visualiza tus cambios de peso a lo largo del tiempo.",
-    link: "/tools/weight-tracker",
-    category: "Seguimiento",
-    tags: ["Peso", "Progreso"],
-  },
-  {
-    title: "Calculadora de Metabolismo Basal",
-    description:
-      "Calcula tus necesidades calóricas diarias basadas en tu actividad física.",
-    link: "/tools/bmr-calculator",
-    category: "Mediciones",
-    tags: ["Metabolismo", "Energía"],
-  },
-  {
-    title: "Recordatorio de Hidratación",
-    description:
-      "Establece metas de hidratación y recibe recordatorios para beber agua.",
-    link: "/tools/hydration-reminder",
-    category: "Seguimiento",
-    tags: ["Agua", "Hábitos"],
   },
 ];
 
