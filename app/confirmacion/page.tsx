@@ -49,7 +49,6 @@ async function getCheckoutSession(sessionId: string): Promise<CheckoutSession> {
 
     return response.json();
   } catch (error) {
-    console.log("error", error);
     redirect("/404");
   }
 }
@@ -125,6 +124,6 @@ export default async function Return({
       </div>
     );
   } catch (error) {
-    redirect("/histor");
+    redirect("/404");
   }
 }
