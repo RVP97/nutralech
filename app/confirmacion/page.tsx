@@ -31,21 +31,25 @@ interface CheckoutSession {
 
 async function getCheckoutSession(sessionId: string): Promise<CheckoutSession> {
   try {
-    const response = await fetch(
-      `https://nutralech.com/api/checkout_sessions?session_id=${sessionId}`,
-      {
-        method: "GET",
-        cache: "no-store",
-      }
-    );
+    const baseUrl =
+      process.env.NEXT_PUBLIC_SITE_URL ||
+      process.env.NEXT_PUBLIC_VERCEL_URL ||
+      "http://localhost:3000";
+    const url = new URL(`/api/checkout_sessions`, baseUrl);
+    url.searchParams.set("session_id", sessionId);
+
+    const response = await fetch(url, {
+      method: "GET",
+      cache: "no-store",
+    });
 
     if (!response.ok) {
-      redirect("/404");
+      throw new Error(`HTTP error! status: ${response.status}`);
     }
 
     return response.json();
   } catch (error) {
-    console.log("error", error);
+    console.error("Error fetching checkout session:", error);
     redirect("/404");
   }
 }
@@ -121,7 +125,7 @@ export default async function Return({
       </div>
     );
   } catch (error) {
-    alert("error: " + error);
-    redirect("/histor");
+    console.error("Error in Return component:", error);
+    redirect("/404");
   }
 }
