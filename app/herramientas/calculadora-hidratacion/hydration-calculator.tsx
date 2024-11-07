@@ -18,7 +18,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Info, Scale } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 interface HydrationRecommendation {
   title: string;
@@ -32,7 +32,7 @@ function getHydrationSuggestion(
   isMetric: boolean
 ): { totalWaterIntake: number; recommendation: HydrationRecommendation } {
   const weightValue = parseFloat(weight);
-  const weightKg = isMetric ? weightValue : weightValue * 0.453592; // Convert pounds to kg if imperial
+  const weightKg = isMetric ? weightValue : weightValue * 0.453592;
   const baseWaterIntake = weightKg * 0.035;
   let additionalWater = 0;
 
@@ -57,11 +57,7 @@ function getHydrationSuggestion(
     totalWaterIntake,
     recommendation: {
       title: "Recomendación de Hidratación Diaria",
-      description: `Basado en tu peso de ${
-        isMetric ? weightKg.toFixed(0) + "kg" : weightValue.toFixed(0) + "lbs"
-      } y nivel de actividad, se recomienda consumir aproximadamente ${totalWaterIntake.toFixed(
-        1
-      )} litros de agua al día.`,
+      description: "",
       keyPoints: [
         "Asegúrate de beber agua a lo largo del día, no solo cuando tengas sed.",
         "Considera aumentar la ingesta en climas cálidos o durante el ejercicio intenso.",
@@ -84,13 +80,8 @@ export function HydrationCalculator() {
   });
 
   const calculateWaterIntake = () => {
-    const newErrors = {
-      weight: "",
-    };
-
     if (!weight) {
-      newErrors.weight = "Por favor, ingresa tu peso";
-      setErrors(newErrors);
+      setErrors({ weight: "Por favor, ingresa tu peso" });
       return;
     }
 
@@ -103,7 +94,26 @@ export function HydrationCalculator() {
     setRecommendation(recommendation);
   };
 
-  const convertToOunces = (liters: number) => liters * 33.814;
+  useEffect(() => {
+    if (waterIntake !== null && recommendation) {
+      const updatedDescription = `Basado en tu peso de ${
+        isMetric
+          ? parseFloat(weight).toFixed(0) + "kg"
+          : parseFloat(weight).toFixed(0) + "lbs"
+      } y nivel de actividad, se recomienda consumir aproximadamente ${
+        waterIntakeUnit === "liters"
+          ? waterIntake.toFixed(1) + " litros"
+          : convertToOunces(waterIntake).toFixed(1) + " onzas"
+      } de agua al día.`;
+
+      setRecommendation((prev) => ({
+        ...prev!,
+        description: updatedDescription,
+      }));
+    }
+  }, [waterIntakeUnit, waterIntake, isMetric, weight]);
+
+  const convertToOunces = (liters: number): number => liters * 33.814;
 
   return (
     <Card className="w-full h-full flex flex-col">

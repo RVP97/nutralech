@@ -13,9 +13,9 @@ import { HydrationCalculator } from "./hydration-calculator";
 
 export async function generateMetadata() {
   return generatePageMetadata({
-    title: "Calculadora de Hidratación",
+    title: "Calculadora de Hidratación Diaria",
     description:
-      "Calcula tus necesidades diarias de hidratación y mantente saludable.",
+      "Calcula tus necesidades diarias de hidratación y mantente saludable con la herramienta de Nutralech.",
     keywords: [
       "hidratación, salud, bienestar, agua, consumo, consejos, nutrición, nutralech, marialy alonso, nutriologa",
     ],
@@ -115,24 +115,40 @@ export default function HydrationCalculatorPage() {
             <CardContent>
               <ul className="space-y-2">
                 <li>
-                  <a href="#" className="text-blue-600 hover:underline">
-                    Guía de Hidratación
-                  </a>
+                  <Link
+                    prefetch={false}
+                    href="/herramientas/calculadora-calorias"
+                    className="text-blue-600 hover:underline"
+                  >
+                    Calculadora de Calorías
+                  </Link>
                 </li>
                 <li>
-                  <a href="#" className="text-blue-600 hover:underline">
-                    Beneficios del Agua para la Salud
-                  </a>
+                  <Link
+                    prefetch={false}
+                    href="/herramientas/calculadora-imc"
+                    className="text-blue-600 hover:underline"
+                  >
+                    Calculadora de IMC
+                  </Link>
                 </li>
                 <li>
-                  <a href="#" className="text-blue-600 hover:underline">
-                    Mitos y Verdades sobre la Hidratación
-                  </a>
+                  <Link
+                    prefetch={false}
+                    href="/#precios"
+                    className="text-blue-600 hover:underline"
+                  >
+                    Planes y Consultas
+                  </Link>
                 </li>
                 <li>
-                  <a href="#" className="text-blue-600 hover:underline">
+                  <Link
+                    prefetch={false}
+                    href="#"
+                    className="text-blue-600 hover:underline"
+                  >
                     Consulta con Nutricionistas
-                  </a>
+                  </Link>
                 </li>
               </ul>
             </CardContent>
