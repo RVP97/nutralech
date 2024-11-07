@@ -40,13 +40,13 @@ async function getCheckoutSession(sessionId: string): Promise<CheckoutSession> {
     );
 
     if (!response.ok) {
-      redirect("/404");
+      redirect("/hi");
     }
 
     return response.json();
   } catch (error) {
     console.log("error", error);
-    redirect("/hi");
+    redirect("/his");
   }
 }
 
@@ -61,10 +61,10 @@ export default async function Return({
 }) {
   try {
     const resolvedParams = await searchParams;
-    if (!resolvedParams.session_id) redirect("/404");
+    if (!resolvedParams.session_id) redirect("/hist");
     const session = await getCheckoutSession(resolvedParams.session_id);
     if (session.status !== "complete") {
-      redirect("/404");
+      redirect("/histo");
     }
 
     const { calendarButtonText, calendarUrl } = session.lineItems.some(
@@ -121,6 +121,6 @@ export default async function Return({
       </div>
     );
   } catch (error) {
-    redirect("/404");
+    redirect("/histor");
   }
 }
