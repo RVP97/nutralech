@@ -1,0 +1,23 @@
+[
+  {
+    "title": "Calculadora de IMC",
+    "description": "Calcula tu Índice de Masa Corporal y descubre tu rango de peso saludable.",
+    "link": "/herramientas/calculadora-imc",
+    "category": "Mediciones",
+    "tags": ["Peso", "Salud"]
+  },
+  {
+    "title": "Contador de Calorías",
+    "description": "Calcula tus necesidades calóricas diarias y ajusta tu dieta para alcanzar tus objetivos.",
+    "link": "/herramientas/calculadora-calorias",
+    "category": "Nutrición",
+    "tags": ["Calorías", "Dieta"]
+  },
+  {
+    "title": "Calculadora de Hidratación",
+    "description": "Calcula tus necesidades diarias de hidratación y mantente saludable.",
+    "link": "/herramientas/calculadora-hidratacion",
+    "category": "Nutrición",
+    "tags": ["Hidratación", "Agua"]
+  }
+]

@@ -1,5 +1,6 @@
 "use client";
 
+import allTools from "@/app/herramientas/herramientas.json";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -12,25 +13,6 @@ import {
 } from "@/components/ui/card";
 import { Tag } from "lucide-react";
 import Link from "next/link";
-
-const allTools = [
-  {
-    title: "Calculadora de IMC",
-    description:
-      "Calcula tu Índice de Masa Corporal y descubre tu rango de peso saludable.",
-    link: "/herramientas/calculadora-imc",
-    category: "Mediciones",
-    tags: ["Peso", "Salud"],
-  },
-  {
-    title: "Contador de Calorías",
-    description:
-      "Calcula tus necesidades calóricas diarias y ajusta tu dieta para alcanzar tus objetivos.",
-    link: "/herramientas/calculadora-calorias",
-    category: "Nutrición",
-    tags: ["Calorías", "Dieta"],
-  },
-];
 
 export default function AppToolsPage() {
   return (
