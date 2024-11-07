@@ -34,7 +34,7 @@ const allTools = [
 
 export default function AppToolsPage() {
   return (
-    <section className="py-12 bg-gradient-to-b from-white to-green-50/50">
+    <section className="py-24 md:py-12 bg-gradient-to-b from-white to-green-50/50">
       <div className="container px-4 mx-auto">
         <div className="text-center mb-16">
           <Badge variant="secondary" className="mb-4">
@@ -44,8 +44,8 @@ export default function AppToolsPage() {
             Recursos para Tu Bienestar
           </h1>
           <p className="mt-4 text-xl text-muted-foreground max-w-2xl mx-auto">
-            Descubre nuestras herramientas gratuitas diseñadas para ayudarte en
-            tu viaje hacia una vida más saludable.
+            Descubre mis herramientas de nutrición gratuitas diseñadas para
+            ayudarte en tu viaje hacia una vida más saludable.
           </p>
         </div>
 
@@ -100,11 +100,11 @@ export default function AppToolsPage() {
             ¿Necesitas ayuda personalizada?
           </h2>
           <p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto">
-            Nuestras herramientas son un gran punto de partida, pero para un
-            plan nutricional completamente adaptado a tus necesidades, considera
-            una consulta personalizada.
+            Mis herramientas son un gran punto de partida, pero para un plan
+            nutricional completamente adaptado a tus necesidades, considera una
+            consulta personalizada.
           </p>
-          <Link href="#consulta">
+          <Link href="/#precios">
             <Button
               size="lg"
               className="bg-[#DA5F6F] hover:bg-[#DA5F6F]/90 text-white transition-colors duration-300"

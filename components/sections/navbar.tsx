@@ -1,21 +1,10 @@
 "use client";
 
-import {
-  Bell,
-  ChevronDown,
-  ChevronUp,
-  Home,
-  Menu,
-  Phone,
-  Search,
-  User,
-  Utensils,
-} from "lucide-react";
+import { Home, Menu, Phone, User, Utensils, Wrench } from "lucide-react";
 import Link from "next/link";
 import * as React from "react";
 
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
 
 export default function Component() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
@@ -31,6 +20,12 @@ export default function Component() {
             icon: User,
             label: "Collabs",
             href: "/colaboraciones",
+          },
+          {
+            id: "herramientas",
+            icon: Wrench,
+            label: "Herramientas",
+            href: "/herramientas",
           },
           { id: "contacto", icon: Phone, label: "Contacto", href: "/contacto" },
         ].map(({ id, icon: Icon, label, href }) => (

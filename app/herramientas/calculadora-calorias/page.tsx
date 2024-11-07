@@ -31,7 +31,7 @@ export default function CalorieCalculatorPage() {
       <nav className="flex items-center gap-2 text-sm text-muted-foreground mb-8">
         <Link href="/">Inicio</Link>
         <span>{">"}</span>
-        <Link href="/tools">Herramientas</Link>
+        <Link href="/herramientas">Herramientas</Link>
         <span>{">"}</span>
         <span className="text-foreground">Calculadora de Calorías</span>
       </nav>
@@ -186,17 +186,19 @@ export default function CalorieCalculatorPage() {
       <div className="mt-12 bg-gradient-to-r from-[#DA5F6F] to-[#DA5F6F]/80 rounded-lg shadow-lg">
         <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:py-16 lg:px-8 lg:flex lg:items-center lg:justify-between">
           <h2 className="text-3xl font-extrabold tracking-tight text-white sm:text-4xl">
-            <span className="block">¿Listo para optimizar tu nutrición?</span>
+            <span className="block">¿Listo para mejorar tu salud?</span>
             <span className="block text-gray-100">
               Agenda una consulta personalizada hoy.
             </span>
           </h2>
           <div className="mt-8 flex lg:mt-0 lg:flex-shrink-0">
             <div className="inline-flex rounded-md shadow">
-              <Button className="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-[#DA5F6F] bg-white hover:bg-gray-50">
-                <Calendar className="w-5 h-5 mr-2" />
-                Agendar Consulta
-              </Button>
+              <Link prefetch={false} href="/#precios">
+                <Button className="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-[#DA5F6F] bg-white hover:bg-gray-50">
+                  <Calendar className="w-5 h-5 mr-2" />
+                  Agendar Consulta
+                </Button>
+              </Link>
             </div>
           </div>
         </div>
