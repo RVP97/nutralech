@@ -40,6 +40,7 @@ async function getCheckoutSession(sessionId: string): Promise<CheckoutSession> {
         cache: "no-store",
       }
     );
+    console.log(response);
 
     if (!response.ok) {
       redirect("/404");
