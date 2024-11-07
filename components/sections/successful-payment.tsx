@@ -55,13 +55,15 @@ export default function SuccessfulPayment({
 }: SuccessfulPaymentProps) {
   const total = lineItems.reduce((sum, item) => sum + item.amount_total, 0);
 
+  const orderDate = time && time > 0 ? new Date(time * 1000) : new Date();
+
   const orderDetails = {
-    date: new Date(time * 1000).toLocaleDateString("es-ES", {
+    date: orderDate.toLocaleDateString("es-ES", {
       year: "numeric",
       month: "long",
       day: "numeric",
     }),
-    time: new Date(time * 1000).toLocaleTimeString("es-ES", {
+    time: orderDate.toLocaleTimeString("es-ES", {
       hour: "2-digit",
       minute: "2-digit",
     }),

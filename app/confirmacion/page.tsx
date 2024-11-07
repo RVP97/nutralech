@@ -1,7 +1,6 @@
 import SuccessfulPayment from "@/components/sections/successful-payment";
 import Confetti from "@/components/ui/confetti";
 import { Metadata } from "next";
-import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import Script from "next/script";
 
@@ -32,12 +31,10 @@ interface CheckoutSession {
 
 async function getCheckoutSession(sessionId: string): Promise<CheckoutSession> {
   try {
-    const headersList = headers();
-    const protocol = process.env.NODE_ENV === "development" ? "http" : "https";
-    const host = (await headersList).get("host") || "";
-
+    const baseUrl =
+      process.env.NEXT_PUBLIC_APP_URL || "https://www.nutralech.com";
     const response = await fetch(
-      `${protocol}://${host}/api/checkout_sessions?session_id=${sessionId}`,
+      `${baseUrl}/api/checkout_sessions?session_id=${sessionId}`,
       {
         method: "GET",
         cache: "no-store",
@@ -50,7 +47,6 @@ async function getCheckoutSession(sessionId: string): Promise<CheckoutSession> {
 
     return response.json();
   } catch (error) {
-    console.error("Checkout session error:", error);
     redirect("/404");
   }
 }
