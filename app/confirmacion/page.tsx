@@ -56,12 +56,21 @@ export const metadata: Metadata = {
 export default async function Return({
   searchParams,
 }: {
-  searchParams: { session_id?: string };
+  searchParams: Promise<{ session_id?: string }>;
 }) {
   try {
-    if (!searchParams.session_id) redirect("/404");
+    console.log("Before resolving searchParams:", searchParams);
+    const resolvedParams = await searchParams;
+    console.log("After resolving searchParams:", resolvedParams);
 
-    const session = await getCheckoutSession(searchParams.session_id);
+    if (!resolvedParams.session_id) {
+      console.log("No session_id found");
+      redirect("/404");
+    }
+
+    console.log("Fetching session with ID:", resolvedParams.session_id);
+
+    const session = await getCheckoutSession(resolvedParams.session_id);
 
     if (session.status !== "complete") {
       redirect("/404");
