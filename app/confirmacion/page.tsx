@@ -31,6 +31,12 @@ interface CheckoutSession {
 
 async function getCheckoutSession(sessionId: string): Promise<CheckoutSession> {
   try {
+    console.info("[Checkout Debug]", {
+      event: "fetch_start",
+      sessionId,
+      timestamp: new Date().toISOString(),
+    });
+
     const response = await fetch(
       `https://nutralech.com/api/checkout_sessions?session_id=${sessionId}`,
       {
@@ -40,11 +46,31 @@ async function getCheckoutSession(sessionId: string): Promise<CheckoutSession> {
     );
 
     if (!response.ok) {
+      console.error("[Checkout Error]", {
+        event: "api_error",
+        status: response.status,
+        statusText: response.statusText,
+        sessionId,
+        timestamp: new Date().toISOString(),
+      });
       redirect("/404");
     }
 
-    return response.json();
+    const data = await response.json();
+    console.info("[Checkout Debug]", {
+      event: "fetch_success",
+      sessionId,
+      status: data.status,
+      timestamp: new Date().toISOString(),
+    });
+    return data;
   } catch (error) {
+    console.error("[Checkout Error]", {
+      event: "fetch_failed",
+      error: error instanceof Error ? error.message : "Unknown error",
+      sessionId,
+      timestamp: new Date().toISOString(),
+    });
     redirect("/404");
   }
 }
@@ -59,20 +85,30 @@ export default async function Return({
   searchParams: Promise<{ session_id?: string }>;
 }) {
   try {
-    console.log("Before resolving searchParams:", searchParams);
     const resolvedParams = await searchParams;
-    console.log("After resolving searchParams:", resolvedParams);
+    console.info("[Page Debug]", {
+      event: "page_load",
+      params: resolvedParams,
+      timestamp: new Date().toISOString(),
+    });
 
     if (!resolvedParams.session_id) {
-      console.log("No session_id found");
+      console.warn("[Page Warning]", {
+        event: "missing_session_id",
+        timestamp: new Date().toISOString(),
+      });
       redirect("/404");
     }
-
-    console.log("Fetching session with ID:", resolvedParams.session_id);
 
     const session = await getCheckoutSession(resolvedParams.session_id);
 
     if (session.status !== "complete") {
+      console.warn("[Page Warning]", {
+        event: "invalid_session_status",
+        status: session.status,
+        sessionId: resolvedParams.session_id,
+        timestamp: new Date().toISOString(),
+      });
       redirect("/404");
     }
 
@@ -130,6 +166,11 @@ export default async function Return({
       </div>
     );
   } catch (error) {
+    console.error("[Page Error]", {
+      event: "page_error",
+      error: error instanceof Error ? error.message : "Unknown error",
+      timestamp: new Date().toISOString(),
+    });
     redirect("/404");
   }
 }
