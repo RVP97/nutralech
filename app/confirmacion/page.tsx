@@ -1,3 +1,4 @@
+export const revalidate = 0; // Disables caching for SSR
 import SuccessfulPayment from "@/components/sections/successful-payment";
 import Confetti from "@/components/ui/confetti";
 import { Metadata } from "next";
@@ -31,25 +32,24 @@ interface CheckoutSession {
 
 async function getCheckoutSession(sessionId: string): Promise<CheckoutSession> {
   try {
-    const baseUrl =
-      process.env.NEXT_PUBLIC_SITE_URL ||
-      process.env.NEXT_PUBLIC_VERCEL_URL ||
-      "http://localhost:3000";
-    const url = new URL(`/api/checkout_sessions`, baseUrl);
-    url.searchParams.set("session_id", sessionId);
-
-    const response = await fetch(url, {
-      method: "GET",
-      cache: "no-store",
-    });
+    const response = await fetch(
+      `https://nutralech.com/api/checkout_sessions?session_id=${sessionId}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    console.log("response", response);
 
     if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
+      redirect("/404");
     }
 
     return response.json();
   } catch (error) {
-    console.error("Error fetching checkout session:", error);
+    console.log("error", error);
     redirect("/404");
   }
 }
@@ -125,7 +125,6 @@ export default async function Return({
       </div>
     );
   } catch (error) {
-    console.error("Error in Return component:", error);
-    redirect("/404");
+    redirect("/histor");
   }
 }
