@@ -43,8 +43,8 @@ export default function Component() {
                   isMobile ? "w-full justify-start" : ""
                 }`}
               >
-                <Icon className={`h-5 w-5 ${isMobile ? "mr-2" : "md:mr-2"}`} />
-                <span className={isMobile ? "inline" : "hidden md:inline"}>
+                <Icon className={`h-5 w-5 ${isMobile ? "mr-2" : "lg:mr-2"}`} />
+                <span className={isMobile ? "inline" : "hidden lg:inline"}>
                   {label}
                 </span>
               </Button>
@@ -80,7 +80,7 @@ export default function Component() {
                   Nutralech
                 </span>
               </Link>
-              <div className="hidden md:flex space-x-1 justify-center flex-1">
+              <div className="hidden lg:flex space-x-1 justify-center flex-1">
                 <NavItems />
               </div>
             </div>
@@ -142,7 +142,7 @@ export default function Component() {
               <Button
                 variant="ghost"
                 size="icon"
-                className="md:hidden rounded-full"
+                className="lg:hidden rounded-full"
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
               >
                 <Menu className="h-5 w-5" />
@@ -151,7 +151,7 @@ export default function Component() {
             </div>
           </div>
           <div
-            className={`md:hidden overflow-hidden transition-all duration-300 ease-in-out ${
+            className={`lg:hidden overflow-hidden transition-all duration-300 ease-in-out ${
               isMenuOpen
                 ? "max-h-[500px] opacity-100 pb-4"
                 : "max-h-0 opacity-0 pb-0"

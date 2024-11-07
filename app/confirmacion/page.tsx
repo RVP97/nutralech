@@ -41,7 +41,6 @@ async function getCheckoutSession(sessionId: string): Promise<CheckoutSession> {
         },
       }
     );
-    console.log("response", response);
 
     if (!response.ok) {
       redirect("/404");
