@@ -31,16 +31,13 @@ interface CheckoutSession {
 
 async function getCheckoutSession(sessionId: string): Promise<CheckoutSession> {
   try {
-    const baseUrl =
-      process.env.NEXT_PUBLIC_APP_URL || "https://www.nutralech.com";
     const response = await fetch(
-      `${baseUrl}/api/checkout_sessions?session_id=${sessionId}`,
+      `http://localhost:3000/api/checkout_sessions?session_id=${sessionId}`,
       {
         method: "GET",
         cache: "no-store",
       }
     );
-    console.log(response);
 
     if (!response.ok) {
       redirect("/404");
@@ -63,6 +60,7 @@ export default async function Return({
 }) {
   try {
     const resolvedParams = await searchParams;
+    console.log(resolvedParams);
     if (!resolvedParams.session_id) redirect("/404");
 
     const session = await getCheckoutSession(resolvedParams.session_id);
