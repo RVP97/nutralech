@@ -17,7 +17,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Switch } from "@/components/ui/switch";
-import { sendGTMEvent } from "@next/third-parties/google";
+// import { sendGTMEvent } from "@next/third-parties/google";
 import { Check, Copy, Percent, Star, X } from "lucide-react";
 import dynamic from "next/dynamic";
 import Image from "next/image";
