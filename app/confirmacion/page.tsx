@@ -32,7 +32,7 @@ interface CheckoutSession {
 async function getCheckoutSession(sessionId: string): Promise<CheckoutSession> {
   try {
     const response = await fetch(
-      `http://localhost:3000/api/checkout_sessions?session_id=${sessionId}`,
+      `https://nutralech.com/api/checkout_sessions?session_id=${sessionId}`,
       {
         method: "GET",
         cache: "no-store",
