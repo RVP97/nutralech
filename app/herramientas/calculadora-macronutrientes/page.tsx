@@ -9,7 +9,7 @@ export async function generateMetadata() {
   return generatePageMetadata({
     title: "Calculadora de Macronutrientes",
     description:
-      "Calcula tu distribución óptima de macronutrientes para tu dieta.",
+      "Calcula tu distribución óptima de macronutrientes para tu dieta. Herramienta desarrollada por Nutralech.",
     keywords: [
       "salud, bienestar, calculadora, imc, nutrición, consejos, recetas, asesoría, personalizada, nutralech, marialy alonso, nutriologa",
     ],
@@ -301,8 +301,15 @@ export default function MacroCalculatorPage() {
       <div className="mt-8 text-center max-w-2xl mx-auto">
         <p className="text-muted-foreground mb-4">
           Recuerda que el IMC es solo una guía general. Para una evaluación más
-          precisa de tu salud y un plan personalizado, consulta con un
-          profesional médico.
+          precisa de tu salud y un plan personalizado,{" "}
+          <Link
+            prefetch={false}
+            href="/#precios"
+            className="text-blue-600 hover:underline"
+          >
+            agenda tu consulta
+          </Link>{" "}
+          conmigo.
         </p>
       </div>
 

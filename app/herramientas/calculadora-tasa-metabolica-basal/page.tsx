@@ -9,23 +9,23 @@ import {
 import { generatePageMetadata } from "@/lib/generateMetadata";
 import { Activity, Apple, Book, Calendar, Info } from "lucide-react";
 import Link from "next/link";
-import { CalorieCalculator } from "./calorie-calculator";
+import { BMRCalculator } from "./bmr-calculator";
 
 export async function generateMetadata() {
   return generatePageMetadata({
-    title: "Calculadora de Calorías",
+    title: "Calculadora de Tasa Metabólica Basal",
     description:
-      "Calcula tus necesidades calóricas diarias y ajusta tu dieta para alcanzar tus objetivos. Herramienta desarrollada por Nutralech.",
+      "Calcula tu tasa metabólica basal (TMB) y conoce las calorías que tu cuerpo necesita en reposo. Herramienta desarrollada por Nutralech.",
     keywords: [
-      "salud, bienestar, calculadora, imc, nutrición, consejos, recetas, asesoría, personalizada, nutralech, marialy alonso, nutriologa",
+      "tasa metabólica basal, TMB, metabolismo, calorías en reposo, nutrición, salud, nutralech, marialy alonso, nutriologa",
     ],
     openGraph: {
-      url: "https://www.nutralech.com/herramientas/calculadora-calorias",
+      url: "https://www.nutralech.com/herramientas/calculadora-tasa-metabolica-basal",
     },
   });
 }
 
-export default function CalorieCalculatorPage() {
+export default function BMRCalculatorPage() {
   return (
     <div className="max-w-7xl mx-auto px-4 py-20">
       <nav className="flex items-center gap-2 text-sm text-muted-foreground mb-8">
@@ -33,7 +33,9 @@ export default function CalorieCalculatorPage() {
         <span>{">"}</span>
         <Link href="/herramientas">Herramientas</Link>
         <span>{">"}</span>
-        <span className="text-foreground">Calculadora de Calorías</span>
+        <span className="text-foreground">
+          Calculadora de Tasa Metabólica Basal
+        </span>
       </nav>
 
       <div className="text-center mb-12">
@@ -41,57 +43,45 @@ export default function CalorieCalculatorPage() {
           HERRAMIENTAS
         </div>
         <h1 className="text-4xl font-bold tracking-tight mb-4">
-          Calculadora de Calorías
+          Calculadora de Tasa Metabólica Basal
         </h1>
         <p className="text-xl text-muted-foreground max-w-[800px] mx-auto">
-          Calcula tus necesidades calóricas diarias de manera fácil y rápida.
-          Obtén una estimación precisa basada en tu perfil personal y objetivos
-          de peso.
+          Calcula las calorías que tu cuerpo necesita en reposo. Conoce tu
+          metabolismo basal para planificar mejor tu nutrición y objetivos de
+          salud.
         </p>
       </div>
 
       <div className="grid lg:grid-cols-2 gap-6">
-        <CalorieCalculator />
+        <BMRCalculator />
 
         <div className="space-y-6">
           <Card>
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <Info className="h-5 w-5" />
-                Entendiendo el Balance Calórico
+                ¿Qué es la Tasa Metabólica Basal?
               </CardTitle>
             </CardHeader>
             <CardContent>
               <p className="mb-3">
-                El balance calórico es la relación entre las calorías que
-                consumes y las que gastas. Un ajuste moderado es clave para
-                resultados saludables y sostenibles:
+                La Tasa Metabólica Basal (TMB) representa la cantidad mínima de
+                energía que tu cuerpo necesita para mantener sus funciones
+                vitales en reposo:
               </p>
               <ul className="list-disc pl-5 space-y-2">
                 <li>
-                  <strong>Balance Negativo (Pérdida):</strong> Un déficit de
-                  250-500 calorías/día resulta en una pérdida de 0.25-0.5kg por
-                  semana. Déficits mayores pueden provocar pérdida de masa
-                  muscular y ralentización metabólica.
-                </li>
-                <li>
-                  <strong>Balance Neutro (Mantenimiento):</strong> Consumir las
-                  mismas calorías que gastas mantiene tu peso actual. Ideal para
-                  estabilizar el peso y mejorar la composición corporal.
-                </li>
-                <li>
-                  <strong>Balance Positivo (Ganancia):</strong> Un superávit de
-                  250-500 calorías/día permite ganar 0.25-0.5kg por semana.
-                  Superávits mayores pueden resultar en ganancia excesiva de
-                  grasa corporal.
+                  <strong>Funciones Básicas:</strong> Mantiene procesos como la
+                  respiración, circulación sanguínea, regulación de temperatura
+                  y funcionamiento de órganos.
                 </li>
                 <li>
                   <strong>Factores Influyentes:</strong>
                   <ul className="list-none mt-1 ml-4 text-muted-foreground">
-                    <li>• Metabolismo basal (65-75% del gasto total)</li>
-                    <li>• Actividad física (15-30% del gasto)</li>
-                    <li>• Efecto térmico de los alimentos (10% del gasto)</li>
-                    <li>• Composición corporal y masa muscular</li>
+                    <li>• Edad (disminuye con los años)</li>
+                    <li>• Masa muscular (mayor músculo = mayor TMB)</li>
+                    <li>• Género (varía según composición corporal)</li>
+                    <li>• Genética y hormonas</li>
                   </ul>
                 </li>
               </ul>
@@ -102,17 +92,55 @@ export default function CalorieCalculatorPage() {
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <Activity className="h-5 w-5" />
-                Consejos para el Balance Calórico
+                Cómo Usar tu TMB
               </CardTitle>
+              <CardDescription>
+                Tu TMB es el punto de partida para calcular tus necesidades
+                calóricas diarias totales.
+              </CardDescription>
             </CardHeader>
             <CardContent>
-              <ul className="list-disc pl-5 space-y-1">
-                <li>Come una variedad de alimentos nutritivos.</li>
-                <li>Controla el tamaño de las porciones.</li>
-                <li>Mantén un registro de tu ingesta calórica.</li>
-                <li>Combina una dieta equilibrada con ejercicio regular.</li>
-                <li>Ajusta tu ingesta según tus objetivos de salud y peso.</li>
-              </ul>
+              <div className="space-y-4">
+                <div>
+                  <h3 className="font-medium mb-2">
+                    1. Calcula tus calorías diarias totales
+                  </h3>
+                  <p className="text-muted-foreground mb-2">
+                    Multiplica tu TMB por tu factor de actividad:
+                  </p>
+                  <ul className="list-disc pl-5 space-y-1 text-sm text-muted-foreground">
+                    <li>Sedentario (poco o ningún ejercicio): TMB × 1.2</li>
+                    <li>Ejercicio ligero (1-3 días/semana): TMB × 1.375</li>
+                    <li>Ejercicio moderado (3-5 días/semana): TMB × 1.55</li>
+                    <li>Ejercicio intenso (6-7 días/semana): TMB × 1.725</li>
+                    <li>Ejercicio muy intenso: TMB × 1.9</li>
+                  </ul>
+                </div>
+
+                <div>
+                  <h3 className="font-medium mb-2">
+                    2. Ajusta según tus objetivos
+                  </h3>
+                  <ul className="list-disc pl-5 space-y-1 text-sm text-muted-foreground">
+                    <li>Mantener peso: Consume las calorías calculadas</li>
+                    <li>Perder peso: Reduce 300-500 calorías del total</li>
+                    <li>Ganar peso: Aumenta 300-500 calorías al total</li>
+                  </ul>
+                </div>
+
+                <div className="text-sm text-muted-foreground border-t pt-4">
+                  <strong className="text-foreground">Importante:</strong> Estos
+                  cálculos son estimaciones. Ajusta según tu progreso y{" "}
+                  <Link
+                    prefetch={false}
+                    href="/#precios"
+                    className="text-blue-600 hover:underline"
+                  >
+                    agenda tu consulta
+                  </Link>{" "}
+                  conmigo para un plan personalizado.
+                </div>
+              </div>
             </CardContent>
           </Card>
 
@@ -155,22 +183,35 @@ export default function CalorieCalculatorPage() {
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Apple className="h-5 w-5" />
-            Alimentación Balanceada
+            Optimizando tu TMB con la Alimentación
           </CardTitle>
         </CardHeader>
         <CardContent>
           <p>
-            Una alimentación balanceada es clave para una buena salud,
-            independientemente de tu objetivo de peso:
+            Tu alimentación puede influir significativamente en tu tasa
+            metabólica basal. Aquí algunos puntos clave para optimizarla:
           </p>
           <ul className="list-disc pl-5 space-y-1">
-            <li>Incluye una variedad de frutas y verduras en cada comida.</li>
-            <li>Opta por granos integrales y proteínas magras.</li>
-            <li>Incorpora grasas saludables en cantidades moderadas.</li>
             <li>
-              Limita el consumo de alimentos procesados y azúcares añadidos.
+              Consume proteína en cada comida para mantener y desarrollar masa
+              muscular, lo que aumenta tu TMB.
             </li>
-            <li>Mantente hidratado bebiendo suficiente agua durante el día.</li>
+            <li>
+              Mantén un horario regular de comidas para estabilizar tu
+              metabolismo.
+            </li>
+            <li>
+              Incluye alimentos termogénicos como chile, jengibre y té verde que
+              pueden estimular temporalmente el metabolismo.
+            </li>
+            <li>
+              No restrinjas demasiado las calorías, ya que esto puede ralentizar
+              tu TMB.
+            </li>
+            <li>
+              Combina tu alimentación con ejercicio de resistencia para aumentar
+              tu masa muscular y, por ende, tu TMB.
+            </li>
           </ul>
         </CardContent>
       </Card>

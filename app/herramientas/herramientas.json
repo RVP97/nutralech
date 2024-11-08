@@ -26,5 +26,12 @@
     "link": "/herramientas/calculadora-macronutrientes",
     "category": "Nutrición",
     "tags": ["Macronutrientes", "Nutrición"]
+  },
+  {
+    "title": "Calculadora de Tasa Metabólica Basal",
+    "description": "Calcula tu tasa metabólica basal y conoce las calorías que tu cuerpo necesita en reposo.",
+    "link": "/herramientas/calculadora-tasa-metabolica-basal",
+    "category": "Nutrición",
+    "tags": ["Tasa Metabólica Basal", "TMB"]
   }
 ]

@@ -181,8 +181,15 @@ export default function HydrationCalculatorPage() {
       <div className="mt-8 text-center max-w-2xl mx-auto">
         <p className="text-muted-foreground mb-4">
           Recuerda que esta calculadora proporciona una estimación. Para un plan
-          de hidratación personalizado que se ajuste a tus necesidades, consulta
-          con un profesional de la salud.
+          de hidratación personalizado que se ajuste a tus necesidades,{" "}
+          <Link
+            prefetch={false}
+            href="/#precios"
+            className="text-blue-600 hover:underline"
+          >
+            agenda tu consulta
+          </Link>{" "}
+          conmigo.
         </p>
       </div>
 
