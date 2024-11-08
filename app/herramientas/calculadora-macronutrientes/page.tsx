@@ -222,24 +222,31 @@ export default function MacroCalculatorPage() {
             <CardContent>
               <ul className="space-y-2">
                 <li>
-                  <a href="#" className="text-blue-600 hover:underline">
-                    Guía de Timing de Macronutrientes
-                  </a>
+                  <Link
+                    prefetch={false}
+                    href="/herramientas/calculadora-calorias"
+                    className="text-blue-600 hover:underline"
+                  >
+                    Calculadora de Calorías
+                  </Link>
                 </li>
                 <li>
-                  <a href="#" className="text-blue-600 hover:underline">
-                    Planificación de Comidas según Macros
-                  </a>
+                  <Link
+                    prefetch={false}
+                    href="/herramientas/calculadora-hidratacion"
+                    className="text-blue-600 hover:underline"
+                  >
+                    Calculadora de Hidratación
+                  </Link>
                 </li>
                 <li>
-                  <a href="#" className="text-blue-600 hover:underline">
-                    Recetas Altas en Proteína
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="text-blue-600 hover:underline">
-                    Consulta Nutricional Personalizada
-                  </a>
+                  <Link
+                    prefetch={false}
+                    href="/herramientas/calculadora-imc"
+                    className="text-blue-600 hover:underline"
+                  >
+                    Calculadora de IMC
+                  </Link>
                 </li>
               </ul>
             </CardContent>
