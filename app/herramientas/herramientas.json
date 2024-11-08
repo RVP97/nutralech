@@ -33,5 +33,12 @@
     "link": "/herramientas/calculadora-tasa-metabolica-basal",
     "category": "Nutrición",
     "tags": ["Tasa Metabólica Basal", "TMB"]
+  },
+  {
+    "title": "Calculadora de Peso Ideal",
+    "description": "Calcula tu peso ideal y conoce las recomendaciones para tu salud.",
+    "link": "/herramientas/calculadora-peso-ideal",
+    "category": "Mediciones",
+    "tags": ["Peso Ideal", "Salud"]
   }
 ]
