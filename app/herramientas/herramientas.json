@@ -19,5 +19,12 @@
     "link": "/herramientas/calculadora-hidratacion",
     "category": "Nutrición",
     "tags": ["Hidratación", "Agua"]
+  },
+  {
+    "title": "Calculadora de Macronutrientes",
+    "description": "Calcula tu distribución óptima de macronutrientes para tu dieta.",
+    "link": "/herramientas/calculadora-macronutrientes",
+    "category": "Nutrición",
+    "tags": ["Macronutrientes", "Nutrición"]
   }
 ]
