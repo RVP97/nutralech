@@ -32,10 +32,16 @@ function getCalorieSuggestion(
   height: string,
   weight: string,
   weightGoal: string,
-  activityLevel: string
+  activityLevel: string,
+  unitSystem: string
 ): NutritionRecommendation {
   const heightCm = parseFloat(height);
-  const weightKg = parseFloat(weight);
+  const weightKg =
+    unitSystem === "metric"
+      ? parseFloat(weight)
+      : parseFloat(weight) * 0.453592;
+  const displayWeight = unitSystem === "metric" ? weightKg : parseFloat(weight);
+  const weightUnit = unitSystem === "metric" ? "kg" : "lb";
   const bmi = weightKg / ((heightCm / 100) * (heightCm / 100));
   const isUnderweight = bmi < 18.5;
   const isOverweight = bmi > 25;
@@ -43,7 +49,7 @@ function getCalorieSuggestion(
   if (calories < 1200) {
     return {
       title: "Precaución: Nivel Muy Bajo de Calorías",
-      description: `Este nivel de calorías está por debajo de lo recomendado para una persona de ${heightCm}cm y ${weightKg}kg. ${
+      description: `Este nivel de calorías está por debajo de lo recomendado para una persona de ${heightCm}cm y ${displayWeight}${weightUnit}. ${
         isUnderweight
           ? "Especialmente considerando que tu IMC indica que podrías estar en bajo peso, "
           : ""
@@ -58,14 +64,11 @@ function getCalorieSuggestion(
   }
 
   if (weightGoal.includes("lose")) {
-    const baseDesc =
-      gender === "female"
-        ? `Para una mujer de ${heightCm}cm, este nivel calórico permite una pérdida de peso saludable${
-            isOverweight ? ", especialmente considerando tu IMC actual" : ""
-          }.`
-        : `Para un hombre de ${heightCm}cm, este rango calórico permite una pérdida de peso gradual${
-            isOverweight ? ", apropiada para tu IMC actual" : ""
-          }.`;
+    const baseDesc = `Para ${
+      gender === "female" ? "una mujer" : "un hombre"
+    } de ${heightCm}cm, este nivel calórico permite una pérdida de peso saludable${
+      isOverweight ? ", especialmente considerando tu IMC actual" : ""
+    }.`;
 
     return {
       title:
@@ -74,13 +77,17 @@ function getCalorieSuggestion(
           : "Déficit Calórico Moderado",
       description: `${baseDesc} ${
         weightGoal === "loseExtreme"
-          ? "Con un déficit de 500 calorías, podrías perder aproximadamente 0.5kg por semana."
-          : "Con un déficit de 250 calorías, podrías perder aproximadamente 0.25kg por semana."
+          ? `Con un déficit de 500 calorías, podrías perder aproximadamente ${
+              unitSystem === "metric" ? "0.5kg" : "1lb"
+            } por semana.`
+          : `Con un déficit de 250 calorías, podrías perder aproximadamente ${
+              unitSystem === "metric" ? "0.25kg" : "0.5lb"
+            } por semana.`
       }`,
       keyPoints: [
         `Asegura una ingesta mínima de ${
           gender === "female" ? "1.6" : "1.8"
-        }g de proteína por kg de peso`,
+        }g de proteína por ${weightUnit} de peso`,
         "Distribuye tus calorías en 4-5 comidas para controlar el hambre",
         "Prioriza alimentos ricos en fibra para mayor saciedad",
         `Mantén una hidratación de ${
@@ -119,7 +126,7 @@ function getCalorieSuggestion(
   // For maintenance
   return {
     title: "Mantenimiento del Peso Actual",
-    description: `Este nivel calórico está diseñado para mantener tu peso actual de ${weightKg}kg. ${
+    description: `Este nivel calórico está diseñado para mantener tu peso actual de ${displayWeight}${weightUnit}. ${
       isUnderweight
         ? "Considera aumentar gradualmente tus calorías para alcanzar un peso más saludable."
         : isOverweight
@@ -145,11 +152,14 @@ export function CalorieCalculator() {
   const [activityLevel, setActivityLevel] = useState("sedentary");
   const [weightGoal, setWeightGoal] = useState("maintain");
   const [calories, setCalories] = useState<number | null>(null);
+  const [recommendation, setRecommendation] =
+    useState<NutritionRecommendation | null>(null);
   const [errors, setErrors] = useState({
     age: "",
     height: "",
     weight: "",
   });
+  const [unitSystem, setUnitSystem] = useState("metric");
 
   const calculateCalories = () => {
     // Reset all errors
@@ -178,18 +188,33 @@ export function CalorieCalculator() {
 
     if (hasErrors) return;
 
+    // Convert measurements if needed
+    let heightInCm: number;
+    let weightInKg: number;
+
+    if (unitSystem === "metric") {
+      heightInCm = parseFloat(height);
+      weightInKg = parseFloat(weight);
+    } else {
+      // Convert height from ft-in to cm
+      const [feet, inches] = height.split("-").map(Number);
+      heightInCm = feet * 30.48 + inches * 2.54;
+      // Convert weight from lb to kg
+      weightInKg = parseFloat(weight) * 0.453592;
+    }
+
     let bmr: number;
     if (gender === "male") {
       bmr =
         88.362 +
-        13.397 * parseFloat(weight) +
-        4.799 * parseFloat(height) -
+        13.397 * weightInKg +
+        4.799 * heightInCm -
         5.677 * parseFloat(age);
     } else {
       bmr =
         447.593 +
-        9.247 * parseFloat(weight) +
-        3.098 * parseFloat(height) -
+        9.247 * weightInKg +
+        3.098 * heightInCm -
         4.33 * parseFloat(age);
     }
 
@@ -233,7 +258,21 @@ export function CalorieCalculator() {
         break;
     }
 
-    setCalories(Math.round(totalCalories));
+    const calculatedCalories = Math.round(totalCalories);
+    setCalories(calculatedCalories);
+
+    // Update recommendation only when calculating
+    setRecommendation(
+      getCalorieSuggestion(
+        calculatedCalories,
+        gender,
+        height,
+        weight,
+        weightGoal,
+        activityLevel,
+        unitSystem
+      )
+    );
   };
 
   return (
@@ -272,25 +311,69 @@ export function CalorieCalculator() {
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="height">Altura (cm)</Label>
-            <Input
-              id="height"
-              type="number"
-              placeholder="170"
-              value={height}
-              onChange={(e) => setHeight(e.target.value)}
-            />
+            <Label htmlFor="unitSystem">Sistema de Medidas</Label>
+            <Select value={unitSystem} onValueChange={setUnitSystem}>
+              <SelectTrigger id="unitSystem">
+                <SelectValue placeholder="Selecciona el sistema" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="metric">Métrico (cm/kg)</SelectItem>
+                <SelectItem value="imperial">Imperial (ft-in/lb)</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="height">
+              Altura ({unitSystem === "metric" ? "cm" : "ft-in"})
+            </Label>
+            {unitSystem === "metric" ? (
+              <Input
+                id="height"
+                type="number"
+                placeholder="170"
+                value={height}
+                onChange={(e) => setHeight(e.target.value)}
+              />
+            ) : (
+              <div className="flex gap-2">
+                <Input
+                  id="heightFt"
+                  type="number"
+                  placeholder="5"
+                  value={height.split("-")[0] || ""}
+                  onChange={(e) =>
+                    setHeight(
+                      `${e.target.value}-${height.split("-")[1] || "0"}`
+                    )
+                  }
+                />
+                <Input
+                  id="heightIn"
+                  type="number"
+                  placeholder="8"
+                  value={height.split("-")[1] || ""}
+                  onChange={(e) =>
+                    setHeight(
+                      `${height.split("-")[0] || "0"}-${e.target.value}`
+                    )
+                  }
+                />
+              </div>
+            )}
             {errors.height && (
               <p className="text-sm text-red-500">{errors.height}</p>
             )}
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="weight">Peso (kg)</Label>
+            <Label htmlFor="weight">
+              Peso ({unitSystem === "metric" ? "kg" : "lb"})
+            </Label>
             <Input
               id="weight"
               type="number"
-              placeholder="70"
+              placeholder={unitSystem === "metric" ? "70" : "154"}
               value={weight}
               onChange={(e) => setWeight(e.target.value)}
             />
@@ -424,7 +507,7 @@ export function CalorieCalculator() {
           </Button>
         </div>
 
-        {calories && (
+        {calories && recommendation && (
           <div className="space-y-4">
             <div className="rounded-lg border p-4 space-y-2">
               <div className="flex items-center gap-2">
@@ -439,44 +522,17 @@ export function CalorieCalculator() {
             <div className="rounded-lg bg-gray-50 p-4 space-y-3">
               <div className="flex items-center gap-2">
                 <Info className="h-5 w-5 text-muted-foreground" />
-                <span className="font-medium">
-                  {
-                    getCalorieSuggestion(
-                      calories,
-                      gender,
-                      height,
-                      weight,
-                      weightGoal,
-                      activityLevel
-                    ).title
-                  }
-                </span>
+                <span className="font-medium">{recommendation.title}</span>
               </div>
               <p className="text-sm text-muted-foreground leading-relaxed">
-                {
-                  getCalorieSuggestion(
-                    calories,
-                    gender,
-                    height,
-                    weight,
-                    weightGoal,
-                    activityLevel
-                  ).description
-                }
+                {recommendation.description}
               </p>
               <div className="pt-2 space-y-2">
                 <div className="text-sm font-medium">
                   Recomendaciones personalizadas:
                 </div>
                 <ul className="list-disc pl-5 space-y-1">
-                  {getCalorieSuggestion(
-                    calories,
-                    gender,
-                    height,
-                    weight,
-                    weightGoal,
-                    activityLevel
-                  ).keyPoints.map((point, index) => (
+                  {recommendation.keyPoints.map((point, index) => (
                     <li key={index} className="pl-1 marker:text-foreground">
                       {point}
                     </li>

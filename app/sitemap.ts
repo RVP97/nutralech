@@ -1,9 +1,17 @@
 import type { MetadataRoute } from "next";
+import tools from "./herramientas/herramientas.json";
 
 const baseUrl = "https://www.nutralech.com";
 
+type SitemapEntry = {
+  url: string;
+  lastModified: Date;
+  changeFrequency: MetadataRoute.Sitemap[number]["changeFrequency"];
+  priority: number;
+};
+
 export default function sitemap(): MetadataRoute.Sitemap {
-  return [
+  const routes: SitemapEntry[] = [
     {
       url: baseUrl,
       lastModified: new Date(),
@@ -34,23 +42,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "monthly",
       priority: 0.7,
     },
-    {
-      url: `${baseUrl}/herramientas/calculadora-imc`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.7,
-    },
-    {
-      url: `${baseUrl}/herramientas/calculadora-calorias`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.7,
-    },
-    {
-      url: `${baseUrl}/herramientas/calculadora-hidratacion`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.7,
-    },
   ];
+
+  const toolRoutes: SitemapEntry[] = tools.map((tool) => ({
+    url: `${baseUrl}${tool.link}`,
+    lastModified: new Date(),
+    changeFrequency: "monthly",
+    priority: 0.7,
+  }));
+
+  return [...routes, ...toolRoutes] as MetadataRoute.Sitemap;
 }
