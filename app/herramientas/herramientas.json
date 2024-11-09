@@ -40,5 +40,12 @@
     "link": "/herramientas/calculadora-peso-ideal",
     "category": "Mediciones",
     "tags": ["Peso Ideal", "Salud"]
+  },
+  {
+    "title": "Calculadora de Proteína Diaria",
+    "description": "Calcula tus necesidades diarias de proteína basado en tu peso, nivel de actividad y objetivos.",
+    "link": "/herramientas/calculadora-proteina",
+    "category": "Nutrición",
+    "tags": ["Proteína", "Nutrición Deportiva"]
   }
 ]
