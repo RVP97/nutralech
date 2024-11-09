@@ -47,5 +47,19 @@
     "link": "/herramientas/calculadora-proteina",
     "category": "Nutrición",
     "tags": ["Proteína", "Nutrición Deportiva"]
+  },
+  {
+    "title": "Calculadora de Frecuencia Cardíaca",
+    "description": "Calcula tus zonas de frecuencia cardíaca para optimizar tu entrenamiento.",
+    "link": "/herramientas/calculadora-frecuencia-cardiaca",
+    "category": "Entrenamiento",
+    "tags": ["Frecuencia Cardíaca", "Entrenamiento"]
+  },
+  {
+    "title": "Calculadora de Relación Cintura-Cadera",
+    "description": "Calcula tu relación cintura-cadera y evalúa tu riesgo de enfermedades cardiovasculares.",
+    "link": "/herramientas/calculadora-relacion-cintura-cadera",
+    "category": "Mediciones",
+    "tags": ["Cintura-Cadera", "Salud"]
   }
 ]
