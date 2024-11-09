@@ -138,24 +138,40 @@ export default function BMICalculatorPage() {
             <CardContent>
               <ul className="space-y-2">
                 <li>
-                  <a href="#" className="text-blue-600 hover:underline">
-                    Guía de Nutrición Balanceada
-                  </a>
+                  <Link
+                    href="/herramientas/calculadora-calorias"
+                    prefetch={false}
+                    className="text-blue-600 hover:underline"
+                  >
+                    Calculadora de Calorías
+                  </Link>
                 </li>
                 <li>
-                  <a href="#" className="text-blue-600 hover:underline">
-                    Programa de Ejercicios para Principiantes
-                  </a>
+                  <Link
+                    href="/herramientas/calculadora-tasa-metabolica-basal"
+                    prefetch={false}
+                    className="text-blue-600 hover:underline"
+                  >
+                    Calculadora de Tasa Metabólica Basal
+                  </Link>
                 </li>
                 <li>
-                  <a href="#" className="text-blue-600 hover:underline">
-                    Técnicas de Manejo del Estrés
-                  </a>
+                  <Link
+                    href="/herramientas/calculadora-hidratacion"
+                    prefetch={false}
+                    className="text-blue-600 hover:underline"
+                  >
+                    Calculadora de Hidratación
+                  </Link>
                 </li>
                 <li>
-                  <a href="#" className="text-blue-600 hover:underline">
-                    Consulta con Nutricionistas
-                  </a>
+                  <Link
+                    href="/herramientas/calculadora-proteina"
+                    prefetch={false}
+                    className="text-blue-600 hover:underline"
+                  >
+                    Calculadora de Proteína Diaria
+                  </Link>
                 </li>
               </ul>
             </CardContent>

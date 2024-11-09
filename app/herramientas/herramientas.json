@@ -61,5 +61,12 @@
     "link": "/herramientas/calculadora-relacion-cintura-cadera",
     "category": "Mediciones",
     "tags": ["Cintura-Cadera", "Salud"]
+  },
+  {
+    "title": "Calculadora de Calorías Quemadas por Actividad",
+    "description": "Calcula las calorías quemadas durante diferentes actividades físicas y ejercicios.",
+    "link": "/herramientas/calculadora-calorias-quemadas-por-actividad",
+    "category": "Entrenamiento",
+    "tags": ["Calorías Quemadas", "Actividad Física"]
   }
 ]
