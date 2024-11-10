@@ -1,6 +1,6 @@
 "use client";
 
-import { Home, Menu, Phone, User, Utensils, Wrench } from "lucide-react";
+import { Home, Menu, Pen, Phone, User, Utensils, Wrench } from "lucide-react";
 import Link from "next/link";
 import * as React from "react";
 
@@ -27,6 +27,7 @@ export default function Component() {
             label: "Herramientas",
             href: "/herramientas",
           },
+          { id: "blog", icon: Pen, label: "Blog", href: "/blog" },
           { id: "contacto", icon: Phone, label: "Contacto", href: "/contacto" },
         ].map(({ id, icon: Icon, label, href }) => (
           <div key={id} className="relative">

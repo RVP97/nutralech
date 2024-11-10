@@ -1,3 +1,4 @@
+import { getPosts } from "@/lib/posts";
 import type { MetadataRoute } from "next";
 import tools from "./herramientas/herramientas.json";
 
@@ -10,7 +11,7 @@ type SitemapEntry = {
   priority: number;
 };
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const routes: SitemapEntry[] = [
     {
       url: baseUrl,
@@ -42,6 +43,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "monthly",
       priority: 0.7,
     },
+    {
+      url: `${baseUrl}/blog`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.7,
+    },
   ];
 
   const toolRoutes: SitemapEntry[] = tools.map((tool) => ({
@@ -51,5 +58,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.7,
   }));
 
-  return [...routes, ...toolRoutes] as MetadataRoute.Sitemap;
+  const posts = await getPosts();
+  const postRoutes: SitemapEntry[] = posts.map((post) => ({
+    url: `${baseUrl}/blog/${post.slug}`,
+    lastModified: new Date(post.publishDate),
+    changeFrequency: "monthly",
+    priority: 0.7,
+  }));
+
+  return [...routes, ...toolRoutes, ...postRoutes] as MetadataRoute.Sitemap;
 }
