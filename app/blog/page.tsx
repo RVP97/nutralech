@@ -7,9 +7,9 @@ import Link from "next/link";
 
 export async function generateMetadata() {
   return generatePageMetadata({
-    title: "Blog | Nutralech",
+    title: "Blog de Nutrición por Marialy Alonso",
     description:
-      "Artículos sobre nutrición, salud y bienestar por Marialy Alonso.",
+      "Artículos sobre nutrición, salud y bienestar basados en estudios científicos y experiencias prácticas de Marialy Alonso.",
     keywords: [
       "blog, nutrición, salud, bienestar, consejos, recetas, nutralech, marialy alonso",
     ],
