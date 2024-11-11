@@ -24,7 +24,7 @@ export async function generateMetadata({ params }: BlogPostPageProps) {
   try {
     const post = await getPost(slug);
     return generatePageMetadata({
-      title: `${post.title} | Blog Nutralech`,
+      title: `${post.title}`,
       description: post.seoDescription || post.title,
       keywords: ["blog", "nutrición", ...(post.categories || [])],
       openGraph: {
