@@ -19,7 +19,7 @@ export function Posts({ posts }: BlogCardsProps) {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       {posts.map((post) => (
-        <Card key={post.slug} className="h-full">
+        <Card key={post.slug} className="flex flex-col h-full">
           <div className="h-2 bg-[#DA5F6F]" />
           <CardHeader>
             <h2 className="text-2xl font-bold text-black mb-2">
@@ -42,7 +42,7 @@ export function Posts({ posts }: BlogCardsProps) {
               ))}
             </div>
           </CardHeader>
-          <CardContent>
+          <CardContent className="flex-grow">
             {post.excerpt && (
               <p className="text-muted-foreground mb-4">{post.excerpt}</p>
             )}
@@ -69,18 +69,27 @@ export function Posts({ posts }: BlogCardsProps) {
               </div>
             )}
           </CardContent>
-          <CardFooter className="flex flex-col sm:flex-row justify-between items-center gap-4 mt-auto">
+          <CardFooter className="flex flex-col sm:flex-row justify-between items-center gap-4">
             <div className="text-sm text-muted-foreground flex items-center">
               <CalendarIcon className="mr-1 h-4 w-4 text-[#DA5F6F]" />
               <time dateTime={post.publishDate}>
-                {new Date(post.publishDate).toLocaleDateString("es-MX", {
-                  year: "numeric",
-                  month: "long",
-                  day: "numeric",
-                })}
+                {(() => {
+                  const [day, month, year] = post.publishDate.split("/");
+                  return new Date(`${year}-${month}-${day}`).toLocaleDateString(
+                    "es-MX",
+                    {
+                      year: "numeric",
+                      month: "long",
+                      day: "numeric",
+                    }
+                  );
+                })()}
               </time>
             </div>
-            <Link href={`/blog/${post.slug}`} className="w-full sm:w-auto">
+            <Link
+              href={`/blog/${post.slug}`}
+              className="w-full sm:w-auto mt-auto"
+            >
               <Button className="bg-[#DA5F6F] text-white hover:bg-[#C54E5E] w-full">
                 Leer Artículo
               </Button>

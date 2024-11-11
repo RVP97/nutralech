@@ -55,14 +55,14 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
   try {
     const post = await getPost(slug);
-    const formattedDate = new Date(post.publishDate).toLocaleDateString(
-      "es-MX",
-      {
+    const formattedDate = (() => {
+      const [day, month, year] = post.publishDate.split("/");
+      return new Date(`${year}-${month}-${day}`).toLocaleDateString("es-MX", {
         year: "numeric",
         month: "long",
         day: "numeric",
-      }
-    );
+      });
+    })();
 
     return (
       <div className="">

@@ -48,7 +48,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     ),
     // Lists
     ul: ({ children, ...props }) => (
-      <ul {...props} className="list-disc list-inside mb-6 space-y-2 pl-4">
+      <ul {...props} className="list-disc pl-6 mb-6 space-y-2">
         {children}
       </ul>
     ),
@@ -58,7 +58,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
       </ol>
     ),
     li: ({ children, ...props }) => (
-      <li {...props} className="text-gray-700">
+      <li {...props} className="text-gray-700 marker:text-gray-500">
         {children}
       </li>
     ),
