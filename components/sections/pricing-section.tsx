@@ -74,7 +74,7 @@ export default function PricingSection() {
         { name: "Evaluación nutricional completa", cross: false },
         { name: "Plan alimenticio personalizado", cross: false },
         { name: "Recomendaciones de suplementación", cross: false },
-        { name: "Seguimiento recomendado cada 3 semanas", cross: false },
+        { name: "Seguimiento recomendado cada 2 semanas", cross: false },
         {
           name: "Soporte por chat ilimitado (directamente con Marialy)",
           cross: false,
@@ -94,7 +94,7 @@ export default function PricingSection() {
         { name: "Evaluación nutricional completa", cross: false },
         { name: "Plan alimenticio personalizado", cross: false },
         { name: "Recomendaciones de suplementación", cross: false },
-        { name: "Seguimiento recomendado cada 3 semanas", cross: false },
+        { name: "Seguimiento recomendado cada 2 semanas", cross: false },
         {
           name: "Soporte por chat ilimitado (directamente con Marialy)",
           cross: false,
@@ -115,7 +115,7 @@ export default function PricingSection() {
         { name: "Cuestionario de evaluación", cross: false },
         { name: "Plan alimenticio personalizado", cross: false },
         { name: "Recomendaciones de suplementación", cross: false },
-        { name: "Seguimiento recomendado cada 3 semanas", cross: false },
+        { name: "Seguimiento recomendado cada 2 semanas", cross: false },
         { name: "Video llamada de 1 hora con Marialy", cross: true },
         { name: "Soporte por chat ilimitado", cross: true },
         { name: "Soporte prioritario 24/7", cross: true },
@@ -139,7 +139,7 @@ export default function PricingSection() {
         { name: "Evaluación nutricional completa", cross: false },
         { name: "Plan alimenticio personalizado", cross: false },
         { name: "Recomendaciones de suplementación", cross: false },
-        { name: "Seguimiento recomendado cada 3 semanas", cross: false },
+        { name: "Seguimiento recomendado cada 2 semanas", cross: false },
         {
           name: "Soporte por chat ilimitado (directamente con Marialy)",
           cross: false,
@@ -162,7 +162,7 @@ export default function PricingSection() {
         { name: "Evaluación nutricional completa", cross: false },
         { name: "Plan alimenticio personalizado", cross: false },
         { name: "Recomendaciones de suplementación", cross: false },
-        { name: "Seguimiento recomendado cada 3 semanas", cross: false },
+        { name: "Seguimiento recomendado cada 2 semanas", cross: false },
         {
           name: "Soporte por chat ilimitado (directamente con Marialy)",
           cross: false,
@@ -186,7 +186,7 @@ export default function PricingSection() {
         { name: "Evaluación nutricional completa", cross: false },
         { name: "Plan alimenticio personalizado", cross: false },
         { name: "Recomendaciones de suplementación", cross: false },
-        { name: "Seguimiento recomendado cada 3 semanas", cross: false },
+        { name: "Seguimiento recomendado cada 2 semanas", cross: false },
         {
           name: "Soporte por chat ilimitado (directamente con Marialy)",
           cross: false,
@@ -209,7 +209,7 @@ export default function PricingSection() {
     //     { name: "Evaluación nutricional completa", cross: false },
     //     { name: "Plan alimenticio personalizado", cross: false },
     //     { name: "Recomendaciones de suplementación", cross: false },
-    //     { name: "Seguimiento recomendado cada 3 semanas", cross: false },
+    //     { name: "Seguimiento recomendado cada 2 semanas", cross: false },
     //     {
     //       name: "Soporte por chat ilimitado (directamente con Marialy)",
     //       cross: false,
