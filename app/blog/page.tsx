@@ -37,7 +37,9 @@ export default async function BlogPage() {
             Artículos escritos por una nutricionista experta.
           </p>
         </div>
-        <Posts posts={posts} />
+        <div id="blog-posts">
+          <Posts posts={posts} />
+        </div>
         <div className="mt-16 text-center">
           <h2 className="text-2xl font-medium mb-4">
             ¿Necesitas ayuda personalizada?

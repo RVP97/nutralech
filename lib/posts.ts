@@ -19,6 +19,13 @@ export interface Post {
 
 const POSTS_DIR = path.join(process.cwd(), "public/posts");
 
+// Helper function to parse DD/MM/YYYY format
+function parseDate(dateString: string): Date {
+  const [day, month, year] = dateString.split("/");
+  // JavaScript Date constructor expects (year, month-1, day)
+  return new Date(parseInt(year), parseInt(month) - 1, parseInt(day));
+}
+
 export async function getPosts(): Promise<Omit<Post, "content">[]> {
   try {
     const files = await readdir(POSTS_DIR);
@@ -44,10 +51,10 @@ export async function getPosts(): Promise<Omit<Post, "content">[]> {
         })
     );
 
-    // Sort posts by date (newest first)
+    // Sort posts by date (newest first) with proper DD/MM/YYYY parsing
     return posts.sort(
       (a, b) =>
-        new Date(b.publishDate).getTime() - new Date(a.publishDate).getTime()
+        parseDate(b.publishDate).getTime() - parseDate(a.publishDate).getTime()
     );
   } catch (error) {
     console.error("Error reading blog posts:", error);
