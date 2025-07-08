@@ -68,5 +68,12 @@
     "link": "/herramientas/calculadora-calorias-quemadas-por-actividad",
     "category": "Entrenamiento",
     "tags": ["Calorías Quemadas", "Actividad Física"]
+  },
+  {
+    "title": "Calculadora de Grasa Corporal",
+    "description": "Estima tu porcentaje de grasa corporal usando métodos científicos precisos y obtén recomendaciones personalizadas.",
+    "link": "/herramientas/calculadora-grasa-corporal",
+    "category": "Mediciones",
+    "tags": ["Grasa Corporal", "Composición Corporal", "Salud"]
   }
 ]
