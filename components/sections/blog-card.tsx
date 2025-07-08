@@ -200,7 +200,9 @@ export function Posts({ posts }: BlogCardsProps) {
                   {(() => {
                     const [day, month, year] = post.publishDate.split("/");
                     return new Date(
-                      `${year}-${month}-${day}`
+                      parseInt(year),
+                      parseInt(month) - 1,
+                      parseInt(day)
                     ).toLocaleDateString("es-MX", {
                       year: "numeric",
                       month: "long",
