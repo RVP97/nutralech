@@ -68,19 +68,19 @@ export default function PricingSection() {
       price: "800",
       priceId: "price_1QHcX3BoTKroQtb9iezs2h2q",
       description:
-        "Ideal para quienes quieren dar seguimiento al progreso del plan alimenticio y nutricional.",
+        "Después de tu consulta inicial, esta es la consulta para dar seguimiento a tus metas y evaluar tu progreso.",
       features: [
-        { name: "Video llamada de 1 hora con Marialy", cross: false },
         { name: "Evaluación nutricional completa", cross: false },
-        { name: "Plan alimenticio personalizado", cross: false },
+        {
+          name: "Plan alimenticio personalizado (basado en macros o menú)",
+          cross: false,
+        },
         { name: "Recomendaciones de suplementación", cross: false },
-        { name: "Seguimiento recomendado cada 2 semanas", cross: false },
+        { name: "Seguimiento recomendado cada 2 o 3 semanas", cross: false },
         {
           name: "Soporte por chat ilimitado (directamente con Marialy)",
           cross: false,
         },
-        { name: "Soporte prioritario 24/7", cross: false },
-        { name: "Análisis de composición corporal", cross: false },
       ],
     },
     {
@@ -88,40 +88,40 @@ export default function PricingSection() {
       price: "1,200",
       priceId: "price_1QHcqHBoTKroQtb9EcQsiBUO",
       description:
-        "Perfecto para quienes buscan un cambio sostenible con seguimiento continuo y personalizado.",
+        "Consulta inicial donde te conozco y adapto un plan personalizado a tus necesidades específicas.",
       features: [
-        { name: "Video llamada de 1 hora con Marialy", cross: false },
         { name: "Evaluación nutricional completa", cross: false },
-        { name: "Plan alimenticio personalizado", cross: false },
+        {
+          name: "Plan alimenticio personalizado (basado en macros o menú)",
+          cross: false,
+        },
         { name: "Recomendaciones de suplementación", cross: false },
-        { name: "Seguimiento recomendado cada 2 semanas", cross: false },
+        { name: "Consulta de primera vez", cross: false },
         {
           name: "Soporte por chat ilimitado (directamente con Marialy)",
           cross: false,
         },
-        { name: "Soporte prioritario 24/7", cross: false },
-        { name: "Análisis de composición corporal", cross: false },
       ],
       popular: true,
     },
-    {
-      name: "Plan a Distancia",
-      price: "600",
-      priceId: "price_1QHcXYBoTKroQtb9Fm9BzAij",
-      description:
-        "La opción más económica para resultados a largo plazo. No incluye seguimiento.",
-      features: [
-        { name: "Evaluación nutricional completa", cross: false },
-        { name: "Cuestionario de evaluación", cross: false },
-        { name: "Plan alimenticio personalizado", cross: false },
-        { name: "Recomendaciones de suplementación", cross: false },
-        { name: "Seguimiento recomendado cada 2 semanas", cross: false },
-        { name: "Video llamada de 1 hora con Marialy", cross: true },
-        { name: "Soporte por chat ilimitado", cross: true },
-        { name: "Soporte prioritario 24/7", cross: true },
-        { name: "Análisis de composición corporal", cross: true },
-      ],
-    },
+    // {
+    //   name: "Plan a Distancia",
+    //   price: "600",
+    //   priceId: "price_1QHcXYBoTKroQtb9Fm9BzAij",
+    //   description:
+    //     "La opción más económica para resultados a largo plazo. No incluye seguimiento.",
+    //   features: [
+    //     { name: "Evaluación nutricional completa", cross: false },
+    //     { name: "Cuestionario de evaluación", cross: false },
+    //     { name: "Plan alimenticio personalizado", cross: false },
+    //     { name: "Recomendaciones de suplementación", cross: false },
+    //     { name: "Seguimiento recomendado cada 2 o 3 semanas", cross: false },
+    //     { name: "Video llamada de 1 hora con Marialy", cross: true },
+    //     { name: "Soporte por chat ilimitado", cross: true },
+    //     { name: "Soporte prioritario 24/7", cross: true },
+    //     { name: "Análisis de composición corporal", cross: true },
+    //   ],
+    // },
   ];
 
   const packages = [
@@ -135,17 +135,17 @@ export default function PricingSection() {
       features: [
         { name: "1 Consulta Inicial", cross: false },
         { name: "1 Consulta de Seguimiento", cross: false },
-        { name: "Video llamada de 1 hora con Marialy", cross: false },
         { name: "Evaluación nutricional completa", cross: false },
-        { name: "Plan alimenticio personalizado", cross: false },
+        {
+          name: "Plan alimenticio personalizado (basado en macros o menú)",
+          cross: false,
+        },
         { name: "Recomendaciones de suplementación", cross: false },
-        { name: "Seguimiento recomendado cada 2 semanas", cross: false },
+        { name: "Seguimiento recomendado cada 2 o 3 semanas", cross: false },
         {
           name: "Soporte por chat ilimitado (directamente con Marialy)",
           cross: false,
         },
-        { name: "Soporte prioritario 24/7", cross: false },
-        { name: "Análisis de composición corporal", cross: false },
       ],
     },
     {
@@ -157,18 +157,18 @@ export default function PricingSection() {
         "El plan ideal para quienes buscan transformar su vida por completo.",
       features: [
         { name: "1 Consulta Inicial", cross: false },
-        { name: "3 Consulta de Seguimiento", cross: false },
-        { name: "Video llamada de 1 hora con Marialy", cross: false },
+        { name: "3 Consultas de Seguimiento", cross: false },
         { name: "Evaluación nutricional completa", cross: false },
-        { name: "Plan alimenticio personalizado", cross: false },
+        {
+          name: "Plan alimenticio personalizado (basado en macros o menú)",
+          cross: false,
+        },
         { name: "Recomendaciones de suplementación", cross: false },
-        { name: "Seguimiento recomendado cada 2 semanas", cross: false },
+        { name: "Seguimiento recomendado cada 2 o 3 semanas", cross: false },
         {
           name: "Soporte por chat ilimitado (directamente con Marialy)",
           cross: false,
         },
-        { name: "Soporte prioritario 24/7", cross: false },
-        { name: "Análisis de composición corporal", cross: false },
       ],
       popular: true,
     },
@@ -182,17 +182,17 @@ export default function PricingSection() {
       features: [
         { name: "1 Consulta Inicial", cross: false },
         { name: "2 Consultas de Seguimiento", cross: false },
-        { name: "Video llamada de 1 hora con Marialy", cross: false },
         { name: "Evaluación nutricional completa", cross: false },
-        { name: "Plan alimenticio personalizado", cross: false },
+        {
+          name: "Plan alimenticio personalizado (basado en macros o menú)",
+          cross: false,
+        },
         { name: "Recomendaciones de suplementación", cross: false },
-        { name: "Seguimiento recomendado cada 2 semanas", cross: false },
+        { name: "Seguimiento recomendado cada 2 o 3 semanas", cross: false },
         {
           name: "Soporte por chat ilimitado (directamente con Marialy)",
           cross: false,
         },
-        { name: "Soporte prioritario 24/7", cross: false },
-        { name: "Análisis de composición corporal", cross: false },
       ],
     },
     // {
@@ -209,7 +209,7 @@ export default function PricingSection() {
     //     { name: "Evaluación nutricional completa", cross: false },
     //     { name: "Plan alimenticio personalizado", cross: false },
     //     { name: "Recomendaciones de suplementación", cross: false },
-    //     { name: "Seguimiento recomendado cada 2 semanas", cross: false },
+    //     { name: "Seguimiento recomendado cada 2 o 3 semanas", cross: false },
     //     {
     //       name: "Soporte por chat ilimitado (directamente con Marialy)",
     //       cross: false,
@@ -491,7 +491,15 @@ export default function PricingSection() {
             </button>
           </div>
 
-          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+          <div
+            className={`grid gap-8 md:grid-cols-2 ${
+              showPackages
+                ? "lg:grid-cols-3"
+                : individualPlans.length === 2
+                ? "lg:grid-cols-2 max-w-4xl mx-auto"
+                : "lg:grid-cols-3"
+            }`}
+          >
             {(showPackages ? packages : individualPlans).map((plan, index) => (
               <Card
                 key={index}
