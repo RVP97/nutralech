@@ -1,8 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { Cross2Icon } from "@radix-ui/react-icons";
-import { Facebook, Linkedin, Share2, Twitter } from "lucide-react";
+import { Facebook, Linkedin, Share2, Twitter, X } from "lucide-react";
 import { useState } from "react";
 
 interface FloatingShareButtonProps {
@@ -71,11 +70,7 @@ export function FloatingShareButton({
         aria-label={isOpen ? "Close share menu" : "Open share menu"}
         className="shadow-lg h-12 w-12"
       >
-        {isOpen ? (
-          <Cross2Icon className="h-5 w-5" />
-        ) : (
-          <Share2 className="h-5 w-5" />
-        )}
+        {isOpen ? <X className="h-5 w-5" /> : <Share2 className="h-5 w-5" />}
       </Button>
     </div>
   );

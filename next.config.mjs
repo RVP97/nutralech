@@ -3,6 +3,7 @@ import createMDX from "@next/mdx";
 const nextConfig = {
   transpilePackages: ["next-mdx-remote"],
   // Configure `pageExtensions` to include markdown and MDX files
+  typedRoutes: true,
   pageExtensions: ["js", "jsx", "md", "mdx", "ts", "tsx"],
   async redirects() {
     return [
