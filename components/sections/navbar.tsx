@@ -33,7 +33,7 @@ export default function Component() {
           <div key={id} className="relative">
             <Link
               prefetch={false}
-              href={href}
+              href={href as any}
               className="w-full"
               onClick={() => isMobile && setIsMenuOpen(false)}
             >

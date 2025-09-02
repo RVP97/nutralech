@@ -1,5 +1,4 @@
 import AnimatedGradientText from "@/components/ui/animated-gradient-text";
-import { AnimatedList } from "@/components/ui/animated-list";
 import NumberTicker from "@/components/ui/number-ticker";
 import WordRotate from "@/components/ui/word-rotate";
 import { ArrowRight, CalendarCheck, Leaf } from "lucide-react";

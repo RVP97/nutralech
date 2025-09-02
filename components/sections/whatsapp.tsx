@@ -242,7 +242,6 @@ function Iphone15ProWhatsappLightSmaller() {
   const [newMessage, setNewMessage] = useState("");
   const [activeTab, setActiveTab] = useState("chats");
   const scrollAreaRef = useRef<HTMLDivElement | null>(null);
-  const messagesEndRef = useRef(null);
   const [currentTime, setCurrentTime] = useState(() => {
     return new Date().toLocaleTimeString("en-US", {
       hour: "numeric",

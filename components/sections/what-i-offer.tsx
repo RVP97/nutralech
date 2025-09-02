@@ -55,7 +55,7 @@ export default function WhatIOfferComponent() {
               <Link
                 prefetch={false}
                 key={index}
-                href={service.href}
+                href={service.href as any}
                 target={service.href.startsWith("https") ? "_blank" : undefined}
               >
                 <Card className="h-full transition-all hover:shadow-lg hover:-translate-y-1">

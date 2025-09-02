@@ -67,7 +67,7 @@ export default function AppToolsPage() {
                     </Badge>
                   ))}
                 </div>
-                <Link href={tool.link} className="w-full">
+                <Link href={tool.link as any} className="w-full">
                   <Button className="w-full bg-[#DA5F6F] hover:bg-[#DA5F6F]/90 text-white transition-colors duration-300">
                     Usar Herramienta
                   </Button>

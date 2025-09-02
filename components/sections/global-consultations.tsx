@@ -187,7 +187,7 @@ export default function GlobalConsultations() {
                   Mis Servicios Globales
                 </h3>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  {features.map((feature, index) => (
+                  {features.map((feature) => (
                     <motion.div
                       key={feature.title}
                       className="bg-gradient-to-br from-pink-50 to-purple-50 rounded-xl p-4"

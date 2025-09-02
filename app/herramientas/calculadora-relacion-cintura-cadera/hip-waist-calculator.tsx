@@ -36,8 +36,7 @@ interface WHRRecommendation {
 function calculateWHR(
   waist: number,
   hip: number,
-  gender: string,
-  unitSystem: string
+  gender: string
 ): WHRCalculation {
   const ratio = waist / hip;
 
@@ -115,7 +114,7 @@ export function WHRCalculator() {
     const waistNum = parseFloat(waist);
     const hipNum = parseFloat(hip);
 
-    const calculation = calculateWHR(waistNum, hipNum, gender, unitSystem);
+    const calculation = calculateWHR(waistNum, hipNum, gender);
 
     setRecommendation({
       title: "Índice Cintura-Cadera (ICC)",

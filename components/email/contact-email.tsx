@@ -130,9 +130,3 @@ const content = {
 const boxInfos = {
   padding: "20px",
 };
-
-const thickHr = {
-  border: "none",
-  borderTop: "5px solid #e00707",
-  margin: "20px 0",
-};

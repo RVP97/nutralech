@@ -1,11 +1,5 @@
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { generatePageMetadata } from "@/lib/generateMetadata";
 import { Activity, Book, Calendar, Heart, Info } from "lucide-react";
 import Link from "next/link";

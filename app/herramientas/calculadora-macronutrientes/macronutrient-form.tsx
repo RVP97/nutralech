@@ -17,7 +17,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Calculator, Scale } from "lucide-react";
+import { Calculator } from "lucide-react";
 import { useState } from "react";
 
 interface MacroRatios {

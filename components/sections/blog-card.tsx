@@ -1,6 +1,6 @@
 "use client";
 
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -90,7 +90,7 @@ export function Posts({ posts }: BlogCardsProps) {
     const showPages = 5; // Number of page buttons to show
 
     let startPage = Math.max(1, currentPage - Math.floor(showPages / 2));
-    let endPage = Math.min(totalPages, startPage + showPages - 1);
+    const endPage = Math.min(totalPages, startPage + showPages - 1);
 
     // Adjust start page if we're near the end
     if (endPage - startPage < showPages - 1) {

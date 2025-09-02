@@ -128,9 +128,9 @@ export default function PersonalizedAttention() {
                 </div>
 
                 <AnimatedBeam
-                  containerRef={containerRef}
-                  fromRef={leftRef}
-                  toRef={rightRef}
+                  containerRef={containerRef as React.RefObject<HTMLElement>}
+                  fromRef={leftRef as React.RefObject<HTMLElement>}
+                  toRef={rightRef as React.RefObject<HTMLElement>}
                   startYOffset={10}
                   endYOffset={10}
                   curvature={-20}
@@ -139,9 +139,9 @@ export default function PersonalizedAttention() {
                   gradientStopColor="#DA5F6F"
                 />
                 <AnimatedBeam
-                  containerRef={containerRef}
-                  fromRef={leftRef}
-                  toRef={rightRef}
+                  containerRef={containerRef as React.RefObject<HTMLElement>}
+                  fromRef={leftRef as React.RefObject<HTMLElement>}
+                  toRef={rightRef as React.RefObject<HTMLElement>}
                   startYOffset={-10}
                   endYOffset={-10}
                   curvature={20}

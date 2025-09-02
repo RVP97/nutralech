@@ -111,7 +111,7 @@ export function HydrationCalculator() {
         description: updatedDescription,
       }));
     }
-  }, [waterIntakeUnit, waterIntake, isMetric, weight]);
+  }, [waterIntakeUnit, waterIntake, isMetric, weight, recommendation]);
 
   const convertToOunces = (liters: number): number => liters * 33.814;
 

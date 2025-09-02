@@ -22,7 +22,7 @@ import { Check, Copy, Percent, Star, X } from "lucide-react";
 import dynamic from "next/dynamic";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { ComponentType, useState } from "react";
 
 interface IndividualPlan {
   name: string;
@@ -57,10 +57,15 @@ function copyToClipboard(text: string, buttonId: string) {
   }
 }
 
+interface StripeCheckoutProps {
+  priceId: string;
+}
+
 export default function PricingSection() {
   const [showPackages, setShowPackages] = useState(false);
   const [selectedPriceId, setSelectedPriceId] = useState<string | null>(null);
-  const [StripeCheckout, setStripeCheckout] = useState<any>(null);
+  const [StripeCheckout, setStripeCheckout] =
+    useState<ComponentType<StripeCheckoutProps> | null>(null);
 
   const individualPlans = [
     {

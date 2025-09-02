@@ -32,7 +32,6 @@ function getCalorieSuggestion(
   height: string,
   weight: string,
   weightGoal: string,
-  activityLevel: string,
   unitSystem: string
 ): NutritionRecommendation {
   const heightCm = parseFloat(height);
@@ -130,8 +129,8 @@ function getCalorieSuggestion(
       isUnderweight
         ? "Considera aumentar gradualmente tus calorías para alcanzar un peso más saludable."
         : isOverweight
-        ? "Podrías beneficiarte de un ligero déficit calórico para mejorar tu composición corporal."
-        : "Tu IMC está en un rango saludable, este nivel calórico te ayudará a mantenerlo."
+          ? "Podrías beneficiarte de un ligero déficit calórico para mejorar tu composición corporal."
+          : "Tu IMC está en un rango saludable, este nivel calórico te ayudará a mantenerlo."
     }`,
     keyPoints: [
       `Mantén una ingesta de ${
@@ -269,7 +268,6 @@ export function CalorieCalculator() {
         height,
         weight,
         weightGoal,
-        activityLevel,
         unitSystem
       )
     );

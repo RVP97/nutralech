@@ -47,7 +47,7 @@ async function getCheckoutSession(sessionId: string): Promise<CheckoutSession> {
     }
 
     return response.json();
-  } catch (error) {
+  } catch {
     notFound();
   }
 }
@@ -124,7 +124,7 @@ export default async function Return({
         />
       </div>
     );
-  } catch (error) {
+  } catch {
     notFound();
   }
 }

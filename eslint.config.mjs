@@ -21,10 +21,14 @@ const eslintConfig = [
   },
   ...compat.extends("next/core-web-vitals", "next/typescript"),
   {
-    files: ["**/*.{js,jsx,ts,tsx}"],
     rules: {
-      "@typescript-eslint/no-unused-vars": "warn",
-      "no-unused-vars": "off", // Turn off base rule as we're using TypeScript version
+      "@typescript-eslint/no-unused-vars": "error",
+      "no-unused-vars": "off", // Turn off base rule as @typescript-eslint rule is used
+      "react-hooks/exhaustive-deps": "error",
+      "@typescript-eslint/no-explicit-any": "warn",
+      "prefer-const": "error", // Use base ESLint rule instead
+      "no-console": "warn",
+      "no-debugger": "error",
     },
   },
 ];

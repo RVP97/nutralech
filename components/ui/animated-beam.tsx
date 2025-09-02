@@ -1,7 +1,7 @@
 "use client";
 
-import { RefObject, useEffect, useId, useState } from "react";
 import { motion } from "framer-motion";
+import { RefObject, useEffect, useId, useState } from "react";
 
 import { cn } from "@/lib/utils";
 
@@ -92,11 +92,8 @@ export const AnimatedBeam: React.FC<AnimatedBeamProps> = ({
     };
 
     // Initialize ResizeObserver
-    const resizeObserver = new ResizeObserver((entries) => {
-      // For all entries, recalculate the path
-      for (let entry of entries) {
-        updatePath();
-      }
+    const resizeObserver = new ResizeObserver(() => {
+      updatePath();
     });
 
     // Observe the container element

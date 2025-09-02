@@ -27,7 +27,6 @@ interface NutritionRecommendation {
 }
 
 function getBMRSuggestion(
-  bmr: number,
   gender: string,
   height: string,
   weight: string,
@@ -135,7 +134,7 @@ export function BMRCalculator() {
     const calculatedBMR = Math.round(bmr);
     setCalories(calculatedBMR);
     setRecommendation(
-      getBMRSuggestion(calculatedBMR, gender, height, weight, unitSystem)
+      getBMRSuggestion(gender, height, weight, unitSystem)
     );
   };
 

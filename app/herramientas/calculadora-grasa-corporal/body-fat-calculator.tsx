@@ -210,8 +210,7 @@ function getBodyFatCategory(
 
 function getBodyFatRecommendation(
   calculations: BodyFatCalculation[],
-  gender: string,
-  age: string
+  gender: string
 ): BodyFatRecommendation {
   const avgPercentage =
     calculations.reduce((sum, calc) => sum + calc.percentage, 0) /
@@ -326,7 +325,7 @@ export function BodyFatCalculator() {
       unitSystem
     );
 
-    setRecommendation(getBodyFatRecommendation(calculations, gender, age));
+    setRecommendation(getBodyFatRecommendation(calculations, gender));
   };
 
   return (

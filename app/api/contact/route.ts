@@ -1,11 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
+import * as React from "react";
 import { Resend } from "resend";
 import { EmailTemplate } from "../../../components/email/contact-email";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 export async function POST(request: NextRequest) {
-  const { token, name, email, message, business, phone, inquiryType } =
+  const { token, name, email, message, phone, inquiryType } =
     await request.json();
 
   try {
@@ -14,7 +15,7 @@ export async function POST(request: NextRequest) {
     const recaptchaResponse = await fetch(recaptchaUrl, { method: "POST" });
     const recaptchaData = await recaptchaResponse.json();
 
-    if (true) {
+    if (recaptchaData.success) {
       // Determine the recipient email(s) based on the business
       // Prepare the email data
       const emailData = {
@@ -31,7 +32,7 @@ export async function POST(request: NextRequest) {
         to: ["rovapin@gmail.com", "marialyalonso@gmail.com"],
         replyTo: email,
         subject: `Nuevo contacto: ${inquiryType}: ${name}`,
-        react: EmailTemplate(emailData),
+        react: React.createElement(EmailTemplate, emailData),
       });
 
       if (error) {

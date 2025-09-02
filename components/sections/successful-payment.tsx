@@ -217,13 +217,13 @@ export default function SuccessfulPayment({
             </DropdownMenu>
           ) : (
             <Button asChild>
-              <Link prefetch={false} target="_blank" href={calendarUrl}>
+              <Link prefetch={false} target="_blank" href={calendarUrl as any}>
                 {calendarButtonText} <Calendar className="ml-2 h-4 w-4" />
               </Link>
             </Button>
           )}
           {receiptUrl && (
-            <Link prefetch={false} target="_blank" href={receiptUrl}>
+            <Link prefetch={false} target="_blank" href={receiptUrl as any}>
               <Button variant="outline">
                 <Download className="mr-2 h-4 w-4" /> Descargar Recibo
               </Button>

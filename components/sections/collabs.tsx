@@ -1,12 +1,9 @@
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import Iphone15Pro from "@/components/ui/iphone-15-pro";
 import Marquee from "@/components/ui/marquee";
-import { ArrowRight, Instagram, Mail, Twitter, Youtube } from "lucide-react";
+import { Mail } from "lucide-react";
 import { Metadata } from "next";
 import Image from "next/image";
-import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "Colabora con Marialy | Alianzas con Influencers",
