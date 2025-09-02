@@ -2,7 +2,7 @@ export const revalidate = 0; // Disables caching for SSR
 import SuccessfulPayment from "@/components/sections/successful-payment";
 import Confetti from "@/components/ui/confetti";
 import { Metadata } from "next";
-import { redirect } from "next/navigation";
+import { notFound } from "next/navigation";
 import Script from "next/script";
 
 interface LineItem {
@@ -43,12 +43,12 @@ async function getCheckoutSession(sessionId: string): Promise<CheckoutSession> {
     );
 
     if (!response.ok) {
-      redirect("/404");
+      notFound();
     }
 
     return response.json();
   } catch (error) {
-    redirect("/404");
+    notFound();
   }
 }
 
@@ -63,10 +63,12 @@ export default async function Return({
 }) {
   try {
     const resolvedParams = await searchParams;
-    if (!resolvedParams.session_id) redirect("/404");
+    if (!resolvedParams.session_id) {
+      notFound();
+    }
     const session = await getCheckoutSession(resolvedParams.session_id);
     if (session.status !== "complete") {
-      redirect("/404");
+      notFound();
     }
 
     const { calendarButtonText, calendarUrl } = session.lineItems.some(
@@ -123,6 +125,6 @@ export default async function Return({
       </div>
     );
   } catch (error) {
-    redirect("/404");
+    notFound();
   }
 }

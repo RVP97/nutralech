@@ -11,7 +11,6 @@ import {
   Clock,
   History,
   MessageCircle,
-  Mic,
   MoreVertical,
   Phone,
   Send,

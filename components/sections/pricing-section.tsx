@@ -22,7 +22,7 @@ import { Check, Copy, Percent, Star, X } from "lucide-react";
 import dynamic from "next/dynamic";
 import Image from "next/image";
 import Link from "next/link";
-import { lazy, Suspense, useCallback, useState } from "react";
+import { useState } from "react";
 
 interface IndividualPlan {
   name: string;
@@ -496,8 +496,8 @@ export default function PricingSection() {
               showPackages
                 ? "lg:grid-cols-3"
                 : individualPlans.length === 2
-                ? "lg:grid-cols-2 max-w-4xl mx-auto"
-                : "lg:grid-cols-3"
+                  ? "lg:grid-cols-2 max-w-4xl mx-auto"
+                  : "lg:grid-cols-3"
             }`}
           >
             {(showPackages ? packages : individualPlans).map((plan, index) => (
