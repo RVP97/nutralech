@@ -223,6 +223,7 @@ export default function SuccessfulPayment({
             </Button>
           )}
           {receiptUrl && (
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             <Link prefetch={false} target="_blank" href={receiptUrl as any}>
               <Button variant="outline">
                 <Download className="mr-2 h-4 w-4" /> Descargar Recibo

@@ -55,6 +55,7 @@ export default function WhatIOfferComponent() {
               <Link
                 prefetch={false}
                 key={index}
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 href={service.href as any}
                 target={service.href.startsWith("https") ? "_blank" : undefined}
               >

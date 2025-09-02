@@ -7,12 +7,6 @@ const nextConfig = {
   pageExtensions: ["js", "jsx", "md", "mdx", "ts", "tsx"],
   async redirects() {
     return [
-      // {
-      //   source: "/blog/:path*",
-      //   destination: "/",
-      //   permanent: true,
-      //   statusCode: 302,
-      // },
       {
         source: "/contact",
         destination: "/contacto",

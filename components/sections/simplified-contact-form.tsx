@@ -85,14 +85,11 @@ function ContactForm() {
           "Gracias por su mensaje. Nos pondremos en contacto con usted pronto."
         );
       } else {
-        const errorData = await response.json();
-        console.error(errorData.message);
         setErrorMessage(
           "Hubo un error al enviar su mensaje. Por favor, inténtelo de nuevo más tarde."
         );
       }
-    } catch (error) {
-      console.error("Error submitting form:", error);
+    } catch {
       setErrorMessage(
         "Hubo un error al enviar su mensaje. Por favor, inténtelo de nuevo más tarde."
       );
