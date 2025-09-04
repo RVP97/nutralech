@@ -31,37 +31,41 @@ async function generateMotivationalMessage(): Promise<string> {
   try {
     const { text } = await generateText({
       model: openai("gpt-5-nano"),
-      prompt: `Generate a supportive and therapeutic message in Spanish for Marialy (sometimes called "Gri" or "Pepe"), someone with binge eating disorder. The message should be written as if it comes from her loving husband. The message should be:
+      prompt: `Generate a supportive and therapeutic message in Spanish for Marialy, someone with binge eating disorder. The message should be written as if it comes from her loving husband. The message should be:
       - Compassionate, understanding, and romantic
       - About 3-4 sentences long  
       - Focused on self-care, self-compassion, and healthy coping strategies
       - Encourage mindful eating and emotional awareness
       - Warm, non-judgmental, empowering, and loving tone from a spouse
       - Include emojis throughout the message (not just at the beginning)
-      - Personalized by addressing her by name (Marialy, Gri, or Pepe) occasionally
+      - Personalized by addressing her with the loving nicknames her husband uses: "Mi guapa", "Pepe", or "Gri" occasionally
       - Written in first person as her husband speaking to her
       - End with a loving message from the husband expressing his love and support
+      - IMPORTANT: Naturally integrate the core message that she can achieve everything she sets her mind to, that she should give it her all because you trust in her completely. Do NOT use quotes around this message - make it flow naturally as part of your loving words.
       
-      Example themes: self-acceptance, mindful eating, emotional awareness, progress over perfection, self-compassion, healthy boundaries, listening to your body, finding alternative coping strategies, spousal love and support.
+      Example themes: self-acceptance, mindful eating, emotional awareness, progress over perfection, self-compassion, healthy boundaries, finding alternative coping strategies, spousal love and support, unwavering belief in her capabilities.
       
-      The husband should express his unconditional love, pride in her progress, and remind her that she's not alone in this journey.
+      The husband should express his unconditional love, pride in her progress, complete trust and confidence in her abilities, and remind her that she's not alone in this journey.
       
-      Avoid: mentioning specific foods, weight, calories, or anything that could trigger restrictive behaviors. Focus on emotional well-being, self-care, and spousal love and support.`,
+      Avoid: mentioning specific foods, weight, calories, meditation, "listening to your body", or anything that could trigger restrictive behaviors. Focus on emotional well-being, self-care, spousal love and support, and empowerment through trust and belief in her strength.`,
     });
     return text;
   } catch {
     // Fallback message if AI generation fails
-    return "💙 Mi amor Marialy, quiero recordarte que eres increíble tal como eres hoy 🌟 Cada momento es una nueva oportunidad para cuidarte con compasión y amor propio 💕 Tus sentimientos son válidos y estoy aquí para apoyarte en cada paso del camino. Te amo profundamente y estoy muy orgulloso de ti ❤️";
+    return "💙 Mi guapa, quiero recordarte que puedes lograr todo lo que te propongas 🌟 Échale ganas porque confío completamente en ti y en tu fuerza 💪 Eres increíble tal como eres hoy y cada momento es una nueva oportunidad para cuidarte con amor propio 💕 Te amo profundamente y estoy muy orgulloso de ti ❤️";
   }
 }
 
 export async function GET() {
   try {
-    // Check API key from headers
+    // Check if this is a Vercel cron job request
     const headersList = await headers();
+    const authHeader = headersList.get("authorization");
     const apiKey = headersList.get("x-api-key");
+    const isVercelCron = authHeader === `Bearer ${process.env.CRON_SECRET}`;
 
-    if (!MENSAJE_API_KEY || apiKey !== MENSAJE_API_KEY) {
+    // Allow requests from Vercel cron or with valid API key
+    if (!isVercelCron && (!MENSAJE_API_KEY || apiKey !== MENSAJE_API_KEY)) {
       return Response.json(
         { success: false, error: "Unauthorized" },
         { status: 401 }
