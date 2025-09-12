@@ -2,15 +2,7 @@
   "crons": [
     {
       "path": "/api/mensaje_diario",
-      "schedule": "0 14 * * *"
-    },
-    {
-      "path": "/api/mensaje_diario",
       "schedule": "0 20 * * *"
-    },
-    {
-      "path": "/api/mensaje_diario",
-      "schedule": "0 0 * * *"
     }
   ]
 }
