@@ -31,6 +31,7 @@ interface IndividualPlan {
   description: string;
   features: { name: string; cross: boolean }[];
   popular?: boolean;
+  selfCare?: boolean;
 }
 
 interface Package {
@@ -73,14 +74,13 @@ export default function PricingSection() {
       price: "800",
       priceId: "price_1QHcX3BoTKroQtb9iezs2h2q",
       description:
-        "Después de tu consulta inicial, esta es la consulta para dar seguimiento a tus metas y evaluar tu progreso.",
+        "Después de tu consulta inicial o sesión de mejora de relación con la comida, esta es la consulta para dar seguimiento a tus metas y evaluar tu progreso.",
       features: [
-        { name: "Evaluación nutricional completa", cross: false },
+        { name: "Evaluación integral completa", cross: false },
         {
-          name: "Plan alimenticio personalizado (basado en macros o menú)",
+          name: "Plan alimenticio personalizado (basado en menú) o seguimiento de relación con la comida",
           cross: false,
         },
-        { name: "Recomendaciones de suplementación", cross: false },
         { name: "Seguimiento recomendado cada 2 o 3 semanas", cross: false },
         {
           name: "Soporte por chat ilimitado (directamente con Marialy)",
@@ -97,7 +97,7 @@ export default function PricingSection() {
       features: [
         { name: "Evaluación nutricional completa", cross: false },
         {
-          name: "Plan alimenticio personalizado (basado en macros o menú)",
+          name: "Plan alimenticio personalizado (basado en menú)",
           cross: false,
         },
         { name: "Recomendaciones de suplementación", cross: false },
@@ -108,6 +108,27 @@ export default function PricingSection() {
         },
       ],
       popular: true,
+    },
+    {
+      name: "Mejora tu relación con la comida",
+      price: "1,200",
+      priceId: "price_1S6bWaBoTKroQtb9yWPxT3lG",
+      description:
+        "Transforma tu relación con la comida y aprende a alimentarte de manera saludable sin restricciones ni culpa.",
+      features: [
+        { name: "Consulta online personalizada (60 minutos)", cross: false },
+        { name: "Practica la alimentación intuitiva", cross: false },
+        { name: "Reconecta con tus señales de hambre y saciedad", cross: false },
+        { name: "Crea hábitos que te acerquen a tu peso y bienestar ideal", cross: false },
+        { name: "Espacio para disfrutar la comida sin culpa", cross: false },
+        { name: "Construye confianza en tus elecciones alimentarias", cross: false },
+        { name: "Logra un estilo de vida sostenible y saludable", cross: false },
+        {
+          name: "Soporte por chat ilimitado (directamente con Marialy)",
+          cross: false,
+        },
+      ],
+      selfCare: true,
     },
     // {
     //   name: "Plan a Distancia",
@@ -509,12 +530,18 @@ export default function PricingSection() {
               <Card
                 key={index}
                 className={`flex flex-col relative ${
-                  plan.popular ? "border-[#DA5F6F] shadow-lg" : ""
+                  plan.popular ? "border-[#DA5F6F] shadow-lg" : 
+                  (plan as IndividualPlan).selfCare ? "border-green-500 shadow-lg" : ""
                 }`}
               >
                 {plan.popular && (
                   <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-[#DA5F6F] text-white px-4 py-1 rounded-full text-sm font-medium flex items-center">
                     <Star className="w-4 h-4 mr-1" /> Más Popular
+                  </div>
+                )}
+                {(plan as IndividualPlan).selfCare && (
+                  <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-green-500 text-white px-4 py-1 rounded-full text-sm font-medium flex items-center">
+                    <Star className="w-4 h-4 mr-1" /> Self Care
                   </div>
                 )}
                 <CardHeader>
@@ -564,6 +591,8 @@ export default function PricingSection() {
                     className={`w-full ${
                       plan.popular
                         ? "bg-[#DA5F6F] hover:bg-[#DA5F6F]/90"
+                        : (plan as IndividualPlan).selfCare
+                        ? "bg-green-500 hover:bg-green-600"
                         : "bg-zinc-800 hover:bg-zinc-700"
                     } text-white`}
                     onClick={() => handlePlanSelection(plan.priceId)}

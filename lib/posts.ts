@@ -57,8 +57,7 @@ export async function getPosts(): Promise<Omit<Post, "content">[]> {
         parseDate(b.publishDate).getTime() - parseDate(a.publishDate).getTime()
     );
   } catch (error) {
-    console.error("Error reading blog posts:", error);
-    return [];
+    throw new Error(`Failed to read blog posts: ${error}`);
   }
 }
 
