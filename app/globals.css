@@ -69,6 +69,8 @@ body {
 	body {
 		@apply bg-background text-foreground;
 	}
+	/* Disable smooth scroll globally to prevent scroll animation during page navigation */
+	/* This fixes the bug where pages smoothly scroll to bottom before navigating */
 	html {
 		scroll-behavior: smooth;
 	}

@@ -9,6 +9,9 @@ const nextConfig = {
 	images: {
 		qualities: [50, 75, 100],
 	},
+	experimental: {
+		turbopackFileSystemCacheForDev: true,
+	},
 	async redirects() {
 		return [
 			{
