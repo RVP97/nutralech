@@ -9,6 +9,7 @@ const nextConfig = {
 	images: {
 		qualities: [50, 75, 100],
 	},
+	reactCompiler: true,
 	experimental: {
 		turbopackFileSystemCacheForDev: true,
 	},

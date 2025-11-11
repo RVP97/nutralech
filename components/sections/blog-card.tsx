@@ -13,7 +13,7 @@ import { MultiSelect } from "@/components/ui/multi-select";
 import type { Post } from "@/lib/posts";
 import { CalendarIcon, ChevronLeft, ChevronRight, Filter } from "lucide-react";
 import Link from "next/link";
-import { useMemo, useState } from "react";
+import { useState } from "react";
 
 interface BlogCardsProps {
   posts: Omit<Post, "content">[];
@@ -26,37 +26,31 @@ export function Posts({ posts }: BlogCardsProps) {
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
 
   // Get all unique tags from posts
-  const allTags = useMemo(() => {
-    const tagSet = new Set<string>();
-    posts.forEach((post) => {
-      post.categories?.forEach((category) => tagSet.add(category));
-    });
-    return Array.from(tagSet)
-      .sort()
-      .map((tag) => ({
-        label: tag.charAt(0).toUpperCase() + tag.slice(1),
-        value: tag,
-      }));
-  }, [posts]);
+  const tagSet = new Set<string>();
+  for (const post of posts) {
+    for (const category of post.categories || []) {
+      tagSet.add(category);
+    }
+  }
+  const allTags = Array.from(tagSet)
+    .sort()
+    .map((tag) => ({
+      label: tag.charAt(0).toUpperCase() + tag.slice(1),
+      value: tag,
+    }));
 
   // Filter posts by selected tags
-  const filteredPosts = useMemo(() => {
-    if (selectedTags.length === 0) {
-      return posts;
-    }
-    return posts.filter((post) =>
-      selectedTags.some((tag) => post.categories?.includes(tag))
-    );
-  }, [posts, selectedTags]);
+  const filteredPosts =
+    selectedTags.length === 0
+      ? posts
+      : posts.filter((post) =>
+          selectedTags.some((tag) => post.categories?.includes(tag))
+        );
 
-  const { currentPosts, totalPages } = useMemo(() => {
-    const startIndex = (currentPage - 1) * POSTS_PER_PAGE;
-    const endIndex = startIndex + POSTS_PER_PAGE;
-    const currentPosts = filteredPosts.slice(startIndex, endIndex);
-    const totalPages = Math.ceil(filteredPosts.length / POSTS_PER_PAGE);
-
-    return { currentPosts, totalPages };
-  }, [filteredPosts, currentPage]);
+  const startIndex = (currentPage - 1) * POSTS_PER_PAGE;
+  const endIndex = startIndex + POSTS_PER_PAGE;
+  const currentPosts = filteredPosts.slice(startIndex, endIndex);
+  const totalPages = Math.ceil(filteredPosts.length / POSTS_PER_PAGE);
 
   const goToPage = (page: number) => {
     setCurrentPage(page);
