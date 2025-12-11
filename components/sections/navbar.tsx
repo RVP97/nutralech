@@ -14,48 +14,48 @@ function NavItems({
   setIsMenuOpen: (open: boolean) => void;
 }) {
   return (
-    <>
-      {[
-        { id: "inicio", icon: Home, label: "Inicio", href: "/" },
-        { id: "planes", icon: Utensils, label: "Planes", href: "/#precios" },
-        {
-          id: "collabs",
-          icon: User,
-          label: "Collabs",
-          href: "/colaboraciones",
-        },
-        {
-          id: "herramientas",
-          icon: Wrench,
-          label: "Herramientas",
-          href: "/herramientas",
-        },
-        { id: "blog", icon: Pen, label: "Blog", href: "/blog" },
-        { id: "contacto", icon: Phone, label: "Contacto", href: "/contacto" },
-      ].map(({ id, icon: Icon, label, href }) => (
-        <div key={id} className="relative">
-          <Link
-            prefetch={false}
-            href={href as any}
-            className="w-full"
-            onClick={() => isMobile && setIsMenuOpen(false)}
-          >
-            <Button
-              variant="ghost"
-              size={isMobile ? "default" : "sm"}
-              className={`rounded-full transition-all duration-300 hover:bg-[#DA5F6F]/20 hover:text-[#DA5F6F] ${
-                isMobile ? "w-full justify-start" : ""
-              }`}
+      <>
+        {[
+          { id: "inicio", icon: Home, label: "Inicio", href: "/" },
+          { id: "planes", icon: Utensils, label: "Planes", href: "/#precios" },
+          {
+            id: "collabs",
+            icon: User,
+            label: "Collabs",
+            href: "/colaboraciones",
+          },
+          {
+            id: "herramientas",
+            icon: Wrench,
+            label: "Herramientas",
+            href: "/herramientas",
+          },
+          { id: "blog", icon: Pen, label: "Blog", href: "/blog" },
+          { id: "contacto", icon: Phone, label: "Contacto", href: "/contacto" },
+        ].map(({ id, icon: Icon, label, href }) => (
+          <div key={id} className="relative">
+            <Link
+              prefetch={false}
+              href={href as any}
+              className="w-full"
+              onClick={() => isMobile && setIsMenuOpen(false)}
             >
-              <Icon className={`h-5 w-5 ${isMobile ? "mr-2" : "lg:mr-2"}`} />
-              <span className={isMobile ? "inline" : "hidden lg:inline"}>
-                {label}
-              </span>
-            </Button>
-          </Link>
-        </div>
-      ))}
-    </>
+              <Button
+                variant="ghost"
+                size={isMobile ? "default" : "sm"}
+                className={`rounded-full transition-all duration-300 hover:bg-[#DA5F6F]/20 hover:text-[#DA5F6F] ${
+                  isMobile ? "w-full justify-start" : ""
+                }`}
+              >
+                <Icon className={`h-5 w-5 ${isMobile ? "mr-2" : "lg:mr-2"}`} />
+                <span className={isMobile ? "inline" : "hidden lg:inline"}>
+                  {label}
+                </span>
+              </Button>
+            </Link>
+          </div>
+        ))}
+      </>
   );
 }
 

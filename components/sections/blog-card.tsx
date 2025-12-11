@@ -26,31 +26,31 @@ export function Posts({ posts }: BlogCardsProps) {
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
 
   // Get all unique tags from posts
-  const tagSet = new Set<string>();
+    const tagSet = new Set<string>();
   for (const post of posts) {
     for (const category of post.categories || []) {
       tagSet.add(category);
     }
   }
   const allTags = Array.from(tagSet)
-    .sort()
-    .map((tag) => ({
-      label: tag.charAt(0).toUpperCase() + tag.slice(1),
-      value: tag,
-    }));
+      .sort()
+      .map((tag) => ({
+        label: tag.charAt(0).toUpperCase() + tag.slice(1),
+        value: tag,
+      }));
 
   // Filter posts by selected tags
   const filteredPosts =
     selectedTags.length === 0
       ? posts
       : posts.filter((post) =>
-          selectedTags.some((tag) => post.categories?.includes(tag))
-        );
+      selectedTags.some((tag) => post.categories?.includes(tag))
+    );
 
-  const startIndex = (currentPage - 1) * POSTS_PER_PAGE;
-  const endIndex = startIndex + POSTS_PER_PAGE;
-  const currentPosts = filteredPosts.slice(startIndex, endIndex);
-  const totalPages = Math.ceil(filteredPosts.length / POSTS_PER_PAGE);
+    const startIndex = (currentPage - 1) * POSTS_PER_PAGE;
+    const endIndex = startIndex + POSTS_PER_PAGE;
+    const currentPosts = filteredPosts.slice(startIndex, endIndex);
+    const totalPages = Math.ceil(filteredPosts.length / POSTS_PER_PAGE);
 
   const goToPage = (page: number) => {
     setCurrentPage(page);

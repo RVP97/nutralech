@@ -54,27 +54,27 @@ const Confetti = forwardRef<ConfettiRef, Props>((props, ref) => {
   const canvasRef = (node: HTMLCanvasElement) => {
     // https://react.dev/reference/react-dom/components/common#ref-callback
     // https://reactjs.org/docs/refs-and-the-dom.html#callback-refs
-    if (node !== null) {
-      // <canvas> is mounted => create the confetti instance
-      if (instanceRef.current) return; // if not already created
-      instanceRef.current = confetti.create(node, {
-        ...globalOptions,
-        resize: true,
-      });
-    } else {
-      // <canvas> is unmounted => reset and destroy instanceRef
-      if (instanceRef.current) {
-        instanceRef.current.reset();
-        instanceRef.current = null;
+      if (node !== null) {
+        // <canvas> is mounted => create the confetti instance
+        if (instanceRef.current) return; // if not already created
+        instanceRef.current = confetti.create(node, {
+          ...globalOptions,
+          resize: true,
+        });
+      } else {
+        // <canvas> is unmounted => reset and destroy instanceRef
+        if (instanceRef.current) {
+          instanceRef.current.reset();
+          instanceRef.current = null;
+        }
       }
-    }
   };
 
   // `fire` is a function that calls the instance() with `opts` merged with `options`
   const fire = (opts = {}) => instanceRef.current?.({ ...options, ...opts });
 
   const api = {
-    fire,
+      fire,
   };
 
   useImperativeHandle(ref, () => api, [api]);
