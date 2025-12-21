@@ -333,7 +333,7 @@ function Iphone15ProWhatsappLightSmaller() {
 					<div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-[100px] h-[25px] bg-black rounded-b-3xl z-20"></div>
 
 					{/* Screen content */}
-					<div className="absolute top-0 left-0 right-0 bottom-0 bg-white m-[10px] rounded-[35px] overflow-hidden">
+					<div className="absolute top-0 left-0 right-0 bottom-0 bg-white m-[10px] rounded-[35px] overflow-hidden w-[calc(100%-20px)]">
 						{/* Status bar */}
 						<div className="flex justify-between items-center px-4 h-6 bg-[#008069] text-white text-xs">
 							<span className="font-medium">{currentTime}</span>
@@ -358,15 +358,19 @@ function Iphone15ProWhatsappLightSmaller() {
 								</div>
 
 								{/* Patient list */}
-								<ScrollArea className="h-[calc(100%-120px)] bg-white">
-									<div>
+								<ScrollArea
+									className="h-[calc(100%-120px)] bg-white overflow-x-hidden"
+									style={{ width: "280px" }}
+								>
+									<div style={{ width: "280px", maxWidth: "280px" }}>
 										{patientsList.map((patient) => (
 											<div
 												key={patient.id}
-												className="flex items-center px-3 py-2 hover:bg-gray-100 cursor-pointer border-b border-gray-200"
+												className="flex items-center px-3 py-2 hover:bg-gray-100 cursor-pointer border-b border-gray-200 overflow-hidden"
+												style={{ width: "280px", maxWidth: "280px" }}
 												onClick={() => openConversation(patient.id)}
 											>
-												<Avatar className="w-10 h-10 rounded-full">
+												<Avatar className="w-10 h-10 rounded-full flex-shrink-0">
 													<AvatarImage
 														src={patient.avatar}
 														alt={patient.name}
@@ -378,17 +382,17 @@ function Iphone15ProWhatsappLightSmaller() {
 															.join("")}
 													</AvatarFallback>
 												</Avatar>
-												<div className="flex-1 min-w-0 ml-3">
-													<div className="flex justify-between items-baseline">
-														<h3 className="text-sm font-semibold text-gray-900 truncate">
+												<div className="flex-1 min-w-0 ml-3 overflow-hidden">
+													<div className="flex justify-between items-baseline gap-2 min-w-0">
+														<h3 className="text-sm font-semibold text-gray-900 truncate flex-1 min-w-0">
 															{patient.name}
 														</h3>
-														<span className="text-xs text-gray-500 ml-2 whitespace-nowrap">
+														<span className="text-xs text-gray-500 whitespace-nowrap flex-shrink-0">
 															{patient.time}
 														</span>
 													</div>
-													<div className="flex justify-between items-center">
-														<p className="text-xs text-gray-500 truncate pr-4">
+													<div className="flex justify-between items-center gap-2 min-w-0">
+														<p className="text-xs text-gray-500 truncate flex-1 min-w-0">
 															{patient.lastMessage}
 														</p>
 														{patient.unread > 0 && (
