@@ -5,12 +5,15 @@ import {
 	Check,
 	ChevronLeft,
 	Clock,
+	Flame,
 	History,
+	Megaphone,
 	MessageCircle,
 	MoreVertical,
 	Phone,
 	Send,
 	Settings,
+	Sparkles,
 	ThumbsUp,
 	Users,
 	Video,
@@ -32,6 +35,13 @@ interface Message {
 
 interface Conversations {
 	[key: number]: Message[];
+}
+
+interface TabItem {
+	id: "updates" | "calls" | "communities" | "chats" | "settings";
+	icon: React.ComponentType<{ className?: string }>;
+	label: string;
+	notifications: number;
 }
 
 // Mock conversations for each patient
@@ -316,13 +326,175 @@ function Iphone15ProWhatsappLightSmaller() {
 		setNewMessage("");
 	};
 
-	const tabs = [
+	const tabs: TabItem[] = [
 		{ id: "updates", icon: History, label: "Updates", notifications: 0 },
 		{ id: "calls", icon: Phone, label: "Calls", notifications: 2 },
 		{ id: "communities", icon: Users, label: "Communities", notifications: 0 },
 		{ id: "chats", icon: MessageCircle, label: "Chats", notifications: 3 },
 		{ id: "settings", icon: Settings, label: "Settings", notifications: 0 },
 	];
+
+	const renderMainContent = () => {
+		if (activeTab === "chats") {
+			return (
+				<ScrollArea
+					className="h-[calc(100%-120px)] bg-white overflow-x-hidden"
+					style={{ width: "280px" }}
+				>
+					<div style={{ width: "280px", maxWidth: "280px" }}>
+						{patientsList.map((patient) => (
+							<div
+								key={patient.id}
+								className="flex items-center px-3 py-2 hover:bg-gray-100 cursor-pointer border-b border-gray-200 overflow-hidden"
+								style={{ width: "280px", maxWidth: "280px" }}
+								onClick={() => openConversation(patient.id)}
+							>
+								<Avatar className="w-10 h-10 rounded-full flex-shrink-0">
+									<AvatarImage src={patient.avatar} alt={patient.name} />
+									<AvatarFallback>
+										{patient.name
+											.split(" ")
+											.map((n) => n[0])
+											.join("")}
+									</AvatarFallback>
+								</Avatar>
+								<div className="flex-1 min-w-0 ml-3 overflow-hidden">
+									<div className="flex justify-between items-baseline gap-2 min-w-0">
+										<h3 className="text-sm font-semibold text-gray-900 truncate flex-1 min-w-0">
+											{patient.name}
+										</h3>
+										<span className="text-xs text-gray-500 whitespace-nowrap flex-shrink-0">
+											{patient.time}
+										</span>
+									</div>
+									<div className="flex justify-between items-center gap-2 min-w-0">
+										<p className="text-xs text-gray-500 truncate flex-1 min-w-0">
+											{patient.lastMessage}
+										</p>
+										{patient.unread > 0 && (
+											<span className="flex-shrink-0 inline-flex items-center justify-center w-4 h-4 bg-[#25D366] text-white rounded-full text-[10px]">
+												{patient.unread}
+											</span>
+										)}
+									</div>
+								</div>
+							</div>
+						))}
+					</div>
+				</ScrollArea>
+			);
+		}
+
+		if (activeTab === "updates") {
+			return (
+				<div className="h-[calc(100%-120px)] bg-[#f8faf9] px-3 py-3 space-y-3 overflow-y-auto">
+					<div className="rounded-xl bg-white border border-gray-200 p-3">
+						<div className="flex items-center gap-2 text-[#008069] mb-2">
+							<Megaphone className="h-4 w-4" />
+							<p className="text-xs font-semibold uppercase tracking-wide">
+								Nutralech Novedades
+							</p>
+						</div>
+						<p className="text-xs text-gray-700">
+							Nuevo artículo publicado: "Cómo crear desayunos altos en proteína
+							en 10 minutos". Ya disponible en el blog.
+						</p>
+					</div>
+					<div className="rounded-xl bg-white border border-gray-200 p-3">
+						<div className="flex items-center gap-2 text-[#008069] mb-2">
+							<Sparkles className="h-4 w-4" />
+							<p className="text-xs font-semibold uppercase tracking-wide">
+								Plan Premium
+							</p>
+						</div>
+						<p className="text-xs text-gray-700">
+							Esta semana: revisión de progreso express para clientes activos.
+							Reserva tu espacio desde la sección de servicios.
+						</p>
+					</div>
+					<div className="rounded-xl bg-white border border-gray-200 p-3">
+						<div className="flex items-center gap-2 text-[#008069] mb-2">
+							<Flame className="h-4 w-4" />
+							<p className="text-xs font-semibold uppercase tracking-wide">
+								Recetas de temporada
+							</p>
+						</div>
+						<p className="text-xs text-gray-700">
+							Actualización del menú saludable con recetas antiinflamatorias
+							adaptadas a tus objetivos.
+						</p>
+					</div>
+				</div>
+			);
+		}
+
+		if (activeTab === "calls") {
+			return (
+				<div className="h-[calc(100%-120px)] bg-white px-3 py-2 overflow-y-auto">
+					{[
+						{ name: "Sesión de seguimiento - Laura", time: "Hoy, 11:00", type: "Video" },
+						{ name: "Consulta inicial - Carlos", time: "Ayer, 18:45", type: "Voice" },
+						{ name: "Revisión de menú - Daniela", time: "Lun, 09:30", type: "Video" },
+					].map((call) => (
+						<div
+							key={call.name}
+							className="border-b border-gray-100 py-3 flex items-center justify-between"
+						>
+							<div>
+								<p className="text-sm font-medium text-gray-900">{call.name}</p>
+								<p className="text-xs text-gray-500">{call.time}</p>
+							</div>
+							<div className="flex items-center gap-2 text-[#008069]">
+								{call.type === "Video" ? (
+									<Video className="h-4 w-4" />
+								) : (
+									<Phone className="h-4 w-4" />
+								)}
+							</div>
+						</div>
+					))}
+				</div>
+			);
+		}
+
+		if (activeTab === "communities") {
+			return (
+				<div className="h-[calc(100%-120px)] bg-[#f8faf9] px-3 py-3 overflow-y-auto space-y-3">
+					<div className="rounded-xl bg-white border border-gray-200 p-3">
+						<p className="text-sm font-semibold text-gray-900">Comunidad Reto 30 Días</p>
+						<p className="text-xs text-gray-600 mt-1">
+							Comparte tus avances diarios de hidratación, descanso y
+							alimentación con otros pacientes.
+						</p>
+					</div>
+					<div className="rounded-xl bg-white border border-gray-200 p-3">
+						<p className="text-sm font-semibold text-gray-900">Recetas Saludables</p>
+						<p className="text-xs text-gray-600 mt-1">
+							Ideas rápidas para desayuno, snacks y cenas alineadas a tu plan
+							nutricional en Nutralech.
+						</p>
+					</div>
+				</div>
+			);
+		}
+
+		return (
+			<div className="h-[calc(100%-120px)] bg-white px-3 py-3 space-y-3">
+				<div className="rounded-xl border border-gray-200 p-3">
+					<p className="text-sm font-semibold text-gray-900">Cuenta profesional</p>
+					<p className="text-xs text-gray-600 mt-1">
+						Sincronizada con tus servicios y contacto de nutralech.com.
+					</p>
+				</div>
+				<div className="rounded-xl border border-gray-200 p-3">
+					<p className="text-sm font-semibold text-gray-900">Notificaciones</p>
+					<p className="text-xs text-gray-600 mt-1">
+						Activas para consultas, recordatorios de citas y nuevos recursos.
+					</p>
+				</div>
+			</div>
+		);
+	};
 
 	return (
 		<div className="flex items-center justify-center p-4">
@@ -357,55 +529,7 @@ function Iphone15ProWhatsappLightSmaller() {
 									<h2 className="text-xl font-bold">WhatsApp</h2>
 								</div>
 
-								{/* Patient list */}
-								<ScrollArea
-									className="h-[calc(100%-120px)] bg-white overflow-x-hidden"
-									style={{ width: "280px" }}
-								>
-									<div style={{ width: "280px", maxWidth: "280px" }}>
-										{patientsList.map((patient) => (
-											<div
-												key={patient.id}
-												className="flex items-center px-3 py-2 hover:bg-gray-100 cursor-pointer border-b border-gray-200 overflow-hidden"
-												style={{ width: "280px", maxWidth: "280px" }}
-												onClick={() => openConversation(patient.id)}
-											>
-												<Avatar className="w-10 h-10 rounded-full flex-shrink-0">
-													<AvatarImage
-														src={patient.avatar}
-														alt={patient.name}
-													/>
-													<AvatarFallback>
-														{patient.name
-															.split(" ")
-															.map((n) => n[0])
-															.join("")}
-													</AvatarFallback>
-												</Avatar>
-												<div className="flex-1 min-w-0 ml-3 overflow-hidden">
-													<div className="flex justify-between items-baseline gap-2 min-w-0">
-														<h3 className="text-sm font-semibold text-gray-900 truncate flex-1 min-w-0">
-															{patient.name}
-														</h3>
-														<span className="text-xs text-gray-500 whitespace-nowrap flex-shrink-0">
-															{patient.time}
-														</span>
-													</div>
-													<div className="flex justify-between items-center gap-2 min-w-0">
-														<p className="text-xs text-gray-500 truncate flex-1 min-w-0">
-															{patient.lastMessage}
-														</p>
-														{patient.unread > 0 && (
-															<span className="flex-shrink-0 inline-flex items-center justify-center w-4 h-4 bg-[#25D366] text-white rounded-full text-[10px]">
-																{patient.unread}
-															</span>
-														)}
-													</div>
-												</div>
-											</div>
-										))}
-									</div>
-								</ScrollArea>
+								{renderMainContent()}
 
 								{/* Bottom Navigation */}
 								<div className="absolute bottom-0 left-0 right-0 h-10 bg-white border-t border-gray-200 flex justify-around items-center">
