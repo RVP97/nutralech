@@ -63,7 +63,7 @@ const faqItems = [
 
 export default function FaqSection() {
 	return (
-		<section id="faq" className="py-12 bg-gradient-to-b from-white to-white">
+		<section id="faq" className="py-12 bg-linear-to-b from-white to-white">
 			<div className=" px-4 mx-auto">
 				<div className="text-center mb-8">
 					<span className="text-lg text-[#DA5F6F]">

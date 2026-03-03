@@ -32,7 +32,7 @@ const services = [
 
 export default function AboutPage() {
 	return (
-		<div className="min-h-screen py-12 md:py-0 bg-gradient-to-b from-white via-pink-50/50 to-white">
+		<div className="min-h-screen py-12 md:py-0 bg-linear-to-b from-white via-pink-50/50 to-white">
 			<div className="pointer-events-none absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMSIgY3k9IjEiIHI9IjEiIGZpbGw9InJnYmEoMjE4LCA5NSwgMTExLCAwLjA3KSIvPjwvc3ZnPg==')] opacity-40" />
 			<div className="absolute top-20 right-0 w-96 h-96 rounded-full bg-[#DA5F6F]/20 blur-[128px]" />
 			<div className="absolute bottom-0 right-20 w-96 h-96 rounded-full bg-yellow-200/30 blur-[128px]" />
@@ -96,7 +96,7 @@ export default function AboutPage() {
 						</div>
 
 						<div className="relative w-full max-w-lg mx-auto lg:max-w-none">
-							<div className="absolute inset-0 bg-gradient-to-br from-[#DA5F6F]/20 to-yellow-200/30 rounded-3xl transform rotate-3"></div>
+							<div className="absolute inset-0 bg-linear-to-br from-[#DA5F6F]/20 to-yellow-200/30 rounded-3xl transform rotate-3"></div>
 							<Image
 								src="/images/marialy.webp"
 								alt="Marialy Rodriguez"
@@ -128,7 +128,7 @@ export default function AboutPage() {
 									<h3 className="text-xl font-semibold mb-2 text-gray-900">
 										{service.title}
 									</h3>
-									<p className="text-gray-600 mb-4 flex-grow">
+									<p className="text-gray-600 mb-4 grow">
 										{service.description}
 									</p>
 									<Link
@@ -179,7 +179,7 @@ export default function AboutPage() {
 										"Educación nutricional para decisiones informadas",
 									].map((item, index) => (
 										<li key={index} className="flex items-start">
-											<Check className="h-6 w-6 text-[#DA5F6F] mr-2 flex-shrink-0" />
+											<Check className="h-6 w-6 text-[#DA5F6F] mr-2 shrink-0" />
 											<span className="text-gray-700">{item}</span>
 										</li>
 									))}
@@ -218,7 +218,7 @@ export default function AboutPage() {
         </section> */}
 
 				<section className="py-16">
-					<div className="bg-gradient-to-br from-[#DA5F6F] to-[#FF8C94] text-white rounded-3xl p-12 relative overflow-hidden">
+					<div className="bg-linear-to-br from-[#DA5F6F] to-[#FF8C94] text-white rounded-3xl p-12 relative overflow-hidden">
 						<div className="absolute inset-0 bg-pattern opacity-10"></div>
 						<div className="relative z-10 max-w-4xl mx-auto text-center">
 							<h2 className="text-4xl font-serif font-medium mb-6">

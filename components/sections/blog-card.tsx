@@ -160,7 +160,7 @@ export function Posts({ posts }: BlogCardsProps) {
 								))}
 							</div>
 						</CardHeader>
-						<CardContent className="flex-grow">
+						<CardContent className="grow">
 							{post.excerpt && (
 								<p className="text-muted-foreground mb-4">{post.excerpt}</p>
 							)}
@@ -263,7 +263,7 @@ export function Posts({ posts }: BlogCardsProps) {
 							{getPageNumbers().map((pageNum) => (
 								<Button
 									key={pageNum}
-									variant={currentPage === pageNum ? "default" : "outline"}
+									variant={currentPage === pageNum ? "default" : "outline-solid"}
 									size="sm"
 									onClick={() => goToPage(pageNum)}
 									className={

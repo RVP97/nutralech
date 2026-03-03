@@ -25,7 +25,7 @@ export default function AboutMeComponent() {
 	];
 
 	return (
-		<section className="py-12 bg-gradient-to-b from-white to-pink-50/50">
+		<section className="py-12 bg-linear-to-b from-white to-pink-50/50">
 			<div className="container px-4 mx-auto">
 				<div className="text-center mb-16">
 					<span className="text-lg text-[#DA5F6F]">Conóceme</span>
@@ -37,7 +37,7 @@ export default function AboutMeComponent() {
 				<div className="grid gap-12 lg:grid-cols-2 items-start">
 					{/* Image - Sticky on desktop */}
 					<div className="relative lg:sticky lg:top-24 lg:self-start">
-						<div className="absolute inset-0 bg-gradient-to-tl from-[#DA5F6F]/20 to-transparent rounded-3xl blur-xl" />
+						<div className="absolute inset-0 bg-linear-to-tl from-[#DA5F6F]/20 to-transparent rounded-3xl blur-xl" />
 						<div className="relative aspect-square overflow-hidden rounded-3xl">
 							<Image
 								src="/images/marialy.webp"

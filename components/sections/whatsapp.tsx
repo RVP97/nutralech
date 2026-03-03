@@ -350,7 +350,7 @@ function Iphone15ProWhatsappLightSmaller() {
 								style={{ width: "280px", maxWidth: "280px" }}
 								onClick={() => openConversation(patient.id)}
 							>
-								<Avatar className="w-10 h-10 rounded-full flex-shrink-0">
+								<Avatar className="w-10 h-10 rounded-full shrink-0">
 									<AvatarImage src={patient.avatar} alt={patient.name} />
 									<AvatarFallback>
 										{patient.name
@@ -364,7 +364,7 @@ function Iphone15ProWhatsappLightSmaller() {
 										<h3 className="text-sm font-semibold text-gray-900 truncate flex-1 min-w-0">
 											{patient.name}
 										</h3>
-										<span className="text-xs text-gray-500 whitespace-nowrap flex-shrink-0">
+										<span className="text-xs text-gray-500 whitespace-nowrap shrink-0">
 											{patient.time}
 										</span>
 									</div>
@@ -373,7 +373,7 @@ function Iphone15ProWhatsappLightSmaller() {
 											{patient.lastMessage}
 										</p>
 										{patient.unread > 0 && (
-											<span className="flex-shrink-0 inline-flex items-center justify-center w-4 h-4 bg-[#25D366] text-white rounded-full text-[10px]">
+											<span className="shrink-0 inline-flex items-center justify-center w-4 h-4 bg-[#25D366] text-white rounded-full text-[10px]">
 												{patient.unread}
 											</span>
 										)}
@@ -666,7 +666,7 @@ function Iphone15ProWhatsappLightSmaller() {
 													msg.sender === "You"
 														? "ml-auto bg-[#d9fdd3]"
 														: "bg-white"
-												} rounded-lg p-2 shadow-sm`}
+												} rounded-lg p-2 shadow-xs`}
 											>
 												<p className="text-xs text-gray-800">{msg.message}</p>
 												<div className="flex justify-end items-center mt-1 space-x-1">
@@ -705,7 +705,7 @@ function Iphone15ProWhatsappLightSmaller() {
 									<Input
 										type="text"
 										placeholder="Type a message"
-										className="flex-1 bg-white text-gray-800 placeholder-gray-500 rounded-full mx-1 text-xs h-8 focus:outline-none border-none"
+										className="flex-1 bg-white text-gray-800 placeholder-gray-500 rounded-full mx-1 text-xs h-8 focus:outline-hidden border-none"
 										value={newMessage}
 										onChange={(e) => setNewMessage(e.target.value)}
 										onKeyDown={(e) => {
@@ -762,14 +762,14 @@ export default function PersonalizedCommunicationSection() {
 	];
 
 	return (
-		<section className="relative py-12 bg-gradient-to-b from-white to-pink-50/50">
+		<section className="relative py-12 bg-linear-to-b from-white to-pink-50/50">
 			{/* Add decorative elements from hero.tsx */}
 			<div className="pointer-events-none absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMSIgY3k9IjEiIHI9IjEiIGZpbGw9InJnYmEoMjE4LCA5NSwgMTExLCAwLjA3KSIvPjwvc3ZnPg==')] opacity-40" />
 			<div className="absolute top-20 right-0 w-96 h-96 rounded-full bg-[#DA5F6F]/20 blur-[128px] animate-pulse" />
 			<div className="absolute bottom-0 right-20 w-96 h-96 rounded-full bg-yellow-200/30 blur-[128px] animate-pulse [animation-delay:1000ms]" />
 
 			{/* Add bottom fade effect */}
-			<div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-white to-transparent" />
+			<div className="absolute bottom-0 left-0 right-0 h-32 bg-linear-to-t from-white to-transparent" />
 
 			<div className="container px-4 mx-auto">
 				<div className="text-center mb-16">
@@ -790,7 +790,7 @@ export default function PersonalizedCommunicationSection() {
 						<div className="space-y-6">
 							{features.map((feature, index) => (
 								<div key={index} className="flex gap-4">
-									<div className="flex-shrink-0">
+									<div className="shrink-0">
 										<div className="w-12 h-12 rounded-full bg-[#DA5F6F]/10 flex items-center justify-center">
 											<feature.icon className="w-6 h-6 text-[#DA5F6F]" />
 										</div>
@@ -809,7 +809,7 @@ export default function PersonalizedCommunicationSection() {
 					</div>
 
 					<div className="relative mx-auto">
-						<div className="absolute inset-0 bg-gradient-to-br from-[#DA5F6F]/20 to-transparent rounded-[45px] blur-xl" />
+						<div className="absolute inset-0 bg-linear-to-br from-[#DA5F6F]/20 to-transparent rounded-[45px] blur-xl" />
 						<div className="relative">
 							<Iphone15ProWhatsappLightSmaller />
 						</div>

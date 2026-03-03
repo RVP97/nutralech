@@ -106,7 +106,7 @@ export default function GlobalConsultations() {
 	};
 
 	return (
-		<section className="py-12 bg-gradient-to-b from-pink-50/50 to-white overflow-hidden">
+		<section className="py-12 bg-linear-to-b from-pink-50/50 to-white overflow-hidden">
 			<div className="container px-4 mx-auto">
 				<div className="text-center mb-10">
 					<span className="text-lg text-[#DA5F6F]">Alcance Global</span>
@@ -131,7 +131,7 @@ export default function GlobalConsultations() {
 										animate={{ opacity: 1, y: 0 }}
 										exit={{ opacity: 0, y: -20 }}
 										transition={{ duration: 0.5 }}
-										className="bg-gradient-to-r from-pink-100 to-purple-100 rounded-2xl p-6"
+										className="bg-linear-to-r from-pink-100 to-purple-100 rounded-2xl p-6"
 									>
 										<div className="flex items-center justify-between mb-4">
 											<span className="text-4xl">
@@ -190,7 +190,7 @@ export default function GlobalConsultations() {
 									{features.map((feature) => (
 										<motion.div
 											key={feature.title}
-											className="bg-gradient-to-br from-pink-50 to-purple-50 rounded-xl p-4"
+											className="bg-linear-to-br from-pink-50 to-purple-50 rounded-xl p-4"
 											whileHover={{ scale: 1.03 }}
 											transition={{ type: "spring", stiffness: 300 }}
 										>

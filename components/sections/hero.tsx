@@ -7,7 +7,7 @@ import WordRotate from "@/components/ui/word-rotate";
 
 export default function Hero() {
 	return (
-		<section className="relative min-h-screen  bg-gradient-to-b from-white to-pink-50/50">
+		<section className="relative min-h-screen  bg-linear-to-b from-white to-pink-50/50">
 			{/* Decorative elements */}
 			<div className="pointer-events-none absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMSIgY3k9IjEiIHI9IjEiIGZpbGw9InJnYmEoMjE4LCA5NSwgMTExLCAwLjA3KSIvPjwvc3ZnPg==')] opacity-40" />
 			<div className="absolute top-20 right-0 w-96 h-96 rounded-full bg-[#DA5F6F]/20 blur-[128px] animate-pulse" />
@@ -16,7 +16,7 @@ export default function Hero() {
 			{/* WhatsApp-style notifications */}
 			{/* <div className="absolute right-4 top-4 z-10 w-full max-w-[360px] sm:right-8">
         <AnimatedList delay={2000} className="flex flex-col gap-2 sm:gap-3">
-          <div className="flex items-start gap-3 rounded-2xl bg-[#F0F2F5] p-3 shadow-sm">
+          <div className="flex items-start gap-3 rounded-2xl bg-[#F0F2F5] p-3 shadow-xs">
             <div className="relative shrink-0">
               <div className="relative w-10 h-10 rounded-full overflow-hidden">
                 <Image
@@ -54,7 +54,7 @@ export default function Hero() {
             </div>
             <div className="text-xs text-[#8696A0] mt-1">Reply</div>
           </div>
-          <div className="flex items-start gap-3 rounded-2xl bg-[#F0F2F5] p-3 shadow-sm">
+          <div className="flex items-start gap-3 rounded-2xl bg-[#F0F2F5] p-3 shadow-xs">
             <div className="relative shrink-0">
               <div className="relative w-10 h-10 rounded-full overflow-hidden">
                 <Image
@@ -95,7 +95,7 @@ export default function Hero() {
       </div> */}
 
 			{/* Add this new div for the bottom fade effect */}
-			<div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-white to-transparent" />
+			<div className="absolute bottom-0 left-0 right-0 h-32 bg-linear-to-t from-white to-transparent" />
 
 			<div className="container relative px-4 mx-auto">
 				<div className="grid min-h-screen items-center gap-12 lg:grid-cols-2">
@@ -164,7 +164,7 @@ export default function Hero() {
 
 							{/* Overlaid statistics */}
 							<div className="absolute translate-y-1/2 bottom-0 -left-2 -right-2">
-								<div className="bg-white/90 backdrop-blur-sm px-6 py-4 rounded-[24px]">
+								<div className="bg-white/90 backdrop-blur-xs px-6 py-4 rounded-[24px]">
 									<div className="flex justify-between">
 										<div>
 											<div className="text-xl font-bold leading-tight text-[#DA5F6F]">

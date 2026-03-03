@@ -155,7 +155,7 @@ export function IdealWeightCalculator() {
 					Calcula tu peso ideal basado en diferentes fórmulas médicas
 				</CardDescription>
 			</CardHeader>
-			<CardContent className="flex-grow space-y-6">
+			<CardContent className="grow space-y-6">
 				<div className="space-y-4">
 					<div className="space-y-2">
 						<Label htmlFor="gender">Género</Label>

@@ -125,7 +125,7 @@ export function HydrationCalculator() {
 					Ingresa tus datos para calcular tus necesidades diarias de agua
 				</CardDescription>
 			</CardHeader>
-			<CardContent className="flex-grow space-y-6">
+			<CardContent className="grow space-y-6">
 				<div className="space-y-4">
 					<div className="space-y-2">
 						<Label htmlFor="unit-system">Sistema de Unidades</Label>

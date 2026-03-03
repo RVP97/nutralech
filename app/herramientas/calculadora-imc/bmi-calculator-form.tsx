@@ -82,7 +82,7 @@ export function BMICalculatorForm() {
 					Ingresa tus datos para calcular tu Índice de Masa Corporal
 				</CardDescription>
 			</CardHeader>
-			<CardContent className="flex-grow space-y-6">
+			<CardContent className="grow space-y-6">
 				<div className="space-y-4">
 					<div>
 						<Label htmlFor="unit">Sistema de Medida</Label>

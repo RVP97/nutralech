@@ -142,7 +142,7 @@ export default function NotFound() {
 						alt="404 No Encontrado"
 						width={2070}
 						height={1380}
-						className="w-full lg:h-[32rem] h-80 md:h-96 rounded-lg object-cover"
+						className="w-full lg:h-128 h-80 md:h-96 rounded-lg object-cover"
 					/>
 				</div>
 			</div>

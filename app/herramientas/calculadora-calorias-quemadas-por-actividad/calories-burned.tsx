@@ -317,7 +317,7 @@ export function CaloriesBurnedCalculator() {
 					Calcula las calorías quemadas según tu actividad física
 				</CardDescription>
 			</CardHeader>
-			<CardContent className="flex-grow space-y-6">
+			<CardContent className="grow space-y-6">
 				<div className="space-y-4">
 					{/* Unit System Select */}
 					<div className="space-y-2">

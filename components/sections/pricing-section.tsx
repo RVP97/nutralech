@@ -283,8 +283,8 @@ export default function PricingSection() {
 				open={!!selectedPriceId}
 				onOpenChange={() => setSelectedPriceId(null)}
 			>
-				<DialogContent className="sm:max-w-[90vw] w-[95vw] h-[90vh] max-h-[90vh] flex flex-col rounded-lg z-[100]">
-					<DialogHeader className="flex-shrink-0">
+				<DialogContent className="sm:max-w-[90vw] w-[95vw] h-[90vh] max-h-[90vh] flex flex-col rounded-lg z-100">
+					<DialogHeader className="shrink-0">
 						<DialogTitle>Completar Pago</DialogTitle>
 					</DialogHeader>
 					<div className="flex-1 overflow-y-auto">
@@ -297,7 +297,7 @@ export default function PricingSection() {
 
 			<section
 				id="precios"
-				className="py-12 md:py-8 bg-gradient-to-b from-white to-pink-50/50"
+				className="py-12 md:py-8 bg-linear-to-b from-white to-pink-50/50"
 			>
 				<div className="container px-4 mx-auto">
 					<div className="text-center mb-10">
@@ -564,7 +564,7 @@ export default function PricingSection() {
 									<CardTitle>{plan.name}</CardTitle>
 									<CardDescription>{plan.description}</CardDescription>
 								</CardHeader>
-								<CardContent className="flex-grow">
+								<CardContent className="grow">
 									<div className="text-4xl font-bold mb-6">
 										{showPackages ? (
 											<>
@@ -587,9 +587,9 @@ export default function PricingSection() {
 										{plan.features.map((feature, idx) => (
 											<li key={idx} className="flex items-center">
 												{feature.cross ? (
-													<X className="h-5 w-5 text-zinc-300 mr-2 flex-shrink-0" />
+													<X className="h-5 w-5 text-zinc-300 mr-2 shrink-0" />
 												) : (
-													<Check className="h-5 w-5 text-[#DA5F6F] mr-2 flex-shrink-0" />
+													<Check className="h-5 w-5 text-[#DA5F6F] mr-2 shrink-0" />
 												)}
 												<span
 													className={

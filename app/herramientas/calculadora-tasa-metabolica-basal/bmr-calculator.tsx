@@ -146,7 +146,7 @@ export function BMRCalculator() {
 					Calcula las calorías que tu cuerpo necesita en reposo completo
 				</CardDescription>
 			</CardHeader>
-			<CardContent className="flex-grow space-y-6">
+			<CardContent className="grow space-y-6">
 				<div className="space-y-4">
 					<div className="space-y-2">
 						<Label htmlFor="age">Edad</Label>

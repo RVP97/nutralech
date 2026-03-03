@@ -51,7 +51,7 @@ export default function ContactPageComponent() {
 								</Link>
 								, o consulta todas las formas de contactarnos a continuación.
 							</p>
-							<div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm rounded-full px-4 py-2">
+							<div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-xs rounded-full px-4 py-2">
 								<div className="flex -space-x-2">
 									{[
 										"/images/testimonial-profile/rodrigo.webp",
@@ -76,7 +76,7 @@ export default function ContactPageComponent() {
 									+500 pacientes felices me avalan
 								</p>
 							</div>
-							<div className="inline-block bg-white/5 border border-white/10 rounded-xl backdrop-blur-sm">
+							<div className="inline-block bg-white/5 border border-white/10 rounded-xl backdrop-blur-xs">
 								<div className="flex flex-wrap divide-x divide-white/10">
 									<div className="px-6 py-3 flex items-center">
 										<div className="w-5 flex justify-center">
@@ -128,7 +128,7 @@ export default function ContactPageComponent() {
 							className="bg-white shadow-lg hover:shadow-xl transition-shadow h-full"
 						>
 							<CardContent className="p-6 flex flex-col h-full">
-								<div className="space-y-4 flex-grow">
+								<div className="space-y-4 grow">
 									<div className="bg-[#DA5F6F]/10 w-12 h-12 rounded-full flex items-center justify-center">
 										<option.icon className="w-6 h-6 text-[#DA5F6F]" />
 									</div>

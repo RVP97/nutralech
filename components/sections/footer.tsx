@@ -4,8 +4,8 @@ import { Button } from "@/components/ui/button";
 
 export default function Footer() {
 	return (
-		<footer className="w-full bg-gradient-to-b from-background to-[#ffe5e5] pt-16 pb-8 px-4 relative">
-			<div className="absolute top-0 left-0 w-full overflow-hidden leading-[0]">
+		<footer className="w-full bg-linear-to-b from-background to-[#ffe5e5] pt-16 pb-8 px-4 relative">
+			<div className="absolute top-0 left-0 w-full overflow-hidden leading-0">
 				<svg
 					aria-hidden="true"
 					data-name="Layer 1"
@@ -43,7 +43,7 @@ export default function Footer() {
 									fill="#FF756D"
 								/>
 							</svg>
-							<span className="text-2xl font-bold bg-gradient-to-r from-[#FF756D] to-[#FF9B9B] bg-clip-text text-transparent">
+							<span className="text-2xl font-bold bg-linear-to-r from-[#FF756D] to-[#FF9B9B] bg-clip-text text-transparent">
 								Nutralech
 							</span>
 						</Link>
@@ -162,7 +162,7 @@ export default function Footer() {
 						</div>
 						<Button
 							asChild
-							className="bg-gradient-to-r from-[#FF756D] to-[#FF9B9B] text-white hover:from-[#FF9B9B] hover:to-[#FF756D] transition-all duration-300 transform hover:scale-105 w-full md:w-auto"
+							className="bg-linear-to-r from-[#FF756D] to-[#FF9B9B] text-white hover:from-[#FF9B9B] hover:to-[#FF756D] transition-all duration-300 transform hover:scale-105 w-full md:w-auto"
 						>
 							<Link prefetch={false} href="/contacto">
 								Contáctame

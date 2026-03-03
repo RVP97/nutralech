@@ -281,7 +281,7 @@ export function CalorieCalculator() {
 					Ingresa tus datos para calcular tus necesidades calóricas diarias
 				</CardDescription>
 			</CardHeader>
-			<CardContent className="flex-grow space-y-6">
+			<CardContent className="grow space-y-6">
 				<div className="space-y-4">
 					<div className="space-y-2">
 						<Label htmlFor="age">Edad</Label>

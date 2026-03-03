@@ -57,7 +57,7 @@ const brandLogos = [
 
 export default function CollaboratePage() {
 	return (
-		<div className="mt-6 bg-gradient-to-b from-white to-pink-50/50">
+		<div className="mt-6 bg-linear-to-b from-white to-pink-50/50">
 			<div className="pointer-events-none absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMSIgY3k9IjEiIHI9IjEiIGZpbGw9InJnYmEoMjE4LCA5NSwgMTExLCAwLjA3KSIvPjwvc3ZnPg==')] opacity-40" />
 			<div className="absolute top-20 right-0 w-96 h-96 rounded-full bg-[#DA5F6F]/20 blur-[128px]" />
 			<div className="absolute bottom-0 right-20 w-96 h-96 rounded-full bg-yellow-200/30 blur-[128px]" />
@@ -176,7 +176,7 @@ export default function CollaboratePage() {
 					<Card className="bg-white overflow-hidden shadow-2xl">
 						<CardContent className="p-0">
 							<div className="grid md:grid-cols-2">
-								<div className="md:p-12 p-4 bg-gradient-to-br from-[#DA5F6F] to-[#FF8C94] text-white relative overflow-hidden">
+								<div className="md:p-12 p-4 bg-linear-to-br from-[#DA5F6F] to-[#FF8C94] text-white relative overflow-hidden">
 									<div className="absolute top-0 right-0 w-64 h-64 bg-white opacity-10 rounded-full -mr-32 -mt-32 transform rotate-45"></div>
 									<div className="absolute bottom-0 left-0 w-48 h-48 bg-white opacity-10 rounded-full -ml-24 -mb-24"></div>
 									<h2 className="text-4xl font-serif font-medium mb-8 relative z-10">

@@ -17,7 +17,7 @@ import {
 
 export default function AppToolsPage() {
 	return (
-		<section className="py-24 md:py-12 bg-gradient-to-b from-white to-green-50/50">
+		<section className="py-24 md:py-12 bg-linear-to-b from-white to-green-50/50">
 			<div className="container px-4 mx-auto">
 				<div className="text-center mb-16">
 					<Badge variant="secondary" className="mb-4">
@@ -54,7 +54,7 @@ export default function AppToolsPage() {
 									{tool.description}
 								</CardDescription>
 							</CardHeader>
-							<CardContent className="flex-grow"></CardContent>
+							<CardContent className="grow"></CardContent>
 							<CardFooter className="flex flex-col gap-4">
 								<div className="flex flex-wrap gap-2 w-full justify-start">
 									{tool.tags.map((tag, tagIndex) => (

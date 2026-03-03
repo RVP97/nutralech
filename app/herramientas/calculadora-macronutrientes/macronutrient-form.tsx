@@ -107,7 +107,7 @@ export function MacroCalculatorForm() {
 					Ingresa tus datos para calcular tus macronutrientes ideales
 				</CardDescription>
 			</CardHeader>
-			<CardContent className="flex-grow space-y-6">
+			<CardContent className="grow space-y-6">
 				<div className="space-y-4">
 					<div>
 						<Label htmlFor="preference">Preferencia de Macros</Label>

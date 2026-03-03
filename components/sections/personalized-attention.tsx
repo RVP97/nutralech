@@ -55,7 +55,7 @@ export default function PersonalizedAttention() {
 	return (
 		<section
 			id="servicios"
-			className="py-12 bg-gradient-to-b from-white to-white"
+			className="py-12 bg-linear-to-b from-white to-white"
 		>
 			<div className="container px-4 mx-auto">
 				<div className="text-center mb-16">
@@ -79,7 +79,7 @@ export default function PersonalizedAttention() {
 						<div className="space-y-6">
 							{steps.map((step, index) => (
 								<div key={index} className="flex gap-4">
-									<div className="flex-shrink-0">
+									<div className="shrink-0">
 										<div className="w-12 h-12 rounded-full bg-[#DA5F6F]/10 flex items-center justify-center">
 											<step.icon className="w-6 h-6 text-[#DA5F6F]" />
 										</div>
@@ -95,7 +95,7 @@ export default function PersonalizedAttention() {
 						{/* Animated Beam Demo */}
 						<div className="space-y-4">
 							<div className="flex gap-4">
-								<div className="flex-shrink-0">
+								<div className="shrink-0">
 									<div className="w-12 h-12 rounded-full bg-[#DA5F6F]/10 flex items-center justify-center">
 										<User className="w-6 h-6 text-[#DA5F6F]" />
 									</div>
@@ -159,7 +159,7 @@ export default function PersonalizedAttention() {
 
 					{/* Image */}
 					<div className="relative">
-						<div className="absolute inset-0 bg-gradient-to-br from-[#DA5F6F]/20 to-transparent rounded-3xl blur-xl" />
+						<div className="absolute inset-0 bg-linear-to-br from-[#DA5F6F]/20 to-transparent rounded-3xl blur-xl" />
 						<div className="relative aspect-square overflow-hidden rounded-3xl">
 							<Image
 								src="/images/marialy-2.webp"

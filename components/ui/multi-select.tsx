@@ -266,13 +266,13 @@ export const MultiSelect = React.forwardRef<
 											>
 												<div className="flex items-center w-full overflow-hidden">
 													{IconComponent && (
-														<IconComponent className="h-4 w-4 mr-2 flex-shrink-0" />
+														<IconComponent className="h-4 w-4 mr-2 shrink-0" />
 													)}
 													<span className="truncate max-w-[calc(100%-1.5rem)]">
 														{option?.label}
 													</span>
 													<XCircle
-														className="ml-2 h-4 w-4 cursor-pointer flex-shrink-0"
+														className="ml-2 h-4 w-4 cursor-pointer shrink-0"
 														onClick={(event) => {
 															event.stopPropagation();
 															toggleOption(value);
@@ -294,7 +294,7 @@ export const MultiSelect = React.forwardRef<
 												{`+ ${selectedValues.length - maxCount} más`}
 											</span>
 											<XCircle
-												className="ml-2 h-4 w-4 cursor-pointer flex-shrink-0"
+												className="ml-2 h-4 w-4 cursor-pointer shrink-0"
 												onClick={(event) => {
 													event.stopPropagation();
 													clearExtraOptions();
@@ -330,7 +330,7 @@ export const MultiSelect = React.forwardRef<
 				</PopoverTrigger>
 				<PopoverContent
 					className={cn(
-						"w-[var(--radix-popover-trigger-width)] p-0 max-w-[95vw]",
+						"w-(--radix-popover-trigger-width) p-0 max-w-[95vw]",
 						variant === "productos" && "border-[#5B48EE]/20",
 					)}
 					align="start"

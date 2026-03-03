@@ -42,7 +42,7 @@ export default function WhatIOfferComponent() {
 	];
 
 	return (
-		<section className="py-24 bg-gradient-to-b from-white to-pink-50/50">
+		<section className="py-24 bg-linear-to-b from-white to-pink-50/50">
 			<div className="container px-4 mx-auto">
 				<span className="text-lg text-[#DA5F6F]">Explora lo que ofrezco</span>
 

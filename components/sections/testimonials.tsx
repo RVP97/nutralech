@@ -29,7 +29,7 @@ export default function TestimonialsComponent() {
 	];
 
 	return (
-		<section className="py-2 bg-gradient-to-b from-pink-50/50 to-white">
+		<section className="py-2 bg-linear-to-b from-pink-50/50 to-white">
 			<div className="container px-4 mx-auto">
 				<div className="text-center mb-16">
 					<span className="text-lg text-[#DA5F6F]">Testimonios</span>
@@ -42,7 +42,7 @@ export default function TestimonialsComponent() {
 					{testimonials.map((testimonial, index) => (
 						<Card key={index} className="p-8 transition-all hover:shadow-lg">
 							<div className="flex items-start gap-4">
-								<div className="relative h-12 w-12 flex-shrink-0">
+								<div className="relative h-12 w-12 shrink-0">
 									<Image
 										src={testimonial.image}
 										alt={testimonial.name}
