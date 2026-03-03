@@ -19,7 +19,7 @@ import {
 	Video,
 } from "lucide-react";
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -281,12 +281,12 @@ function Iphone15ProWhatsappLightSmaller() {
 		return () => clearInterval(timer);
 	}, []);
 
-	const openConversation = (patientId) => {
+	const openConversation = (patientId: number) => {
 		setActiveConversation(patientId);
 		setActiveView("conversation");
 	};
 
-	const scrollToBottom = () => {
+	const scrollToBottom = useCallback(() => {
 		if (scrollAreaRef.current) {
 			const scrollContainer = (
 				scrollAreaRef.current as HTMLDivElement
@@ -295,13 +295,13 @@ function Iphone15ProWhatsappLightSmaller() {
 				scrollContainer.scrollTop = scrollContainer.scrollHeight;
 			}
 		}
-	};
+	}, []);
 
 	useEffect(() => {
 		if (activeView === "conversation") {
 			scrollToBottom();
 		}
-	}, [conversations, activeView]);
+	}, [activeView, scrollToBottom]);
 
 	const sendMessage = () => {
 		if (newMessage.trim() === "") return;
@@ -343,9 +343,10 @@ function Iphone15ProWhatsappLightSmaller() {
 				>
 					<div style={{ width: "280px", maxWidth: "280px" }}>
 						{patientsList.map((patient) => (
-							<div
+							<button
 								key={patient.id}
-								className="flex items-center px-3 py-2 hover:bg-gray-100 cursor-pointer border-b border-gray-200 overflow-hidden"
+								type="button"
+								className="flex w-full items-center px-3 py-2 hover:bg-gray-100 cursor-pointer border-b border-gray-200 overflow-hidden text-left"
 								style={{ width: "280px", maxWidth: "280px" }}
 								onClick={() => openConversation(patient.id)}
 							>
@@ -378,7 +379,7 @@ function Iphone15ProWhatsappLightSmaller() {
 										)}
 									</div>
 								</div>
-							</div>
+							</button>
 						))}
 					</div>
 				</ScrollArea>
@@ -432,9 +433,21 @@ function Iphone15ProWhatsappLightSmaller() {
 			return (
 				<div className="h-[calc(100%-120px)] bg-white px-3 py-2 overflow-y-auto">
 					{[
-						{ name: "Sesión de seguimiento - Laura", time: "Hoy, 11:00", type: "Video" },
-						{ name: "Consulta inicial - Carlos", time: "Ayer, 18:45", type: "Voice" },
-						{ name: "Revisión de menú - Daniela", time: "Lun, 09:30", type: "Video" },
+						{
+							name: "Sesión de seguimiento - Laura",
+							time: "Hoy, 11:00",
+							type: "Video",
+						},
+						{
+							name: "Consulta inicial - Carlos",
+							time: "Ayer, 18:45",
+							type: "Voice",
+						},
+						{
+							name: "Revisión de menú - Daniela",
+							time: "Lun, 09:30",
+							type: "Video",
+						},
 					].map((call) => (
 						<div
 							key={call.name}
@@ -461,14 +474,18 @@ function Iphone15ProWhatsappLightSmaller() {
 			return (
 				<div className="h-[calc(100%-120px)] bg-[#f8faf9] px-3 py-3 overflow-y-auto space-y-3">
 					<div className="rounded-xl bg-white border border-gray-200 p-3">
-						<p className="text-sm font-semibold text-gray-900">Comunidad Reto 30 Días</p>
+						<p className="text-sm font-semibold text-gray-900">
+							Comunidad Reto 30 Días
+						</p>
 						<p className="text-xs text-gray-600 mt-1">
 							Comparte tus avances diarios de hidratación, descanso y
 							alimentación con otros pacientes.
 						</p>
 					</div>
 					<div className="rounded-xl bg-white border border-gray-200 p-3">
-						<p className="text-sm font-semibold text-gray-900">Recetas Saludables</p>
+						<p className="text-sm font-semibold text-gray-900">
+							Recetas Saludables
+						</p>
 						<p className="text-xs text-gray-600 mt-1">
 							Ideas rápidas para desayuno, snacks y cenas alineadas a tu plan
 							nutricional en Nutralech.
@@ -481,7 +498,9 @@ function Iphone15ProWhatsappLightSmaller() {
 		return (
 			<div className="h-[calc(100%-120px)] bg-white px-3 py-3 space-y-3">
 				<div className="rounded-xl border border-gray-200 p-3">
-					<p className="text-sm font-semibold text-gray-900">Cuenta profesional</p>
+					<p className="text-sm font-semibold text-gray-900">
+						Cuenta profesional
+					</p>
 					<p className="text-xs text-gray-600 mt-1">
 						Sincronizada con tus servicios y contacto de nutralech.com.
 					</p>
@@ -510,7 +529,11 @@ function Iphone15ProWhatsappLightSmaller() {
 						<div className="flex justify-between items-center px-4 h-6 bg-[#008069] text-white text-xs">
 							<span className="font-medium">{currentTime}</span>
 							<div className="flex items-center space-x-1">
-								<svg viewBox="0 0 24 24" className="w-3 h-3 fill-current">
+								<svg
+									viewBox="0 0 24 24"
+									className="w-3 h-3 fill-current"
+									aria-hidden="true"
+								>
 									<path d="M1 9l2 2c4.97-4.97 13.03-4.97 18 0l2-2C16.93 2.93 7.08 2.93 1 9zm8 8l3 3 3-3c-1.65-1.66-4.34-1.66-6 0zm-4-4l2 2c2.76-2.76 7.24-2.76 10 0l2-2C15.14 9.14 8.87 9.14 5 13z" />
 								</svg>
 								<div className="flex items-center">
@@ -535,6 +558,7 @@ function Iphone15ProWhatsappLightSmaller() {
 								<div className="absolute bottom-0 left-0 right-0 h-10 bg-white border-t border-gray-200 flex justify-around items-center">
 									{tabs.map((tab) => (
 										<button
+											type="button"
 											key={tab.id}
 											onClick={() => setActiveTab(tab.id)}
 											className="relative flex flex-col items-center justify-center w-full h-full"
@@ -692,6 +716,7 @@ function Iphone15ProWhatsappLightSmaller() {
 										}}
 									/>
 									<Button
+										type="button"
 										variant="ghost"
 										size="icon"
 										className="text-[#54656f] p-1"

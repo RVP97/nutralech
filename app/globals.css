@@ -84,27 +84,27 @@ iframe[src*="stripe"],
 [class*="stripe"],
 div[role="dialog"]:has([class*="Stripe"]),
 div[role="dialog"]:has([class*="stripe"]) {
-	z-index: 99999 !important;
-	pointer-events: auto !important;
+	z-index: 99999;
+	pointer-events: auto;
 }
 
 /* Target Stripe portal containers - direct children of body */
 body > div:has(iframe[src*="stripe"]),
 body > div:has([class*="Stripe"]),
 body > div:has([class*="stripe"]) {
-	z-index: 99999 !important;
-	pointer-events: auto !important;
+	z-index: 99999;
+	pointer-events: auto;
 }
 
 /* Ensure Stripe overlay/dialog containers are clickable */
 div[class*="StripeElement"],
 div[class*="stripe-element"] {
-	z-index: 99999 !important;
-	pointer-events: auto !important;
+	z-index: 99999;
+	pointer-events: auto;
 }
 
 /* Lower the dialog overlay z-index when Stripe dialogs are present */
 body:has([class*="Stripe"]) [data-radix-dialog-overlay],
 body:has([class*="stripe"]) [data-radix-dialog-overlay] {
-	z-index: 40 !important;
+	z-index: 40;
 }

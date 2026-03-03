@@ -1,79 +1,79 @@
 [
-  {
-    "title": "Calculadora de IMC",
-    "description": "Calcula tu Índice de Masa Corporal y descubre tu rango de peso saludable.",
-    "link": "/herramientas/calculadora-imc",
-    "category": "Mediciones",
-    "tags": ["Peso", "Salud"]
-  },
-  {
-    "title": "Calculadora de Calorías",
-    "description": "Calcula tus necesidades calóricas diarias y ajusta tu dieta para alcanzar tus objetivos.",
-    "link": "/herramientas/calculadora-calorias",
-    "category": "Nutrición",
-    "tags": ["Calorías", "Dieta"]
-  },
-  {
-    "title": "Calculadora de Hidratación",
-    "description": "Calcula tus necesidades diarias de hidratación y mantente saludable.",
-    "link": "/herramientas/calculadora-hidratacion",
-    "category": "Nutrición",
-    "tags": ["Hidratación", "Agua"]
-  },
-  {
-    "title": "Calculadora de Macronutrientes",
-    "description": "Calcula tu distribución óptima de macronutrientes para tu dieta.",
-    "link": "/herramientas/calculadora-macronutrientes",
-    "category": "Nutrición",
-    "tags": ["Macronutrientes", "Nutrición"]
-  },
-  {
-    "title": "Calculadora de Tasa Metabólica Basal",
-    "description": "Calcula tu tasa metabólica basal y conoce las calorías que tu cuerpo necesita en reposo.",
-    "link": "/herramientas/calculadora-tasa-metabolica-basal",
-    "category": "Nutrición",
-    "tags": ["Tasa Metabólica Basal", "TMB"]
-  },
-  {
-    "title": "Calculadora de Peso Ideal",
-    "description": "Calcula tu peso ideal y conoce las recomendaciones para tu salud.",
-    "link": "/herramientas/calculadora-peso-ideal",
-    "category": "Mediciones",
-    "tags": ["Peso Ideal", "Salud"]
-  },
-  {
-    "title": "Calculadora de Proteína Diaria",
-    "description": "Calcula tus necesidades diarias de proteína basado en tu peso, nivel de actividad y objetivos.",
-    "link": "/herramientas/calculadora-proteina",
-    "category": "Nutrición",
-    "tags": ["Proteína", "Nutrición Deportiva"]
-  },
-  {
-    "title": "Calculadora de Frecuencia Cardíaca",
-    "description": "Calcula tus zonas de frecuencia cardíaca para optimizar tu entrenamiento.",
-    "link": "/herramientas/calculadora-frecuencia-cardiaca",
-    "category": "Entrenamiento",
-    "tags": ["Frecuencia Cardíaca", "Entrenamiento"]
-  },
-  {
-    "title": "Calculadora de Relación Cintura-Cadera",
-    "description": "Calcula tu relación cintura-cadera y evalúa tu riesgo de enfermedades cardiovasculares.",
-    "link": "/herramientas/calculadora-relacion-cintura-cadera",
-    "category": "Mediciones",
-    "tags": ["Cintura-Cadera", "Salud"]
-  },
-  {
-    "title": "Calculadora de Calorías Quemadas por Actividad",
-    "description": "Calcula las calorías quemadas durante diferentes actividades físicas y ejercicios.",
-    "link": "/herramientas/calculadora-calorias-quemadas-por-actividad",
-    "category": "Entrenamiento",
-    "tags": ["Calorías Quemadas", "Actividad Física"]
-  },
-  {
-    "title": "Calculadora de Grasa Corporal",
-    "description": "Estima tu porcentaje de grasa corporal usando métodos científicos precisos y obtén recomendaciones personalizadas.",
-    "link": "/herramientas/calculadora-grasa-corporal",
-    "category": "Mediciones",
-    "tags": ["Grasa Corporal", "Composición Corporal", "Salud"]
-  }
+	{
+		"title": "Calculadora de IMC",
+		"description": "Calcula tu Índice de Masa Corporal y descubre tu rango de peso saludable.",
+		"link": "/herramientas/calculadora-imc",
+		"category": "Mediciones",
+		"tags": ["Peso", "Salud"]
+	},
+	{
+		"title": "Calculadora de Calorías",
+		"description": "Calcula tus necesidades calóricas diarias y ajusta tu dieta para alcanzar tus objetivos.",
+		"link": "/herramientas/calculadora-calorias",
+		"category": "Nutrición",
+		"tags": ["Calorías", "Dieta"]
+	},
+	{
+		"title": "Calculadora de Hidratación",
+		"description": "Calcula tus necesidades diarias de hidratación y mantente saludable.",
+		"link": "/herramientas/calculadora-hidratacion",
+		"category": "Nutrición",
+		"tags": ["Hidratación", "Agua"]
+	},
+	{
+		"title": "Calculadora de Macronutrientes",
+		"description": "Calcula tu distribución óptima de macronutrientes para tu dieta.",
+		"link": "/herramientas/calculadora-macronutrientes",
+		"category": "Nutrición",
+		"tags": ["Macronutrientes", "Nutrición"]
+	},
+	{
+		"title": "Calculadora de Tasa Metabólica Basal",
+		"description": "Calcula tu tasa metabólica basal y conoce las calorías que tu cuerpo necesita en reposo.",
+		"link": "/herramientas/calculadora-tasa-metabolica-basal",
+		"category": "Nutrición",
+		"tags": ["Tasa Metabólica Basal", "TMB"]
+	},
+	{
+		"title": "Calculadora de Peso Ideal",
+		"description": "Calcula tu peso ideal y conoce las recomendaciones para tu salud.",
+		"link": "/herramientas/calculadora-peso-ideal",
+		"category": "Mediciones",
+		"tags": ["Peso Ideal", "Salud"]
+	},
+	{
+		"title": "Calculadora de Proteína Diaria",
+		"description": "Calcula tus necesidades diarias de proteína basado en tu peso, nivel de actividad y objetivos.",
+		"link": "/herramientas/calculadora-proteina",
+		"category": "Nutrición",
+		"tags": ["Proteína", "Nutrición Deportiva"]
+	},
+	{
+		"title": "Calculadora de Frecuencia Cardíaca",
+		"description": "Calcula tus zonas de frecuencia cardíaca para optimizar tu entrenamiento.",
+		"link": "/herramientas/calculadora-frecuencia-cardiaca",
+		"category": "Entrenamiento",
+		"tags": ["Frecuencia Cardíaca", "Entrenamiento"]
+	},
+	{
+		"title": "Calculadora de Relación Cintura-Cadera",
+		"description": "Calcula tu relación cintura-cadera y evalúa tu riesgo de enfermedades cardiovasculares.",
+		"link": "/herramientas/calculadora-relacion-cintura-cadera",
+		"category": "Mediciones",
+		"tags": ["Cintura-Cadera", "Salud"]
+	},
+	{
+		"title": "Calculadora de Calorías Quemadas por Actividad",
+		"description": "Calcula las calorías quemadas durante diferentes actividades físicas y ejercicios.",
+		"link": "/herramientas/calculadora-calorias-quemadas-por-actividad",
+		"category": "Entrenamiento",
+		"tags": ["Calorías Quemadas", "Actividad Física"]
+	},
+	{
+		"title": "Calculadora de Grasa Corporal",
+		"description": "Estima tu porcentaje de grasa corporal usando métodos científicos precisos y obtén recomendaciones personalizadas.",
+		"link": "/herramientas/calculadora-grasa-corporal",
+		"category": "Mediciones",
+		"tags": ["Grasa Corporal", "Composición Corporal", "Salud"]
+	}
 ]

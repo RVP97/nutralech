@@ -513,6 +513,7 @@ export default function PricingSection() {
 							</span>
 						</div>
 						<button
+							type="button"
 							onClick={() => setShowPackages(true)}
 							className={`flex items-center ${
 								showPackages

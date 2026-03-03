@@ -10,31 +10,31 @@ import Whatsapp from "@/components/sections/whatsapp";
 import { generatePageMetadata } from "@/lib/generateMetadata";
 
 export async function generateMetadata() {
-  return generatePageMetadata({
-    title: "Nutrición y Bienestar con Marialy Alonso: Nutralech",
-    description:
-      "Mejora tu salud con Nutralech y Marialy Alonso. Asesoría nutricional personalizada, recetas y consejos para un bienestar equilibrado y sostenible.",
-    keywords: [
-      "salud, bienestar, nutrición, consejos, recetas, asesoría, personalizada, nutralech, marialy alonso, nutriologa",
-    ],
-    openGraph: {
-      url: "https://www.nutralech.com",
-    },
-  });
+	return generatePageMetadata({
+		title: "Nutrición y Bienestar con Marialy Alonso: Nutralech",
+		description:
+			"Mejora tu salud con Nutralech y Marialy Alonso. Asesoría nutricional personalizada, recetas y consejos para un bienestar equilibrado y sostenible.",
+		keywords: [
+			"salud, bienestar, nutrición, consejos, recetas, asesoría, personalizada, nutralech, marialy alonso, nutriologa",
+		],
+		openGraph: {
+			url: "https://www.nutralech.com",
+		},
+	});
 }
 
 export default function Home() {
-  return (
-    <div>
-      <Hero />
-      <WhatIOfferComponent />
-      <TestimonialsComponent />
-      <PersonalizedAttention />
-      <Whatsapp />
-      <PricingSectionComponent />
-      <AboutMeComponent />
-      <GlobalConsultations />
-      <FaqSection />
-    </div>
-  );
+	return (
+		<div>
+			<Hero />
+			<WhatIOfferComponent />
+			<TestimonialsComponent />
+			<PersonalizedAttention />
+			<Whatsapp />
+			<PricingSectionComponent />
+			<AboutMeComponent />
+			<GlobalConsultations />
+			<FaqSection />
+		</div>
+	);
 }

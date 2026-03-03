@@ -1,4 +1,5 @@
 import { Calendar, CheckCircle, Download } from "lucide-react";
+import type { Route } from "next";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import {
@@ -215,14 +216,17 @@ export default function SuccessfulPayment({
 						</DropdownMenu>
 					) : (
 						<Button asChild>
-							<Link prefetch={false} target="_blank" href={calendarUrl as any}>
+							<Link
+								prefetch={false}
+								target="_blank"
+								href={calendarUrl as Route}
+							>
 								{calendarButtonText} <Calendar className="ml-2 h-4 w-4" />
 							</Link>
 						</Button>
 					)}
 					{receiptUrl && (
-						// eslint-disable-next-line @typescript-eslint/no-explicit-any
-						<Link prefetch={false} target="_blank" href={receiptUrl as any}>
+						<Link prefetch={false} target="_blank" href={receiptUrl as Route}>
 							<Button variant="outline">
 								<Download className="mr-2 h-4 w-4" /> Descargar Recibo
 							</Button>

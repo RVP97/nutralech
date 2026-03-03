@@ -1,20 +1,20 @@
-import AnimatedGradientText from "@/components/ui/animated-gradient-text";
-import NumberTicker from "@/components/ui/number-ticker";
-import WordRotate from "@/components/ui/word-rotate";
 import { ArrowRight, CalendarCheck, Leaf } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import AnimatedGradientText from "@/components/ui/animated-gradient-text";
+import NumberTicker from "@/components/ui/number-ticker";
+import WordRotate from "@/components/ui/word-rotate";
 
 export default function Hero() {
-  return (
-    <section className="relative min-h-screen  bg-gradient-to-b from-white to-pink-50/50">
-      {/* Decorative elements */}
-      <div className="pointer-events-none absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMSIgY3k9IjEiIHI9IjEiIGZpbGw9InJnYmEoMjE4LCA5NSwgMTExLCAwLjA3KSIvPjwvc3ZnPg==')] opacity-40" />
-      <div className="absolute top-20 right-0 w-96 h-96 rounded-full bg-[#DA5F6F]/20 blur-[128px] animate-pulse" />
-      <div className="absolute bottom-0 right-20 w-96 h-96 rounded-full bg-yellow-200/30 blur-[128px] animate-pulse [animation-delay:1000ms]" />
+	return (
+		<section className="relative min-h-screen  bg-gradient-to-b from-white to-pink-50/50">
+			{/* Decorative elements */}
+			<div className="pointer-events-none absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMSIgY3k9IjEiIHI9IjEiIGZpbGw9InJnYmEoMjE4LCA5NSwgMTExLCAwLjA3KSIvPjwvc3ZnPg==')] opacity-40" />
+			<div className="absolute top-20 right-0 w-96 h-96 rounded-full bg-[#DA5F6F]/20 blur-[128px] animate-pulse" />
+			<div className="absolute bottom-0 right-20 w-96 h-96 rounded-full bg-yellow-200/30 blur-[128px] animate-pulse [animation-delay:1000ms]" />
 
-      {/* WhatsApp-style notifications */}
-      {/* <div className="absolute right-4 top-4 z-10 w-full max-w-[360px] sm:right-8">
+			{/* WhatsApp-style notifications */}
+			{/* <div className="absolute right-4 top-4 z-10 w-full max-w-[360px] sm:right-8">
         <AnimatedList delay={2000} className="flex flex-col gap-2 sm:gap-3">
           <div className="flex items-start gap-3 rounded-2xl bg-[#F0F2F5] p-3 shadow-sm">
             <div className="relative shrink-0">
@@ -94,141 +94,141 @@ export default function Hero() {
         </AnimatedList>
       </div> */}
 
-      {/* Add this new div for the bottom fade effect */}
-      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-white to-transparent" />
+			{/* Add this new div for the bottom fade effect */}
+			<div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-white to-transparent" />
 
-      <div className="container relative px-4 mx-auto">
-        <div className="grid min-h-screen items-center gap-12 lg:grid-cols-2">
-          <div className="space-y-10 pt-20 lg:pt-0 animate-fade-in">
-            <div className="space-y-8">
-              <AnimatedGradientText>
-                <div className="inline-flex items-center gap-2">
-                  <Leaf className="h-4 w-4 text-[#DA5F6F]" />
-                  Descubre tu potencial
-                </div>
-              </AnimatedGradientText>
+			<div className="container relative px-4 mx-auto">
+				<div className="grid min-h-screen items-center gap-12 lg:grid-cols-2">
+					<div className="space-y-10 pt-20 lg:pt-0 animate-fade-in">
+						<div className="space-y-8">
+							<AnimatedGradientText>
+								<div className="inline-flex items-center gap-2">
+									<Leaf className="h-4 w-4 text-[#DA5F6F]" />
+									Descubre tu potencial
+								</div>
+							</AnimatedGradientText>
 
-              <h1 className="font-serif text-4xl font-medium tracking-tight sm:text-5xl md:text-6xl lg:text-7xl">
-                Inicia Tu Camino a La{" "}
-                <WordRotate
-                  words={["Transformación", "Mejor Vida", "Evolución"]}
-                  className="relative inline-block"
-                  framerProps={{
-                    initial: { opacity: 0, y: 20 },
-                    animate: { opacity: 1, y: 0 },
-                    exit: { opacity: 0, y: -20 },
-                    transition: { duration: 0.3, ease: "easeOut" },
-                  }}
-                />
-              </h1>
+							<h1 className="font-serif text-4xl font-medium tracking-tight sm:text-5xl md:text-6xl lg:text-7xl">
+								Inicia Tu Camino a La{" "}
+								<WordRotate
+									words={["Transformación", "Mejor Vida", "Evolución"]}
+									className="relative inline-block"
+									framerProps={{
+										initial: { opacity: 0, y: 20 },
+										animate: { opacity: 1, y: 0 },
+										exit: { opacity: 0, y: -20 },
+										transition: { duration: 0.3, ease: "easeOut" },
+									}}
+								/>
+							</h1>
 
-              <p className="max-w-lg text-lg text-muted-foreground md:text-xl">
-                Con mi asesoramiento profesional, puedes alcanzar tu máximo
-                potencial. Inicia hoy tu camino hacia una vida más saludable y
-                equilibrada.
-              </p>
-            </div>
+							<p className="max-w-lg text-lg text-muted-foreground md:text-xl">
+								Con mi asesoramiento profesional, puedes alcanzar tu máximo
+								potencial. Inicia hoy tu camino hacia una vida más saludable y
+								equilibrada.
+							</p>
+						</div>
 
-            <div className="flex flex-wrap gap-4">
-              <Link
-                prefetch={false}
-                href="#precios"
-                className="inline-flex h-14 items-center justify-center gap-2 rounded-full bg-[#DA5F6F] px-8 font-medium text-white transition-colors hover:bg-[#DA5F6F]/90"
-              >
-                <CalendarCheck className="h-5 w-5" />
-                Agenda tu Consulta
-              </Link>
+						<div className="flex flex-wrap gap-4">
+							<Link
+								prefetch={false}
+								href="#precios"
+								className="inline-flex h-14 items-center justify-center gap-2 rounded-full bg-[#DA5F6F] px-8 font-medium text-white transition-colors hover:bg-[#DA5F6F]/90"
+							>
+								<CalendarCheck className="h-5 w-5" />
+								Agenda tu Consulta
+							</Link>
 
-              <Link
-                prefetch={false}
-                href="/acerca-de-mi"
-                className="inline-flex h-14 items-center justify-center gap-2 rounded-full border border-[#DA5F6F]/20 bg-white px-8 font-medium text-[#DA5F6F] transition-colors hover:bg-[#DA5F6F]/5"
-              >
-                Conóceme
-                <ArrowRight className="h-5 w-5" />
-              </Link>
-            </div>
+							<Link
+								prefetch={false}
+								href="/acerca-de-mi"
+								className="inline-flex h-14 items-center justify-center gap-2 rounded-full border border-[#DA5F6F]/20 bg-white px-8 font-medium text-[#DA5F6F] transition-colors hover:bg-[#DA5F6F]/5"
+							>
+								Conóceme
+								<ArrowRight className="h-5 w-5" />
+							</Link>
+						</div>
 
-            {/* Mobile image with overlaid statistics */}
-            <div className="relative block lg:hidden">
-              <div className="relative w-full h-[400px]">
-                <Image
-                  src="/images/marialy.webp"
-                  alt="Professional nutritionist"
-                  fill
-                  sizes="(max-width: 768px) 100vw, 600px"
-                  className="object-cover rounded-2xl"
-                  priority
-                />
-              </div>
+						{/* Mobile image with overlaid statistics */}
+						<div className="relative block lg:hidden">
+							<div className="relative w-full h-[400px]">
+								<Image
+									src="/images/marialy.webp"
+									alt="Professional nutritionist"
+									fill
+									sizes="(max-width: 768px) 100vw, 600px"
+									className="object-cover rounded-2xl"
+									priority
+								/>
+							</div>
 
-              {/* Overlaid statistics */}
-              <div className="absolute translate-y-1/2 bottom-0 -left-2 -right-2">
-                <div className="bg-white/90 backdrop-blur-sm px-6 py-4 rounded-[24px]">
-                  <div className="flex justify-between">
-                    <div>
-                      <div className="text-xl font-bold leading-tight text-[#DA5F6F]">
-                        <NumberTicker value={500} />+
-                      </div>
-                      <p className="text-sm text-muted-foreground flex items-center gap-1">
-                        Vidas Transformadas <span>❤️</span>
-                      </p>
-                    </div>
+							{/* Overlaid statistics */}
+							<div className="absolute translate-y-1/2 bottom-0 -left-2 -right-2">
+								<div className="bg-white/90 backdrop-blur-sm px-6 py-4 rounded-[24px]">
+									<div className="flex justify-between">
+										<div>
+											<div className="text-xl font-bold leading-tight text-[#DA5F6F]">
+												<NumberTicker value={500} />+
+											</div>
+											<p className="text-sm text-muted-foreground flex items-center gap-1">
+												Vidas Transformadas <span>❤️</span>
+											</p>
+										</div>
 
-                    <div>
-                      <div className="text-xl font-bold leading-tight text-[#DA5F6F]">
-                        <NumberTicker value={1000} />+
-                      </div>
-                      <p className="text-sm text-muted-foreground flex items-center gap-1">
-                        Consultas Anuales <span>😊</span>
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+										<div>
+											<div className="text-xl font-bold leading-tight text-[#DA5F6F]">
+												<NumberTicker value={1000} />+
+											</div>
+											<p className="text-sm text-muted-foreground flex items-center gap-1">
+												Consultas Anuales <span>😊</span>
+											</p>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
 
-            {/* Desktop statistics (hidden on mobile) */}
-            <div className="hidden lg:grid gap-8 sm:grid-cols-2">
-              <div className="relative overflow-hidden rounded-2xl bg-white p-6 shadow-xl shadow-rose-200/10 animate-fade-in [animation-delay:200ms]">
-                <div className="space-y-2">
-                  <div className="text-4xl font-bold text-[#DA5F6F]">
-                    <NumberTicker value={500} />+
-                  </div>
-                  <p className="text-sm text-muted-foreground">
-                    Vidas Transformadas ❤️
-                  </p>
-                </div>
-                <div className="absolute -right-4 -top-4 h-16 w-16 rounded-full bg-[#DA5F6F]/10" />
-              </div>
+						{/* Desktop statistics (hidden on mobile) */}
+						<div className="hidden lg:grid gap-8 sm:grid-cols-2">
+							<div className="relative overflow-hidden rounded-2xl bg-white p-6 shadow-xl shadow-rose-200/10 animate-fade-in [animation-delay:200ms]">
+								<div className="space-y-2">
+									<div className="text-4xl font-bold text-[#DA5F6F]">
+										<NumberTicker value={500} />+
+									</div>
+									<p className="text-sm text-muted-foreground">
+										Vidas Transformadas ❤️
+									</p>
+								</div>
+								<div className="absolute -right-4 -top-4 h-16 w-16 rounded-full bg-[#DA5F6F]/10" />
+							</div>
 
-              <div className="relative overflow-hidden rounded-2xl bg-white p-6 shadow-xl shadow-rose-200/10 animate-fade-in [animation-delay:400ms]">
-                <div className="space-y-2">
-                  <div className="text-4xl font-bold text-[#DA5F6F]">
-                    <NumberTicker value={1000} />+
-                  </div>
-                  <p className="text-sm text-muted-foreground">
-                    Consultas Anuales 😊
-                  </p>
-                </div>
-                <div className="absolute -right-4 -top-4 h-16 w-16 rounded-full bg-[#DA5F6F]/10" />
-              </div>
-            </div>
-          </div>
+							<div className="relative overflow-hidden rounded-2xl bg-white p-6 shadow-xl shadow-rose-200/10 animate-fade-in [animation-delay:400ms]">
+								<div className="space-y-2">
+									<div className="text-4xl font-bold text-[#DA5F6F]">
+										<NumberTicker value={1000} />+
+									</div>
+									<p className="text-sm text-muted-foreground">
+										Consultas Anuales 😊
+									</p>
+								</div>
+								<div className="absolute -right-4 -top-4 h-16 w-16 rounded-full bg-[#DA5F6F]/10" />
+							</div>
+						</div>
+					</div>
 
-          {/* Desktop image */}
-          <div className="hidden lg:block relative w-full h-screen md:h-[600px] lg:h-[800px]">
-            <Image
-              src="/images/marialy.webp"
-              alt="Professional nutritionist"
-              fill
-              sizes="(max-width: 768px) 100vw, 600px"
-              className="object-cover rounded-2xl"
-              priority
-            />
-          </div>
-        </div>
-      </div>
-    </section>
-  );
+					{/* Desktop image */}
+					<div className="hidden lg:block relative w-full h-screen md:h-[600px] lg:h-[800px]">
+						<Image
+							src="/images/marialy.webp"
+							alt="Professional nutritionist"
+							fill
+							sizes="(max-width: 768px) 100vw, 600px"
+							className="object-cover rounded-2xl"
+							priority
+						/>
+					</div>
+				</div>
+			</div>
+		</section>
+	);
 }
