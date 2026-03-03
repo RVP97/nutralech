@@ -1,15 +1,8 @@
 import { ArrowRight, CalendarCheck, Check, Leaf, Star } from "lucide-react";
-import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-
-export const metadata: Metadata = {
-	title: "Sobre Mí | Marialy Rodriguez",
-	description:
-		"Descubre la pasión y experiencia de Marialy Rodriguez en nutrición y bienestar.",
-};
 
 const services = [
 	{
@@ -99,7 +92,7 @@ export default function AboutPage() {
 							<div className="absolute inset-0 bg-linear-to-br from-[#DA5F6F]/20 to-yellow-200/30 rounded-3xl transform rotate-3"></div>
 							<Image
 								src="/images/marialy.webp"
-								alt="Marialy Rodriguez"
+								alt="Marialy Alonso, nutricionista profesional"
 								width={600}
 								height={600}
 								className="rounded-3xl shadow-lg relative z-10 transform -rotate-3 transition-transform hover:rotate-0 duration-300 w-full h-auto"

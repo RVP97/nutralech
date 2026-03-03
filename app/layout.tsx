@@ -47,7 +47,7 @@ export async function generateMetadata(): Promise<Metadata> {
 		},
 		twitter: {
 			card: "summary_large_image",
-			site: "@grupocassatt",
+			site: "@nutralech",
 			creator: "@nutralech",
 			title: "Nutrición y Bienestar con Marialy Alonso: Nutralech",
 			description:
@@ -169,6 +169,61 @@ export async function generateMetadata(): Promise<Metadata> {
 		category: "Health & Fitness",
 	};
 }
+const jsonLd = {
+	"@context": "https://schema.org",
+	"@graph": [
+		{
+			"@type": "Organization",
+			"@id": "https://www.nutralech.com/#organization",
+			name: "Nutralech",
+			url: "https://www.nutralech.com",
+			logo: {
+				"@type": "ImageObject",
+				url: "https://www.nutralech.com/icons/android-icon-192x192.png",
+				width: 192,
+				height: 192,
+			},
+			sameAs: [
+				"https://www.instagram.com/nutralech/",
+				"https://www.tiktok.com/@nutralech",
+				"https://www.facebook.com/nutralech/",
+			],
+			contactPoint: {
+				"@type": "ContactPoint",
+				telephone: "+52-744-346-8252",
+				contactType: "customer service",
+				availableLanguage: "Spanish",
+			},
+		},
+		{
+			"@type": "WebSite",
+			"@id": "https://www.nutralech.com/#website",
+			url: "https://www.nutralech.com",
+			name: "Nutralech",
+			description:
+				"Mejora tu salud con Nutralech y Marialy Alonso. Asesoría nutricional personalizada, recetas y consejos para un bienestar equilibrado y sostenible.",
+			publisher: {
+				"@id": "https://www.nutralech.com/#organization",
+			},
+			inLanguage: "es",
+		},
+		{
+			"@type": "Person",
+			"@id": "https://www.nutralech.com/#person",
+			name: "Marialy Alonso",
+			url: "https://www.nutralech.com/acerca-de-mi",
+			jobTitle: "Nutrióloga",
+			worksFor: {
+				"@id": "https://www.nutralech.com/#organization",
+			},
+			sameAs: [
+				"https://www.instagram.com/nutralech/",
+				"https://www.tiktok.com/@nutralech",
+			],
+		},
+	],
+};
+
 export default function RootLayout({
 	children,
 }: Readonly<{
@@ -180,8 +235,13 @@ export default function RootLayout({
 			<body
 				className={`${inter.className} mt-8 md:mt-16 flex flex-col min-h-screen`}
 			>
+				<script
+					type="application/ld+json"
+					// biome-ignore lint/security/noDangerouslySetInnerHtml: JSON-LD structured data requires dangerouslySetInnerHTML
+					dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+				/>
 				<Navbar />
-				{children}
+				<main>{children}</main>
 				<Footer />
 			</body>
 		</html>

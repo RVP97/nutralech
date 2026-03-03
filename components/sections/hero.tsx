@@ -154,7 +154,7 @@ export default function Hero() {
 							<div className="relative w-full h-[400px]">
 								<Image
 									src="/images/marialy.webp"
-									alt="Professional nutritionist"
+									alt="Marialy Alonso, nutricionista profesional de Nutralech"
 									fill
 									sizes="(max-width: 768px) 100vw, 600px"
 									className="object-cover rounded-2xl"
@@ -220,7 +220,7 @@ export default function Hero() {
 					<div className="hidden lg:block relative w-full h-screen md:h-[600px] lg:h-[800px]">
 						<Image
 							src="/images/marialy.webp"
-							alt="Professional nutritionist"
+							alt="Marialy Alonso, nutricionista profesional de Nutralech"
 							fill
 							sizes="(max-width: 768px) 100vw, 600px"
 							className="object-cover rounded-2xl"

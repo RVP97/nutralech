@@ -7,7 +7,14 @@ export async function generateMetadata() {
 		description:
 			"Descubre mis herramientas de nutrición gratuitas diseñadas para ayudarte en tu viaje hacia una vida más saludable.",
 		keywords: [
-			"salud, bienestar, calculadora, imc, nutrición, consejos, recetas, asesoría, personalizada, nutralech, marialy alonso, nutriologa",
+			"salud",
+			"bienestar",
+			"calculadora",
+			"imc",
+			"nutrición",
+			"herramientas",
+			"nutralech",
+			"marialy alonso",
 		],
 		openGraph: {
 			url: "https://www.nutralech.com/herramientas",

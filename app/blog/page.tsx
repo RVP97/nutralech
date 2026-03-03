@@ -11,7 +11,14 @@ export async function generateMetadata() {
 		description:
 			"Artículos sobre nutrición, salud y bienestar basados en estudios científicos y experiencias prácticas de Marialy Alonso.",
 		keywords: [
-			"blog, nutrición, salud, bienestar, consejos, recetas, nutralech, marialy alonso",
+			"blog",
+			"nutrición",
+			"salud",
+			"bienestar",
+			"consejos",
+			"recetas",
+			"nutralech",
+			"marialy alonso",
 		],
 		openGraph: {
 			url: "https://www.nutralech.com/blog",

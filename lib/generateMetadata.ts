@@ -19,7 +19,7 @@ export function generatePageMetadata(params: MetadataParams): Metadata {
 			type: "website",
 			siteName: "Nutralech: Marialy Alonso",
 			url: params.openGraph.url,
-			locale: "es-MX",
+			locale: "es_MX",
 			description: params.description,
 			images: [
 				{

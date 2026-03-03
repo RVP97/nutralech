@@ -7,7 +7,13 @@ export async function generateMetadata() {
 		description:
 			"Contacta a Marialy Alonso, mejor conocida como Nutralech, para asesoría nutricional personalizada y consejos para un bienestar equilibrado y sostenible.",
 		keywords: [
-			"salud, bienestar, contacto, nutrición, consejos, recetas, asesoría, personalizada, nutralech, marialy alonso, nutriologa",
+			"salud",
+			"bienestar",
+			"contacto",
+			"nutrición",
+			"asesoría personalizada",
+			"nutralech",
+			"marialy alonso",
 		],
 		openGraph: {
 			url: "https://www.nutralech.com/contacto",

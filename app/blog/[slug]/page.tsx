@@ -55,21 +55,55 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
 	try {
 		const post = await getPost(slug);
-		const formattedDate = (() => {
-			const [day, month, year] = post.publishDate.split("/");
-			return new Date(
-				parseInt(year, 10),
-				parseInt(month, 10) - 1,
-				parseInt(day, 10),
-			).toLocaleDateString("es-MX", {
-				year: "numeric",
-				month: "long",
-				day: "numeric",
-			});
-		})();
+		const [day, month, year] = post.publishDate.split("/");
+		const dateObj = new Date(
+			parseInt(year, 10),
+			parseInt(month, 10) - 1,
+			parseInt(day, 10),
+		);
+		const isoDate = dateObj.toISOString();
+		const formattedDate = dateObj.toLocaleDateString("es-MX", {
+			year: "numeric",
+			month: "long",
+			day: "numeric",
+		});
+
+		const articleJsonLd = {
+			"@context": "https://schema.org",
+			"@type": "Article",
+			headline: post.title,
+			description: post.seoDescription || post.excerpt || post.title,
+			image: "https://www.nutralech.com/images/marialy.webp",
+			datePublished: isoDate,
+			dateModified: isoDate,
+			author: {
+				"@type": "Person",
+				name: "Marialy Alonso",
+				url: "https://www.nutralech.com/acerca-de-mi",
+			},
+			publisher: {
+				"@type": "Organization",
+				name: "Nutralech",
+				logo: {
+					"@type": "ImageObject",
+					url: "https://www.nutralech.com/icons/android-icon-192x192.png",
+				},
+			},
+			mainEntityOfPage: {
+				"@type": "WebPage",
+				"@id": `https://www.nutralech.com/blog/${slug}`,
+			},
+		};
 
 		return (
 			<div className="">
+				<script
+					type="application/ld+json"
+					// biome-ignore lint/security/noDangerouslySetInnerHtml: JSON-LD structured data requires dangerouslySetInnerHTML
+					dangerouslySetInnerHTML={{
+						__html: JSON.stringify(articleJsonLd),
+					}}
+				/>
 				<ReadingProgress />
 				<article
 					id="blog-post"
@@ -87,14 +121,19 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 							</div>
 							<div className="flex items-center space-x-4">
 								<Avatar>
-									<AvatarImage src="/images/marialy.webp" alt="Nutralech" />
+									<AvatarImage
+										src="/images/marialy.webp"
+										alt="Marialy Alonso, autora del artículo"
+									/>
 									<AvatarFallback>N</AvatarFallback>
 								</Avatar>
 								<div className="space-y-1">
-									<p className="text-sm font-medium leading-none">Nutralech</p>
+									<p className="text-sm font-medium leading-none">
+										Marialy Alonso
+									</p>
 									<div className="flex items-center text-sm text-gray-800">
 										<Calendar className="mr-1 h-3 w-3" aria-hidden="true" />
-										<time dateTime={post.publishDate}>{formattedDate}</time>
+										<time dateTime={isoDate}>{formattedDate}</time>
 									</div>
 								</div>
 							</div>
@@ -199,7 +238,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 											<Image
 												{...props}
 												src={src ?? ""}
-												alt={alt ?? ""}
+												alt={alt || "Imagen del artículo de nutrición"}
 												width={800}
 												height={400}
 												className="rounded-lg shadow-md mx-auto"

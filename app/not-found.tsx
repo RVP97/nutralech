@@ -139,7 +139,7 @@ export default function NotFound() {
 				<div className="relative w-full mt-8 lg:w-1/2 lg:mt-0">
 					<Image
 						src="/images/marialy.webp"
-						alt="404 No Encontrado"
+						alt="Marialy Alonso, nutricionista de Nutralech"
 						width={2070}
 						height={1380}
 						className="w-full lg:h-128 h-80 md:h-96 rounded-lg object-cover"

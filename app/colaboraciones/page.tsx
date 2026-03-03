@@ -7,7 +7,14 @@ export async function generateMetadata() {
 		description:
 			"¿Interesado en colaborar con Nutralech? Impulsa tu marca y alcanza un público objetivo con mi audiencia de más de 780k seguidores en Instagram y TikTok.",
 		keywords: [
-			"salud, bienestar, colaboraciones, nutrición, consejos, recetas, asesoría, personalizada, nutralech, marialy alonso, nutriologa",
+			"salud",
+			"bienestar",
+			"colaboraciones",
+			"nutrición",
+			"influencer",
+			"nutralech",
+			"marialy alonso",
+			"nutriologa",
 		],
 		openGraph: {
 			url: "https://www.nutralech.com/colaboraciones",

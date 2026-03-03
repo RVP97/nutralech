@@ -1,15 +1,8 @@
 import { Mail } from "lucide-react";
-import type { Metadata } from "next";
 import Image from "next/image";
 import { Card, CardContent } from "@/components/ui/card";
 import Iphone15Pro from "@/components/ui/iphone-15-pro";
 import Marquee from "@/components/ui/marquee";
-
-export const metadata: Metadata = {
-	title: "Colabora con Marialy | Alianzas con Influencers",
-	description:
-		"Explora oportunidades de colaboración con Marialy Rodriguez, influencer de nutrición y bienestar.",
-};
 
 const collaborationTypes = [
 	{

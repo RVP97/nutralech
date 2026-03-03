@@ -62,6 +62,34 @@ export default function Footer() {
 							</Link>
 							<Link
 								prefetch={false}
+								href="/acerca-de-mi"
+								className="text-muted-foreground hover:text-[#FF756D] transition-colors"
+							>
+								Acerca de Mí
+							</Link>
+							<Link
+								prefetch={false}
+								href="/blog"
+								className="text-muted-foreground hover:text-[#FF756D] transition-colors"
+							>
+								Blog
+							</Link>
+							<Link
+								prefetch={false}
+								href="/herramientas"
+								className="text-muted-foreground hover:text-[#FF756D] transition-colors"
+							>
+								Herramientas
+							</Link>
+							<Link
+								prefetch={false}
+								href="/colaboraciones"
+								className="text-muted-foreground hover:text-[#FF756D] transition-colors"
+							>
+								Colaboraciones
+							</Link>
+							<Link
+								prefetch={false}
 								href="/contacto"
 								className="text-muted-foreground hover:text-[#FF756D] transition-colors"
 							>
