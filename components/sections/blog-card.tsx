@@ -263,7 +263,7 @@ export function Posts({ posts }: BlogCardsProps) {
 							{getPageNumbers().map((pageNum) => (
 								<Button
 									key={pageNum}
-									variant={currentPage === pageNum ? "default" : "outline-solid"}
+									variant={currentPage === pageNum ? "default" : "outline"}
 									size="sm"
 									onClick={() => goToPage(pageNum)}
 									className={
