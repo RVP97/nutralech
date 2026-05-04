@@ -1,179 +1,147 @@
 "use client";
 
-import { Home, Menu, Pen, Phone, User, Utensils, Wrench } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import type { Route } from "next";
 import Link from "next/link";
-import * as React from "react";
+import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
 
-import { Button } from "@/components/ui/button";
+const links = [
+	{ label: "Inicio", href: "/" },
+	{ label: "Planes", href: "/#precios" },
+	{ label: "Collabs", href: "/colaboraciones" },
+	{ label: "Herramientas", href: "/herramientas" },
+	{ label: "Blog", href: "/blog" },
+	{ label: "Contacto", href: "/contacto" },
+] as const;
 
-function NavItems({
-	isMobile = false,
-	setIsMenuOpen,
-}: {
-	isMobile?: boolean;
-	setIsMenuOpen: (open: boolean) => void;
-}) {
-	return (
-		<>
-			{[
-				{ id: "inicio", icon: Home, label: "Inicio", href: "/" },
-				{ id: "planes", icon: Utensils, label: "Planes", href: "/#precios" },
-				{
-					id: "collabs",
-					icon: User,
-					label: "Collabs",
-					href: "/colaboraciones",
-				},
-				{
-					id: "herramientas",
-					icon: Wrench,
-					label: "Herramientas",
-					href: "/herramientas",
-				},
-				{ id: "blog", icon: Pen, label: "Blog", href: "/blog" },
-				{ id: "contacto", icon: Phone, label: "Contacto", href: "/contacto" },
-			].map(({ id, icon: Icon, label, href }) => (
-				<div key={id} className="relative">
-					<Link
-						prefetch={false}
-						href={href as Route}
-						className="w-full"
-						onClick={() => isMobile && setIsMenuOpen(false)}
-					>
-						<Button
-							variant="ghost"
-							size={isMobile ? "default" : "sm"}
-							className={`rounded-full transition-all duration-300 hover:bg-[#DA5F6F]/20 hover:text-[#DA5F6F] ${
-								isMobile ? "w-full justify-start" : ""
-							}`}
-						>
-							<Icon className={`h-5 w-5 ${isMobile ? "mr-2" : "lg:mr-2"}`} />
-							<span className={isMobile ? "inline" : "hidden lg:inline"}>
-								{label}
-							</span>
-						</Button>
-					</Link>
-				</div>
-			))}
-		</>
-	);
-}
+export default function Navbar() {
+	const [open, setOpen] = useState(false);
+	const [scrolled, setScrolled] = useState(false);
+	const pathname = usePathname();
 
-export default function Component() {
-	const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+	useEffect(() => {
+		const onScroll = () => setScrolled(window.scrollY > 16);
+		onScroll();
+		window.addEventListener("scroll", onScroll, { passive: true });
+		return () => window.removeEventListener("scroll", onScroll);
+	}, []);
+
+	useEffect(() => {
+		setOpen(false);
+	}, [pathname]);
+
+	const isActive = (href: string) => {
+		if (href.includes("#")) return false;
+		if (href === "/") return pathname === "/";
+		return pathname.startsWith(href);
+	};
 
 	return (
 		<div className="fixed top-4 left-0 right-0 z-50 flex justify-center px-4">
-			<nav className="w-full max-w-[90%] bg-background/80 backdrop-blur-lg shadow-lg border rounded-3xl">
-				<div className="mx-auto px-4 sm:px-6 lg:px-8">
-					<div className="flex items-center justify-between h-16">
-						<div className="flex items-center flex-1">
-							<Link prefetch={false} href="/" className="flex items-center">
-								<svg
-									viewBox="0 0 49 34"
-									className="w-8 h-8 mr-2"
-									aria-label="Nutralech logo"
-								>
-									<path
-										d="M 4.071 11.084 C 4.071 11.084 2.168 26.266 18.051 26.266 C 18.051 26.266 22.01 11.084 4.071 11.084 Z"
-										fill="#FF756D"
-									/>
-									<path
-										d="M 44.429 4.722 C 22.823 4.722 20.824 18.311 21.221 25.288 C 24.871 14.76 34.822 12.436 34.822 12.436 C 25.322 18.179 23.374 28.546 23.247 29.278 C 47.374 28.347 44.429 4.722 44.429 4.722 Z"
-										fill="#FF756D"
-									/>
-								</svg>
-								<span
-									className="text-2xl font-bold"
-									style={{ color: "#DA5F6F" }}
-								>
-									Nutralech
-								</span>
+			<nav
+				className={`w-full max-w-4xl rounded-2xl border transition-all duration-300 ${
+					scrolled
+						? "border-[oklch(92%_0.005_12)] bg-[oklch(99.5%_0.003_12)]/90 shadow-sm backdrop-blur-xl"
+						: "border-transparent bg-[oklch(99.5%_0.003_12)]/70 backdrop-blur-lg"
+				}`}
+			>
+				<div className="flex items-center justify-between h-14 px-5">
+					{/* Logo */}
+					<Link href="/" className="flex items-center gap-2 shrink-0">
+						<svg aria-hidden="true" viewBox="0 0 49 34" className="h-6 w-6">
+							<path
+								d="M 4.071 11.084 C 4.071 11.084 2.168 26.266 18.051 26.266 C 18.051 26.266 22.01 11.084 4.071 11.084 Z"
+								fill="#DA5F6F"
+							/>
+							<path
+								d="M 44.429 4.722 C 22.823 4.722 20.824 18.311 21.221 25.288 C 24.871 14.76 34.822 12.436 34.822 12.436 C 25.322 18.179 23.374 28.546 23.247 29.278 C 47.374 28.347 44.429 4.722 44.429 4.722 Z"
+								fill="#DA5F6F"
+							/>
+						</svg>
+						<span className="text-base font-semibold text-[oklch(22%_0.005_12)]">
+							Nutralech
+						</span>
+					</Link>
+
+					{/* Desktop links */}
+					<div className="hidden lg:flex items-center gap-1">
+						{links.map((link) => (
+							<Link
+								key={link.href}
+								prefetch={false}
+								href={link.href as Route}
+								className={`rounded-full px-3.5 py-1.5 text-sm transition-colors duration-150 ${
+									isActive(link.href)
+										? "bg-[#DA5F6F]/10 font-medium text-[#DA5F6F]"
+										: "text-[oklch(40%_0.005_12)] hover:text-[oklch(22%_0.005_12)]"
+								}`}
+							>
+								{link.label}
 							</Link>
-							<div className="hidden lg:flex space-x-1 justify-center flex-1">
-								<NavItems setIsMenuOpen={setIsMenuOpen} />
-							</div>
-						</div>
-						<div className="flex items-center space-x-2">
+						))}
+					</div>
+
+					{/* Right side */}
+					<div className="flex items-center gap-3">
+						<Link
+							prefetch={false}
+							href="https://wa.me/message/BLYZCVYW2MOAJ1"
+							target="_blank"
+							rel="noopener noreferrer"
+							className="hidden sm:inline-flex h-8 items-center gap-1.5 rounded-full bg-[oklch(95%_0.005_12)] px-3.5 text-xs font-medium text-[oklch(35%_0.005_12)] transition-colors duration-150 hover:bg-[#DA5F6F]/10 hover:text-[#DA5F6F]"
+							aria-label="WhatsApp"
+						>
+							<svg aria-hidden="true" viewBox="0 0 24 24" className="h-3.5 w-3.5" fill="currentColor">
+								<path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z" />
+							</svg>
+							WhatsApp
+						</Link>
+
+						<button
+							type="button"
+							className="lg:hidden flex h-8 w-8 items-center justify-center rounded-full text-[oklch(40%_0.005_12)] transition-colors duration-150 hover:bg-[oklch(95%_0.005_12)]"
+							onClick={() => setOpen(!open)}
+							aria-label={open ? "Cerrar menú" : "Abrir menú"}
+						>
+							{open ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
+						</button>
+					</div>
+				</div>
+
+				{/* Mobile menu */}
+				{open && (
+					<div className="lg:hidden border-t border-[oklch(94%_0.005_12)] px-5 py-3">
+						<nav className="flex flex-col gap-0.5">
+							{links.map((link) => (
+								<Link
+									key={link.href}
+									prefetch={false}
+									href={link.href as Route}
+									className={`rounded-lg px-3 py-2.5 text-sm transition-colors duration-150 ${
+										isActive(link.href)
+											? "bg-[#DA5F6F]/10 font-medium text-[#DA5F6F]"
+											: "text-[oklch(35%_0.005_12)] hover:bg-[oklch(96%_0.005_12)]"
+									}`}
+								>
+									{link.label}
+								</Link>
+							))}
 							<Link
 								prefetch={false}
 								href="https://wa.me/message/BLYZCVYW2MOAJ1"
 								target="_blank"
 								rel="noopener noreferrer"
+								className="mt-1 flex items-center gap-2 rounded-lg px-3 py-2.5 text-sm text-[oklch(35%_0.005_12)] hover:bg-[oklch(96%_0.005_12)]"
 							>
-								<svg
-									xmlns="http://www.w3.org/2000/svg"
-									viewBox="0 0 175.216 175.552"
-									className="h-8 w-8 cursor-pointer hover:opacity-80 transition-opacity duration-300"
-									aria-label="WhatsApp"
-								>
-									<defs>
-										<linearGradient
-											id="b"
-											x1="85.915"
-											x2="86.535"
-											y1="32.567"
-											y2="137.092"
-											gradientUnits="userSpaceOnUse"
-										>
-											<stop offset="0" stopColor="#57d163" />
-											<stop offset="1" stopColor="#23b33a" />
-										</linearGradient>
-										<filter
-											id="a"
-											width="1.115"
-											height="1.114"
-											x="-.057"
-											y="-.057"
-											colorInterpolationFilters="sRGB"
-										>
-											<feGaussianBlur stdDeviation="3.531" />
-										</filter>
-									</defs>
-									<path
-										fill="#b3b3b3"
-										d="m54.532 138.45 2.235 1.324c9.387 5.571 20.15 8.518 31.126 8.523h.023c33.707 0 61.139-27.426 61.153-61.135.006-16.335-6.349-31.696-17.895-43.251A60.75 60.75 0 0 0 87.94 25.983c-33.733 0-61.166 27.423-61.178 61.13a60.98 60.98 0 0 0 9.349 32.535l1.455 2.312-6.179 22.558zm-40.811 23.544L24.16 123.88c-6.438-11.154-9.825-23.808-9.821-36.772.017-40.556 33.021-73.55 73.578-73.55 19.681.01 38.154 7.669 52.047 21.572s21.537 32.383 21.53 52.037c-.018 40.553-33.027 73.553-73.578 73.553h-.032c-12.313-.005-24.412-3.094-35.159-8.954zm0 0"
-										filter="url(#a)"
-									/>
-									<path
-										fill="#fff"
-										d="m12.966 161.238 10.439-38.114a73.42 73.42 0 0 1-9.821-36.772c.017-40.556 33.021-73.55 73.578-73.55 19.681.01 38.154 7.669 52.047 21.572s21.537 32.383 21.53 52.037c-.018 40.553-33.027 73.553-73.578 73.553h-.032c-12.313-.005-24.412-3.094-35.159-8.954z"
-									/>
-									<path
-										fill="url(#b)"
-										d="M87.184 25.227c-33.733 0-61.166 27.423-61.178 61.13a60.98 60.98 0 0 0 9.349 32.535l1.455 2.313-6.179 22.558 23.146-6.069 2.235 1.324c9.387 5.571 20.15 8.517 31.126 8.523h.023c33.707 0 61.14-27.426 61.153-61.135a60.75 60.75 0 0 0-17.895-43.251 60.75 60.75 0 0 0-43.235-17.928z"
-									/>
-									<path
-										fill="#fff"
-										fillRule="evenodd"
-										d="M68.772 55.603c-1.378-3.061-2.828-3.123-4.137-3.176l-3.524-.043c-1.226 0-3.218.46-4.902 2.3s-6.435 6.287-6.435 15.332 6.588 17.785 7.506 19.013 12.718 20.381 31.405 27.75c15.529 6.124 18.689 4.906 22.061 4.6s10.877-4.447 12.408-8.74 1.532-7.971 1.073-8.74-1.685-1.226-3.525-2.146-10.877-5.367-12.562-5.981-2.91-.919-4.137.921-4.746 5.979-5.819 7.206-2.144 1.381-3.984.462-7.76-2.861-14.784-9.124c-5.465-4.873-9.154-10.891-10.228-12.73s-.114-2.835.808-3.751c.825-.824 1.838-2.147 2.759-3.22s1.224-1.84 1.836-3.065.307-2.301-.153-3.22-4.032-10.011-5.666-13.647"
-									/>
+								<svg aria-hidden="true" viewBox="0 0 24 24" className="h-4 w-4" fill="currentColor">
+									<path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z" />
 								</svg>
+								WhatsApp
 							</Link>
-							<Button
-								variant="ghost"
-								size="icon"
-								className="lg:hidden rounded-full"
-								onClick={() => setIsMenuOpen(!isMenuOpen)}
-							>
-								<Menu className="h-5 w-5" />
-								<span className="sr-only">Toggle menu</span>
-							</Button>
-						</div>
-					</div>
-					<div
-						className={`lg:hidden overflow-hidden transition-all duration-300 ease-in-out ${
-							isMenuOpen
-								? "max-h-[500px] opacity-100 pb-4"
-								: "max-h-0 opacity-0 pb-0"
-						}`}
-					>
-						<nav className="flex flex-col space-y-2 pt-2">
-							<NavItems isMobile setIsMenuOpen={setIsMenuOpen} />
 						</nav>
 					</div>
-				</div>
+				)}
 			</nav>
 		</div>
 	);
