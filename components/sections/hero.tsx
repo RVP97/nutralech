@@ -9,7 +9,7 @@ export default function Hero() {
 
 			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
 				<div className="grid min-h-screen items-center gap-8 lg:grid-cols-[1fr_0.9fr] lg:gap-16">
-					<div className="space-y-8 pt-28 lg:pt-0">
+					<div className="space-y-8 pt-4 lg:pt-0">
 						<p className="text-sm font-medium tracking-wide uppercase text-[#DA5F6F]">
 							Nutrición personalizada
 						</p>
