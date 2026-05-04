@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import { Card } from "@/components/ui/card";
 
 export default function TestimonialsComponent() {
 	const testimonials = [
@@ -29,39 +28,46 @@ export default function TestimonialsComponent() {
 	];
 
 	return (
-		<section className="py-2 bg-linear-to-b from-pink-50/50 to-white">
-			<div className="container px-4 mx-auto">
-				<div className="text-center mb-16">
-					<span className="text-lg text-[#DA5F6F]">Testimonios</span>
-					<h2 className="mt-4 text-4xl font-serif font-medium tracking-tight sm:text-5xl">
-						Lo Que Dicen Mis Pacientes
+		<section className="py-24 bg-[oklch(97.5%_0.008_12)]">
+			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+				<div className="max-w-2xl">
+					<p className="text-sm font-medium tracking-wide uppercase text-[#DA5F6F]">
+						Testimonios
+					</p>
+					<h2 className="mt-3 font-serif text-3xl font-medium tracking-tight text-[oklch(18%_0.005_12)] sm:text-4xl">
+						Lo que dicen mis pacientes
 					</h2>
 				</div>
 
-				<div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+				<div className="mt-14 grid gap-6 md:grid-cols-3">
 					{testimonials.map((testimonial, index) => (
-						<Card key={index} className="p-8 transition-all hover:shadow-lg">
-							<div className="flex items-start gap-4">
-								<div className="relative h-12 w-12 shrink-0">
+						<figure
+							key={index}
+							className="rounded-2xl bg-white p-8 transition-shadow duration-200 hover:shadow-md"
+						>
+							<blockquote className="text-[15px] leading-relaxed text-[oklch(35%_0.005_12)]">
+								"{testimonial.quote}"
+							</blockquote>
+							<figcaption className="mt-6 flex items-center gap-3">
+								<div className="relative h-10 w-10 shrink-0 overflow-hidden rounded-full">
 									<Image
 										src={testimonial.image}
 										alt={testimonial.name}
 										fill
 										quality={50}
-										className="rounded-full object-cover"
+										className="object-cover"
 									/>
 								</div>
 								<div>
-									<div className="font-medium">{testimonial.name}</div>
-									<div className="text-sm text-muted-foreground">
+									<div className="text-sm font-medium text-[oklch(22%_0.005_12)]">
+										{testimonial.name}
+									</div>
+									<div className="text-xs text-[oklch(55%_0.01_12)]">
 										{testimonial.handle}
 									</div>
 								</div>
-							</div>
-							<blockquote className="mt-4 text-muted-foreground">
-								{testimonial.quote}
-							</blockquote>
-						</Card>
+							</figcaption>
+						</figure>
 					))}
 				</div>
 			</div>

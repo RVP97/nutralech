@@ -762,44 +762,35 @@ export default function PersonalizedCommunicationSection() {
 	];
 
 	return (
-		<section className="relative py-12 bg-linear-to-b from-white to-pink-50/50">
-			{/* Add decorative elements from hero.tsx */}
-			<div className="pointer-events-none absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMSIgY3k9IjEiIHI9IjEiIGZpbGw9InJnYmEoMjE4LCA5NSwgMTExLCAwLjA3KSIvPjwvc3ZnPg==')] opacity-40" />
-			<div className="absolute top-20 right-0 w-96 h-96 rounded-full bg-[#DA5F6F]/20 blur-[128px] animate-pulse" />
-			<div className="absolute bottom-0 right-20 w-96 h-96 rounded-full bg-yellow-200/30 blur-[128px] animate-pulse [animation-delay:1000ms]" />
-
-			{/* Add bottom fade effect */}
-			<div className="absolute bottom-0 left-0 right-0 h-32 bg-linear-to-t from-white to-transparent" />
-
-			<div className="container px-4 mx-auto">
-				<div className="text-center mb-16">
-					<span className="text-lg text-[#DA5F6F]">Acceso Directo</span>
-					<h2 className="mt-4 text-4xl font-serif font-medium tracking-tight sm:text-5xl">
-						Comunicación Personalizada
+		<section className="py-24 bg-[oklch(97.5%_0.008_12)]">
+			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+				<div className="max-w-2xl mb-14">
+					<p className="text-sm font-medium tracking-wide uppercase text-[#DA5F6F]">
+						Acceso directo
+					</p>
+					<h2 className="mt-3 font-serif text-3xl font-medium tracking-tight text-[oklch(18%_0.005_12)] sm:text-4xl lg:text-5xl">
+						Comunicación personalizada
 					</h2>
 				</div>
 
 				<div className="grid gap-12 lg:grid-cols-2 items-center">
 					<div className="space-y-8">
-						<p className="text-lg text-muted-foreground">
-							Tu éxito es mi prioridad. Por eso, ofrezco una atención
-							completamente personalizada a través de una plataforma de
-							comunicación segura y fácil de usar. Estoy aquí para apoyarte en
-							cada paso de tu viaje hacia una mejor salud y nutrición.
+						<p className="text-lg leading-relaxed text-[oklch(45%_0.01_12)]">
+							Estoy disponible para responder tus preguntas y brindarte apoyo
+							personalizado entre sesiones. Respuestas en un plazo máximo de
+							24 horas, con ajustes a tu plan según tu progreso.
 						</p>
-						<div className="space-y-6">
+						<div className="space-y-5">
 							{features.map((feature, index) => (
-								<div key={index} className="flex gap-4">
-									<div className="shrink-0">
-										<div className="w-12 h-12 rounded-full bg-[#DA5F6F]/10 flex items-center justify-center">
-											<feature.icon className="w-6 h-6 text-[#DA5F6F]" />
-										</div>
+								<div key={index} className="flex gap-4 items-start">
+									<div className="shrink-0 mt-0.5">
+										<feature.icon className="w-5 h-5 text-[#DA5F6F]" />
 									</div>
 									<div>
-										<h3 className="text-xl font-medium mb-2">
+										<h3 className="text-base font-medium text-[oklch(22%_0.005_12)]">
 											{feature.title}
 										</h3>
-										<p className="text-muted-foreground">
+										<p className="mt-1 text-sm text-[oklch(50%_0.01_12)]">
 											{feature.description}
 										</p>
 									</div>
@@ -809,10 +800,7 @@ export default function PersonalizedCommunicationSection() {
 					</div>
 
 					<div className="relative mx-auto">
-						<div className="absolute inset-0 bg-linear-to-br from-[#DA5F6F]/20 to-transparent rounded-[45px] blur-xl" />
-						<div className="relative">
-							<Iphone15ProWhatsappLightSmaller />
-						</div>
+						<Iphone15ProWhatsappLightSmaller />
 					</div>
 				</div>
 			</div>

@@ -1,0 +1,185 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-05-04T00:00:00.000Z",
+  "title": "Design System: Nutralech",
+  "extensions": {
+    "colorMeta": {
+      "brand-rose": {
+        "role": "primary",
+        "displayName": "Brand Rose",
+        "canonical": "oklch(62% 0.17 12)",
+        "tonalRamp": [
+          "oklch(28% 0.08 12)",
+          "oklch(35% 0.11 12)",
+          "oklch(42% 0.13 12)",
+          "oklch(50% 0.15 12)",
+          "oklch(58% 0.165 12)",
+          "oklch(62% 0.17 12)",
+          "oklch(72% 0.12 12)",
+          "oklch(88% 0.05 12)"
+        ]
+      },
+      "surface-blush": {
+        "role": "neutral",
+        "displayName": "Surface Blush",
+        "canonical": "oklch(97% 0.02 350)",
+        "tonalRamp": [
+          "oklch(88% 0.04 350)",
+          "oklch(91% 0.035 350)",
+          "oklch(93% 0.03 350)",
+          "oklch(95% 0.025 350)",
+          "oklch(96% 0.022 350)",
+          "oklch(97% 0.02 350)",
+          "oklch(98% 0.015 350)",
+          "oklch(99% 0.008 350)"
+        ]
+      },
+      "ui-primary": {
+        "role": "neutral",
+        "displayName": "Semantic UI Primary",
+        "canonical": "oklch(22% 0 0)",
+        "tonalRamp": [
+          "oklch(12% 0 0)",
+          "oklch(16% 0 0)",
+          "oklch(20% 0 0)",
+          "oklch(22% 0 0)",
+          "oklch(35% 0 0)",
+          "oklch(50% 0 0)",
+          "oklch(75% 0 0)",
+          "oklch(96% 0 0)"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "Marketing H1 and large section titles."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "UI and long-form reading; prefer max 65 to 75ch for articles."
+      }
+    },
+    "shadows": [
+      {
+        "name": "primitive-rest",
+        "value": "0 1px 2px 0 rgb(0 0 0 / 0.05)",
+        "purpose": "Cards and default shadcn buttons at rest."
+      },
+      {
+        "name": "navbar-shell",
+        "value": "0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)",
+        "purpose": "Floating pill navigation container."
+      },
+      {
+        "name": "hero-stat",
+        "value": "0 20px 25px -5px rgb(254 205 211 / 0.1), 0 8px 10px -6px rgb(254 205 211 / 0.1)",
+        "purpose": "Rose-tinted lift for hero metric panels only."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease-colors",
+        "value": "color 150ms ease, background-color 150ms ease, border-color 150ms ease",
+        "purpose": "Default transition-colors feel on buttons and links."
+      },
+      {
+        "name": "nav-hover",
+        "value": "all 300ms ease",
+        "purpose": "Navbar ghost buttons use transition-all duration-300."
+      }
+    ],
+    "breakpoints": [
+      { "name": "sm", "value": "640px" },
+      { "name": "md", "value": "768px" },
+      { "name": "lg", "value": "1024px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Marketing primary button",
+      "kind": "button",
+      "refersTo": "button-brand-solid",
+      "description": "Pill-shaped consult CTA as used in hero and sections.",
+      "html": "<a class=\"ds-btn-brand\" href=\"#precios\">Agenda tu Consulta</a>",
+      "css": ".ds-btn-brand { display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; min-height: 56px; padding: 0 32px; border-radius: 9999px; background: #DA5F6F; color: #ffffff; font-family: Inter, ui-sans-serif, system-ui, sans-serif; font-size: 0.875rem; font-weight: 500; text-decoration: none; border: none; cursor: pointer; transition: background-color 0.2s ease; } .ds-btn-brand:hover { background: #C54B5B; } .ds-btn-brand:focus-visible { outline: 2px solid #171717; outline-offset: 2px; }"
+    },
+    {
+      "name": "UI default button",
+      "kind": "button",
+      "refersTo": "button-ui-default",
+      "description": "shadcn default variant for dense UI and Stripe contexts.",
+      "html": "<button type=\"button\" class=\"ds-btn-ui\">Continuar</button>",
+      "css": ".ds-btn-ui { display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; height: 36px; padding: 8px 16px; border-radius: 8px; background: #171717; color: #fafafa; font-family: Inter, ui-sans-serif, system-ui, sans-serif; font-size: 0.875rem; font-weight: 500; border: none; box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05); cursor: pointer; transition: background-color 0.15s ease, opacity 0.15s ease; } .ds-btn-ui:hover { background: rgb(23 23 23 / 0.9); } .ds-btn-ui:focus-visible { outline: 2px solid #171717; outline-offset: 2px; } .ds-btn-ui:disabled { opacity: 0.5; pointer-events: none; }"
+    },
+    {
+      "name": "Card",
+      "kind": "card",
+      "refersTo": "card-surface",
+      "description": "Default marketing and pricing card shell.",
+      "html": "<div class=\"ds-card\"><div class=\"ds-card-body\">Contenido</div></div>",
+      "css": ".ds-card { border-radius: 12px; border: 1px solid #e5e5e5; background: #ffffff; color: #0a0a0a; box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05); } .ds-card-body { padding: 24px; font-family: Inter, ui-sans-serif, system-ui, sans-serif; font-size: 0.875rem; line-height: 1.5; }"
+    },
+    {
+      "name": "Text input",
+      "kind": "input",
+      "refersTo": "input-field",
+      "description": "Default bordered field for calculators and settings.",
+      "html": "<input class=\"ds-input\" type=\"text\" placeholder=\"Nombre\" />",
+      "css": ".ds-input { display: flex; width: 100%; height: 36px; padding: 8px 12px; border-radius: 8px; border: 1px solid #e5e5e5; background: transparent; color: #0a0a0a; font-family: Inter, ui-sans-serif, system-ui, sans-serif; font-size: 0.875rem; box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05); } .ds-input::placeholder { color: #737373; } .ds-input:focus-visible { outline: none; box-shadow: 0 0 0 1px #0a0a0a; } .ds-input:disabled { opacity: 0.5; cursor: not-allowed; }"
+    },
+    {
+      "name": "Navbar pill",
+      "kind": "nav",
+      "refersTo": null,
+      "description": "Fixed centered nav with blur, translucent background, rose hover on ghost items.",
+      "html": "<nav class=\"ds-nav\"><span class=\"ds-nav-inner\">Nutralech</span></nav>",
+      "css": ".ds-nav { max-width: 90%; margin: 0 auto; padding: 0 16px; height: 64px; display: flex; align-items: center; justify-content: center; border-radius: 24px; border: 1px solid #e5e5e5; background: rgb(255 255 255 / 0.8); backdrop-filter: blur(16px); box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1); } .ds-nav-inner { font-family: Inter, ui-sans-serif, system-ui, sans-serif; font-weight: 700; font-size: 1.5rem; color: #DA5F6F; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Calibrated Table",
+    "overview": "Nutralech pairs a human, approachable presence with rigorous clarity: food, body, and habits discussed like at a trusted table, not in a sales funnel. The interface stacks a committed rose accent on warm white and whisper-pink atmospheres so marketing pages feel inviting without abandoning structure. Under that layer, shadcn-style primitives keep forms, dialogs, and Stripe flows legible: near-black semantic primary, crisp borders, and restrained shadows.\n\nThe system rejects interchangeable SaaS hero patterns, decorative glass without intent, and category-reflex wellness teal unless explicitly reintroduced with a named reference. Depth is mostly lift-on-hover cards and diffuse rose-tinted shadows on white shells, not heavy skeuomorphism.",
+    "keyCharacteristics": [
+      "Marketing accent is brand rose, not the semantic primary token used by default shadcn buttons.",
+      "Serif display for section heroes; Inter for UI chrome and long reading.",
+      "Pill navigation and pill CTAs on landing; md radius on system inputs and default buttons.",
+      "Atmosphere uses vertical washes and large soft blurs behind photography, used sparingly so tools stay calm."
+    ],
+    "rules": [
+      {
+        "name": "The Two-Primary Rule",
+        "body": "Marketing surfaces may lead with Brand Rose. App-style components should respect semantic primary unless the design task explicitly overrides for a campaign.",
+        "section": "colors"
+      },
+      {
+        "name": "The Wash Pair Rule",
+        "body": "Section backgrounds that use atmosphere gradients should move between white and a single blush tint. Do not stack unrelated gradient stops for novelty.",
+        "section": "colors"
+      },
+      {
+        "name": "The Serif Containment Rule",
+        "body": "Serif display sizes are for marketing headings and hero moments. Do not set long body copy in all-caps serif tracking unless that surface is intentionally editorial.",
+        "section": "typography"
+      },
+      {
+        "name": "The Flat Forms Rule",
+        "body": "Calculators and checkout paths should stay tonally flat: rely on borders and focus rings, not marketing blurs, behind inputs.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do lead marketing CTAs with Brand Rose on white or blush wash, with pill shape when the action is consult booking or equivalent primary conversion.",
+      "Do keep Inter for form labels, calculator copy, and Stripe-adjacent UI.",
+      "Do use focus-visible ring and visible borders so keyboard paths meet accessibility targets.",
+      "Do respect prefers-reduced-motion for decorative pulses and ambient blurs when adding new motion."
+    ],
+    "donts": [
+      "Don't use twin stat cards with huge numbers and tiny labels as the only hero story; PRODUCT.md rejects generic SaaS landing patterns that read as interchangeable AI output.",
+      "Don't stack decorative glass and gradient chrome without intent; glass is for rare emphasis, not every kicker.",
+      "Don't default to stock healthcare teal clichés unless deliberately chosen with a named reference (PRODUCT.md).",
+      "Don't use border-left greater than 1px as a colored accent stripe on prose callouts; audit mdx-components blockquote pattern when tightening the system.",
+      "Don't imply medical diagnosis through visual urgency outside the destructive token role for real errors."
+    ]
+  }
+}

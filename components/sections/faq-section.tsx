@@ -6,7 +6,6 @@ import {
 	AccordionItem,
 	AccordionTrigger,
 } from "@/components/ui/accordion";
-import { Card, CardContent } from "@/components/ui/card";
 
 const faqItems = [
 	{
@@ -23,10 +22,10 @@ const faqItems = [
 		question: "¿Puedo contactarte entre sesiones si tengo preguntas?",
 		answer: (
 			<>
-				¡Absolutamente! Puedes contactarme por{" "}
+				Puedes contactarme por{" "}
 				<a
 					href="mailto:dudas@nutralech.com"
-					className="text-primary font-medium hover:underline"
+					className="text-[#DA5F6F] font-medium hover:underline"
 				>
 					correo electrónico
 				</a>{" "}
@@ -35,7 +34,7 @@ const faqItems = [
 					href="https://wa.me/message/BLYZCVYW2MOAJ1"
 					target="_blank"
 					rel="noopener noreferrer"
-					className="text-primary font-medium hover:underline"
+					className="text-[#DA5F6F] font-medium hover:underline"
 				>
 					WhatsApp
 				</a>{" "}
@@ -57,51 +56,39 @@ const faqItems = [
 	{
 		question: "¿En qué eres diferente a otras nutricionistas?",
 		answer:
-			"Soy una nutricionista con un enfoque centrado en la salud y el bienestar, con un enfoque en la nutrición sostenible y el equilibrio entre cuerpo y mente. Mi objetivo es guiarte hacia un estilo de vida más saludable y sostenible, no solo en términos nutricionales, sino también en términos de valores y prácticas. Todo mi trabajo es personalizado para adaptarse a tus necesidades y objetivos específicos.",
+			"Mi enfoque se centra en la nutrición sostenible y el equilibrio entre cuerpo y mente. Todo mi trabajo es personalizado para adaptarse a tus necesidades y objetivos específicos, y siempre coordino con tu equipo médico cuando es relevante.",
 	},
 ];
 
 export default function FaqSection() {
 	return (
-		<section id="faq" className="py-12 bg-linear-to-b from-white to-white">
-			<div className=" px-4 mx-auto">
-				<div className="text-center mb-8">
-					<span className="text-lg text-[#DA5F6F]">
-						¿Tienes alguna pregunta?
-					</span>
-					<h2 className="mt-4 text-4xl font-serif font-medium tracking-tight sm:text-5xl">
-						Preguntas Frecuentes
-					</h2>
-					<p className="mt-4 text-base text-muted-foreground max-w-2xl mx-auto">
-						Encuentra respuestas a las preguntas más comunes sobre mis servicios
-						de nutrición
+		<section id="faq" className="py-24 bg-[oklch(97.5%_0.008_12)]">
+			<div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
+				<div className="text-center mb-12">
+					<p className="text-sm font-medium tracking-wide uppercase text-[#DA5F6F]">
+						Preguntas frecuentes
 					</p>
+					<h2 className="mt-3 font-serif text-3xl font-medium tracking-tight text-[oklch(18%_0.005_12)] sm:text-4xl">
+						¿Tienes alguna pregunta?
+					</h2>
 				</div>
-				<Card className="w-full max-w-[95%] md:max-w-[85%] mx-auto">
-					{/* <CardHeader className="text-center">
-            <CardTitle className="text-3xl font-bold">
-              Preguntas Frecuentes
-            </CardTitle>
-            <CardDescription>
-              Encuentra respuestas a las preguntas más comunes sobre nuestros
-              servicios de nutrición
-            </CardDescription>
-          </CardHeader> */}
-					<CardContent>
-						<Accordion type="single" collapsible className="w-full">
-							{faqItems.map((item, index) => (
-								<AccordionItem key={index} value={`item-${index}`}>
-									<AccordionTrigger className="text-left font-medium">
-										{item.question}
-									</AccordionTrigger>
-									<AccordionContent className="text-muted-foreground">
-										{item.answer}
-									</AccordionContent>
-								</AccordionItem>
-							))}
-						</Accordion>
-					</CardContent>
-				</Card>
+
+				<Accordion type="single" collapsible className="w-full space-y-2">
+					{faqItems.map((item, index) => (
+						<AccordionItem
+							key={index}
+							value={`item-${index}`}
+							className="rounded-xl bg-white px-6 border-none"
+						>
+							<AccordionTrigger className="text-left text-[15px] font-medium text-[oklch(22%_0.005_12)] hover:no-underline py-5">
+								{item.question}
+							</AccordionTrigger>
+							<AccordionContent className="text-sm leading-relaxed text-[oklch(45%_0.01_12)] pb-5">
+								{item.answer}
+							</AccordionContent>
+						</AccordionItem>
+					))}
+				</Accordion>
 			</div>
 		</section>
 	);

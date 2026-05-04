@@ -1,6 +1,5 @@
 "use client";
 
-import { Phone } from "lucide-react";
 import type React from "react";
 import { useState } from "react";
 import {
@@ -19,12 +18,15 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 
 const INQUIRY_OPTIONS = [
-	{ value: "Consulta General", label: "Consulta General" },
-	{ value: "Solicitar Cita", label: "Solicitar Cita" },
-	{ value: "Colaboración", label: "Colaboración" },
+	{ value: "Consulta General", label: "Consulta general" },
+	{ value: "Solicitar Cita", label: "Solicitar cita" },
+	{ value: "Colaboración", label: "Colaboración profesional" },
 	{ value: "Comentarios", label: "Comentarios" },
 	{ value: "Otro", label: "Otro" },
 ];
+
+const fieldClass =
+	"bg-[oklch(97%_0.005_12)] border border-[oklch(90%_0.005_12)] rounded-lg text-sm text-[oklch(18%_0.005_12)] placeholder:text-[oklch(62%_0.005_12)] focus-visible:ring-[#DA5F6F]/30 focus-visible:border-[#DA5F6F]/50";
 
 function ContactForm() {
 	const [formData, setFormData] = useState({
@@ -58,7 +60,7 @@ function ContactForm() {
 		if (!executeRecaptcha) return;
 
 		if (!formData.inquiryType) {
-			setInquiryTypeError("Por favor, seleccione un tipo de consulta.");
+			setInquiryTypeError("Selecciona un tipo de consulta.");
 			return;
 		}
 
@@ -83,16 +85,16 @@ function ContactForm() {
 					message: "",
 				});
 				setSuccessMessage(
-					"Gracias por su mensaje. Nos pondremos en contacto con usted pronto.",
+					"Gracias por tu mensaje. Te responderé lo antes posible.",
 				);
 			} else {
 				setErrorMessage(
-					"Hubo un error al enviar su mensaje. Por favor, inténtelo de nuevo más tarde.",
+					"Hubo un error al enviar tu mensaje. Intenta de nuevo o escríbeme por WhatsApp.",
 				);
 			}
 		} catch {
 			setErrorMessage(
-				"Hubo un error al enviar su mensaje. Por favor, inténtelo de nuevo más tarde.",
+				"Hubo un error al enviar tu mensaje. Intenta de nuevo o escríbeme por WhatsApp.",
 			);
 		} finally {
 			setIsSubmitting(false);
@@ -100,106 +102,107 @@ function ContactForm() {
 	};
 
 	return (
-		<form onSubmit={handleSubmit} className="space-y-6">
-			<Input
-				type="text"
-				name="name"
-				placeholder="Nombre"
-				className="bg-[#F0F0F0] border-0 font-serif tracking-widest border-b border-black rounded-none focus:ring-0 focus:border-black"
-				value={formData.name}
-				onChange={handleInputChange}
-				required
-				aria-label="Nombre"
-			/>
-			<Input
-				type="email"
-				name="email"
-				placeholder="Correo electrónico"
-				className="bg-[#F0F0F0] border-0 border-b font-serif tracking-widest border-black rounded-none focus:ring-0 focus:border-black"
-				value={formData.email}
-				onChange={handleInputChange}
-				required
-				aria-label="Correo electrónico"
-			/>
-			<div className="relative">
-				<Phone
-					className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
-					size={18}
+		<form onSubmit={handleSubmit} className="space-y-5">
+			<div className="grid sm:grid-cols-2 gap-5">
+				<Input
+					type="text"
+					name="name"
+					placeholder="Nombre"
+					className={fieldClass}
+					value={formData.name}
+					onChange={handleInputChange}
+					required
+					aria-label="Nombre"
 				/>
+				<Input
+					type="email"
+					name="email"
+					placeholder="Correo electrónico"
+					className={fieldClass}
+					value={formData.email}
+					onChange={handleInputChange}
+					required
+					aria-label="Correo electrónico"
+				/>
+			</div>
+			<div className="grid sm:grid-cols-2 gap-5">
 				<Input
 					type="tel"
 					name="phone"
-					placeholder="Número de teléfono (opcional)"
-					className="bg-[#F0F0F0] border-0 font-serif tracking-widest border-b border-black rounded-none focus:ring-0 focus:border-black pl-10"
+					placeholder="Teléfono (opcional)"
+					className={fieldClass}
 					value={formData.phone}
 					onChange={handleInputChange}
 					aria-label="Número de teléfono (opcional)"
 				/>
-			</div>
-			<div className="space-y-2">
-				<Select
-					name="inquiryType"
-					onValueChange={handleInquiryTypeChange}
-					value={formData.inquiryType}
-				>
-					<SelectTrigger
-						className={`w-full font-serif tracking-widest bg-[#F0F0F0] border-0 border-b ${
-							inquiryTypeError ? "border-red-500" : "border-black"
-						} rounded-none focus:ring-0 focus:border-black`}
-						aria-label="Tipo de consulta"
+				<div>
+					<Select
+						name="inquiryType"
+						onValueChange={handleInquiryTypeChange}
+						value={formData.inquiryType}
 					>
-						<SelectValue placeholder="Tipo de consulta *" />
-					</SelectTrigger>
-					<SelectContent>
-						{INQUIRY_OPTIONS.map((option) => (
-							<SelectItem key={option.value} value={option.value}>
-								{option.label}
-							</SelectItem>
-						))}
-					</SelectContent>
-				</Select>
-				{inquiryTypeError && (
-					<p className="text-red-500 text-xs">{inquiryTypeError}</p>
-				)}
+						<SelectTrigger
+							className={`w-full ${fieldClass} ${
+								inquiryTypeError
+									? "border-red-400 focus-visible:ring-red-200"
+									: ""
+							}`}
+							aria-label="Tipo de consulta"
+						>
+							<SelectValue placeholder="Tipo de consulta" />
+						</SelectTrigger>
+						<SelectContent>
+							{INQUIRY_OPTIONS.map((option) => (
+								<SelectItem key={option.value} value={option.value}>
+									{option.label}
+								</SelectItem>
+							))}
+						</SelectContent>
+					</Select>
+					{inquiryTypeError && (
+						<p className="mt-1.5 text-xs text-red-500">{inquiryTypeError}</p>
+					)}
+				</div>
 			</div>
 			<Textarea
 				name="message"
-				placeholder="Mensaje"
-				className="bg-[#F0F0F0] border-0 font-serif tracking-widest border-b border-black rounded-none focus:ring-0 focus:border-black min-h-[100px] "
+				placeholder="Tu mensaje"
+				className={`${fieldClass} min-h-[140px] resize-y`}
 				value={formData.message}
 				onChange={handleInputChange}
 				required
 				aria-label="Mensaje"
 			/>
+
 			<Button
 				type="submit"
-				className="px-10 w-full md:w-auto bg-[#DA5F6F] tracking-[0.25em] text-xs hover:bg-[#DA5F6F]/90 text-white rounded-none"
+				className="h-12 w-full rounded-full bg-[#DA5F6F] text-sm font-medium text-white hover:bg-[#C54B5B] sm:w-auto sm:px-10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#DA5F6F]"
 				disabled={isSubmitting}
 			>
-				{isSubmitting ? "Enviando..." : "Enviar"}
+				{isSubmitting ? "Enviando..." : "Enviar mensaje"}
 			</Button>
+
 			{successMessage && (
-				<p className="text-gray-700 text-xs md:text-sm mt-4">
-					{successMessage}
-				</p>
+				<p className="text-sm text-[oklch(40%_0.1_150)]">{successMessage}</p>
 			)}
 			{errorMessage && (
-				<p className="text-gray-700 text-xs md:text-sm mt-4">{errorMessage}</p>
+				<p className="text-sm text-red-500">{errorMessage}</p>
 			)}
-			<p className="text-xs md:text-sm font-serif tracking-widest text-gray-500">
-				Este sitio está protegido por reCAPTCHA y se aplican la{" "}
+
+			<p className="text-xs leading-relaxed text-[oklch(62%_0.005_12)]">
+				Protegido por reCAPTCHA. Aplican la{" "}
 				<a
 					href="https://policies.google.com/privacy"
-					className="text-[#DA5F6F] hover:underline"
+					className="underline underline-offset-2 hover:text-[#DA5F6F]"
 					target="_blank"
 					rel="noopener noreferrer"
 				>
 					Política de Privacidad
 				</a>{" "}
-				y las{" "}
+				y{" "}
 				<a
 					href="https://policies.google.com/terms"
-					className="text-[#DA5F6F] hover:underline"
+					className="underline underline-offset-2 hover:text-[#DA5F6F]"
 					target="_blank"
 					rel="noopener noreferrer"
 				>
@@ -217,10 +220,10 @@ export default function SimplifiedContactForm() {
 			reCaptchaKey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || ""}
 		>
 			<style jsx global>{`
-        .grecaptcha-badge {
-          visibility: hidden;
-        }
-      `}</style>
+				.grecaptcha-badge {
+					visibility: hidden;
+				}
+			`}</style>
 			<ContactForm />
 		</GoogleReCaptchaProvider>
 	);

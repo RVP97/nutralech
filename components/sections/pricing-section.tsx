@@ -1,20 +1,11 @@
 "use client";
 
-// import { sendGTMEvent } from "@next/third-parties/google";
-import { Check, Copy, Percent, Star, X } from "lucide-react";
+import { Check, Copy, X } from "lucide-react";
 import dynamic from "next/dynamic";
 import Image from "next/image";
 import Link from "next/link";
-import { type ComponentType, useState } from "react";
+import { type ComponentType, useCallback, useState } from "react";
 import { Button } from "@/components/ui/button";
-import {
-	Card,
-	CardContent,
-	CardDescription,
-	CardFooter,
-	CardHeader,
-	CardTitle,
-} from "@/components/ui/card";
 import {
 	Dialog,
 	DialogContent,
@@ -22,7 +13,6 @@ import {
 	DialogTitle,
 	DialogTrigger,
 } from "@/components/ui/dialog";
-import { Switch } from "@/components/ui/switch";
 
 interface IndividualPlan {
 	name: string;
@@ -44,22 +34,134 @@ interface Package {
 	popular?: boolean;
 }
 
-function copyToClipboard(text: string, buttonId: string) {
-	navigator.clipboard.writeText(text);
-
-	// Get the text span element and update text
-	const textSpan = document.querySelector(`#${buttonId} span`);
-	if (textSpan) {
-		const originalText = textSpan.textContent;
-		textSpan.textContent = "Copiado";
-		setTimeout(() => {
-			textSpan.textContent = originalText;
-		}, 1500);
-	}
-}
-
 interface StripeCheckoutProps {
 	priceId: string;
+}
+
+const individualPlans: IndividualPlan[] = [
+	{
+		name: "Consulta de Seguimiento",
+		price: "800",
+		priceId: "price_1QHcX3BoTKroQtb9iezs2h2q",
+		description:
+			"Para dar seguimiento a tus metas y evaluar tu progreso después de la consulta inicial.",
+		features: [
+			{ name: "Evaluación integral completa", cross: false },
+			{ name: "Plan alimenticio personalizado (basado en menú) o seguimiento de relación con la comida", cross: false },
+			{ name: "Seguimiento recomendado cada 2 o 3 semanas", cross: false },
+			{ name: "Soporte por chat ilimitado (directamente con Marialy)", cross: false },
+		],
+	},
+	{
+		name: "Consulta Inicial",
+		price: "1,200",
+		priceId: "price_1QHcqHBoTKroQtb9EcQsiBUO",
+		description:
+			"Te conozco y adapto un plan personalizado a tus necesidades específicas.",
+		features: [
+			{ name: "Evaluación nutricional completa", cross: false },
+			{ name: "Plan alimenticio personalizado (basado en menú)", cross: false },
+			{ name: "Recomendaciones de suplementación", cross: false },
+			{ name: "Consulta de primera vez", cross: false },
+			{ name: "Soporte por chat ilimitado (directamente con Marialy)", cross: false },
+		],
+		popular: true,
+	},
+	{
+		name: "Mejora tu relación con la comida",
+		price: "1,200",
+		priceId: "price_1S6bWaBoTKroQtb9yWPxT3lG",
+		description:
+			"Aprende a alimentarte sin restricciones ni culpa. Alimentación intuitiva y hábitos sostenibles.",
+		features: [
+			{ name: "Consulta online personalizada (60 minutos)", cross: false },
+			{ name: "Practica la alimentación intuitiva", cross: false },
+			{ name: "Reconecta con tus señales de hambre y saciedad", cross: false },
+			{ name: "Crea hábitos que te acerquen a tu peso y bienestar ideal", cross: false },
+			{ name: "Espacio para disfrutar la comida sin culpa", cross: false },
+			{ name: "Construye confianza en tus elecciones alimentarias", cross: false },
+			{ name: "Logra un estilo de vida sostenible y saludable", cross: false },
+			{ name: "Soporte por chat ilimitado (directamente con Marialy)", cross: false },
+		],
+		selfCare: true,
+	},
+];
+
+const packages: Package[] = [
+	{
+		name: "Paquete Básico",
+		originalPrice: "2,000",
+		discountedPrice: "1,700",
+		priceId: "price_1QHcY3BoTKroQtb9oY63GCl3",
+		description:
+			"Perfecto para empezar a cambiar tu estilo de vida y alimentación.",
+		features: [
+			{ name: "1 Consulta Inicial", cross: false },
+			{ name: "1 Consulta de Seguimiento", cross: false },
+			{ name: "Evaluación nutricional completa", cross: false },
+			{ name: "Plan alimenticio personalizado (basado en macros o menú)", cross: false },
+			{ name: "Recomendaciones de suplementación", cross: false },
+			{ name: "Seguimiento recomendado cada 2 o 3 semanas", cross: false },
+			{ name: "Soporte por chat ilimitado (directamente con Marialy)", cross: false },
+		],
+	},
+	{
+		name: "Paquete Transformación",
+		originalPrice: "3,600",
+		discountedPrice: "3,060",
+		priceId: "price_1QHcYLBoTKroQtb9bjxsrz4x",
+		description:
+			"El plan ideal para quienes buscan transformar su vida por completo.",
+		features: [
+			{ name: "1 Consulta Inicial", cross: false },
+			{ name: "3 Consultas de Seguimiento", cross: false },
+			{ name: "Evaluación nutricional completa", cross: false },
+			{ name: "Plan alimenticio personalizado (basado en macros o menú)", cross: false },
+			{ name: "Recomendaciones de suplementación", cross: false },
+			{ name: "Seguimiento recomendado cada 2 o 3 semanas", cross: false },
+			{ name: "Soporte por chat ilimitado (directamente con Marialy)", cross: false },
+		],
+		popular: true,
+	},
+	{
+		name: "Paquete Profesional",
+		originalPrice: "2,800",
+		discountedPrice: "2,380",
+		priceId: "price_1QHcYeBoTKroQtb9zJO7l4lD",
+		description:
+			"Ideal para una transformación profunda para quien quiere un buen cambio.",
+		features: [
+			{ name: "1 Consulta Inicial", cross: false },
+			{ name: "2 Consultas de Seguimiento", cross: false },
+			{ name: "Evaluación nutricional completa", cross: false },
+			{ name: "Plan alimenticio personalizado (basado en macros o menú)", cross: false },
+			{ name: "Recomendaciones de suplementación", cross: false },
+			{ name: "Seguimiento recomendado cada 2 o 3 semanas", cross: false },
+			{ name: "Soporte por chat ilimitado (directamente con Marialy)", cross: false },
+		],
+	},
+];
+
+function CopyButton({ text, label }: { text: string; label: string }) {
+	const [copied, setCopied] = useState(false);
+
+	const handleCopy = useCallback(() => {
+		navigator.clipboard.writeText(text);
+		setCopied(true);
+		setTimeout(() => setCopied(false), 1500);
+	}, [text]);
+
+	return (
+		<Button
+			variant="ghost"
+			size="sm"
+			className="flex items-center gap-1 text-[oklch(50%_0.01_12)] hover:text-[#DA5F6F]"
+			onClick={handleCopy}
+		>
+			<Copy className="h-3.5 w-3.5" />
+			<span className="text-xs">{copied ? "Copiado" : label}</span>
+		</Button>
+	);
 }
 
 export default function PricingSection() {
@@ -68,206 +170,15 @@ export default function PricingSection() {
 	const [StripeCheckout, setStripeCheckout] =
 		useState<ComponentType<StripeCheckoutProps> | null>(null);
 
-	const individualPlans = [
-		{
-			name: "Consulta de Seguimiento",
-			price: "800",
-			priceId: "price_1QHcX3BoTKroQtb9iezs2h2q",
-			description:
-				"Después de tu consulta inicial o sesión de mejora de relación con la comida, esta es la consulta para dar seguimiento a tus metas y evaluar tu progreso.",
-			features: [
-				{ name: "Evaluación integral completa", cross: false },
-				{
-					name: "Plan alimenticio personalizado (basado en menú) o seguimiento de relación con la comida",
-					cross: false,
-				},
-				{ name: "Seguimiento recomendado cada 2 o 3 semanas", cross: false },
-				{
-					name: "Soporte por chat ilimitado (directamente con Marialy)",
-					cross: false,
-				},
-			],
-		},
-		{
-			name: "Consulta Inicial",
-			price: "1,200",
-			priceId: "price_1QHcqHBoTKroQtb9EcQsiBUO",
-			description:
-				"Consulta inicial donde te conozco y adapto un plan personalizado a tus necesidades específicas.",
-			features: [
-				{ name: "Evaluación nutricional completa", cross: false },
-				{
-					name: "Plan alimenticio personalizado (basado en menú)",
-					cross: false,
-				},
-				{ name: "Recomendaciones de suplementación", cross: false },
-				{ name: "Consulta de primera vez", cross: false },
-				{
-					name: "Soporte por chat ilimitado (directamente con Marialy)",
-					cross: false,
-				},
-			],
-			popular: true,
-		},
-		{
-			name: "Mejora tu relación con la comida",
-			price: "1,200",
-			priceId: "price_1S6bWaBoTKroQtb9yWPxT3lG",
-			description:
-				"Transforma tu relación con la comida y aprende a alimentarte de manera saludable sin restricciones ni culpa.",
-			features: [
-				{ name: "Consulta online personalizada (60 minutos)", cross: false },
-				{ name: "Practica la alimentación intuitiva", cross: false },
-				{
-					name: "Reconecta con tus señales de hambre y saciedad",
-					cross: false,
-				},
-				{
-					name: "Crea hábitos que te acerquen a tu peso y bienestar ideal",
-					cross: false,
-				},
-				{ name: "Espacio para disfrutar la comida sin culpa", cross: false },
-				{
-					name: "Construye confianza en tus elecciones alimentarias",
-					cross: false,
-				},
-				{
-					name: "Logra un estilo de vida sostenible y saludable",
-					cross: false,
-				},
-				{
-					name: "Soporte por chat ilimitado (directamente con Marialy)",
-					cross: false,
-				},
-			],
-			selfCare: true,
-		},
-		// {
-		//   name: "Plan a Distancia",
-		//   price: "600",
-		//   priceId: "price_1QHcXYBoTKroQtb9Fm9BzAij",
-		//   description:
-		//     "La opción más económica para resultados a largo plazo. No incluye seguimiento.",
-		//   features: [
-		//     { name: "Evaluación nutricional completa", cross: false },
-		//     { name: "Cuestionario de evaluación", cross: false },
-		//     { name: "Plan alimenticio personalizado", cross: false },
-		//     { name: "Recomendaciones de suplementación", cross: false },
-		//     { name: "Seguimiento recomendado cada 2 o 3 semanas", cross: false },
-		//     { name: "Video llamada de 1 hora con Marialy", cross: true },
-		//     { name: "Soporte por chat ilimitado", cross: true },
-		//     { name: "Soporte prioritario 24/7", cross: true },
-		//     { name: "Análisis de composición corporal", cross: true },
-		//   ],
-		// },
-	];
-
-	const packages = [
-		{
-			name: "Paquete Básico",
-			originalPrice: "2,000",
-			discountedPrice: "1,700",
-			priceId: "price_1QHcY3BoTKroQtb9oY63GCl3",
-			description:
-				"Perfecto para empezar a cambiar tu estilo de vida y alimentación.",
-			features: [
-				{ name: "1 Consulta Inicial", cross: false },
-				{ name: "1 Consulta de Seguimiento", cross: false },
-				{ name: "Evaluación nutricional completa", cross: false },
-				{
-					name: "Plan alimenticio personalizado (basado en macros o menú)",
-					cross: false,
-				},
-				{ name: "Recomendaciones de suplementación", cross: false },
-				{ name: "Seguimiento recomendado cada 2 o 3 semanas", cross: false },
-				{
-					name: "Soporte por chat ilimitado (directamente con Marialy)",
-					cross: false,
-				},
-			],
-		},
-		{
-			name: "Paquete Transformación",
-			originalPrice: "3,600",
-			discountedPrice: "3,060",
-			priceId: "price_1QHcYLBoTKroQtb9bjxsrz4x",
-			description:
-				"El plan ideal para quienes buscan transformar su vida por completo.",
-			features: [
-				{ name: "1 Consulta Inicial", cross: false },
-				{ name: "3 Consultas de Seguimiento", cross: false },
-				{ name: "Evaluación nutricional completa", cross: false },
-				{
-					name: "Plan alimenticio personalizado (basado en macros o menú)",
-					cross: false,
-				},
-				{ name: "Recomendaciones de suplementación", cross: false },
-				{ name: "Seguimiento recomendado cada 2 o 3 semanas", cross: false },
-				{
-					name: "Soporte por chat ilimitado (directamente con Marialy)",
-					cross: false,
-				},
-			],
-			popular: true,
-		},
-		{
-			name: "Paquete Profesional",
-			originalPrice: "2,800",
-			discountedPrice: "2,380",
-			priceId: "price_1QHcYeBoTKroQtb9zJO7l4lD",
-			description:
-				"Ideal para una transformación profunda para quien quiere un buen cambio.",
-			features: [
-				{ name: "1 Consulta Inicial", cross: false },
-				{ name: "2 Consultas de Seguimiento", cross: false },
-				{ name: "Evaluación nutricional completa", cross: false },
-				{
-					name: "Plan alimenticio personalizado (basado en macros o menú)",
-					cross: false,
-				},
-				{ name: "Recomendaciones de suplementación", cross: false },
-				{ name: "Seguimiento recomendado cada 2 o 3 semanas", cross: false },
-				{
-					name: "Soporte por chat ilimitado (directamente con Marialy)",
-					cross: false,
-				},
-			],
-		},
-		// {
-		//   name: "Test",
-		//   originalPrice: "2,800",
-		//   discountedPrice: "2,380",
-		//   priceId: "price_1Mvmc2BoTKroQtb9Kz0QKe6B",
-		//   description:
-		//     "Ideal para una transformación profunda para quien quiere un buen cambio.",
-		//   features: [
-		//     { name: "1 Consulta Inicial", cross: false },
-		//     { name: "2 Consultas de Seguimiento", cross: false },
-		//     { name: "Video llamada de 1 hora con Marialy", cross: false },
-		//     { name: "Evaluación nutricional completa", cross: false },
-		//     { name: "Plan alimenticio personalizado", cross: false },
-		//     { name: "Recomendaciones de suplementación", cross: false },
-		//     { name: "Seguimiento recomendado cada 2 o 3 semanas", cross: false },
-		//     {
-		//       name: "Soporte por chat ilimitado (directamente con Marialy)",
-		//       cross: false,
-		//     },
-		//     { name: "Soporte prioritario 24/7", cross: false },
-		//     { name: "Análisis de composición corporal", cross: false },
-		//   ],
-		// },
-	];
-
 	const handlePlanSelection = async (priceId: string) => {
 		setSelectedPriceId(priceId);
 
-		// Only load Stripe component when button is clicked
 		const StripeCheckoutComponent = dynamic(
 			() => import("@/lib/stripe-checkout"),
 			{
 				loading: () => (
-					<div className="w-full h-full flex items-center justify-center">
-						<div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#DA5F6F]" />
+					<div className="flex h-full w-full items-center justify-center">
+						<div className="h-6 w-6 animate-spin rounded-full border-2 border-[oklch(85%_0.01_12)] border-t-[#DA5F6F]" />
 					</div>
 				),
 				ssr: false,
@@ -277,15 +188,17 @@ export default function PricingSection() {
 		setStripeCheckout(() => StripeCheckoutComponent);
 	};
 
+	const activePlans = showPackages ? packages : individualPlans;
+
 	return (
 		<>
 			<Dialog
 				open={!!selectedPriceId}
 				onOpenChange={() => setSelectedPriceId(null)}
 			>
-				<DialogContent className="sm:max-w-[90vw] w-[95vw] h-[90vh] max-h-[90vh] flex flex-col rounded-lg z-100">
+				<DialogContent className="sm:max-w-[90vw] w-[95vw] h-[90vh] max-h-[90vh] flex flex-col rounded-xl z-100">
 					<DialogHeader className="shrink-0">
-						<DialogTitle>Completar Pago</DialogTitle>
+						<DialogTitle className="text-[oklch(18%_0.005_12)]">Completar pago</DialogTitle>
 					</DialogHeader>
 					<div className="flex-1 overflow-y-auto">
 						{selectedPriceId && StripeCheckout && (
@@ -295,329 +208,207 @@ export default function PricingSection() {
 				</DialogContent>
 			</Dialog>
 
-			<section
-				id="precios"
-				className="py-12 md:py-8 bg-linear-to-b from-white to-pink-50/50"
-			>
-				<div className="container px-4 mx-auto">
+			<section id="precios" className="py-24 bg-white">
+				<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+					{/* Header */}
 					<div className="text-center mb-10">
-						<span className="text-lg text-[#DA5F6F]">Precios</span>
-						<h2 className="mt-4 text-4xl font-serif font-medium tracking-tight sm:text-5xl">
-							Planes Diseñados para Ti
+						<p className="text-sm font-medium tracking-wide uppercase text-[#DA5F6F]">
+							Precios
+						</p>
+						<h2 className="mt-3 font-serif text-3xl font-medium tracking-tight text-[oklch(18%_0.005_12)] sm:text-4xl lg:text-5xl">
+							Elige tu plan
 						</h2>
-						<p className="mt-4 text-xl text-muted-foreground max-w-2xl mx-auto">
-							Elige el plan que mejor se adapte a tus necesidades y objetivos de
-							salud.
+						<p className="mt-4 text-base text-[oklch(50%_0.01_12)] max-w-lg mx-auto">
+							Consultas individuales para empezar, o paquetes con hasta 15% de ahorro
+							si buscas un proceso completo.
 						</p>
 					</div>
 
-					<div className="flex flex-col items-center justify-center mb-8">
-						<p className="text-sm text-muted-foreground mb-4">
-							Métodos de pago aceptados
-						</p>
-						<div className="grid grid-cols-4 sm:flex items-center gap-6 md:gap-6">
-							<Image
-								unoptimized
-								src="/images/logos/oxxo-logo.svg"
-								alt="OXXO"
-								width={80}
-								height={40}
-								className="h-8 w-auto object-contain justify-self-center"
-							/>
-							<Image
-								unoptimized
-								src="/images/logos/amex.svg"
-								alt="American Express"
-								width={80}
-								height={40}
-								className="h-12 w-auto object-contain justify-self-center"
-							/>
-							<Image
-								unoptimized
-								src="/images/logos/mastercard.svg"
-								alt="Mastercard"
-								width={80}
-								height={40}
-								className="h-8 w-auto object-contain justify-self-center"
-							/>
-							<Image
-								unoptimized
-								src="/images/logos/visa.svg"
-								alt="Visa"
-								width={80}
-								height={40}
-								className="h-8 w-auto object-contain justify-self-center"
-							/>
-							{/* <Image
-                unoptimized
-                src="/images/logos/spei.svg"
-                alt="SPEI"
-                width={80}
-                height={40}
-                className="h-8 w-auto object-contain justify-self-center"
-              /> */}
-						</div>
-
-						<Dialog>
-							<DialogTrigger asChild>
-								<Button
-									variant="outline"
-									className="mt-4 text-muted-foreground hover:text-[#DA5F6F] hover:border-[#DA5F6F] flex items-center gap-2"
-								>
-									<Image
-										unoptimized
-										src="/images/logos/spei.svg"
-										alt="SPEI"
-										width={24}
-										height={24}
-										className="h-5 w-auto object-contain"
-									/>
-									Instrucciones para Transferencia
-								</Button>
-							</DialogTrigger>
-							<DialogContent className="sm:max-w-[425px] rounded-lg">
-								<DialogHeader>
-									<DialogTitle>
-										Información para Transferencia Bancaria
-									</DialogTitle>
-								</DialogHeader>
-								<div className="space-y-4">
-									<div>
-										<h4 className="font-medium mb-2">Datos Bancarios:</h4>
-										<ul className="space-y-2 text-sm">
-											<li className="flex items-center justify-between">
-												<div>
-													<span className="font-medium">Banco:</span> BBVA
-													Bancomer
-												</div>
-												<Button
-													id="copy-bank"
-													variant="ghost"
-													size="sm"
-													className="flex items-center gap-1"
-													onClick={() =>
-														copyToClipboard("BBVA Bancomer", "copy-bank")
-													}
-												>
-													<Copy className="h-4 w-4" />
-													<span>Copiar</span>
-												</Button>
-											</li>
-											<li className="flex items-center justify-between">
-												<div>
-													<span className="font-medium">Titular:</span> Marialy
-													Alonso Echenique
-												</div>
-												<Button
-													id="copy-name"
-													variant="ghost"
-													size="sm"
-													className="flex items-center gap-1"
-													onClick={() =>
-														copyToClipboard(
-															"Marialy Alonso Echenique",
-															"copy-name",
-														)
-													}
-												>
-													<Copy className="h-4 w-4" />
-													<span>Copiar</span>
-												</Button>
-											</li>
-											<li className="flex items-center justify-between">
-												<div>
-													<span className="font-medium">Cuenta:</span> 159 382
-													7239
-												</div>
-												<Button
-													id="copy-cuenta"
-													variant="ghost"
-													size="sm"
-													className="flex items-center gap-1"
-													onClick={() =>
-														copyToClipboard("1593827239", "copy-cuenta")
-													}
-												>
-													<Copy className="h-4 w-4" />
-													<span>Copiar</span>
-												</Button>
-											</li>
-											<li className="flex items-center justify-between">
-												<div>
-													<span className="font-medium">CLABE:</span> 0121 8001
-													5938 272395
-												</div>
-												<Button
-													id="copy-clabe"
-													variant="ghost"
-													size="sm"
-													className="flex items-center gap-1"
-													onClick={() =>
-														copyToClipboard("012180015938272395", "copy-clabe")
-													}
-												>
-													<Copy className="h-4 w-4" />
-													<span>Copiar</span>
-												</Button>
-											</li>
-										</ul>
-									</div>
-									<p className="text-sm text-muted-foreground">
-										Una vez realizada la transferencia, por favor envía el
-										comprobante a{" "}
-										<Link
-											prefetch={false}
-											href="mailto:pagos@nutralech.com"
-											className="font-bold"
-										>
-											pagos@nutralech.com
-										</Link>{" "}
-										o a través de WhatsApp al{" "}
-										<Link
-											prefetch={false}
-											href="https://wa.me/message/BLYZCVYW2MOAJ1"
-											className="font-bold"
-										>
-											+52 744 346 8252
-										</Link>
-									</p>
-								</div>
-							</DialogContent>
-						</Dialog>
-					</div>
-
-					<div className="flex flex-col items-center justify-center space-y-4 mb-12">
-						<div className="flex items-center space-x-4">
-							<span
-								className={`text-lg ${
+					{/* Toggle */}
+					<div className="flex justify-center mb-12">
+						<div className="inline-flex rounded-full bg-[oklch(96%_0.005_12)] p-1">
+							<button
+								type="button"
+								onClick={() => setShowPackages(false)}
+								className={`rounded-full px-6 py-2.5 text-sm font-medium transition-all duration-200 ${
 									!showPackages
-										? "text-[#DA5F6F] font-medium"
-										: "text-muted-foreground"
+										? "bg-white text-[oklch(18%_0.005_12)] shadow-sm"
+										: "text-[oklch(50%_0.01_12)] hover:text-[oklch(30%_0.005_12)]"
 								}`}
 							>
-								Planes Individuales
-							</span>
-							<Switch
-								checked={showPackages}
-								onCheckedChange={setShowPackages}
-								className="data-[state=checked]:bg-[#DA5F6F]"
-							/>
-							<span
-								className={`text-lg ${
+								Planes individuales
+							</button>
+							<button
+								type="button"
+								onClick={() => setShowPackages(true)}
+								className={`rounded-full px-6 py-2.5 text-sm font-medium transition-all duration-200 ${
 									showPackages
-										? "text-[#DA5F6F] font-medium"
-										: "text-muted-foreground"
+										? "bg-white text-[oklch(18%_0.005_12)] shadow-sm"
+										: "text-[oklch(50%_0.01_12)] hover:text-[oklch(30%_0.005_12)]"
 								}`}
 							>
 								Paquetes
-							</span>
+								<span className="ml-1.5 text-xs text-[#DA5F6F]">-15%</span>
+							</button>
 						</div>
-						<button
-							type="button"
-							onClick={() => setShowPackages(true)}
-							className={`flex items-center ${
-								showPackages
-									? "text-[#DA5F6F] bg-[#DA5F6F]/10"
-									: "text-zinc-700 bg-zinc-100 hover:bg-zinc-200"
-							} px-4 py-2 rounded-full transition-colors duration-300`}
-						>
-							<Percent className="w-5 h-5 mr-2" />
-							<span className="font-medium">
-								{showPackages
-									? "Ahorras hasta un 15% con los paquetes"
-									: "Cambia a paquetes y ahorra hasta un 15%"}
-							</span>
-						</button>
 					</div>
 
+					{/* Plans grid */}
 					<div
-						className={`grid gap-8 md:grid-cols-2 ${
-							showPackages
-								? "lg:grid-cols-3"
-								: individualPlans.length === 2
-									? "lg:grid-cols-2 max-w-4xl mx-auto"
-									: "lg:grid-cols-3"
+						className={`grid gap-6 md:grid-cols-2 ${
+							activePlans.length === 2
+								? "lg:grid-cols-2 max-w-4xl mx-auto"
+								: "lg:grid-cols-3"
 						}`}
 					>
-						{(showPackages ? packages : individualPlans).map((plan, index) => (
-							<Card
-								key={index}
-								className={`flex flex-col relative ${
-									plan.popular
-										? "border-[#DA5F6F] shadow-lg"
-										: (plan as IndividualPlan).selfCare
-											? "border-green-500 shadow-lg"
-											: ""
-								}`}
-							>
-								{plan.popular && (
-									<div className="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-[#DA5F6F] text-white px-4 py-1 rounded-full text-sm font-medium flex items-center">
-										<Star className="w-4 h-4 mr-1" /> Más Popular
-									</div>
-								)}
-								{(plan as IndividualPlan).selfCare && (
-									<div className="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-green-500 text-white px-4 py-1 rounded-full text-sm font-medium flex items-center">
-										<Star className="w-4 h-4 mr-1" /> Self Care
-									</div>
-								)}
-								<CardHeader>
-									<CardTitle>{plan.name}</CardTitle>
-									<CardDescription>{plan.description}</CardDescription>
-								</CardHeader>
-								<CardContent className="grow">
-									<div className="text-4xl font-bold mb-6">
+						{activePlans.map((plan, index) => {
+							const isPopular = plan.popular;
+							const isSelfCare = (plan as IndividualPlan).selfCare;
+							const isHighlighted = isPopular || isSelfCare;
+
+							return (
+								<div
+									key={index}
+									className={`relative flex flex-col rounded-2xl border p-8 transition-shadow duration-200 ${
+										isHighlighted
+											? "border-[#DA5F6F]/30 bg-[oklch(98.5%_0.01_12)] shadow-sm"
+											: "border-[oklch(92%_0.005_12)] bg-white hover:shadow-sm"
+									}`}
+								>
+									{/* Badge */}
+									{isPopular && (
+										<span className="absolute -top-3 left-6 rounded-full bg-[#DA5F6F] px-3.5 py-1 text-xs font-medium text-white">
+											Más popular
+										</span>
+									)}
+									{isSelfCare && (
+										<span className="absolute -top-3 left-6 rounded-full bg-[oklch(65%_0.15_160)] px-3.5 py-1 text-xs font-medium text-white">
+											Self care
+										</span>
+									)}
+
+									{/* Name + description */}
+									<h3 className="text-lg font-medium text-[oklch(18%_0.005_12)]">
+										{plan.name}
+									</h3>
+									<p className="mt-2 text-sm leading-relaxed text-[oklch(50%_0.01_12)]">
+										{plan.description}
+									</p>
+
+									{/* Price */}
+									<div className="mt-6 flex items-baseline gap-2">
 										{showPackages ? (
 											<>
-												<span className="text-2xl line-through text-muted-foreground mr-2">
+												<span className="text-sm line-through text-[oklch(65%_0.005_12)]">
 													${(plan as Package).originalPrice}
 												</span>
-												<span className="text-[#DA5F6F]">
+												<span className="text-3xl font-semibold tabular-nums text-[oklch(18%_0.005_12)]">
 													${(plan as Package).discountedPrice}
 												</span>
 											</>
 										) : (
-											<>${(plan as IndividualPlan).price}</>
+											<span className="text-3xl font-semibold tabular-nums text-[oklch(18%_0.005_12)]">
+												${(plan as IndividualPlan).price}
+											</span>
 										)}
-										<span className="text-lg font-normal text-muted-foreground">
-											{" "}
-											MXN
-										</span>
+										<span className="text-sm text-[oklch(55%_0.01_12)]">MXN</span>
 									</div>
-									<ul className="space-y-2">
+
+									{/* Features */}
+									<ul className="mt-8 flex-1 space-y-3">
 										{plan.features.map((feature, idx) => (
-											<li key={idx} className="flex items-center">
+											<li key={idx} className="flex items-start gap-2.5">
 												{feature.cross ? (
-													<X className="h-5 w-5 text-zinc-300 mr-2 shrink-0" />
+													<X className="mt-0.5 h-4 w-4 shrink-0 text-[oklch(82%_0.005_12)]" />
 												) : (
-													<Check className="h-5 w-5 text-[#DA5F6F] mr-2 shrink-0" />
+													<Check className="mt-0.5 h-4 w-4 shrink-0 text-[#DA5F6F]" />
 												)}
 												<span
-													className={
-														feature.cross ? "text-zinc-400" : "text-zinc-900"
-													}
+													className={`text-sm leading-relaxed ${
+														feature.cross
+															? "text-[oklch(72%_0.005_12)]"
+															: "text-[oklch(35%_0.005_12)]"
+													}`}
 												>
 													{feature.name}
 												</span>
 											</li>
 										))}
 									</ul>
-								</CardContent>
-								<CardFooter>
-									<Button
-										className={`w-full ${
-											plan.popular
-												? "bg-[#DA5F6F] hover:bg-[#DA5F6F]/90"
-												: (plan as IndividualPlan).selfCare
-													? "bg-green-500 hover:bg-green-600"
-													: "bg-zinc-800 hover:bg-zinc-700"
-										} text-white`}
+
+									{/* CTA */}
+									<button
+										type="button"
 										onClick={() => handlePlanSelection(plan.priceId)}
+										className={`mt-8 flex h-12 w-full items-center justify-center rounded-full text-sm font-medium transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 ${
+											isHighlighted
+												? "bg-[#DA5F6F] text-white hover:bg-[#C54B5B] focus-visible:outline-[#DA5F6F]"
+												: "bg-[oklch(18%_0.005_12)] text-white hover:bg-[oklch(25%_0.005_12)] focus-visible:outline-[oklch(18%_0.005_12)]"
+										}`}
 									>
-										Elegir Plan
-									</Button>
-								</CardFooter>
-							</Card>
-						))}
+										Elegir plan
+									</button>
+								</div>
+							);
+						})}
+					</div>
+
+					{/* Payment methods + transfer info (below cards) */}
+					<div className="mt-16 flex flex-col items-center gap-4">
+						<p className="text-xs font-medium tracking-wide uppercase text-[oklch(60%_0.005_12)]">
+							Métodos de pago
+						</p>
+						<div className="flex items-center gap-6">
+							<Image unoptimized src="/images/logos/visa.svg" alt="Visa" width={48} height={24} className="h-6 w-auto object-contain opacity-60" />
+							<Image unoptimized src="/images/logos/mastercard.svg" alt="Mastercard" width={48} height={24} className="h-6 w-auto object-contain opacity-60" />
+							<Image unoptimized src="/images/logos/amex.svg" alt="American Express" width={48} height={24} className="h-8 w-auto object-contain opacity-60" />
+							<Image unoptimized src="/images/logos/oxxo-logo.svg" alt="OXXO" width={48} height={24} className="h-6 w-auto object-contain opacity-60" />
+						</div>
+
+						<Dialog>
+							<DialogTrigger asChild>
+								<button
+									type="button"
+									className="mt-1 inline-flex items-center gap-2 text-sm text-[oklch(50%_0.01_12)] underline underline-offset-4 decoration-[oklch(85%_0.005_12)] transition-colors duration-200 hover:text-[#DA5F6F] hover:decoration-[#DA5F6F]/30"
+								>
+									<Image unoptimized src="/images/logos/spei.svg" alt="SPEI" width={20} height={20} className="h-4 w-auto object-contain" />
+									Ver datos para transferencia
+								</button>
+							</DialogTrigger>
+							<DialogContent className="sm:max-w-md rounded-xl">
+								<DialogHeader>
+									<DialogTitle className="text-[oklch(18%_0.005_12)]">Transferencia bancaria</DialogTitle>
+								</DialogHeader>
+								<div className="space-y-4 pt-2">
+									<div className="space-y-3">
+										{[
+											{ label: "Banco", value: "BBVA Bancomer", copyValue: "BBVA Bancomer" },
+											{ label: "Titular", value: "Marialy Alonso Echenique", copyValue: "Marialy Alonso Echenique" },
+											{ label: "Cuenta", value: "159 382 7239", copyValue: "1593827239" },
+											{ label: "CLABE", value: "0121 8001 5938 272395", copyValue: "012180015938272395" },
+										].map((item) => (
+											<div key={item.label} className="flex items-center justify-between rounded-lg bg-[oklch(97.5%_0.005_12)] px-4 py-3">
+												<div className="text-sm">
+													<span className="text-[oklch(50%_0.01_12)]">{item.label}: </span>
+													<span className="font-medium text-[oklch(22%_0.005_12)]">{item.value}</span>
+												</div>
+												<CopyButton text={item.copyValue} label="Copiar" />
+											</div>
+										))}
+									</div>
+									<p className="text-sm leading-relaxed text-[oklch(50%_0.01_12)]">
+										Envía el comprobante a{" "}
+										<Link prefetch={false} href="mailto:pagos@nutralech.com" className="font-medium text-[oklch(22%_0.005_12)] hover:text-[#DA5F6F]">
+											pagos@nutralech.com
+										</Link>{" "}
+										o por WhatsApp al{" "}
+										<Link prefetch={false} href="https://wa.me/message/BLYZCVYW2MOAJ1" className="font-medium text-[oklch(22%_0.005_12)] hover:text-[#DA5F6F]">
+											+52 744 346 8252
+										</Link>
+									</p>
+								</div>
+							</DialogContent>
+						</Dialog>
 					</div>
 				</div>
 			</section>

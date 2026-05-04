@@ -1,171 +1,79 @@
 "use client";
 
-import { Calendar, Heart, Puzzle, User } from "lucide-react";
+import { Calendar, Heart, Puzzle } from "lucide-react";
 import Image from "next/image";
-import type React from "react";
-import { forwardRef, useRef } from "react";
-import { AnimatedBeam } from "@/components/ui/animated-beam";
-import { cn } from "@/lib/utils";
 
-const Circle = forwardRef<
-	HTMLDivElement,
-	{ className?: string; children?: React.ReactNode }
->(({ className, children }, ref) => {
-	return (
-		<div
-			ref={ref}
-			className={cn(
-				"relative z-10 flex size-12 items-center justify-center rounded-full bg-white border-2 shadow-[0_0_20px_-12px_rgba(0,0,0,0.8)] overflow-hidden",
-				className,
-			)}
-		>
-			{children}
-		</div>
-	);
-});
-
-Circle.displayName = "Circle";
+const steps = [
+	{
+		number: "01",
+		icon: Calendar,
+		title: "Consulta inicial personalizada",
+		description:
+			"Comenzamos con una consulta detallada para entender tus necesidades únicas, historial médico y objetivos de salud.",
+	},
+	{
+		number: "02",
+		icon: Puzzle,
+		title: "Plan nutricional a medida",
+		description:
+			"Desarrollo un plan nutricional completamente personalizado que se adapta a tu estilo de vida, preferencias y metas específicas.",
+	},
+	{
+		number: "03",
+		icon: Heart,
+		title: "Seguimiento y apoyo continuo",
+		description:
+			"Te acompaño en cada paso con consultas regulares, ajustes al plan según sea necesario y apoyo constante por WhatsApp.",
+	},
+];
 
 export default function PersonalizedAttention() {
-	const containerRef = useRef<HTMLDivElement>(null);
-	const leftRef = useRef<HTMLDivElement>(null);
-	const rightRef = useRef<HTMLDivElement>(null);
-
-	const steps = [
-		{
-			icon: Calendar,
-			title: "Consulta Inicial Personalizada",
-			description:
-				"Comenzamos con una consulta detallada para entender tus necesidades únicas, historial médico y objetivos de salud.",
-		},
-		{
-			icon: Puzzle,
-			title: "Plan Nutricional a Medida",
-			description:
-				"Desarrollo un plan nutricional completamente personalizado que se adapta a tu estilo de vida, preferencias y metas específicas.",
-		},
-		{
-			icon: Heart,
-			title: "Seguimiento y Apoyo Continuo",
-			description:
-				"Te acompaño en cada paso del camino con consultas regulares, ajustes al plan según sea necesario y apoyo constante para asegurar tu éxito.",
-		},
-	];
-
 	return (
-		<section
-			id="servicios"
-			className="py-12 bg-linear-to-b from-white to-white"
-		>
-			<div className="container px-4 mx-auto">
-				<div className="text-center mb-16">
-					<span className="text-lg text-[#DA5F6F]">Cada Plan es Único</span>
-					<h2 className="mt-4 text-4xl font-serif font-medium tracking-tight sm:text-5xl">
-						Atención Personalizada para Ti
-					</h2>
-				</div>
-
-				<div className="grid gap-12 lg:grid-cols-2 items-center">
-					<div className="space-y-8">
-						<p className="text-lg text-muted-foreground">
-							En mis servicios, cada cliente recibe una atención completamente
-							personalizada. Entiendo que cada persona es única, con sus propias
-							necesidades, desafíos y objetivos. Mi enfoque se adapta
-							específicamente a ti, asegurando que recibas el apoyo exacto que
-							necesitas para alcanzar tus metas de salud y bienestar.
+		<section id="servicios" className="py-24 bg-white">
+			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+				<div className="grid gap-16 lg:grid-cols-2 items-center">
+					<div>
+						<p className="text-sm font-medium tracking-wide uppercase text-[#DA5F6F]">
+							Cada plan es único
+						</p>
+						<h2 className="mt-3 font-serif text-3xl font-medium tracking-tight text-[oklch(18%_0.005_12)] sm:text-4xl lg:text-5xl">
+							Atención personalizada para ti
+						</h2>
+						<p className="mt-6 text-lg leading-relaxed text-[oklch(45%_0.01_12)] max-w-xl">
+							Cada cliente recibe una atención completamente personalizada.
+							Mi enfoque se adapta específicamente a ti, asegurando que recibas
+							el apoyo exacto que necesitas.
 						</p>
 
-						{/* Steps */}
-						<div className="space-y-6">
-							{steps.map((step, index) => (
-								<div key={index} className="flex gap-4">
-									<div className="shrink-0">
-										<div className="w-12 h-12 rounded-full bg-[#DA5F6F]/10 flex items-center justify-center">
-											<step.icon className="w-6 h-6 text-[#DA5F6F]" />
-										</div>
+						<div className="mt-12 space-y-10">
+							{steps.map((step) => (
+								<div key={step.number} className="flex gap-5">
+									<div className="shrink-0 pt-1">
+										<span className="block text-xs font-medium text-[#DA5F6F] tabular-nums">
+											{step.number}
+										</span>
 									</div>
 									<div>
-										<h3 className="text-xl font-medium mb-2">{step.title}</h3>
-										<p className="text-muted-foreground">{step.description}</p>
+										<h3 className="text-base font-medium text-[oklch(22%_0.005_12)]">
+											{step.title}
+										</h3>
+										<p className="mt-2 text-sm leading-relaxed text-[oklch(50%_0.01_12)]">
+											{step.description}
+										</p>
 									</div>
 								</div>
 							))}
 						</div>
-
-						{/* Animated Beam Demo */}
-						<div className="space-y-4">
-							<div className="flex gap-4">
-								<div className="shrink-0">
-									<div className="w-12 h-12 rounded-full bg-[#DA5F6F]/10 flex items-center justify-center">
-										<User className="w-6 h-6 text-[#DA5F6F]" />
-									</div>
-								</div>
-								<div>
-									<h3 className="text-xl font-medium mb-2">
-										Comunicación Constante
-									</h3>
-									<p className="text-muted-foreground">
-										Mantén una línea directa de comunicación conmigo durante
-										todo tu proceso
-									</p>
-								</div>
-							</div>
-
-							<div
-								className="relative flex w-full items-center justify-center overflow-hidden p-10 bg-transparent"
-								ref={containerRef}
-								style={{ background: "transparent" }}
-							>
-								<div className="flex w-full flex-row justify-between">
-									<Circle ref={leftRef}>
-										<Image
-											src="/images/marialy.webp"
-											alt="Marialy"
-											className="object-cover"
-											fill
-										/>
-									</Circle>
-									<Circle ref={rightRef}>
-										<User className="w-6 h-6 text-[#DA5F6F]" />
-									</Circle>
-								</div>
-
-								<AnimatedBeam
-									containerRef={containerRef as React.RefObject<HTMLElement>}
-									fromRef={leftRef as React.RefObject<HTMLElement>}
-									toRef={rightRef as React.RefObject<HTMLElement>}
-									startYOffset={10}
-									endYOffset={10}
-									curvature={-20}
-									pathColor="#DA5F6F"
-									gradientStartColor="#DA5F6F"
-									gradientStopColor="#DA5F6F"
-								/>
-								<AnimatedBeam
-									containerRef={containerRef as React.RefObject<HTMLElement>}
-									fromRef={leftRef as React.RefObject<HTMLElement>}
-									toRef={rightRef as React.RefObject<HTMLElement>}
-									startYOffset={-10}
-									endYOffset={-10}
-									curvature={20}
-									reverse
-									pathColor="#DA5F6F"
-									gradientStartColor="#DA5F6F"
-									gradientStopColor="#DA5F6F"
-								/>
-							</div>
-						</div>
 					</div>
 
-					{/* Image */}
 					<div className="relative">
-						<div className="absolute inset-0 bg-linear-to-br from-[#DA5F6F]/20 to-transparent rounded-3xl blur-xl" />
-						<div className="relative aspect-square overflow-hidden rounded-3xl">
+						<div className="relative aspect-[4/5] overflow-hidden rounded-2xl">
 							<Image
 								src="/images/marialy-2.webp"
-								alt="Personalized nutrition consultation"
+								alt="Consulta de nutrición personalizada con Marialy Alonso"
 								className="object-cover"
 								fill
+								sizes="(max-width: 1024px) 100vw, 50vw"
 							/>
 						</div>
 					</div>

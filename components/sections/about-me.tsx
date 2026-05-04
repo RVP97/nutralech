@@ -25,20 +25,20 @@ export default function AboutMeComponent() {
 	];
 
 	return (
-		<section className="py-12 bg-linear-to-b from-white to-pink-50/50">
-			<div className="container px-4 mx-auto">
-				<div className="text-center mb-16">
-					<span className="text-lg text-[#DA5F6F]">Conóceme</span>
-					<h2 className="mt-4 text-4xl font-serif font-medium tracking-tight sm:text-5xl">
-						Acerca de Mí
+		<section className="py-24 bg-[oklch(97.5%_0.008_12)]">
+			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+				<div className="max-w-2xl mb-14">
+					<p className="text-sm font-medium tracking-wide uppercase text-[#DA5F6F]">
+						Conóceme
+					</p>
+					<h2 className="mt-3 font-serif text-3xl font-medium tracking-tight text-[oklch(18%_0.005_12)] sm:text-4xl">
+						Acerca de mí
 					</h2>
 				</div>
 
 				<div className="grid gap-12 lg:grid-cols-2 items-start">
-					{/* Image - Sticky on desktop */}
 					<div className="relative lg:sticky lg:top-24 lg:self-start">
-						<div className="absolute inset-0 bg-linear-to-tl from-[#DA5F6F]/20 to-transparent rounded-3xl blur-xl" />
-						<div className="relative aspect-square overflow-hidden rounded-3xl">
+						<div className="relative aspect-square overflow-hidden rounded-2xl">
 							<Image
 								src="/images/marialy.webp"
 								alt="Marialy, Nutricionista"
