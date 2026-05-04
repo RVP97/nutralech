@@ -1,14 +1,10 @@
-import { Calendar, Tag } from "lucide-react";
+import { Calendar } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import { FloatingShareButton } from "@/components/sections/floating-share-button";
 import { ReadingProgress } from "@/components/sections/reading-progress";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { generatePageMetadata } from "@/lib/generateMetadata";
 import { getPost, getPosts } from "@/lib/posts";
 
@@ -96,7 +92,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 		};
 
 		return (
-			<div className="">
+			<div>
 				<script
 					type="application/ld+json"
 					// biome-ignore lint/security/noDangerouslySetInnerHtml: JSON-LD structured data requires dangerouslySetInnerHTML
@@ -105,62 +101,63 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 					}}
 				/>
 				<ReadingProgress />
-				<article
-					id="blog-post"
-					className="max-w-[95%] min-w-[95%] md:max-w-[85%] md:min-w-[85%] lg:max-w-[80%] lg:min-w-[80%] pt-24 pb-12 mx-auto"
-				>
-					<Card className="border-none shadow-none bg-linear-to-b from-[#ffe5e5] to-background">
-						<CardHeader className="pt-12 pb-4 space-y-6">
-							<div className="space-y-2">
-								<h1 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight text-primary">
-									{post.title}
-								</h1>
-								{post.excerpt && (
-									<p className="text-xl text-gray-800">{post.excerpt}</p>
-								)}
+
+				<article id="blog-post" className="mx-auto max-w-3xl px-4 pt-28 pb-16">
+					{/* Header */}
+					<header className="mb-12">
+						{post.categories && post.categories.length > 0 && (
+							<div className="mb-4 flex flex-wrap gap-3">
+								{post.categories.map((category) => (
+									<span
+										key={category}
+										className="text-xs font-medium tracking-wide uppercase text-[#DA5F6F]"
+									>
+										{category.charAt(0).toUpperCase() + category.slice(1)}
+									</span>
+								))}
 							</div>
-							<div className="flex items-center space-x-4">
-								<Avatar>
-									<AvatarImage
-										src="/images/marialy.webp"
-										alt="Marialy Alonso, autora del artículo"
-									/>
-									<AvatarFallback>N</AvatarFallback>
-								</Avatar>
-								<div className="space-y-1">
-									<p className="text-sm font-medium leading-none">
-										Marialy Alonso
-									</p>
-									<div className="flex items-center text-sm text-gray-800">
-										<Calendar className="mr-1 h-3 w-3" aria-hidden="true" />
-										<time dateTime={isoDate}>{formattedDate}</time>
-									</div>
+						)}
+
+						<h1 className="font-serif text-3xl font-medium tracking-tight text-[oklch(18%_0.005_12)] sm:text-4xl lg:text-5xl">
+							{post.title}
+						</h1>
+
+						{post.excerpt && (
+							<p className="mt-4 text-lg leading-relaxed text-[oklch(45%_0.01_12)]">
+								{post.excerpt}
+							</p>
+						)}
+
+						<div className="mt-6 flex items-center gap-3">
+							<Image
+								src="/images/marialy.webp"
+								alt="Marialy Alonso"
+								width={36}
+								height={36}
+								className="rounded-full"
+							/>
+							<div className="text-sm">
+								<p className="font-medium text-[oklch(22%_0.005_12)]">
+									Marialy Alonso
+								</p>
+								<div className="flex items-center gap-1.5 text-[oklch(55%_0.01_12)]">
+									<Calendar className="h-3 w-3" aria-hidden="true" />
+									<time dateTime={isoDate}>{formattedDate}</time>
 								</div>
 							</div>
-						</CardHeader>
-						<CardContent>
-							{post.categories && post.categories.length > 0 && (
-								<div className="flex flex-wrap gap-2">
-									{post.categories.map((category) => (
-										<Badge key={category} variant="secondary">
-											<Tag className="mr-1 h-3 w-3" aria-hidden="true" />
-											{category.charAt(0).toUpperCase() + category.slice(1)}
-										</Badge>
-									))}
-								</div>
-							)}
-						</CardContent>
-					</Card>
-					<div className="px-4 prose prose-lg max-w-none">
+						</div>
+					</header>
+
+					{/* Content */}
+					<div className="prose prose-lg max-w-none">
 						{post.content && (
 							<MDXRemote
 								source={post.content}
 								components={{
-									// Headings
 									h1: ({ children, ...props }) => (
 										<h1
 											{...props}
-											className="text-5xl sm:text-6xl md:text-7xl font-bold mb-6 mt-8 text-gray-800"
+											className="font-serif text-3xl font-medium tracking-tight text-[oklch(18%_0.005_12)] mt-12 mb-6"
 										>
 											{children}
 										</h1>
@@ -168,7 +165,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 									h2: ({ children, ...props }) => (
 										<h2
 											{...props}
-											className="text-2xl sm:text-3xl font-extrabold text-gray-800 mb-4 mt-8"
+											className="font-serif text-2xl font-medium tracking-tight text-[oklch(18%_0.005_12)] mt-10 mb-4"
 										>
 											{children}
 										</h2>
@@ -176,33 +173,40 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 									h3: ({ children, ...props }) => (
 										<h3
 											{...props}
-											className="text-xl sm:text-2xl font-bold text-gray-800 mb-3 mt-6"
+											className="text-xl font-semibold text-[oklch(20%_0.005_12)] mt-8 mb-3"
 										>
 											{children}
 										</h3>
 									),
-									// Text elements
 									p: ({ children, ...props }) => (
 										<div
 											{...props}
-											className="text-gray-700 leading-relaxed mb-6"
+											className="text-[oklch(35%_0.005_12)] leading-relaxed mb-6"
 										>
 											{children}
 										</div>
 									),
 									strong: ({ children, ...props }) => (
-										<strong {...props} className="font-bold text-gray-900">
+										<strong
+											{...props}
+											className="font-semibold text-[oklch(22%_0.005_12)]"
+										>
 											{children}
 										</strong>
 									),
 									em: ({ children, ...props }) => (
-										<em {...props} className="italic text-gray-800">
+										<em
+											{...props}
+											className="italic text-[oklch(30%_0.005_12)]"
+										>
 											{children}
 										</em>
 									),
-									// Lists
 									ul: ({ children, ...props }) => (
-										<ul {...props} className="list-disc pl-6 mb-6 space-y-2">
+										<ul
+											{...props}
+											className="list-disc pl-6 mb-6 space-y-2"
+										>
 											{children}
 										</ul>
 									),
@@ -217,39 +221,37 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 									li: ({ children, ...props }) => (
 										<li
 											{...props}
-											className="text-gray-700 marker:text-gray-500"
+											className="text-[oklch(35%_0.005_12)] marker:text-[oklch(65%_0.005_12)]"
 										>
 											{children}
 										</li>
 									),
-									// Links and media
 									a: ({ children, href, ...props }) => (
 										<Link
 											href={href ?? "#"}
 											prefetch={false}
 											{...props}
-											className="text-[#DA5F6F] hover:text-[#C54B5B] underline underline-offset-2 transition-colors duration-200"
+											className="text-[#DA5F6F] hover:text-[#C54B5B] underline underline-offset-2 decoration-[#DA5F6F]/30 hover:decoration-[#DA5F6F] transition-colors duration-150"
 										>
 											{children}
 										</Link>
 									),
 									img: ({ src, alt, ...props }) => (
-										<div className="my-6">
+										<div className="my-8">
 											<Image
 												{...props}
 												src={src ?? ""}
-												alt={alt || "Imagen del artículo de nutrición"}
+												alt={alt || "Imagen del artículo"}
 												width={800}
 												height={400}
-												className="rounded-lg shadow-md mx-auto"
+												className="rounded-xl mx-auto"
 											/>
 										</div>
 									),
-									// Code blocks
 									code: ({ children, ...props }) => (
 										<code
 											{...props}
-											className="bg-gray-100 text-[#DA5F6F] rounded px-1.5 py-0.5 font-mono text-sm"
+											className="bg-[oklch(96%_0.005_12)] text-[#DA5F6F] rounded px-1.5 py-0.5 font-mono text-sm"
 										>
 											{children}
 										</code>
@@ -257,26 +259,24 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 									pre: ({ children, ...props }) => (
 										<pre
 											{...props}
-											className="bg-gray-900 text-gray-100 rounded-lg p-4 mb-6 overflow-x-auto"
+											className="bg-[oklch(16%_0.005_12)] text-[oklch(90%_0.005_12)] rounded-xl p-5 mb-6 overflow-x-auto text-sm"
 										>
 											{children}
 										</pre>
 									),
-									// Blockquotes
 									blockquote: ({ children, ...props }) => (
 										<blockquote
 											{...props}
-											className="border-l-4 border-[#DA5F6F] pl-4 italic text-gray-700 mb-6"
+											className="my-6 rounded-xl bg-[oklch(97%_0.01_12)] px-6 py-5 text-[oklch(35%_0.01_12)] italic"
 										>
 											{children}
 										</blockquote>
 									),
-									// Tables
 									table: ({ children, ...props }) => (
-										<div className="overflow-x-auto mb-6">
+										<div className="overflow-x-auto mb-6 rounded-xl border border-[oklch(92%_0.005_12)]">
 											<table
 												{...props}
-												className="min-w-full divide-y divide-gray-200 border"
+												className="min-w-full divide-y divide-[oklch(92%_0.005_12)]"
 											>
 												{children}
 											</table>
@@ -285,7 +285,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 									th: ({ children, ...props }) => (
 										<th
 											{...props}
-											className="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+											className="px-5 py-3 bg-[oklch(97%_0.005_12)] text-left text-xs font-medium uppercase tracking-wider text-[oklch(50%_0.005_12)]"
 										>
 											{children}
 										</th>
@@ -293,40 +293,43 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 									td: ({ children, ...props }) => (
 										<td
 											{...props}
-											className="px-6 py-4 whitespace-nowrap text-gray-700"
+											className="px-5 py-3.5 text-sm text-[oklch(35%_0.005_12)]"
 										>
 											{children}
 										</td>
 									),
-									// Horizontal Rule
-									hr: () => <hr className="border-t border-gray-300 my-8" />,
+									hr: () => (
+										<hr className="my-10 border-t border-[oklch(92%_0.005_12)]" />
+									),
 								}}
 							/>
 						)}
 					</div>
+
 					<FloatingShareButton
 						url={`https://www.nutralech.com/blog/${slug}`}
 						title={post.title}
 					/>
 				</article>
-				<div className="mt-12 bg-linear-to-r from-[#DA5F6F] to-[#DA5F6F]/80  shadow-lg">
-					<div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:py-16 lg:px-8 lg:flex lg:items-center lg:justify-between">
-						<h2 className="text-3xl font-extrabold tracking-tight text-white sm:text-4xl">
-							<span className="block">¿Listo para mejorar tu salud?</span>
-							<span className="block text-gray-100">
-								Agenda una consulta personalizada hoy.
-							</span>
-						</h2>
-						<div className="mt-8 flex lg:mt-0 lg:shrink-0">
-							<div className="inline-flex rounded-md shadow-sm">
-								<Link prefetch={false} href="/#precios">
-									<Button className="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-[#DA5F6F] bg-white hover:bg-gray-50">
-										<Calendar className="w-5 h-5 mr-2" />
-										Agendar Consulta
-									</Button>
-								</Link>
-							</div>
+
+				{/* CTA */}
+				<div className="border-t border-[oklch(92%_0.005_12)]">
+					<div className="mx-auto max-w-3xl px-4 py-16 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
+						<div>
+							<h2 className="font-serif text-xl font-medium text-[oklch(18%_0.005_12)]">
+								Quieres un plan personalizado?
+							</h2>
+							<p className="mt-1 text-sm text-[oklch(50%_0.01_12)]">
+								Agenda una consulta para recomendaciones adaptadas a ti.
+							</p>
 						</div>
+						<Link
+							prefetch={false}
+							href="/#precios"
+							className="shrink-0 inline-flex h-11 items-center rounded-full bg-[#DA5F6F] px-7 text-sm font-medium text-white transition-colors duration-200 hover:bg-[#C54B5B]"
+						>
+							Ver planes
+						</Link>
 					</div>
 				</div>
 			</div>

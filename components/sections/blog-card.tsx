@@ -1,17 +1,9 @@
 "use client";
 
-import { CalendarIcon, ChevronLeft, ChevronRight, Filter } from "lucide-react";
+import { ChevronLeft, ChevronRight, Filter } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
-import { Avatar, AvatarImage } from "@/components/ui/avatar";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import {
-	Card,
-	CardContent,
-	CardFooter,
-	CardHeader,
-} from "@/components/ui/card";
 import { MultiSelect } from "@/components/ui/multi-select";
 import type { Post } from "@/lib/posts";
 
@@ -21,11 +13,23 @@ interface BlogCardsProps {
 
 const POSTS_PER_PAGE = 10;
 
+function formatDate(dateStr: string): string {
+	const [day, month, year] = dateStr.split("/");
+	return new Date(
+		parseInt(year, 10),
+		parseInt(month, 10) - 1,
+		parseInt(day, 10),
+	).toLocaleDateString("es-MX", {
+		year: "numeric",
+		month: "long",
+		day: "numeric",
+	});
+}
+
 export function Posts({ posts }: BlogCardsProps) {
 	const [currentPage, setCurrentPage] = useState(1);
 	const [selectedTags, setSelectedTags] = useState<string[]>([]);
 
-	// Get all unique tags from posts
 	const tagSet = new Set<string>();
 	for (const post of posts) {
 		for (const category of post.categories || []) {
@@ -39,7 +43,6 @@ export function Posts({ posts }: BlogCardsProps) {
 			value: tag,
 		}));
 
-	// Filter posts by selected tags
 	const filteredPosts =
 		selectedTags.length === 0
 			? posts
@@ -54,61 +57,41 @@ export function Posts({ posts }: BlogCardsProps) {
 
 	const goToPage = (page: number) => {
 		setCurrentPage(page);
-		// Scroll to very top of page
 		setTimeout(() => {
 			window.scrollTo({ top: 0, behavior: "smooth" });
 		}, 0);
 	};
 
-	const goToPrevious = () => {
-		if (currentPage > 1) {
-			goToPage(currentPage - 1);
-		}
-	};
-
-	const goToNext = () => {
-		if (currentPage < totalPages) {
-			goToPage(currentPage + 1);
-		}
-	};
-
-	// Reset to page 1 when tags change
 	const handleTagsChange = (tags: string[]) => {
 		setSelectedTags(tags);
 		setCurrentPage(1);
 	};
 
-	// Generate page numbers for pagination
 	const getPageNumbers = (): number[] => {
 		const pages: number[] = [];
-		const showPages = 5; // Number of page buttons to show
-
+		const showPages = 5;
 		let startPage = Math.max(1, currentPage - Math.floor(showPages / 2));
 		const endPage = Math.min(totalPages, startPage + showPages - 1);
-
-		// Adjust start page if we're near the end
 		if (endPage - startPage < showPages - 1) {
 			startPage = Math.max(1, endPage - showPages + 1);
 		}
-
 		for (let i = startPage; i <= endPage; i++) {
 			pages.push(i);
 		}
-
 		return pages;
 	};
 
 	return (
 		<div>
-			{/* Tag Filter */}
+			{/* Filter */}
 			<div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-8">
 				<div className="flex items-center gap-2">
-					<Filter className="h-4 w-4 text-muted-foreground" />
-					<span className="text-sm font-medium text-muted-foreground">
-						Filtrar por temas:
+					<Filter className="h-4 w-4 text-[oklch(60%_0.005_12)]" />
+					<span className="text-sm text-[oklch(55%_0.01_12)]">
+						Filtrar por tema:
 					</span>
 				</div>
-				<div className="w-full sm:w-[300px]">
+				<div className="w-full sm:w-[280px]">
 					<MultiSelect
 						options={allTags}
 						value={selectedTags}
@@ -120,172 +103,117 @@ export function Posts({ posts }: BlogCardsProps) {
 				</div>
 			</div>
 
-			{/* Results count */}
 			{selectedTags.length > 0 && (
-				<div className="mb-6 text-sm text-muted-foreground">
-					Mostrando {filteredPosts.length} artículo
-					{filteredPosts.length !== 1 ? "s" : ""} sobre{" "}
-					{selectedTags.length === 1 ? "el tema" : "los temas"}:{" "}
-					<span className="font-medium">
+				<p className="mb-6 text-sm text-[oklch(55%_0.01_12)]">
+					{filteredPosts.length} artículo{filteredPosts.length !== 1 ? "s" : ""}{" "}
+					sobre{" "}
+					<span className="font-medium text-[oklch(30%_0.005_12)]">
 						{selectedTags
 							.map((tag) => tag.charAt(0).toUpperCase() + tag.slice(1))
 							.join(", ")}
 					</span>
-				</div>
+				</p>
 			)}
 
-			{/* Posts Grid */}
-			<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+			{/* Posts list */}
+			<div className="divide-y divide-[oklch(94%_0.005_12)]">
 				{currentPosts.map((post) => (
-					<Card key={post.slug} className="flex flex-col h-full">
-						<div className="h-2 bg-[#DA5F6F]" />
-						<CardHeader>
-							<h2 className="text-2xl font-bold text-black mb-2">
-								<Link
-									href={`/blog/${post.slug}`}
-									className="text-gray-900 hover:text-[#DA5F6F] transition-colors"
-								>
+					<article key={post.slug} className="py-6 first:pt-0">
+						<Link
+							href={`/blog/${post.slug}`}
+							className="group block"
+						>
+							<div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1 sm:gap-4">
+								<h2 className="text-base font-medium text-[oklch(18%_0.005_12)] group-hover:text-[#DA5F6F] transition-colors duration-150">
 									{post.title}
-								</Link>
-							</h2>
-							<div className="flex flex-wrap gap-2 mb-2">
-								{(post.categories ?? []).map((category, index) => (
-									<Badge
-										key={index}
-										variant="secondary"
-										className="bg-gray-100 text-gray-800 hover:bg-gray-200"
-									>
-										{category.charAt(0).toUpperCase() + category.slice(1)}
-									</Badge>
-								))}
-							</div>
-						</CardHeader>
-						<CardContent className="grow">
-							{post.excerpt && (
-								<p className="text-muted-foreground mb-4">{post.excerpt}</p>
-							)}
-							{post.author && (
-								<div className="flex items-center space-x-4">
-									<Avatar>
-										<AvatarImage
-											src={post.author.avatar}
-											alt={post.author.name}
-										/>
-										{/* <AvatarFallback className="bg-[#DA5F6F] text-white">
-                      {post.author.name
-                        .split(" ")
-                        .map((n) => n[0])
-                        .join("")}
-                    </AvatarFallback> */}
-									</Avatar>
-									<div>
-										<p className="font-semibold">{post.author.name}</p>
-										<p className="text-sm text-muted-foreground">
-											{post.author.role}
-										</p>
-									</div>
-								</div>
-							)}
-						</CardContent>
-						<CardFooter className="flex flex-col sm:flex-row justify-between items-center gap-4">
-							<div className="text-sm text-muted-foreground flex items-center">
-								<CalendarIcon className="mr-1 h-4 w-4 text-[#DA5F6F]" />
-								<time dateTime={post.publishDate}>
-									{(() => {
-										const [day, month, year] = post.publishDate.split("/");
-										return new Date(
-											parseInt(year, 10),
-											parseInt(month, 10) - 1,
-											parseInt(day, 10),
-										).toLocaleDateString("es-MX", {
-											year: "numeric",
-											month: "long",
-											day: "numeric",
-										});
-									})()}
+								</h2>
+								<time
+									dateTime={post.publishDate}
+									className="text-sm text-[oklch(60%_0.005_12)] shrink-0"
+								>
+									{formatDate(post.publishDate)}
 								</time>
 							</div>
-							<Link
-								href={`/blog/${post.slug}`}
-								className="w-full sm:w-auto mt-auto"
-							>
-								<Button className="bg-[#DA5F6F] text-white hover:bg-[#C54E5E] w-full">
-									Leer Artículo
-								</Button>
-							</Link>
-						</CardFooter>
-					</Card>
+							{post.excerpt && (
+								<p className="mt-1.5 text-sm leading-relaxed text-[oklch(50%_0.01_12)] max-w-2xl">
+									{post.excerpt}
+								</p>
+							)}
+							{post.categories && post.categories.length > 0 && (
+								<div className="mt-2 flex flex-wrap gap-2">
+									{post.categories.map((category) => (
+										<span
+											key={category}
+											className="text-xs text-[oklch(55%_0.01_12)]"
+										>
+											{category.charAt(0).toUpperCase() + category.slice(1)}
+										</span>
+									))}
+								</div>
+							)}
+						</Link>
+					</article>
 				))}
 			</div>
 
-			{/* No results message */}
+			{/* Empty state */}
 			{currentPosts.length === 0 && (
-				<div className="text-center py-12">
-					<p className="text-lg text-muted-foreground mb-4">
+				<div className="py-16 text-center">
+					<p className="text-sm text-[oklch(55%_0.01_12)] mb-4">
 						No se encontraron artículos para los temas seleccionados.
 					</p>
-					<Button
-						variant="outline"
+					<button
+						type="button"
 						onClick={() => handleTagsChange([])}
-						className="text-[#DA5F6F] border-[#DA5F6F] hover:bg-[#DA5F6F] hover:text-white"
+						className="text-sm text-[#DA5F6F] underline underline-offset-4 decoration-[#DA5F6F]/30 hover:decoration-[#DA5F6F]"
 					>
 						Ver todos los artículos
-					</Button>
+					</button>
 				</div>
 			)}
 
-			{/* Pagination Controls */}
+			{/* Pagination */}
 			{totalPages > 1 && (
-				<div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-					{/* Posts count info */}
-					<div className="text-sm text-muted-foreground">
-						Mostrando {(currentPage - 1) * POSTS_PER_PAGE + 1} a{" "}
+				<div className="mt-8 flex flex-col sm:flex-row items-center justify-between gap-4 pt-6 border-t border-[oklch(94%_0.005_12)]">
+					<p className="text-sm text-[oklch(55%_0.01_12)]">
+						{(currentPage - 1) * POSTS_PER_PAGE + 1}–
 						{Math.min(currentPage * POSTS_PER_PAGE, filteredPosts.length)} de{" "}
-						{filteredPosts.length} artículos
-					</div>
+						{filteredPosts.length}
+					</p>
 
-					{/* Pagination buttons */}
-					<div className="flex items-center space-x-2">
-						{/* Previous button */}
+					<div className="flex items-center gap-1">
 						<Button
-							variant="outline"
+							variant="ghost"
 							size="sm"
-							onClick={goToPrevious}
+							onClick={() => currentPage > 1 && goToPage(currentPage - 1)}
 							disabled={currentPage === 1}
-							className="flex items-center gap-1"
+							className="h-8 px-2 text-[oklch(45%_0.005_12)]"
 						>
 							<ChevronLeft className="h-4 w-4" />
-							Anterior
 						</Button>
 
-						{/* Page numbers */}
-						<div className="flex items-center space-x-1">
-							{getPageNumbers().map((pageNum) => (
-								<Button
-									key={pageNum}
-									variant={currentPage === pageNum ? "default" : "outline"}
-									size="sm"
-									onClick={() => goToPage(pageNum)}
-									className={
-										currentPage === pageNum
-											? "bg-[#DA5F6F] text-white hover:bg-[#C54E5E]"
-											: ""
-									}
-								>
-									{pageNum}
-								</Button>
-							))}
-						</div>
+						{getPageNumbers().map((pageNum) => (
+							<button
+								key={pageNum}
+								type="button"
+								onClick={() => goToPage(pageNum)}
+								className={`h-8 w-8 rounded-lg text-sm transition-colors duration-150 ${
+									currentPage === pageNum
+										? "bg-[#DA5F6F] text-white"
+										: "text-[oklch(45%_0.005_12)] hover:bg-[oklch(95%_0.005_12)]"
+								}`}
+							>
+								{pageNum}
+							</button>
+						))}
 
-						{/* Next button */}
 						<Button
-							variant="outline"
+							variant="ghost"
 							size="sm"
-							onClick={goToNext}
+							onClick={() => currentPage < totalPages && goToPage(currentPage + 1)}
 							disabled={currentPage === totalPages}
-							className="flex items-center gap-1"
+							className="h-8 px-2 text-[oklch(45%_0.005_12)]"
 						>
-							Siguiente
 							<ChevronRight className="h-4 w-4" />
 						</Button>
 					</div>

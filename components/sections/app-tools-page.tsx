@@ -1,99 +1,78 @@
-"use client";
-
-import { Tag } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import type { Route } from "next";
 import Link from "next/link";
 import allTools from "@/app/herramientas/herramientas.json";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import {
-	Card,
-	CardContent,
-	CardDescription,
-	CardFooter,
-	CardHeader,
-	CardTitle,
-} from "@/components/ui/card";
+
+const categories = ["Nutrición", "Mediciones", "Entrenamiento"] as const;
+
+const toolsByCategory = categories.map((cat) => ({
+	name: cat,
+	tools: allTools.filter((t) => t.category === cat),
+}));
 
 export default function AppToolsPage() {
 	return (
-		<section className="py-24 md:py-12 bg-linear-to-b from-white to-green-50/50">
-			<div className="container px-4 mx-auto">
-				<div className="text-center mb-16">
-					<Badge variant="secondary" className="mb-4">
-						Herramientas Nutricionales
-					</Badge>
-					<h1 className="mt-4 text-4xl font-serif font-medium tracking-tight sm:text-5xl">
-						Recursos para Tu Bienestar
+		<section className="py-28 bg-[oklch(99%_0.005_12)]">
+			<div className="mx-auto max-w-4xl px-4 sm:px-6">
+				{/* Header */}
+				<div className="mb-16">
+					<p className="text-sm font-medium tracking-wide uppercase text-[#DA5F6F] mb-3">
+						Herramientas gratuitas
+					</p>
+					<h1 className="font-serif text-3xl font-medium tracking-tight text-[oklch(18%_0.005_12)] sm:text-4xl lg:text-5xl">
+						Calculadoras de nutrición
 					</h1>
-					<p className="mt-4 text-xl text-muted-foreground max-w-2xl mx-auto">
-						Descubre mis herramientas de nutrición gratuitas diseñadas para
-						ayudarte en tu viaje hacia una vida más saludable.
+					<p className="mt-4 text-base leading-relaxed text-[oklch(50%_0.01_12)] max-w-xl">
+						Estimaciones rápidas para calorías, macros, hidratación y más.
+						Para un plan personalizado, agenda una consulta.
 					</p>
 				</div>
 
-				<div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-					{allTools.map((tool, index) => (
-						<Card
-							key={index}
-							className="flex flex-col border-t-4 border-[#DA5F6F] hover:shadow-lg transition-shadow duration-300"
-						>
-							<CardHeader>
-								<div className="flex items-center justify-between mb-2">
-									<Badge
-										variant="outline"
-										className="bg-[#DA5F6F]/10 text-[#DA5F6F] border-[#DA5F6F]"
+				{/* Grouped tools */}
+				<div className="space-y-12">
+					{toolsByCategory.map((group) => (
+						<div key={group.name}>
+							<h2 className="text-xs font-medium tracking-wide uppercase text-[oklch(55%_0.005_12)] mb-4">
+								{group.name}
+							</h2>
+							<div className="divide-y divide-[oklch(94%_0.005_12)] rounded-xl border border-[oklch(92%_0.005_12)] bg-white">
+								{group.tools.map((tool) => (
+									<Link
+										key={tool.title}
+										href={tool.link as Route}
+										className="group flex items-center justify-between gap-4 px-5 py-4 transition-colors duration-150 first:rounded-t-xl last:rounded-b-xl hover:bg-[oklch(98%_0.01_12)]"
 									>
-										{tool.category}
-									</Badge>
-								</div>
-								<CardTitle className="text-2xl font-medium">
-									{tool.title}
-								</CardTitle>
-								<CardDescription className="mt-2">
-									{tool.description}
-								</CardDescription>
-							</CardHeader>
-							<CardContent className="grow"></CardContent>
-							<CardFooter className="flex flex-col gap-4">
-								<div className="flex flex-wrap gap-2 w-full justify-start">
-									{tool.tags.map((tag, tagIndex) => (
-										<Badge
-											key={tagIndex}
-											variant="secondary"
-											className="flex items-center gap-1 bg-gray-100 text-gray-700"
-										>
-											<Tag size={12} />
-											{tag}
-										</Badge>
-									))}
-								</div>
-								<Link href={tool.link as Route} className="w-full">
-									<Button className="w-full bg-[#DA5F6F] hover:bg-[#DA5F6F]/90 text-white transition-colors duration-300">
-										Usar Herramienta
-									</Button>
-								</Link>
-							</CardFooter>
-						</Card>
+										<div className="min-w-0">
+											<h3 className="text-sm font-medium text-[oklch(18%_0.005_12)] group-hover:text-[#DA5F6F] transition-colors duration-150">
+												{tool.title}
+											</h3>
+											<p className="mt-0.5 text-sm text-[oklch(55%_0.01_12)] truncate">
+												{tool.description}
+											</p>
+										</div>
+										<ArrowRight className="h-4 w-4 shrink-0 text-[oklch(78%_0.005_12)] transition-all duration-150 group-hover:text-[#DA5F6F] group-hover:translate-x-0.5" />
+									</Link>
+								))}
+							</div>
+						</div>
 					))}
 				</div>
 
-				<div className="mt-16 text-center">
-					<h2 className="text-2xl font-medium mb-4">
-						¿Necesitas ayuda personalizada?
+				{/* CTA */}
+				<div className="mt-16 rounded-2xl bg-[oklch(96.5%_0.01_12)] p-8 sm:p-10">
+					<h2 className="font-serif text-xl font-medium text-[oklch(18%_0.005_12)]">
+						Necesitas un plan personalizado?
 					</h2>
-					<p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto">
-						Mis herramientas son un gran punto de partida, pero para un plan
-						nutricional completamente adaptado a tus necesidades, considera una
-						consulta personalizada.
+					<p className="mt-2 text-sm leading-relaxed text-[oklch(50%_0.01_12)] max-w-lg">
+						Las calculadoras dan estimaciones generales. Para recomendaciones
+						adaptadas a tu cuerpo, objetivos y condiciones, una consulta es el
+						siguiente paso.
 					</p>
-					<Link href="/#precios">
-						<Button
-							size="lg"
-							className="bg-[#DA5F6F] hover:bg-[#DA5F6F]/90 text-white transition-colors duration-300"
-						>
-							Agenda una Consulta
-						</Button>
+					<Link
+						href="/#precios"
+						className="mt-6 inline-flex h-11 items-center rounded-full bg-[#DA5F6F] px-7 text-sm font-medium text-white transition-colors duration-200 hover:bg-[#C54B5B]"
+					>
+						Ver planes de consulta
 					</Link>
 				</div>
 			</div>
