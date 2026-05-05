@@ -44,8 +44,10 @@
 	--animate-gradient: gradient 8s linear infinite;
 	--animate-accordion-down: accordion-down 0.2s ease-out;
 	--animate-accordion-up: accordion-up 0.2s ease-out;
-	--animate-marquee: marquee var(--duration) infinite linear;
-	--animate-marquee-vertical: marquee-vertical var(--duration) linear infinite;
+	/* Fallback duration/gap keeps animation valid if a scope drops the custom props */
+	--animate-marquee: marquee var(--duration, 40s) linear infinite;
+	--animate-marquee-vertical: marquee-vertical var(--duration, 40s) linear
+		infinite;
 
 	@keyframes gradient {
 		to {
@@ -73,7 +75,7 @@
 			transform: translateX(0);
 		}
 		to {
-			transform: translateX(calc(-100% - var(--gap)));
+			transform: translateX(calc(-100% - var(--gap, 1rem)));
 		}
 	}
 	@keyframes marquee-vertical {
@@ -81,7 +83,7 @@
 			transform: translateY(0);
 		}
 		to {
-			transform: translateY(calc(-100% - var(--gap)));
+			transform: translateY(calc(-100% - var(--gap, 1rem)));
 		}
 	}
 }
