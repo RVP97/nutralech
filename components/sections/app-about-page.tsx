@@ -19,7 +19,7 @@ const services = [
 	},
 	{
 		title: "Planes personalizados",
-		description: "Menús y recomendaciones adaptados a tus metas y estilo de vida",
+		description: "Planes por equivalencias con ejemplos de menú adaptados a tus metas",
 	},
 ];
 
