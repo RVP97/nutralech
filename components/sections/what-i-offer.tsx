@@ -20,12 +20,7 @@ export default function WhatIOfferComponent() {
 	const services = [
 		{
 			title: "Consultas en línea",
-			description: "Sesiones de 60 minutos por videollamada, desde donde estés.",
-			href: "#precios" as Route,
-		},
-		{
-			title: "Planes a distancia",
-			description: "Evaluación, plan alimenticio y recomendaciones sin videollamada.",
+			description: "Consulta inicial de 45 minutos por videollamada, desde donde estés.",
 			href: "#precios" as Route,
 		},
 		{
@@ -53,10 +48,10 @@ export default function WhatIOfferComponent() {
 							Planes alimenticios personalizados
 						</h2>
 						<p className="mt-6 text-lg leading-relaxed text-[oklch(45%_0.01_12)] max-w-xl">
-							Mis ofertas consisten en servicios de asesoría nutricional de
-							alta calidad, personalizados según tus necesidades únicas. Mi
-							enfoque integral se fundamenta en el conocimiento científico y
-							la práctica basada en evidencia.
+							Mis ofertas consisten en consultas nutricionales en línea de alta
+							calidad, personalizadas según tus necesidades únicas. Mi enfoque
+							integral se fundamenta en el conocimiento científico y la práctica
+							basada en evidencia.
 						</p>
 
 						<div className="mt-10 space-y-1">

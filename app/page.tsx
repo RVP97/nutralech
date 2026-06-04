@@ -13,7 +13,7 @@ export async function generateMetadata() {
 	return generatePageMetadata({
 		title: "Nutrición y Bienestar con Marialy Alonso: Nutralech",
 		description:
-			"Mejora tu salud con Nutralech y Marialy Alonso. Asesoría nutricional personalizada, recetas y consejos para un bienestar equilibrado y sostenible.",
+			"Mejora tu salud con Nutralech y Marialy Alonso. Consultas nutricionales en línea, recetas y consejos para un bienestar equilibrado y sostenible.",
 		keywords: [
 			"salud",
 			"bienestar",
@@ -41,7 +41,7 @@ const faqJsonLd = {
 			name: "¿Cómo funciona la consulta nutricional inicial?",
 			acceptedAnswer: {
 				"@type": "Answer",
-				text: "La consulta inicial es una sesión de 60 minutos donde evaluamos tu historial médico, hábitos alimenticios y objetivos de salud. Desarrollamos un plan nutricional personalizado basado en esta información.",
+				text: "La consulta inicial es una sesión en línea de 45 minutos por videollamada donde evaluamos tu historial médico, hábitos alimenticios y objetivos de salud. Desarrollamos un plan nutricional personalizado basado en esta información.",
 			},
 		},
 		{
@@ -49,7 +49,7 @@ const faqJsonLd = {
 			name: "¿Con qué frecuencia debo tener sesiones de seguimiento?",
 			acceptedAnswer: {
 				"@type": "Answer",
-				text: "Recomendamos sesiones de seguimiento cada 2-4 semanas, dependiendo de tus objetivos y progreso. Estas sesiones nos permiten ajustar tu plan según sea necesario.",
+				text: "Recomendamos sesiones de seguimiento en línea cada 2-4 semanas, dependiendo de tus objetivos y progreso. Estas videollamadas nos permiten ajustar tu plan según sea necesario.",
 			},
 		},
 		{

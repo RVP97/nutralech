@@ -16,7 +16,7 @@ export async function generateMetadata(): Promise<Metadata> {
 			template: "%s | Nutralech",
 		},
 		description:
-			"Mejora tu salud con Nutralech y Marialy Alonso. Asesoría nutricional personalizada, recetas y consejos para un bienestar equilibrado y sostenible.",
+			"Mejora tu salud con Nutralech y Marialy Alonso. Consultas nutricionales en línea, recetas y consejos para un bienestar equilibrado y sostenible.",
 		keywords:
 			"salud, bienestar, nutrición, consejos, recetas, asesoría, personalizada",
 		applicationName: "Nutralech",
@@ -35,7 +35,7 @@ export async function generateMetadata(): Promise<Metadata> {
 			siteName: "Nutralech",
 			title: "Nutrición y Bienestar con Marialy Alonso: Nutralech",
 			description:
-				"Mejora tu salud con Nutralech y Marialy Alonso. Asesoría nutricional personalizada, recetas y consejos para un bienestar equilibrado y sostenible.",
+				"Mejora tu salud con Nutralech y Marialy Alonso. Consultas nutricionales en línea, recetas y consejos para un bienestar equilibrado y sostenible.",
 			images: [
 				{
 					url: "/images/marialy.webp",
@@ -51,7 +51,7 @@ export async function generateMetadata(): Promise<Metadata> {
 			creator: "@nutralech",
 			title: "Nutrición y Bienestar con Marialy Alonso: Nutralech",
 			description:
-				"Mejora tu salud con Nutralech y Marialy Alonso. Asesoría nutricional personalizada, recetas y consejos para un bienestar equilibrado y sostenible.",
+				"Mejora tu salud con Nutralech y Marialy Alonso. Consultas nutricionales en línea, recetas y consejos para un bienestar equilibrado y sostenible.",
 			images: "/images/marialy.webp",
 		},
 		icons: {
@@ -201,7 +201,7 @@ const jsonLd = {
 			url: "https://www.nutralech.com",
 			name: "Nutralech",
 			description:
-				"Mejora tu salud con Nutralech y Marialy Alonso. Asesoría nutricional personalizada, recetas y consejos para un bienestar equilibrado y sostenible.",
+				"Mejora tu salud con Nutralech y Marialy Alonso. Consultas nutricionales en línea, recetas y consejos para un bienestar equilibrado y sostenible.",
 			publisher: {
 				"@id": "https://www.nutralech.com/#organization",
 			},

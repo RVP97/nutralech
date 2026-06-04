@@ -6,20 +6,20 @@ import { Card, CardContent } from "@/components/ui/card";
 
 const services = [
 	{
-		title: "Consultas Personalizadas",
-		description: "Planes adaptados a tu estilo de vida único",
+		title: "Consultas en línea",
+		description: "Consulta inicial de 45 minutos por videollamada, adaptada a tu estilo de vida",
 	},
 	{
 		title: "Asesoramiento Global",
 		description: "Nutrición sin fronteras, desde cualquier parte del mundo",
 	},
 	{
-		title: "Sesiones Virtuales",
-		description: "Experiencias de consulta inmersivas en alta definición",
+		title: "Seguimiento continuo",
+		description: "Ajustes al plan y apoyo constante entre sesiones por WhatsApp",
 	},
 	{
-		title: "Seguimiento Continuo",
-		description: "Apoyo constante en tu viaje hacia el bienestar",
+		title: "Planes personalizados",
+		description: "Menús y recomendaciones adaptados a tus metas y estilo de vida",
 	},
 ];
 

@@ -60,8 +60,8 @@ export default function Footer() {
 							</span>
 						</Link>
 						<p className="mt-4 text-sm leading-relaxed text-[oklch(50%_0.01_12)] max-w-xs">
-							Nutrición personalizada con Marialy Alonso. Consultas presenciales
-							en CDMX y online para todo el mundo.
+							Nutrición personalizada con Marialy Alonso. Consultas en línea por
+							videollamada para todo el mundo.
 						</p>
 					</div>
 

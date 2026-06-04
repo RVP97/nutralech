@@ -9,7 +9,7 @@ const steps = [
 		icon: Calendar,
 		title: "Consulta inicial personalizada",
 		description:
-			"Comenzamos con una consulta detallada para entender tus necesidades únicas, historial médico y objetivos de salud.",
+			"Comenzamos con una consulta en línea por videollamada para entender tus necesidades únicas, historial médico y objetivos de salud.",
 	},
 	{
 		number: "02",
@@ -23,7 +23,7 @@ const steps = [
 		icon: Heart,
 		title: "Seguimiento y apoyo continuo",
 		description:
-			"Te acompaño en cada paso con consultas regulares, ajustes al plan según sea necesario y apoyo constante por WhatsApp.",
+			"Te acompaño en cada paso con consultas en línea regulares, ajustes al plan según sea necesario y apoyo constante por WhatsApp.",
 	},
 ];
 

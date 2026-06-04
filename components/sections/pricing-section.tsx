@@ -21,7 +21,6 @@ interface IndividualPlan {
 	description: string;
 	features: { name: string; cross: boolean }[];
 	popular?: boolean;
-	selfCare?: boolean;
 }
 
 interface Package {
@@ -44,12 +43,13 @@ const individualPlans: IndividualPlan[] = [
 		price: "800",
 		priceId: "price_1QHcX3BoTKroQtb9iezs2h2q",
 		description:
-			"Para dar seguimiento a tus metas y evaluar tu progreso después de la consulta inicial.",
+			"Seguimiento en línea para evaluar tu progreso después de la consulta inicial.",
 		features: [
+			{ name: "Sesión por videollamada (45 minutos)", cross: false },
 			{ name: "Evaluación integral completa", cross: false },
-			{ name: "Plan alimenticio personalizado (basado en menú) o seguimiento de relación con la comida", cross: false },
+			{ name: "Plan alimenticio personalizado (basado en menú)", cross: false },
 			{ name: "Seguimiento recomendado cada 2 o 3 semanas", cross: false },
-			{ name: "Soporte por chat ilimitado (directamente con Marialy)", cross: false },
+			{ name: "Comunicación y soporte por WhatsApp (directamente con Marialy)", cross: false },
 		],
 	},
 	{
@@ -57,33 +57,16 @@ const individualPlans: IndividualPlan[] = [
 		price: "1,200",
 		priceId: "price_1QHcqHBoTKroQtb9EcQsiBUO",
 		description:
-			"Te conozco y adapto un plan personalizado a tus necesidades específicas.",
+			"Primera consulta en línea para conocerte y adaptar un plan a tus necesidades.",
 		features: [
+			{ name: "Sesión por videollamada (45 minutos)", cross: false },
 			{ name: "Evaluación nutricional completa", cross: false },
 			{ name: "Plan alimenticio personalizado (basado en menú)", cross: false },
 			{ name: "Recomendaciones de suplementación", cross: false },
 			{ name: "Consulta de primera vez", cross: false },
-			{ name: "Soporte por chat ilimitado (directamente con Marialy)", cross: false },
+			{ name: "Comunicación y soporte por WhatsApp (directamente con Marialy)", cross: false },
 		],
 		popular: true,
-	},
-	{
-		name: "Mejora tu relación con la comida",
-		price: "1,200",
-		priceId: "price_1S6bWaBoTKroQtb9yWPxT3lG",
-		description:
-			"Aprende a alimentarte sin restricciones ni culpa. Alimentación intuitiva y hábitos sostenibles.",
-		features: [
-			{ name: "Consulta online personalizada (60 minutos)", cross: false },
-			{ name: "Practica la alimentación intuitiva", cross: false },
-			{ name: "Reconecta con tus señales de hambre y saciedad", cross: false },
-			{ name: "Crea hábitos que te acerquen a tu peso y bienestar ideal", cross: false },
-			{ name: "Espacio para disfrutar la comida sin culpa", cross: false },
-			{ name: "Construye confianza en tus elecciones alimentarias", cross: false },
-			{ name: "Logra un estilo de vida sostenible y saludable", cross: false },
-			{ name: "Soporte por chat ilimitado (directamente con Marialy)", cross: false },
-		],
-		selfCare: true,
 	},
 ];
 
@@ -102,7 +85,7 @@ const packages: Package[] = [
 			{ name: "Plan alimenticio personalizado (basado en macros o menú)", cross: false },
 			{ name: "Recomendaciones de suplementación", cross: false },
 			{ name: "Seguimiento recomendado cada 2 o 3 semanas", cross: false },
-			{ name: "Soporte por chat ilimitado (directamente con Marialy)", cross: false },
+			{ name: "Comunicación y soporte por WhatsApp (directamente con Marialy)", cross: false },
 		],
 	},
 	{
@@ -119,7 +102,7 @@ const packages: Package[] = [
 			{ name: "Plan alimenticio personalizado (basado en macros o menú)", cross: false },
 			{ name: "Recomendaciones de suplementación", cross: false },
 			{ name: "Seguimiento recomendado cada 2 o 3 semanas", cross: false },
-			{ name: "Soporte por chat ilimitado (directamente con Marialy)", cross: false },
+			{ name: "Comunicación y soporte por WhatsApp (directamente con Marialy)", cross: false },
 		],
 		popular: true,
 	},
@@ -137,7 +120,7 @@ const packages: Package[] = [
 			{ name: "Plan alimenticio personalizado (basado en macros o menú)", cross: false },
 			{ name: "Recomendaciones de suplementación", cross: false },
 			{ name: "Seguimiento recomendado cada 2 o 3 semanas", cross: false },
-			{ name: "Soporte por chat ilimitado (directamente con Marialy)", cross: false },
+			{ name: "Comunicación y soporte por WhatsApp (directamente con Marialy)", cross: false },
 		],
 	},
 ];
@@ -219,8 +202,8 @@ export default function PricingSection() {
 							Elige tu plan
 						</h2>
 						<p className="mt-4 text-base text-[oklch(50%_0.01_12)] max-w-lg mx-auto">
-							Consultas individuales para empezar, o paquetes con hasta 15% de ahorro
-							si buscas un proceso completo.
+							Consultas en línea individuales para empezar, o paquetes con hasta
+							15% de ahorro si buscas un proceso completo.
 						</p>
 					</div>
 
@@ -263,8 +246,7 @@ export default function PricingSection() {
 					>
 						{activePlans.map((plan, index) => {
 							const isPopular = plan.popular;
-							const isSelfCare = (plan as IndividualPlan).selfCare;
-							const isHighlighted = isPopular || isSelfCare;
+							const isHighlighted = isPopular;
 
 							return (
 								<div
@@ -279,11 +261,6 @@ export default function PricingSection() {
 									{isPopular && (
 										<span className="absolute -top-3 left-6 rounded-full bg-[#DA5F6F] px-3.5 py-1 text-xs font-medium text-white">
 											Más popular
-										</span>
-									)}
-									{isSelfCare && (
-										<span className="absolute -top-3 left-6 rounded-full bg-[oklch(65%_0.15_160)] px-3.5 py-1 text-xs font-medium text-white">
-											Self care
 										</span>
 									)}
 

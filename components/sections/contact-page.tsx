@@ -14,8 +14,8 @@ export default function ContactPageComponent() {
 								Hablemos de tu salud
 							</h1>
 							<p className="text-base md:text-lg leading-relaxed text-[oklch(40%_0.01_12)]">
-								Si tienes dudas sobre consultas, precios o cómo funciona el
-								proceso, escríbeme directamente. También puedes revisar las{" "}
+								Si tienes dudas sobre consultas en línea, precios o cómo funciona
+								el proceso, escríbeme directamente. También puedes revisar las{" "}
 								<Link
 									prefetch={false}
 									href="/#faq"

@@ -11,12 +11,12 @@ const faqItems = [
 	{
 		question: "¿Cómo funciona la consulta nutricional inicial?",
 		answer:
-			"La consulta inicial es una sesión de 60 minutos donde evaluamos tu historial médico, hábitos alimenticios y objetivos de salud. Desarrollamos un plan nutricional personalizado basado en esta información.",
+			"La consulta inicial es una sesión en línea de 45 minutos por videollamada donde evaluamos tu historial médico, hábitos alimenticios y objetivos de salud. Desarrollamos un plan nutricional personalizado basado en esta información.",
 	},
 	{
 		question: "¿Con qué frecuencia debo tener sesiones de seguimiento?",
 		answer:
-			"Recomendamos sesiones de seguimiento cada 2-4 semanas, dependiendo de tus objetivos y progreso. Estas sesiones nos permiten ajustar tu plan según sea necesario.",
+			"Recomendamos sesiones de seguimiento en línea cada 2-4 semanas, dependiendo de tus objetivos y progreso. Estas videollamadas nos permiten ajustar tu plan según sea necesario.",
 	},
 	{
 		question: "¿Puedo contactarte entre sesiones si tengo preguntas?",

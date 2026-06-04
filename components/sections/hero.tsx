@@ -19,9 +19,9 @@ export default function Hero() {
 						</h1>
 
 						<p className="max-w-lg text-lg leading-relaxed text-[oklch(45%_0.01_12)]">
-							Consulta inicial de 60 minutos, plan alimenticio a medida y
-							seguimiento directo con Marialy por WhatsApp. Sin dietas
-							restrictivas, sin fórmulas genéricas.
+							Consulta inicial en línea de 45 minutos por videollamada, plan
+							alimenticio a medida y seguimiento directo con Marialy por WhatsApp.
+							Sin dietas restrictivas, sin fórmulas genéricas.
 						</p>
 
 						<div className="flex flex-wrap items-center gap-4 pt-2">
