@@ -229,7 +229,7 @@ export default function CaloriesBurnedCalculatorPage() {
 						href="/#precios"
 						className="text-blue-600 hover:underline"
 					>
-						agenda una consulta
+						conoce el Plan a distancia
 					</Link>{" "}
 					con nuestros especialistas.
 				</p>
@@ -248,7 +248,7 @@ export default function CaloriesBurnedCalculatorPage() {
 							<Link prefetch={false} href="/#precios">
 								<Button className="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-[#DA5F6F] bg-white hover:bg-gray-50">
 									<Calendar className="w-5 h-5 mr-2" />
-									Agendar Consulta
+									Ver plan a distancia
 								</Button>
 							</Link>
 						</div>

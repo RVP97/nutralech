@@ -307,7 +307,7 @@ export default function MacroCalculatorPage() {
 						href="/#precios"
 						className="text-blue-600 hover:underline"
 					>
-						agenda tu consulta
+						conoce el Plan a distancia
 					</Link>{" "}
 					conmigo.
 				</p>
@@ -318,7 +318,7 @@ export default function MacroCalculatorPage() {
 					<h2 className="text-3xl font-extrabold tracking-tight text-white sm:text-4xl">
 						<span className="block">¿Listo para mejorar tu salud?</span>
 						<span className="block text-gray-100">
-							Agenda una consulta personalizada hoy.
+							Empieza tu plan a distancia hoy.
 						</span>
 					</h2>
 					<div className="mt-8 flex lg:mt-0 lg:shrink-0">
@@ -326,7 +326,7 @@ export default function MacroCalculatorPage() {
 							<Link prefetch={false} href="/#precios">
 								<Button className="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-[#DA5F6F] bg-white hover:bg-gray-50">
 									<Calendar className="w-5 h-5 mr-2" />
-									Agendar Consulta
+									Ver plan a distancia
 								</Button>
 							</Link>
 						</div>

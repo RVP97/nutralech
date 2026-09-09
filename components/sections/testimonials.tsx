@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 
 export default function TestimonialsComponent() {
 	const testimonials = [
@@ -69,6 +70,16 @@ export default function TestimonialsComponent() {
 							</figcaption>
 						</figure>
 					))}
+				</div>
+
+				<div className="mt-12 text-center">
+					<Link
+						prefetch={false}
+						href="#precios"
+						className="inline-flex h-12 items-center justify-center rounded-full bg-[#DA5F6F] px-8 text-sm font-medium text-white transition-colors duration-200 hover:bg-[#C54B5B]"
+					>
+						Ver plan a distancia
+					</Link>
 				</div>
 			</div>
 		</section>

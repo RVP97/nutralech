@@ -1,29 +1,30 @@
 "use client";
 
-import { Calendar, Heart, Puzzle } from "lucide-react";
+import { FileText, Heart, Puzzle } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 
 const steps = [
 	{
 		number: "01",
-		icon: Calendar,
-		title: "Consulta inicial personalizada",
+		icon: FileText,
+		title: "Compras y llenas tu documento",
 		description:
-			"Comenzamos con una consulta en línea por videollamada para entender tus necesidades únicas, historial médico y objetivos de salud.",
+			"Eliges tu plan, pagas en línea y recibes un documento para compartir tus datos, objetivos, hábitos, rutina y preferencias.",
 	},
 	{
 		number: "02",
 		icon: Puzzle,
-		title: "Plan nutricional a medida",
+		title: "Recibes tu plan personalizado",
 		description:
-			"Desarrollo un plan nutricional completamente personalizado que se adapta a tu estilo de vida, preferencias y metas específicas.",
+			"Con esa información elaboro tu plan de alimentación con equivalencias, menú ejemplo y recomendaciones adaptadas a tu vida.",
 	},
 	{
 		number: "03",
 		icon: Heart,
-		title: "Seguimiento y apoyo continuo",
+		title: "Lo aplicas con apoyo continuo",
 		description:
-			"Te acompaño en cada paso con consultas en línea regulares, ajustes al plan según sea necesario y apoyo constante por WhatsApp.",
+			"Puedes escribirme por WhatsApp para dudas del plan y, cuando lo necesites, actualizarlo con el Plan de seguimiento.",
 	},
 ];
 
@@ -37,12 +38,11 @@ export default function PersonalizedAttention() {
 							Cada plan es único
 						</p>
 						<h2 className="mt-3 font-serif text-3xl font-medium tracking-tight text-[oklch(18%_0.005_12)] sm:text-4xl lg:text-5xl">
-							Atención personalizada para ti
+							Así funciona el plan a distancia
 						</h2>
 						<p className="mt-6 text-lg leading-relaxed text-[oklch(45%_0.01_12)] max-w-xl">
-							Cada cliente recibe una atención completamente personalizada.
-							Mi enfoque se adapta específicamente a ti, asegurando que recibas
-							el apoyo exacto que necesitas.
+							Sin citas ni videollamadas. Un proceso claro para que recibas una
+							guía realista, personalizada y fácil de aplicar en tu día a día.
 						</p>
 
 						<div className="mt-12 space-y-10">
@@ -64,13 +64,21 @@ export default function PersonalizedAttention() {
 								</div>
 							))}
 						</div>
+
+						<Link
+							prefetch={false}
+							href="#precios"
+							className="mt-10 inline-flex h-12 items-center justify-center rounded-full bg-[#DA5F6F] px-8 text-sm font-medium text-white transition-colors duration-200 hover:bg-[#C54B5B]"
+						>
+							Empezar mi plan
+						</Link>
 					</div>
 
 					<div className="relative">
 						<div className="relative aspect-[4/5] overflow-hidden rounded-2xl">
 							<Image
 								src="/images/marialy-2.webp"
-								alt="Consulta de nutrición personalizada con Marialy Alonso"
+								alt="Plan de nutrición personalizado a distancia con Marialy Alonso"
 								className="object-cover"
 								fill
 								sizes="(max-width: 1024px) 100vw, 50vw"

@@ -1,4 +1,4 @@
-import { ArrowRight, CalendarCheck, Check, Leaf, Star } from "lucide-react";
+import { ArrowRight, Check, FileText, Leaf, Star } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
@@ -6,16 +6,17 @@ import { Card, CardContent } from "@/components/ui/card";
 
 const services = [
 	{
-		title: "Consultas en línea",
-		description: "Consulta inicial de 45 minutos por videollamada, adaptada a tu estilo de vida",
+		title: "Plan a distancia",
+		description:
+			"Plan alimenticio 100% personalizado sin consulta presencial ni videollamada",
 	},
 	{
 		title: "Asesoramiento Global",
 		description: "Nutrición sin fronteras, desde cualquier parte del mundo",
 	},
 	{
-		title: "Seguimiento continuo",
-		description: "Ajustes al plan y apoyo constante entre sesiones por WhatsApp",
+		title: "Soporte por WhatsApp",
+		description: "Dudas del plan y seguimiento cercano después de la entrega",
 	},
 	{
 		title: "Planes personalizados",
@@ -61,8 +62,8 @@ export default function AboutPage() {
 									href="/#precios"
 									className="inline-flex h-14 items-center justify-center gap-2 rounded-full bg-[#DA5F6F] px-8 font-medium text-white transition-colors hover:bg-[#DA5F6F]/90 text-lg"
 								>
-									<CalendarCheck className="h-5 w-5" />
-									Agenda tu Consulta
+									<FileText className="h-5 w-5" />
+									Ver plan a distancia
 								</Link>
 
 								<Link
@@ -70,7 +71,7 @@ export default function AboutPage() {
 									href="/#precios"
 									className="inline-flex h-14 items-center justify-center gap-2 rounded-full border-2 border-[#DA5F6F] bg-transparent px-8 font-medium text-[#DA5F6F] transition-colors hover:bg-[#DA5F6F]/5 text-lg"
 								>
-									Explora Mis Servicios
+									Ver precios
 									<ArrowRight className="h-5 w-5" />
 								</Link>
 							</div>

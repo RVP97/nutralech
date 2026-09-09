@@ -52,12 +52,12 @@ export default function GlobalConsultations() {
 							6 continentes
 						</p>
 						<h2 className="mt-3 font-serif text-3xl font-medium tracking-tight text-[oklch(18%_0.005_12)] sm:text-4xl lg:text-5xl">
-							Tu zona horaria, tu consulta
+							Desde cualquier país, a tu ritmo
 						</h2>
 						<p className="mt-6 text-lg leading-relaxed text-[oklch(45%_0.01_12)] max-w-md">
-							Consultas por videollamada adaptadas a tu horario, con
-							seguimiento por WhatsApp entre sesiones. No importa si estás en
-							México, Argentina o Japón.
+							Atiendo pacientes en 6 continentes con el Plan a distancia: sin
+							agendar cita ni cuadrar horarios. Tú envías tu información y
+							recibes un plan adaptado a tu vida, con soporte por WhatsApp.
 						</p>
 
 						<Link
@@ -65,7 +65,7 @@ export default function GlobalConsultations() {
 							href="#precios"
 							className="mt-8 inline-flex h-12 items-center justify-center rounded-full bg-[#DA5F6F] px-8 text-sm font-medium text-white transition-colors duration-200 hover:bg-[#C54B5B] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#DA5F6F]"
 						>
-							Agenda tu consulta
+							Ver plan a distancia
 						</Link>
 					</div>
 
@@ -99,12 +99,12 @@ export default function GlobalConsultations() {
 											{isDaytime(active.offset) ? (
 												<>
 													<Sun className="h-3.5 w-3.5 text-[oklch(75%_0.15_85)]" />
-													Horario disponible
+													Plan a tu ritmo
 												</>
 											) : (
 												<>
 													<Moon className="h-3.5 w-3.5 text-[oklch(55%_0.1_260)]" />
-													Agendamos para mañana
+													Sin agendar cita
 												</>
 											)}
 										</span>

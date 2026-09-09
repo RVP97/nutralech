@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import {
 	Accordion,
 	AccordionContent,
@@ -9,27 +10,36 @@ import {
 
 const faqItems = [
 	{
-		question: "¿Cómo funciona la consulta nutricional inicial?",
+		question: "¿Cómo funciona el Plan a distancia?",
 		answer:
-			"La consulta inicial es una sesión en línea de 45 minutos por videollamada donde evaluamos tu historial médico, hábitos alimenticios y objetivos de salud. Desarrollamos un plan nutricional personalizado basado en esta información.",
+			"Al contratar recibes un documento para llenar con tus datos, objetivos, hábitos de alimentación, rutina, actividad física, horarios, gustos y preferencias. Con esa información elaboro un plan de alimentación 100% personalizado, sin necesidad de consulta presencial ni videollamada.",
 	},
 	{
-		question: "¿Con qué frecuencia debo tener sesiones de seguimiento?",
+		question: "¿Incluye videollamada?",
 		answer:
-			"Recomendamos sesiones de seguimiento en línea cada 2-4 semanas, dependiendo de tus objetivos y progreso. Estas videollamadas nos permiten ajustar tu plan según sea necesario.",
+			"No. El Plan a distancia es completamente asíncrono: tú envías tu información por el documento y yo te entrego el plan listo para aplicar en tu día a día.",
 	},
 	{
-		question: "¿Puedo contactarte entre sesiones si tengo preguntas?",
+		question: "¿Cuánto tarda en llegar mi plan?",
+		answer:
+			"Una vez que recibo tu documento completo, elaboro y te entrego el plan en aproximadamente 5 a 7 días hábiles.",
+	},
+	{
+		question: "¿Qué diferencia hay entre Plan inicial y Plan de seguimiento?",
+		answer:
+			"El Plan inicial ($1,200 MXN) es para quienes contratan por primera vez. El Plan de seguimiento ($1,000 MXN) es para actualizar tu plan cuando ya tienes uno previo y quieres ajustes según tus avances u objetivos nuevos.",
+	},
+	{
+		question: "¿Qué incluye el plan?",
+		answer:
+			"Plan de alimentación personalizado, sistema de equivalencias para variar alimentos, un menú ejemplo, recomendaciones según tus hábitos y objetivos, estrategias para comer fuera de casa y tips prácticos para adaptar el plan a tu rutina.",
+	},
+	{
+		question: "¿Puedo escribirte por WhatsApp después de comprar?",
 		answer: (
 			<>
-				Puedes contactarme por{" "}
-				<a
-					href="mailto:dudas@nutralech.com"
-					className="text-[#DA5F6F] font-medium hover:underline"
-				>
-					correo electrónico
-				</a>{" "}
-				o{" "}
+				Sí. Puedes enviarme el documento lleno y dudas relacionadas con tu plan
+				por{" "}
 				<a
 					href="https://wa.me/message/BLYZCVYW2MOAJ1"
 					target="_blank"
@@ -38,25 +48,21 @@ const faqItems = [
 				>
 					WhatsApp
 				</a>{" "}
-				entre sesiones para preguntas rápidas. Para consultas más extensas,
-				podemos programar una mini-sesión.
+				o por correo a{" "}
+				<a
+					href="mailto:marialyalonso@gmail.com"
+					className="text-[#DA5F6F] font-medium hover:underline"
+				>
+					marialyalonso@gmail.com
+				</a>
+				.
 			</>
 		),
 	},
 	{
 		question: "¿Trabajas con condiciones médicas específicas?",
 		answer:
-			"Sí, tengo experiencia en nutrición para diversas condiciones médicas como diabetes, hipertensión, y enfermedades autoinmunes. Siempre trabajo en coordinación con tu equipo médico.",
-	},
-	{
-		question: "¿Ofreces planes de comidas y recetas?",
-		answer:
-			"Sí, proporciono planes de comidas personalizados y una selección de recetas adaptadas a tus preferencias y necesidades nutricionales como parte de tu plan.",
-	},
-	{
-		question: "¿En qué eres diferente a otras nutricionistas?",
-		answer:
-			"Mi enfoque se centra en la nutrición sostenible y el equilibrio entre cuerpo y mente. Todo mi trabajo es personalizado para adaptarse a tus necesidades y objetivos específicos, y siempre coordino con tu equipo médico cuando es relevante.",
+			"Sí, tengo experiencia en nutrición para condiciones como diabetes, hipertensión y enfermedades autoinmunes. Siempre trabajo en coordinación con tu equipo médico cuando es relevante.",
 	},
 ];
 
@@ -76,7 +82,7 @@ export default function FaqSection() {
 				<Accordion type="single" collapsible className="w-full space-y-2">
 					{faqItems.map((item, index) => (
 						<AccordionItem
-							key={index}
+							key={item.question}
 							value={`item-${index}`}
 							className="rounded-xl bg-white px-6 border-none"
 						>
@@ -89,6 +95,16 @@ export default function FaqSection() {
 						</AccordionItem>
 					))}
 				</Accordion>
+
+				<div className="mt-10 text-center">
+					<Link
+						prefetch={false}
+						href="#precios"
+						className="inline-flex h-12 items-center justify-center rounded-full bg-[#DA5F6F] px-8 text-sm font-medium text-white transition-colors duration-200 hover:bg-[#C54B5B]"
+					>
+						Ver plan a distancia
+					</Link>
+				</div>
 			</div>
 		</section>
 	);

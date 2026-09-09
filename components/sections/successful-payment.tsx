@@ -1,4 +1,4 @@
-import { Calendar, CheckCircle, Download } from "lucide-react";
+import { CheckCircle, Download } from "lucide-react";
 import type { Route } from "next";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
@@ -32,9 +32,6 @@ interface SuccessfulPaymentProps {
 	email: string;
 	time: number;
 	lineItems: LineItem[];
-	calendarUrl?: string;
-	calendarButtonText?: string;
-	consultaDistancia?: boolean;
 }
 
 const CLINICAL_FORMS = {
@@ -48,9 +45,6 @@ export default function SuccessfulPayment({
 	email,
 	time,
 	lineItems,
-	calendarUrl = "https://cal.com/nutralech/inicial",
-	calendarButtonText = "Agendar Sesión",
-	consultaDistancia = false,
 }: SuccessfulPaymentProps) {
 	const total = lineItems.reduce((sum, item) => sum + item.amount_total, 0);
 
@@ -77,7 +71,8 @@ export default function SuccessfulPayment({
 					</div>
 					<CardTitle className="text-2xl font-bold">¡Pago Exitoso!</CardTitle>
 					<CardDescription>
-						Gracias por tu compra. Tu orden ha sido procesada correctamente.
+						Gracias por tu compra. Tu Plan a distancia está listo para
+						comenzar.
 					</CardDescription>
 				</CardHeader>
 				<CardContent className="space-y-6">
@@ -86,7 +81,6 @@ export default function SuccessfulPayment({
 							Número de Orden: {receiptNumber}
 						</p>
 						<div className="flex items-center text-sm text-muted-foreground">
-							{/* <AtSign className="mr-2 h-4 w-4" /> */}
 							Email: {email}
 						</div>
 					</div>
@@ -138,94 +132,65 @@ export default function SuccessfulPayment({
 						</div>
 					</div>
 					<div className="space-y-2">
-						<h3 className="font-semibold">Próximos Pasos:</h3>
-						<ul className="list-disc ml-6 space-y-1 text-sm">
+						<h3 className="font-semibold">Próximos pasos</h3>
+						<ol className="ml-6 list-decimal space-y-2 text-sm">
 							<li className="pl-2">
 								Recibirás un email de confirmación a{" "}
-								<span className="font-semibold">{email}</span> con los detalles
-								de tu orden.
+								<span className="font-semibold">{email}</span>.
 							</li>
-							{consultaDistancia && (
-								<li className="pl-2">
-									Descarga y llena el documento con tus datos, objetivos,
-									hábitos, rutina y preferencias, y envíamelo por correo a{" "}
-									<span className="font-semibold">marialyalonso@gmail.com</span>{" "}
-									o por WhatsApp al{" "}
-									<Link
-										prefetch={false}
-										target="_blank"
-										rel="noopener noreferrer"
-										href="https://wa.me/message/BLYZCVYW2MOAJ1"
-										className="font-bold whitespace-nowrap"
-									>
-										+52 744 346 8252
-									</Link>
-								</li>
-							)}
-							{!consultaDistancia && (
-								<li className="pl-2">
-									Para agendar tu sesión, por favor usa el botón de abajo o
-									envíame un mensaje a{" "}
-									<Link
-										prefetch={false}
-										target="_blank"
-										rel="noopener noreferrer"
-										href="https://wa.me/message/BLYZCVYW2MOAJ1"
-										className="font-bold whitespace-nowrap"
-									>
-										+52 744 346 8252
-									</Link>
-								</li>
-							)}
 							<li className="pl-2">
-								Prepara cualquier pregunta o inquietud que tengas para tu
-								sesión.
+								Descarga el documento, llénalo con tus datos, objetivos,
+								hábitos, rutina y preferencias, y envíamelo a{" "}
+								<span className="font-semibold">marialyalonso@gmail.com</span>{" "}
+								o por WhatsApp al{" "}
+								<Link
+									prefetch={false}
+									target="_blank"
+									rel="noopener noreferrer"
+									href="https://wa.me/message/BLYZCVYW2MOAJ1"
+									className="font-bold whitespace-nowrap"
+								>
+									+52 744 346 8252
+								</Link>
+								.
 							</li>
-						</ul>
+							<li className="pl-2">
+								En aproximadamente 5–7 días hábiles después de recibir tu
+								documento completo, te entregaré tu plan personalizado.
+							</li>
+						</ol>
 					</div>
 				</CardContent>
 				<CardFooter className="flex flex-col space-y-2 sm:flex-row sm:justify-between sm:space-x-2 sm:space-y-0">
-					{consultaDistancia ? (
-						<DropdownMenu>
-							<DropdownMenuTrigger asChild>
-								<Button>
-									Descargar Formulario <Download className="ml-2 h-4 w-4" />
-								</Button>
-							</DropdownMenuTrigger>
-							<DropdownMenuContent>
-								<DropdownMenuItem asChild>
-									<Link
-										prefetch={false}
-										href={CLINICAL_FORMS.hombres}
-										target="_blank"
-										className="w-full"
-									>
-										Hombres
-									</Link>
-								</DropdownMenuItem>
-								<DropdownMenuItem asChild>
-									<Link
-										prefetch={false}
-										href={CLINICAL_FORMS.mujeres}
-										target="_blank"
-										className="w-full"
-									>
-										Mujeres
-									</Link>
-								</DropdownMenuItem>
-							</DropdownMenuContent>
-						</DropdownMenu>
-					) : (
-						<Button asChild>
-							<Link
-								prefetch={false}
-								target="_blank"
-								href={calendarUrl as Route}
-							>
-								{calendarButtonText} <Calendar className="ml-2 h-4 w-4" />
-							</Link>
-						</Button>
-					)}
+					<DropdownMenu>
+						<DropdownMenuTrigger asChild>
+							<Button>
+								Descargar documento <Download className="ml-2 h-4 w-4" />
+							</Button>
+						</DropdownMenuTrigger>
+						<DropdownMenuContent>
+							<DropdownMenuItem asChild>
+								<Link
+									prefetch={false}
+									href={CLINICAL_FORMS.hombres}
+									target="_blank"
+									className="w-full"
+								>
+									Hombres
+								</Link>
+							</DropdownMenuItem>
+							<DropdownMenuItem asChild>
+								<Link
+									prefetch={false}
+									href={CLINICAL_FORMS.mujeres}
+									target="_blank"
+									className="w-full"
+								>
+									Mujeres
+								</Link>
+							</DropdownMenuItem>
+						</DropdownMenuContent>
+					</DropdownMenu>
 					{receiptUrl && (
 						<Link prefetch={false} target="_blank" href={receiptUrl as Route}>
 							<Button variant="outline">

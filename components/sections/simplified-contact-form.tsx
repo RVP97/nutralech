@@ -18,8 +18,8 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 
 const INQUIRY_OPTIONS = [
-	{ value: "Consulta General", label: "Consulta general" },
-	{ value: "Solicitar Cita", label: "Solicitar cita" },
+	{ value: "Consulta General", label: "Duda general" },
+	{ value: "Solicitar Cita", label: "Quiero el Plan a distancia" },
 	{ value: "Colaboración", label: "Colaboración profesional" },
 	{ value: "Comentarios", label: "Comentarios" },
 	{ value: "Otro", label: "Otro" },

@@ -19,8 +19,9 @@ export default function WhatIOfferComponent() {
 
 	const services = [
 		{
-			title: "Consultas en línea",
-			description: "Consulta inicial de 45 minutos por videollamada, desde donde estés.",
+			title: "Plan a distancia",
+			description:
+				"Plan alimenticio 100% personalizado sin consulta presencial ni videollamada.",
 			href: "#precios" as Route,
 		},
 		{
@@ -48,10 +49,9 @@ export default function WhatIOfferComponent() {
 							Planes alimenticios personalizados
 						</h2>
 						<p className="mt-6 text-lg leading-relaxed text-[oklch(45%_0.01_12)] max-w-xl">
-							Mis ofertas consisten en consultas nutricionales en línea de alta
-							calidad, personalizadas según tus necesidades únicas. Mi enfoque
-							integral se fundamenta en el conocimiento científico y la práctica
-							basada en evidencia.
+							Diseño planes a distancia según tus objetivos, hábitos y estilo de
+							vida. Mi enfoque integral se fundamenta en evidencia científica y
+							en una guía que puedas aplicar de forma realista día a día.
 						</p>
 
 						<div className="mt-10 space-y-1">
@@ -100,7 +100,7 @@ export default function WhatIOfferComponent() {
 						<div className="mt-10">
 							<Link prefetch={false} href="#precios">
 								<Button className="rounded-full bg-[#DA5F6F] hover:bg-[#C54B5B] text-white px-8 h-12">
-									Ver planes y precios
+									Ver plan a distancia
 								</Button>
 							</Link>
 						</div>

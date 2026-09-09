@@ -27,12 +27,12 @@ export async function POST(request: Request) {
 			custom_text: {
 				after_submit: {
 					message:
-						"Esta consulta es el inicio de un nuevo camino hacia una vida más saludable y plena.",
+						"Gracias por tu compra. En el siguiente paso descarga y llena tu documento para que prepare tu plan personalizado.",
 				},
 			},
 			allow_promotion_codes: true,
 			mode: "payment",
-			submit_type: "book",
+			submit_type: "pay",
 			return_url: `${request.headers.get(
 				"origin",
 			)}/confirmacion?session_id={CHECKOUT_SESSION_ID}`,

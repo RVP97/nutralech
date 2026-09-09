@@ -22,9 +22,9 @@ export default function AppToolsPage() {
 					<h1 className="font-serif text-3xl font-medium tracking-tight text-[oklch(18%_0.005_12)] sm:text-4xl lg:text-5xl">
 						Calculadoras de nutrición
 					</h1>
-					<p className="mt-4 text-base leading-relaxed text-[oklch(50%_0.01_12)] max-w-xl">
+									<p className="mt-4 text-base leading-relaxed text-[oklch(50%_0.01_12)] max-w-xl">
 						Estimaciones rápidas para calorías, macros, hidratación y más.
-						Para un plan personalizado, agenda una consulta.
+						Para un plan personalizado, conoce el Plan a distancia.
 					</p>
 				</div>
 
@@ -64,15 +64,15 @@ export default function AppToolsPage() {
 						Necesitas un plan personalizado?
 					</h2>
 					<p className="mt-2 text-sm leading-relaxed text-[oklch(50%_0.01_12)] max-w-lg">
-						Las calculadoras dan estimaciones generales. Para recomendaciones
-						adaptadas a tu cuerpo, objetivos y condiciones, una consulta es el
+						Las calculadoras dan estimaciones generales. Para un plan
+						adaptado a tu cuerpo, objetivos y rutina, el Plan a distancia es el
 						siguiente paso.
 					</p>
 					<Link
 						href="/#precios"
 						className="mt-6 inline-flex h-11 items-center rounded-full bg-[#DA5F6F] px-7 text-sm font-medium text-white transition-colors duration-200 hover:bg-[#C54B5B]"
 					>
-						Ver planes de consulta
+						Ver plan a distancia
 					</Link>
 				</div>
 			</div>

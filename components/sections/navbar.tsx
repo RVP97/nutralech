@@ -86,6 +86,13 @@ export default function Navbar() {
 					<div className="flex items-center gap-3">
 						<Link
 							prefetch={false}
+							href="/#precios"
+							className="hidden sm:inline-flex h-8 items-center rounded-full bg-[#DA5F6F] px-3.5 text-xs font-medium text-white transition-colors duration-150 hover:bg-[#C54B5B]"
+						>
+							Ver planes
+						</Link>
+						<Link
+							prefetch={false}
 							href="https://wa.me/message/BLYZCVYW2MOAJ1"
 							target="_blank"
 							rel="noopener noreferrer"
@@ -127,6 +134,13 @@ export default function Navbar() {
 									{link.label}
 								</Link>
 							))}
+							<Link
+								prefetch={false}
+								href="/#precios"
+								className="mt-2 flex items-center justify-center rounded-full bg-[#DA5F6F] px-3 py-2.5 text-sm font-medium text-white hover:bg-[#C54B5B]"
+							>
+								Ver plan a distancia
+							</Link>
 							<Link
 								prefetch={false}
 								href="https://wa.me/message/BLYZCVYW2MOAJ1"

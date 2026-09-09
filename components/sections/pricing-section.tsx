@@ -18,6 +18,7 @@ interface PlanTier {
 	name: string;
 	price: string;
 	priceId: string;
+	badge: string;
 	description: string;
 	features: string[];
 	popular?: boolean;
@@ -41,6 +42,7 @@ const planTiers: PlanTier[] = [
 		name: "Plan inicial",
 		price: "1,200",
 		priceId: "price_1UDoYxBoTKroQtb9eaEjMz8v",
+		badge: "Primera vez",
 		description:
 			"Tu primer plan a distancia: un documento para conocer tus datos, objetivos, hábitos y rutina, y a partir de ahí un plan 100% personalizado.",
 		features: sharedFeatures,
@@ -50,6 +52,7 @@ const planTiers: PlanTier[] = [
 		name: "Plan de seguimiento",
 		price: "1,000",
 		priceId: "price_1UDoZIBoTKroQtb96qUzoQz8",
+		badge: "Ya soy paciente",
 		description:
 			"Actualiza tu plan a distancia con base en tus avances, cambios de hábitos y nuevos objetivos, sin consulta presencial.",
 		features: sharedFeatures,
@@ -147,6 +150,10 @@ export default function PricingSection() {
 							un plan de alimentación completamente personalizado y adaptado a
 							tu día a día.
 						</p>
+						<p className="mt-3 text-sm font-medium text-[oklch(30%_0.005_12)]">
+							Entrega aproximada: 5–7 días hábiles después de recibir tu
+							documento completo.
+						</p>
 					</div>
 
 					<div className="grid gap-6 md:grid-cols-2 max-w-4xl mx-auto">
@@ -168,7 +175,10 @@ export default function PricingSection() {
 										</span>
 									)}
 
-									<h3 className="text-lg font-medium text-[oklch(18%_0.005_12)]">
+									<p className="text-xs font-medium uppercase tracking-wide text-[#DA5F6F]">
+										{plan.badge}
+									</p>
+									<h3 className="mt-1 text-lg font-medium text-[oklch(18%_0.005_12)]">
 										{plan.name}
 									</h3>
 									<p className="mt-2 text-sm leading-relaxed text-[oklch(50%_0.01_12)]">
@@ -202,7 +212,7 @@ export default function PricingSection() {
 												: "bg-[oklch(18%_0.005_12)] text-white hover:bg-[oklch(25%_0.005_12)] focus-visible:outline-[oklch(18%_0.005_12)]"
 										}`}
 									>
-										Elegir plan
+										{plan.popular ? "Empezar plan inicial" : "Actualizar mi plan"}
 									</button>
 								</div>
 							);

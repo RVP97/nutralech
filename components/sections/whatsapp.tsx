@@ -409,8 +409,8 @@ function Iphone15ProWhatsappLightSmaller() {
 							</p>
 						</div>
 						<p className="text-xs text-gray-700">
-							Esta semana: revisión de progreso express para clientes activos.
-							Reserva tu espacio desde la sección de servicios.
+							Esta semana: seguimiento express para pacientes activos. Actualiza
+							tu plan desde la sección de precios.
 						</p>
 					</div>
 					<div className="rounded-xl bg-white border border-gray-200 p-3">
@@ -439,7 +439,7 @@ function Iphone15ProWhatsappLightSmaller() {
 							type: "Video",
 						},
 						{
-							name: "Consulta inicial - Carlos",
+							name: "Plan inicial - Carlos",
 							time: "Ayer, 18:45",
 							type: "Voice",
 						},
@@ -508,7 +508,7 @@ function Iphone15ProWhatsappLightSmaller() {
 				<div className="rounded-xl border border-gray-200 p-3">
 					<p className="text-sm font-semibold text-gray-900">Notificaciones</p>
 					<p className="text-xs text-gray-600 mt-1">
-						Activas para consultas, recordatorios de citas y nuevos recursos.
+						Activas para dudas del plan, entrega de documentos y nuevos recursos.
 					</p>
 				</div>
 			</div>
@@ -776,9 +776,9 @@ export default function PersonalizedCommunicationSection() {
 				<div className="grid gap-12 lg:grid-cols-2 items-center">
 					<div className="space-y-8">
 						<p className="text-lg leading-relaxed text-[oklch(45%_0.01_12)]">
-							Estoy disponible para responder tus preguntas y brindarte apoyo
-							personalizado entre sesiones. Respuestas en un plazo máximo de
-							24 horas, con ajustes a tu plan según tu progreso.
+							Estoy disponible para responder tus preguntas y apoyarte con
+							ajustes a tu plan. Respuestas en un plazo máximo de 24 horas,
+							adaptadas a tu progreso.
 						</p>
 						<div className="space-y-5">
 							{features.map((feature, index) => (

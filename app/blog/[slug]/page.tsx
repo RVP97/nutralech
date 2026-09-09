@@ -320,7 +320,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 								Quieres un plan personalizado?
 							</h2>
 							<p className="mt-1 text-sm text-[oklch(50%_0.01_12)]">
-								Agenda una consulta para recomendaciones adaptadas a ti.
+								Conoce el Plan a distancia para recomendaciones adaptadas a ti.
 							</p>
 						</div>
 						<Link
@@ -328,7 +328,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 							href="/#precios"
 							className="shrink-0 inline-flex h-11 items-center rounded-full bg-[#DA5F6F] px-7 text-sm font-medium text-white transition-colors duration-200 hover:bg-[#C54B5B]"
 						>
-							Ver planes
+							Ver plan a distancia
 						</Link>
 					</div>
 				</div>

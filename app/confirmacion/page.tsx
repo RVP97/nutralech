@@ -1,6 +1,7 @@
 export const revalidate = 0; // Disables caching for SSR
 
 import type { Metadata } from "next";
+import { headers } from "next/headers";
 import { notFound } from "next/navigation";
 import Script from "next/script";
 import SuccessfulPayment from "@/components/sections/successful-payment";
@@ -33,13 +34,21 @@ interface CheckoutSession {
 
 async function getCheckoutSession(sessionId: string): Promise<CheckoutSession> {
 	try {
+		const headerStore = await headers();
+		const host = headerStore.get("x-forwarded-host") ?? headerStore.get("host");
+		const proto = headerStore.get("x-forwarded-proto") ?? "https";
+		const baseUrl = host
+			? `${proto}://${host}`
+			: "https://www.nutralech.com";
+
 		const response = await fetch(
-			`https://nutralech.com/api/checkout_sessions?session_id=${sessionId}`,
+			`${baseUrl}/api/checkout_sessions?session_id=${sessionId}`,
 			{
 				method: "GET",
 				headers: {
 					"Content-Type": "application/json",
 				},
+				cache: "no-store",
 			},
 		);
 
@@ -72,11 +81,7 @@ export default async function Return({
 			notFound();
 		}
 
-		// Solo se vende Plan a distancia: post-pago = llenar documento, sin Cal.com.
-		const calendarButtonText = "Agendar Sesión";
-		const calendarUrl = "https://cal.com/nutralech/inicial";
-		const consultaDistancia = true;
-
+		// Solo se vende Plan a distancia: post-pago = llenar documento.
 		return (
 			<div className="mt-14 md:mt-0">
 				<Script id="gtm-purchase-script" strategy="afterInteractive">
@@ -103,9 +108,6 @@ export default async function Return({
 				</Script>
 				<Confetti />
 				<SuccessfulPayment
-					consultaDistancia={consultaDistancia}
-					calendarButtonText={calendarButtonText}
-					calendarUrl={calendarUrl}
 					time={session.time ?? 0}
 					lineItems={session.lineItems ?? []}
 					email={session.customer_email ?? ""}
