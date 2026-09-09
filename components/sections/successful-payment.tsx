@@ -147,7 +147,8 @@ export default function SuccessfulPayment({
 							</li>
 							{consultaDistancia && (
 								<li className="pl-2">
-									Por favor llena la historia clínica y envíamela por correo a{" "}
+									Descarga y llena el documento con tus datos, objetivos,
+									hábitos, rutina y preferencias, y envíamelo por correo a{" "}
 									<span className="font-semibold">marialyalonso@gmail.com</span>{" "}
 									o por WhatsApp al{" "}
 									<Link

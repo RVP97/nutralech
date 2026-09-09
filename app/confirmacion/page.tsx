@@ -72,21 +72,10 @@ export default async function Return({
 			notFound();
 		}
 
-		const { calendarButtonText, calendarUrl } = session.lineItems.some(
-			(item) => item.price.product === "prod_NKr66L5cZaB7J3",
-		)
-			? {
-					calendarButtonText: "Agendar Sesión",
-					calendarUrl: "https://cal.com/nutralech/seguimiento",
-				}
-			: {
-					calendarButtonText: "Agendar Sesión",
-					calendarUrl: "https://cal.com/nutralech/inicial",
-				};
-
-		const consultaDistancia = session.lineItems.some(
-			(item) => item.price.product === "prod_NKrB6ksz8CGbeU",
-		);
+		// Solo se vende Plan a distancia: post-pago = llenar documento, sin Cal.com.
+		const calendarButtonText = "Agendar Sesión";
+		const calendarUrl = "https://cal.com/nutralech/inicial";
+		const consultaDistancia = true;
 
 		return (
 			<div className="mt-14 md:mt-0">

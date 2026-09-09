@@ -1,6 +1,6 @@
 "use client";
 
-import { Check, Copy, X } from "lucide-react";
+import { Check, Copy } from "lucide-react";
 import dynamic from "next/dynamic";
 import Image from "next/image";
 import Link from "next/link";
@@ -14,22 +14,12 @@ import {
 	DialogTrigger,
 } from "@/components/ui/dialog";
 
-interface IndividualPlan {
+interface PlanTier {
 	name: string;
 	price: string;
 	priceId: string;
 	description: string;
-	features: { name: string; cross: boolean }[];
-	popular?: boolean;
-}
-
-interface Package {
-	name: string;
-	originalPrice: string;
-	discountedPrice: string;
-	priceId: string;
-	description: string;
-	features: { name: string; cross: boolean }[];
+	features: string[];
 	popular?: boolean;
 }
 
@@ -37,94 +27,32 @@ interface StripeCheckoutProps {
 	priceId: string;
 }
 
-const individualPlans: IndividualPlan[] = [
-	{
-		name: "Consulta de Seguimiento",
-		price: "800",
-		priceId: "price_1QHcX3BoTKroQtb9iezs2h2q",
-		description:
-			"Sesión en línea para revisar avances y afinar tu plan después de la consulta inicial.",
-		features: [
-			{ name: "Sesión por videollamada (30 minutos)", cross: false },
-			{
-				name: "Revisión de tu plan, progreso, dificultades y retos, con ajustes para alcanzar tus metas",
-				cross: false,
-			},
-			{ name: "Plan alimenticio por equivalencias con ejemplos de menú", cross: false },
-			{ name: "Seguimiento recomendado cada 2 o 3 semanas", cross: false },
-			{ name: "Comunicación y soporte por WhatsApp (directamente con Marialy)", cross: false },
-		],
-	},
-	{
-		name: "Consulta Inicial",
-		price: "1,200",
-		priceId: "price_1QHcqHBoTKroQtb9EcQsiBUO",
-		description:
-			"Primera consulta en línea para conocerte y adaptar un plan a tus necesidades.",
-		features: [
-			{ name: "Sesión por videollamada (45 minutos)", cross: false },
-			{ name: "Evaluación nutricional completa", cross: false },
-			{ name: "Plan alimenticio por equivalencias con ejemplos de menú", cross: false },
-			{ name: "Recomendaciones de suplementación (solo si es necesario)", cross: false },
-			{ name: "Consulta de primera vez", cross: false },
-			{ name: "Comunicación y soporte por WhatsApp (directamente con Marialy)", cross: false },
-		],
-		popular: true,
-	},
+const sharedFeatures = [
+	"Plan de alimentación personalizado.",
+	"Sistema de equivalencias para que puedas variar tus alimentos y no depender de un menú rígido.",
+	"Una opción de menú ejemplo para ayudarte a visualizar cómo organizar tus comidas.",
+	"Recomendaciones personalizadas de acuerdo con tus hábitos y objetivos.",
+	"Opciones y estrategias para cuando comes fuera de casa.",
+	"Recomendaciones prácticas para que puedas adaptar el plan a tu rutina y estilo de vida.",
 ];
 
-const packages: Package[] = [
+const planTiers: PlanTier[] = [
 	{
-		name: "Paquete Básico",
-		originalPrice: "2,000",
-		discountedPrice: "1,700",
-		priceId: "price_1QHcY3BoTKroQtb9oY63GCl3",
+		name: "Plan inicial",
+		price: "1,200",
+		priceId: "price_1UDoYxBoTKroQtb9eaEjMz8v",
 		description:
-			"Perfecto para empezar a cambiar tu estilo de vida y alimentación.",
-		features: [
-			{ name: "1 Consulta Inicial", cross: false },
-			{ name: "1 Consulta de Seguimiento", cross: false },
-			{ name: "Evaluación nutricional completa", cross: false },
-			{ name: "Plan alimenticio por equivalencias con ejemplos de menú", cross: false },
-			{ name: "Recomendaciones de suplementación (solo si es necesario)", cross: false },
-			{ name: "Seguimiento recomendado cada 2 o 3 semanas", cross: false },
-			{ name: "Comunicación y soporte por WhatsApp (directamente con Marialy)", cross: false },
-		],
-	},
-	{
-		name: "Paquete Transformación",
-		originalPrice: "3,600",
-		discountedPrice: "3,060",
-		priceId: "price_1QHcYLBoTKroQtb9bjxsrz4x",
-		description:
-			"El plan ideal para quienes buscan transformar su vida por completo.",
-		features: [
-			{ name: "1 Consulta Inicial", cross: false },
-			{ name: "3 Consultas de Seguimiento", cross: false },
-			{ name: "Evaluación nutricional completa", cross: false },
-			{ name: "Plan alimenticio por equivalencias con ejemplos de menú", cross: false },
-			{ name: "Recomendaciones de suplementación (solo si es necesario)", cross: false },
-			{ name: "Seguimiento recomendado cada 2 o 3 semanas", cross: false },
-			{ name: "Comunicación y soporte por WhatsApp (directamente con Marialy)", cross: false },
-		],
+			"Tu primer plan a distancia: un documento para conocer tus datos, objetivos, hábitos y rutina, y a partir de ahí un plan 100% personalizado.",
+		features: sharedFeatures,
 		popular: true,
 	},
 	{
-		name: "Paquete Profesional",
-		originalPrice: "2,800",
-		discountedPrice: "2,380",
-		priceId: "price_1QHcYeBoTKroQtb9zJO7l4lD",
+		name: "Plan de seguimiento",
+		price: "1,000",
+		priceId: "price_1UDoZIBoTKroQtb96qUzoQz8",
 		description:
-			"Ideal para una transformación profunda para quien quiere un buen cambio.",
-		features: [
-			{ name: "1 Consulta Inicial", cross: false },
-			{ name: "2 Consultas de Seguimiento", cross: false },
-			{ name: "Evaluación nutricional completa", cross: false },
-			{ name: "Plan alimenticio por equivalencias con ejemplos de menú", cross: false },
-			{ name: "Recomendaciones de suplementación (solo si es necesario)", cross: false },
-			{ name: "Seguimiento recomendado cada 2 o 3 semanas", cross: false },
-			{ name: "Comunicación y soporte por WhatsApp (directamente con Marialy)", cross: false },
-		],
+			"Actualiza tu plan a distancia con base en tus avances, cambios de hábitos y nuevos objetivos, sin consulta presencial.",
+		features: sharedFeatures,
 	},
 ];
 
@@ -151,7 +79,6 @@ function CopyButton({ text, label }: { text: string; label: string }) {
 }
 
 export default function PricingSection() {
-	const [showPackages, setShowPackages] = useState(false);
 	const [selectedPriceId, setSelectedPriceId] = useState<string | null>(null);
 	const [StripeCheckout, setStripeCheckout] =
 		useState<ComponentType<StripeCheckoutProps> | null>(null);
@@ -174,8 +101,6 @@ export default function PricingSection() {
 		setStripeCheckout(() => StripeCheckoutComponent);
 	};
 
-	const activePlans = showPackages ? packages : individualPlans;
-
 	return (
 		<>
 			<Dialog
@@ -196,78 +121,53 @@ export default function PricingSection() {
 
 			<section id="precios" className="py-24 bg-white">
 				<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-					{/* Header */}
-					<div className="text-center mb-10">
+					<div className="text-center mb-6">
 						<p className="text-sm font-medium tracking-wide uppercase text-[#DA5F6F]">
 							Precios
 						</p>
 						<h2 className="mt-3 font-serif text-3xl font-medium tracking-tight text-[oklch(18%_0.005_12)] sm:text-4xl lg:text-5xl">
-							Elige tu plan
+							Plan a distancia
 						</h2>
-						<p className="mt-4 text-base text-[oklch(50%_0.01_12)] max-w-lg mx-auto">
-							Consultas en línea individuales para empezar, o paquetes con hasta
-							15% de ahorro si buscas un proceso completo.
+						<p className="mt-4 text-base text-[oklch(50%_0.01_12)] max-w-2xl mx-auto leading-relaxed">
+							Recibe un plan de alimentación 100% personalizado, diseñado de
+							acuerdo con tus objetivos, hábitos, estilo de vida y rutina, sin
+							necesidad de realizar una consulta presencial.
 						</p>
 					</div>
 
-					{/* Toggle */}
-					<div className="flex justify-center mb-12">
-						<div className="inline-flex rounded-full bg-[oklch(96%_0.005_12)] p-1">
-							<button
-								type="button"
-								onClick={() => setShowPackages(false)}
-								className={`rounded-full px-6 py-2.5 text-sm font-medium transition-all duration-200 ${
-									!showPackages
-										? "bg-white text-[oklch(18%_0.005_12)] shadow-sm"
-										: "text-[oklch(50%_0.01_12)] hover:text-[oklch(30%_0.005_12)]"
-								}`}
-							>
-								Planes individuales
-							</button>
-							<button
-								type="button"
-								onClick={() => setShowPackages(true)}
-								className={`rounded-full px-6 py-2.5 text-sm font-medium transition-all duration-200 ${
-									showPackages
-										? "bg-white text-[oklch(18%_0.005_12)] shadow-sm"
-										: "text-[oklch(50%_0.01_12)] hover:text-[oklch(30%_0.005_12)]"
-								}`}
-							>
-								Paquetes
-								<span className="ml-1.5 text-xs text-[#DA5F6F]">-15%</span>
-							</button>
-						</div>
+					<div className="mx-auto mb-12 max-w-2xl rounded-2xl border border-[oklch(92%_0.005_12)] bg-[oklch(98.5%_0.005_12)] px-6 py-5 text-left">
+						<p className="text-sm font-medium text-[oklch(18%_0.005_12)]">
+							¿Cómo funciona?
+						</p>
+						<p className="mt-2 text-sm leading-relaxed text-[oklch(45%_0.01_12)]">
+							Al contratar tu plan recibirás un documento que deberás llenar con
+							información sobre ti: tus datos, objetivos, hábitos de
+							alimentación, rutina, actividad física, estilo de vida, horarios,
+							gustos y preferencias. Con base en toda esta información elaboraré
+							un plan de alimentación completamente personalizado y adaptado a
+							tu día a día.
+						</p>
 					</div>
 
-					{/* Plans grid */}
-					<div
-						className={`grid gap-6 md:grid-cols-2 ${
-							activePlans.length === 2
-								? "lg:grid-cols-2 max-w-4xl mx-auto"
-								: "lg:grid-cols-3"
-						}`}
-					>
-						{activePlans.map((plan, index) => {
-							const isPopular = plan.popular;
-							const isHighlighted = isPopular;
+					<div className="grid gap-6 md:grid-cols-2 max-w-4xl mx-auto">
+						{planTiers.map((plan) => {
+							const isHighlighted = plan.popular;
 
 							return (
 								<div
-									key={index}
+									key={plan.priceId}
 									className={`relative flex flex-col rounded-2xl border p-8 transition-shadow duration-200 ${
 										isHighlighted
 											? "border-[#DA5F6F]/30 bg-[oklch(98.5%_0.01_12)] shadow-sm"
 											: "border-[oklch(92%_0.005_12)] bg-white hover:shadow-sm"
 									}`}
 								>
-									{/* Badge */}
-									{isPopular && (
+									{isHighlighted && (
 										<span className="absolute -top-3 left-6 rounded-full bg-[#DA5F6F] px-3.5 py-1 text-xs font-medium text-white">
 											Más popular
 										</span>
 									)}
 
-									{/* Name + description */}
 									<h3 className="text-lg font-medium text-[oklch(18%_0.005_12)]">
 										{plan.name}
 									</h3>
@@ -275,48 +175,24 @@ export default function PricingSection() {
 										{plan.description}
 									</p>
 
-									{/* Price */}
 									<div className="mt-6 flex items-baseline gap-2">
-										{showPackages ? (
-											<>
-												<span className="text-sm line-through text-[oklch(65%_0.005_12)]">
-													${(plan as Package).originalPrice}
-												</span>
-												<span className="text-3xl font-semibold tabular-nums text-[oklch(18%_0.005_12)]">
-													${(plan as Package).discountedPrice}
-												</span>
-											</>
-										) : (
-											<span className="text-3xl font-semibold tabular-nums text-[oklch(18%_0.005_12)]">
-												${(plan as IndividualPlan).price}
-											</span>
-										)}
+										<span className="text-3xl font-semibold tabular-nums text-[oklch(18%_0.005_12)]">
+											${plan.price}
+										</span>
 										<span className="text-sm text-[oklch(55%_0.01_12)]">MXN</span>
 									</div>
 
-									{/* Features */}
 									<ul className="mt-8 flex-1 space-y-3">
-										{plan.features.map((feature, idx) => (
-											<li key={idx} className="flex items-start gap-2.5">
-												{feature.cross ? (
-													<X className="mt-0.5 h-4 w-4 shrink-0 text-[oklch(82%_0.005_12)]" />
-												) : (
-													<Check className="mt-0.5 h-4 w-4 shrink-0 text-[#DA5F6F]" />
-												)}
-												<span
-													className={`text-sm leading-relaxed ${
-														feature.cross
-															? "text-[oklch(72%_0.005_12)]"
-															: "text-[oklch(35%_0.005_12)]"
-													}`}
-												>
-													{feature.name}
+										{plan.features.map((feature) => (
+											<li key={feature} className="flex items-start gap-2.5">
+												<Check className="mt-0.5 h-4 w-4 shrink-0 text-[#DA5F6F]" />
+												<span className="text-sm leading-relaxed text-[oklch(35%_0.005_12)]">
+													{feature}
 												</span>
 											</li>
 										))}
 									</ul>
 
-									{/* CTA */}
 									<button
 										type="button"
 										onClick={() => handlePlanSelection(plan.priceId)}
@@ -333,7 +209,12 @@ export default function PricingSection() {
 						})}
 					</div>
 
-					{/* Payment methods + transfer info (below cards) */}
+					<p className="mt-10 mx-auto max-w-2xl text-center text-sm leading-relaxed text-[oklch(50%_0.01_12)]">
+						La idea no es darte una dieta genérica, sino crear una guía que
+						puedas aplicar de manera realista en tu día a día y que se adapte a
+						ti.
+					</p>
+
 					<div className="mt-16 flex flex-col items-center gap-4">
 						<p className="text-xs font-medium tracking-wide uppercase text-[oklch(60%_0.005_12)]">
 							Métodos de pago
