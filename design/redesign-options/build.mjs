@@ -1,0 +1,935 @@
+// Builds index.html: a diagnosis of the current homepage plus five redesign
+// directions, each rendered from the same content model at desktop and mobile.
+// Run: node design/redesign-options/build.mjs
+import { writeFileSync } from "node:fs";
+import { dirname, join } from "node:path";
+import { fileURLToPath } from "node:url";
+
+const here = dirname(fileURLToPath(import.meta.url));
+
+/* ------------------------------------------------------------------ */
+/* Content model (real copy from the site, tightened)                  */
+/* ------------------------------------------------------------------ */
+const C = {
+	steps: [
+		["Compras tu plan y llenas el documento", "Pagas en línea y recibes un documento para contarme tus datos, objetivos, hábitos, rutina, horarios y gustos."],
+		["Elaboro tu plan personalizado", "Con esa información preparo tu plan. Lo recibes en 5 a 7 días hábiles después de enviar el documento completo."],
+		["Lo aplicas con acompañamiento", "Me escribes por WhatsApp con dudas sobre tu plan. Cuando quieras ajustes, lo actualizamos con el Plan de seguimiento."],
+	],
+	includes: [
+		["Plan de alimentación personalizado", "Diseñado para tus objetivos, horarios y preferencias."],
+		["Sistema de equivalencias", "Para variar tus alimentos sin depender de un menú rígido."],
+		["Menú ejemplo", "Para visualizar cómo organizar tus comidas del día."],
+		["Recomendaciones personalizadas", "De acuerdo con tus hábitos y objetivos."],
+		["Estrategias para comer fuera", "Opciones para restaurantes, oficina y viajes."],
+		["Tips para tu rutina", "Recomendaciones prácticas para que el plan se adapte a tu vida."],
+	],
+	focus: ["Relación con la comida", "Síndrome de ovario poliquístico", "Resistencia a la insulina", "Pérdida de grasa", "Aumento de masa muscular", "Salud hormonal", "Rendimiento deportivo", "Aprender a comer bien"],
+	plans: [
+		{ name: "Plan inicial", who: "Primera vez", price: "1,200", desc: "Tu primer plan a distancia, elaborado desde cero con la información de tu documento.", cta: "Empezar plan inicial", rec: true },
+		{ name: "Plan de seguimiento", who: "Ya tienes un plan conmigo", price: "1,000", desc: "Actualizo tu plan según tus avances, cambios de hábitos y nuevos objetivos.", cta: "Actualizar mi plan" },
+	],
+	quotes: [
+		{ q: "Obtuve súper buenos resultados sin hacer nada extremo ni estar en dietas restrictivas. Me encanta que todo mi plan fue muy balanceado y que diario me apoya en todas mis dudas.", n: "Emma Pinto", h: "@chefeemmapinto", img: "img/emma.webp" },
+		{ q: "No solo me ayuda a cumplir mis metas, sino que tengo una mejor relación con la comida. La recomiendo 100% a quien esté buscando a una nutrióloga.", n: "Helena Molina", h: "@helenamolinar", img: "img/helena.webp" },
+		{ q: "He logrado mis objetivos de salud con facilidad y eficacia. Su conocimiento y enfoque personalizado son excepcionales.", n: "Rodrigo Valle", h: "@rodrigo.vallep", img: "img/rodrigo.webp" },
+	],
+	faq: [
+		["¿Incluye videollamada?", "No. El plan es asíncrono: tú envías tu información por el documento y yo te entrego el plan listo para aplicar."],
+		["¿Cuánto tarda en llegar mi plan?", "Aproximadamente 5 a 7 días hábiles después de recibir tu documento completo."],
+		["¿Qué diferencia hay entre el Plan inicial y el de seguimiento?", "El Plan inicial ($1,200 MXN) es para tu primera vez. El de seguimiento ($1,000 MXN) actualiza un plan que ya tienes, según tus avances u objetivos nuevos."],
+		["¿Trabajas con condiciones médicas?", "Sí, tengo experiencia con diabetes, hipertensión y enfermedades autoinmunes. Trabajo en coordinación con tu equipo médico cuando es relevante."],
+		["¿Cómo puedo pagar?", "Con tarjeta (Visa, Mastercard, American Express), en efectivo en OXXO o por transferencia SPEI."],
+	],
+	about: "Estudié Nutrición en la Universidad Iberoamericana y me titulé con Mención Honorífica. Mi enfoque va más allá de las dietas restrictivas: construir hábitos sostenibles que mejoren tu salud y tu calidad de vida a largo plazo, con base en evidencia científica.",
+};
+
+/* ------------------------------------------------------------------ */
+/* Small helpers                                                        */
+/* ------------------------------------------------------------------ */
+const logo = (fill = "currentColor") =>
+	`<svg class="lm" viewBox="0 0 49 34" aria-hidden="true"><path fill="${fill}" d="M 4.071 11.084 C 4.071 11.084 2.168 26.266 18.051 26.266 C 18.051 26.266 22.01 11.084 4.071 11.084 Z"/><path fill="${fill}" d="M 44.429 4.722 C 22.823 4.722 20.824 18.311 21.221 25.288 C 24.871 14.76 34.822 12.436 34.822 12.436 C 25.322 18.179 23.374 28.546 23.247 29.278 C 47.374 28.347 44.429 4.722 44.429 4.722 Z"/></svg>`;
+const check = `<svg class="ck" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 10.5l3.2 3.2L15 7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+const arrow = `<svg class="ar" viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h11m-4-4 4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+const menu = `<svg class="mn" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>`;
+
+const nav = (o = {}) => `
+<header class="nav"><div class="w nav-in">
+  <a class="brand" href="#">${logo(o.logoFill)}<span>Nutralech</span></a>
+  <nav class="links"><a href="#">Cómo funciona</a><a href="#">Planes</a><a href="#">Sobre mí</a><a href="#">Blog</a><a href="#">Herramientas</a></nav>
+  <div class="nav-r"><a class="btn btn-p btn-sm" href="#">${o.cta ?? "Empezar"}</a><button class="burger" type="button" aria-label="Menú">${menu}</button></div>
+</div></header>`;
+
+const faqList = (open = 0) =>
+	C.faq.map(([q, a], i) => `<details class="qa"${i === open ? " open" : ""}><summary>${q}</summary><p>${a}</p></details>`).join("");
+
+const includesList = () =>
+	`<ul class="incl">${C.includes.map(([t, d]) => `<li>${check}<div><strong>${t}</strong><span>${d}</span></div></li>`).join("")}</ul>`;
+
+const stepsList = () =>
+	`<ol class="steps">${C.steps.map(([t, d], i) => `<li><span class="sn">${i + 1}</span><div><h3>${t}</h3><p>${d}</p></div></li>`).join("")}</ol>`;
+
+const planCards = () =>
+	`<div class="plans">${C.plans
+		.map(
+			(p) => `<article class="plan${p.rec ? " rec" : ""}">
+  <div class="plan-hd"><span class="plan-who">${p.who}</span>${p.rec ? `<span class="plan-tag">Recomendado para empezar</span>` : ""}</div>
+  <h3>${p.name}</h3>
+  <p class="plan-price"><span>$${p.price}</span> MXN</p>
+  <p class="plan-desc">${p.desc}</p>
+  <a class="btn ${p.rec ? "btn-p" : "btn-s"} btn-block" href="#">${p.cta}</a>
+</article>`,
+		)
+		.join("")}</div>`;
+
+const payNote = `<p class="pay">Entrega en 5–7 días hábiles · Pago con tarjeta, OXXO o transferencia SPEI</p>`;
+
+const quoteCards = () =>
+	`<div class="quotes">${C.quotes
+		.map((t) => `<figure class="quote"><blockquote>“${t.q}”</blockquote><figcaption><img src="${t.img}" alt=""><span><strong>${t.n}</strong>${t.h}</span></figcaption></figure>`)
+		.join("")}</div>`;
+
+const sticky = `<div class="sticky"><div><strong>Plan inicial</strong><span>$1,200 MXN · 5–7 días hábiles</span></div><a class="btn btn-p btn-sm" href="#">Empezar</a></div>`;
+
+const footer = () => `
+<footer class="foot"><div class="w foot-in">
+  <div class="foot-brand"><a class="brand" href="#">${logo()}<span>Nutralech</span></a><p>Nutrición personalizada a distancia con Marialy Alonso.</p></div>
+  <div class="foot-cols">
+    <div><h4>Sitio</h4><a href="#">Planes</a><a href="#">Sobre mí</a><a href="#">Blog</a><a href="#">Herramientas</a></div>
+    <div><h4>Contacto</h4><a href="#">WhatsApp +52 744 346 8252</a><a href="#">contacto@nutralech.com</a></div>
+    <div><h4>Redes</h4><a href="#">Instagram</a><a href="#">TikTok</a><a href="#">YouTube</a></div>
+  </div>
+</div><div class="w foot-legal">© 2026 Nutralech. La asesoría nutricional no sustituye la atención médica.</div></footer>`;
+
+/* A realistic, flat preview of the deliverable (used by C, and small in A). */
+const planPreview = () => `
+<div class="doc" role="img" aria-label="Ejemplo de una página del plan de alimentación">
+  <div class="doc-hd"><div>${logo()}<strong>Plan de alimentación</strong></div><span>Ejemplo</span></div>
+  <dl class="doc-meta"><div><dt>Paciente</dt><dd>Ana, 29 años</dd></div><div><dt>Objetivo</dt><dd>Más energía y mejor composición corporal</dd></div><div><dt>Rutina</dt><dd>Oficina 9–18 h · entrena 7:00</dd></div></dl>
+  <table class="doc-t"><caption>Distribución diaria en equivalentes</caption>
+    <thead><tr><th scope="col">Tiempo</th><th scope="col">Hora</th><th scope="col">Equivalentes</th></tr></thead>
+    <tbody>
+      <tr><th scope="row">Desayuno</th><td>8:00</td><td>2 cereal · 1 proteína · 1 fruta · 1 grasa</td></tr>
+      <tr><th scope="row">Colación</th><td>11:30</td><td>1 fruta · 1 lácteo</td></tr>
+      <tr><th scope="row">Comida</th><td>15:00</td><td>2 cereal · 3 proteína · 2 verdura · 1 grasa</td></tr>
+      <tr><th scope="row">Cena</th><td>20:30</td><td>1 cereal · 2 proteína · 1 verdura</td></tr>
+    </tbody></table>
+  <div class="doc-eq"><span>1 equivalente de cereal</span><ul><li>1 tortilla de maíz</li><li>⅓ taza de avena</li><li>1 rebanada de pan integral</li></ul></div>
+</div>`;
+
+/* ------------------------------------------------------------------ */
+/* Five directions                                                      */
+/* ------------------------------------------------------------------ */
+
+// A · Evolución: same identity, fixed fundamentals.
+const A = () => `
+<div class="mk oA">
+${nav({ cta: "Empezar mi plan" })}
+<section class="hero"><div class="w hero-g">
+  <div class="hero-t">
+    <p class="eyebrow">Plan de alimentación a distancia</p>
+    <h1>Planes que se adaptan a tu vida, no al revés</h1>
+    <p class="lead">Un plan 100% personalizado según tus objetivos, hábitos y rutina. Llenas un documento y en 5–7 días hábiles recibes una guía realista para tu día a día.</p>
+    <div class="ctas"><a class="btn btn-p" href="#">Empezar · $1,200 MXN</a><a class="btn btn-s" href="#">Cómo funciona</a></div>
+    <p class="micro">Sin videollamada · Dudas por WhatsApp · Pagos con tarjeta, OXXO o SPEI</p>
+  </div>
+  <figure class="hero-img"><img src="img/marialy.webp" alt="Marialy Alonso, nutrióloga"></figure>
+</div></section>
+<section class="proof"><div class="w proof-g">
+  <div><strong>Universidad Iberoamericana</strong><span>Nutrióloga, Mención Honorífica</span></div>
+  <div><strong>780K</strong><span>personas siguen su contenido</span></div>
+  <div><strong>6 continentes</strong><span>pacientes atendidos a distancia</span></div>
+</div></section>
+<section class="sec"><div class="w">
+  <div class="sh"><p class="eyebrow">Cómo funciona</p><h2>Tres pasos, sin citas ni horarios</h2></div>
+  ${stepsList()}
+</div></section>
+<section class="sec tint"><div class="w two">
+  <div><p class="eyebrow">Qué recibes</p><h2>Una guía que puedes aplicar de verdad</h2><p class="body">La idea no es darte una dieta genérica, sino un plan que se adapte a ti y que puedas sostener.</p>
+    <div class="focus"><h3>Áreas en las que te puedo ayudar</h3><ul class="chips">${C.focus.map((f) => `<li>${f}</li>`).join("")}</ul></div></div>
+  ${includesList()}
+</div></section>
+<section class="sec"><div class="w">
+  <div class="sh center"><p class="eyebrow">Planes</p><h2>Elige cómo empezar</h2><p class="body">Ambos planes incluyen todo lo anterior. La diferencia es si es tu primera vez.</p></div>
+  ${planCards()}${payNote}
+</div></section>
+<section class="sec tint"><div class="w">
+  <div class="sh"><p class="eyebrow">Testimonios</p><h2>Lo que dicen mis pacientes</h2></div>
+  ${quoteCards()}
+</div></section>
+<section class="sec"><div class="w two about">
+  <figure class="about-img"><img src="img/marialy-2.webp" alt="Retrato de Marialy Alonso"></figure>
+  <div><p class="eyebrow">Sobre mí</p><h2>Hola, soy Marialy</h2><p class="body">${C.about}</p><a class="link" href="#">Conoce mi historia ${arrow}</a></div>
+</div></section>
+<section class="sec tint"><div class="w two faq">
+  <div><p class="eyebrow">Preguntas frecuentes</p><h2>Antes de empezar</h2><p class="body">¿Otra duda? Escríbeme por WhatsApp al +52 744 346 8252.</p></div>
+  <div>${faqList()}</div>
+</div></section>
+<section class="final"><div class="w final-in"><h2>Empieza tu plan hoy</h2><p>Recíbelo en 5–7 días hábiles después de enviar tu documento.</p><a class="btn btn-p" href="#">Empezar · $1,200 MXN</a></div></section>
+${footer()}${sticky}
+</div>`;
+
+// B · Suizo: one typeface, a strict 12-column grid, information-first.
+const B = () => `
+<div class="mk oB">
+${nav({ cta: "Empezar" })}
+<section class="hero"><div class="w">
+  <h1>Nutrición personalizada, a&nbsp;distancia.</h1>
+  <div class="g12 hero-g">
+    <figure class="hero-img"><img src="img/marialy.webp" alt="Marialy Alonso, nutrióloga"></figure>
+    <div class="hero-side">
+      <p class="lead">Un plan de alimentación hecho para tus objetivos, hábitos y rutina por Marialy Alonso, nutrióloga por la Universidad Iberoamericana.</p>
+      <dl class="facts"><div><dt>Precio</dt><dd>$1,200 MXN</dd></div><div><dt>Entrega</dt><dd>5–7 días hábiles</dd></div><div><dt>Formato</dt><dd>Documento, sin videollamada</dd></div><div><dt>Soporte</dt><dd>WhatsApp</dd></div></dl>
+      <a class="btn btn-p btn-block" href="#">Empezar mi plan</a>
+    </div>
+  </div>
+</div></section>
+<section class="sec"><div class="w g12">
+  <div class="c-l"><p class="eyebrow">Proceso</p><h2>Cómo funciona</h2></div>
+  <div class="c-r">${stepsList()}</div>
+</div></section>
+<section class="sec"><div class="w g12">
+  <div class="c-l"><p class="eyebrow">Planes</p><h2>Precios</h2><p class="body">Ambos planes incluyen lo mismo. El Plan de seguimiento es para quien ya tiene un plan conmigo.</p></div>
+  <div class="c-r"><div class="tbl"><table class="cmp">
+    <thead><tr><th scope="col"><span class="vh">Incluye</span></th><th scope="col">Plan inicial<span>Primera vez</span></th><th scope="col">Seguimiento<span>Ya tienes un plan</span></th></tr></thead>
+    <tbody>
+      <tr class="pr"><th scope="row">Precio</th><td>$1,200 <small>MXN</small></td><td>$1,000 <small>MXN</small></td></tr>
+      ${C.includes.map(([t]) => `<tr><th scope="row">${t}</th><td>${check}</td><td>${check}</td></tr>`).join("")}
+      <tr><th scope="row">Basado en</th><td>Tu documento inicial</td><td>Tus avances y nuevos objetivos</td></tr>
+    </tbody>
+    <tfoot><tr><td></td><td><a class="btn btn-p btn-block" href="#">Empezar</a></td><td><a class="btn btn-s btn-block" href="#">Actualizar</a></td></tr></tfoot>
+  </table></div>${payNote}</div>
+</div></section>
+<section class="sec"><div class="w g12">
+  <div class="c-l"><p class="eyebrow">Testimonios</p><h2>Pacientes</h2></div>
+  <div class="c-r">
+    <figure class="bigq"><blockquote>“${C.quotes[1].q}”</blockquote><figcaption>${C.quotes[1].n}, ${C.quotes[1].h}</figcaption></figure>
+    <div class="smallq">${[C.quotes[0], C.quotes[2]].map((t) => `<figure><blockquote>“${t.q}”</blockquote><figcaption>${t.n}</figcaption></figure>`).join("")}</div>
+  </div>
+</div></section>
+<section class="sec"><div class="w g12">
+  <div class="c-l"><p class="eyebrow">Sobre mí</p><h2>Marialy Alonso</h2></div>
+  <div class="c-r about">
+    <figure><img src="img/marialy-2.webp" alt="Retrato de Marialy Alonso"></figure>
+    <div><p class="body">${C.about}</p>
+      <dl class="facts"><div><dt>Formación</dt><dd>Universidad Iberoamericana</dd></div><div><dt>Distinción</dt><dd>Mención Honorífica</dd></div><div><dt>Comunidad</dt><dd>780K seguidores</dd></div><div><dt>Alcance</dt><dd>Pacientes en 6 continentes</dd></div></dl></div>
+  </div>
+</div></section>
+<section class="sec"><div class="w g12">
+  <div class="c-l"><p class="eyebrow">Preguntas</p><h2>Frecuentes</h2></div>
+  <div class="c-r"><dl class="faqdl">${C.faq.map(([q, a]) => `<div><dt>${q}</dt><dd>${a}</dd></div>`).join("")}</dl></div>
+</div></section>
+<section class="final"><div class="w final-in"><h2>Empieza tu plan.</h2><a class="btn btn-p" href="#">Empezar · $1,200 MXN</a></div></section>
+${footer()}${sticky}
+</div>`;
+
+// C · Producto: lead with what you actually receive.
+const Cc = () => `
+<div class="mk oC">
+${nav({ cta: "Empezar mi plan" })}
+<section class="hero"><div class="w hero-g">
+  <div class="hero-t">
+    <p class="eyebrow">Plan de alimentación a distancia</p>
+    <h1>Tu plan de alimentación, hecho para tu rutina</h1>
+    <p class="lead">Cuéntame tus objetivos, horarios y lo que te gusta comer. Recibe en 5–7 días hábiles un plan con equivalencias, menú ejemplo y recomendaciones para tu vida real.</p>
+    <div class="ctas"><a class="btn btn-p" href="#">Empezar · $1,200 MXN</a><a class="btn btn-s" href="#">Ver qué incluye</a></div>
+    <div class="byline"><img src="img/marialy-2.webp" alt=""><span><strong>Marialy Alonso</strong>Nutrióloga · Universidad Iberoamericana</span></div>
+  </div>
+  <div class="hero-doc">${planPreview()}</div>
+</div></section>
+<section class="logos"><div class="w logos-in"><span>780K personas siguen su contenido</span><span>Pacientes en 6 continentes</span><span>Mención Honorífica, Ibero</span></div></section>
+<section class="sec"><div class="w">
+  <div class="sh center"><p class="eyebrow">Qué incluye</p><h2>Todo lo que necesitas para comer bien sin menú rígido</h2></div>
+  <div class="feat">${C.includes.map(([t, d]) => `<div class="fc">${check}<h3>${t}</h3><p>${d}</p></div>`).join("")}</div>
+</div></section>
+<section class="sec tint"><div class="w">
+  <div class="sh center"><p class="eyebrow">Cómo funciona</p><h2>Sin citas ni videollamadas</h2></div>
+  ${stepsList()}
+</div></section>
+<section class="sec"><div class="w">
+  <div class="sh center"><p class="eyebrow">Planes</p><h2>Un pago único, sin suscripción</h2></div>
+  ${planCards()}${payNote}
+</div></section>
+<section class="sec tint"><div class="w">
+  <div class="sh center"><p class="eyebrow">Testimonios</p><h2>Resultados sin extremos</h2></div>
+  ${quoteCards()}
+</div></section>
+<section class="sec"><div class="w two faq">
+  <div><p class="eyebrow">Preguntas frecuentes</p><h2>Resolvemos tus dudas</h2><div class="about-mini"><img src="img/marialy.webp" alt="Marialy Alonso"><p>${C.about}</p></div></div>
+  <div>${faqList()}</div>
+</div></section>
+<section class="final"><div class="w final-in"><div><h2>Listo para empezar</h2><p>Plan inicial · $1,200 MXN · entrega en 5–7 días hábiles</p></div><a class="btn btn-p" href="#">Empezar mi plan</a></div></section>
+${footer()}${sticky}
+</div>`;
+
+// D · Retrato: the person first, warm and quiet.
+const D = () => `
+<div class="mk oD">
+${nav({ cta: "Empezar" })}
+<section class="hero">
+  <div class="hero-t"><div class="hero-t-in">
+    <p class="eyebrow">Marialy Alonso · Nutrióloga</p>
+    <h1>Una forma realista de <em>comer mejor</em></h1>
+    <p class="lead">Planes de alimentación personalizados a distancia, pensados para tus horarios, tus gustos y tu ritmo. Sin extremos y sin videollamadas.</p>
+    <div class="ctas"><a class="btn btn-p" href="#">Empezar mi plan</a><a class="link" href="#">Conoce a Marialy ${arrow}</a></div>
+  </div></div>
+  <figure class="hero-img"><img src="img/marialy-2.webp" alt="Marialy Alonso, nutrióloga"></figure>
+</section>
+<section class="sec"><div class="w feature-q">
+  <figure><blockquote>“${C.quotes[1].q}”</blockquote><figcaption><img src="${C.quotes[1].img}" alt=""><span><strong>${C.quotes[1].n}</strong>Paciente</span></figcaption></figure>
+</div></section>
+<section class="sec tint"><div class="w two how">
+  <div><p class="eyebrow">Cómo funciona</p><h2>Tú me cuentas cómo vives. Yo diseño tu plan.</h2>${stepsList()}</div>
+  <figure class="how-img"><img src="img/marialy.webp" alt="Marialy Alonso sonriendo"></figure>
+</div></section>
+<section class="sec"><div class="w two">
+  <div><p class="eyebrow">Qué recibes</p><h2>Todo lo que incluye tu plan</h2><p class="body">La idea no es darte una dieta genérica, sino una guía que puedas aplicar de manera realista en tu día a día.</p></div>
+  ${includesList()}
+</div></section>
+<section class="sec tint"><div class="w">
+  <div class="sh"><p class="eyebrow">Planes</p><h2>Elige tu plan</h2></div>
+  ${planCards()}${payNote}
+</div></section>
+<section class="sec"><div class="w">
+  <div class="sh"><p class="eyebrow">Más testimonios</p><h2>Pacientes que ya tienen su plan</h2></div>
+  <div class="quotes two-q">${[C.quotes[0], C.quotes[2]].map((t) => `<figure class="quote"><blockquote>“${t.q}”</blockquote><figcaption><img src="${t.img}" alt=""><span><strong>${t.n}</strong>${t.h}</span></figcaption></figure>`).join("")}</div>
+</div></section>
+<section class="sec tint"><div class="w two faq">
+  <div><p class="eyebrow">Sobre mí</p><h2>Hola, soy Marialy</h2><p class="body">${C.about}</p><p class="sig">Marialy Alonso</p></div>
+  <div><h3 class="faq-h">Preguntas frecuentes</h3>${faqList()}</div>
+</div></section>
+<section class="final"><div class="w final-in"><h2>Empecemos por <em>tu</em> plan</h2><a class="btn btn-p" href="#">Empezar · $1,200 MXN</a></div></section>
+${footer()}${sticky}
+</div>`;
+
+// E · Marca: the brand rose as a confident field color.
+const E = () => `
+<div class="mk oE">
+<div class="hero-wrap">
+${nav({ cta: "Empezar", logoFill: "#fff" })}
+<section class="hero"><div class="w hero-g">
+  <div class="hero-t">
+    <h1>Come bien, a tu manera.</h1>
+    <p class="lead">Un plan de alimentación 100% personalizado, hecho por Marialy Alonso para tus objetivos, tu rutina y lo que te gusta comer. Sin videollamada.</p>
+    <div class="ctas"><a class="btn btn-w" href="#">Empezar · $1,200 MXN</a><a class="btn btn-o" href="#">Cómo funciona</a></div>
+    <ul class="hero-facts"><li>Entrega en 5–7 días hábiles</li><li>Dudas por WhatsApp</li><li>780K seguidores</li></ul>
+  </div>
+  <figure class="hero-img"><img src="img/marialy.webp" alt="Marialy Alonso, nutrióloga"></figure>
+</div></section>
+</div>
+<section class="sec"><div class="w">
+  <div class="sh"><h2>Así funciona</h2></div>
+  ${stepsList()}
+</div></section>
+<section class="sec blush"><div class="w two">
+  <div><h2>Qué incluye tu plan</h2><p class="body">Una guía para tu vida real, no una dieta genérica.</p><ul class="chips">${C.focus.map((f) => `<li>${f}</li>`).join("")}</ul></div>
+  ${includesList()}
+</div></section>
+<section class="sec ink"><div class="w">
+  <div class="sh"><h2>Planes</h2><p class="body">Un pago único. Sin suscripción.</p></div>
+  ${planCards()}${payNote}
+</div></section>
+<section class="sec"><div class="w">
+  <div class="sh"><h2>Lo que dicen mis pacientes</h2></div>
+  ${quoteCards()}
+</div></section>
+<section class="sec blush"><div class="w two about">
+  <figure class="about-img"><img src="img/marialy-2.webp" alt="Retrato de Marialy Alonso"></figure>
+  <div><h2>Hola, soy Marialy</h2><p class="body">${C.about}</p>
+  <dl class="stats"><div><dt>Formación</dt><dd>Ibero, Mención Honorífica</dd></div><div><dt>Comunidad</dt><dd>780K seguidores</dd></div><div><dt>Alcance</dt><dd>6 continentes</dd></div></dl></div>
+</div></section>
+<section class="sec"><div class="w two faq">
+  <div><h2>Preguntas frecuentes</h2></div>
+  <div>${faqList()}</div>
+</div></section>
+<section class="final"><div class="w final-in"><h2>¿Empezamos?</h2><a class="btn btn-w" href="#">Empezar · $1,200 MXN</a></div></section>
+${footer()}${sticky}
+</div>`;
+
+/* ------------------------------------------------------------------ */
+/* Directions metadata                                                  */
+/* ------------------------------------------------------------------ */
+const options = [
+	{
+		k: "a", name: "A · Evolución", tag: "Menor riesgo", html: A(),
+		title: "Evolución: tu marca actual, bien ejecutada",
+		why: "Mantiene el rosa, la foto y el tono actuales, y corrige los fundamentos: una serif real (Newsreader) en lugar de Times, texto de 17px con contraste AA, un orden de secciones que sigue la decisión de compra y un solo CTA primario. Tus pacientes actuales reconocen el sitio.",
+		fit: ["Quieres mejorar conversión sin cambiar la identidad", "Es la opción más rápida de implementar"],
+		risk: "Es la menos memorable de las cinco.",
+		pal: ["#FFFFFF", "#FBF5F5", "#1F1A1B", "#5F5557", "#B8404F", "#DA5F6F"],
+		type: "Newsreader (títulos) · Inter (texto)",
+	},
+	{
+		k: "b", name: "B · Suizo", tag: "Precisión", html: B(),
+		title: "Suizo: información clara en una retícula estricta",
+		why: "Una sola familia tipográfica (Geist), retícula de 12 columnas con títulos a la izquierda y contenido a la derecha, y nada decorativo. Los datos clave (precio, entrega, formato, soporte) están en el hero, los precios en una tabla comparativa y las preguntas frecuentes abiertas, sin clics. Transmite rigor científico.",
+		fit: ["Tu público valora la evidencia y la claridad", "Quieres diferenciarte de las marcas de wellness"],
+		risk: "Es más fría. La calidez depende de la fotografía.",
+		pal: ["#FFFFFF", "#F4F3F2", "#111111", "#5E5A58", "#B83A4D"],
+		type: "Geist (todo) · Geist Mono (números)",
+	},
+	{
+		k: "c", name: "C · Producto", tag: "Claridad", html: Cc(),
+		title: "Producto: enseña lo que recibes",
+		why: "Hoy el sitio describe el plan pero nunca lo muestra. Esta dirección pone una vista previa del plan en el hero (distribución diaria en equivalentes, tabla de intercambios) para que la gente vea lo que va a comprar. La autoría de Marialy aparece junto al CTA. Sigue el patrón de las mejores páginas de producto: mostrar antes que describir.",
+		fit: ["La duda principal es “¿qué me van a entregar?”", "Quieres reducir preguntas por WhatsApp antes de comprar"],
+		risk: "La vista previa debe basarse en un plan real (anonimizado).",
+		pal: ["#F6F6F7", "#FFFFFF", "#17161B", "#5C5A63", "#B8404F", "#FBEDEF"],
+		type: "Plus Jakarta Sans (todo)",
+	},
+	{
+		k: "d", name: "D · Retrato", tag: "Cercanía", html: D(),
+		title: "Retrato: la persona primero",
+		why: "La foto ocupa media pantalla, a sangre, y el primer bloque después del hero es un testimonio grande. La serie tipográfica Source Serif y Source Sans da calidez sin ornamento. Funciona porque la gente compra a Marialy, no a un servicio genérico, y aprovecha que tus fotos en blanco y negro son de buena calidad.",
+		fit: ["La mayoría llega desde tus redes y ya te conoce", "Tu diferencial es la relación con la comida"],
+		risk: "Depende de tener más fotografía propia de calidad.",
+		pal: ["#FFFFFF", "#F7F2F2", "#2A2224", "#665B5E", "#A93D4E"],
+		type: "Source Serif 4 (títulos) · Source Sans 3 (texto)",
+	},
+	{
+		k: "e", name: "E · Marca", tag: "Impacto", html: E(),
+		title: "Marca: el rosa como campo de color",
+		why: "El rosa de tu logotipo deja de ser un acento y se vuelve el fondo del hero. La foto en blanco y negro sobre el rosa crea una imagen propia, y las secciones alternan blanco, rosa claro y un tono tinta para marcar el ritmo. La tipografía (Bricolage Grotesque) tiene carácter sin ser llamativa. Es la más reconocible en una captura de Instagram.",
+		fit: ["Quieres una marca que se recuerde", "Tu público es joven y llega por redes"],
+		risk: "El rosa se oscurece a #B8404F para cumplir contraste AA con texto blanco.",
+		pal: ["#B8404F", "#FFFFFF", "#FCEEEF", "#231B1D", "#6A5C5F"],
+		type: "Bricolage Grotesque (títulos) · Figtree (texto)",
+	},
+];
+
+/* ------------------------------------------------------------------ */
+/* CSS                                                                  */
+/* ------------------------------------------------------------------ */
+const css = String.raw`
+/* ---------- Review chrome (theme-aware) ---------- */
+:root{--c-bg:#F3F2F1;--c-surface:#FFFFFF;--c-ink:#1B1A19;--c-muted:#63605D;--c-line:#DEDBD8;--c-accent:#B8404F;color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--c-bg:#151414;--c-surface:#1F1E1D;--c-ink:#EEECEA;--c-muted:#A29E9A;--c-line:#34312F;--c-accent:#F08C99;color-scheme:dark}}
+:root[data-theme="dark"]{--c-bg:#151414;--c-surface:#1F1E1D;--c-ink:#EEECEA;--c-muted:#A29E9A;--c-line:#34312F;--c-accent:#F08C99;color-scheme:dark}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--c-bg);color:var(--c-ink);font:15px/1.55 system-ui,-apple-system,"Segoe UI",sans-serif}
+.chrome{max-width:1360px;margin-inline:auto;padding-inline:16px}
+.top{padding-block:32px 16px}
+.top h1{margin:0;font-size:22px;line-height:1.25;font-weight:650;letter-spacing:-.01em}
+.top p{margin:6px 0 0;color:var(--c-muted);max-width:72ch}
+.tabs{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;display:flex;gap:4px;overflow-x:auto;scrollbar-width:none;padding-block:10px;background:var(--c-bg);border-bottom:1px solid var(--c-line)}
+.tab{flex:0 0 auto;border:0;background:transparent;color:var(--c-muted);font:600 14px/1 system-ui,sans-serif;padding:10px 14px;border-radius:8px;cursor:pointer}
+.tab small{font-weight:500;margin-left:6px;opacity:.8}
+.tab[aria-selected="true"]{background:var(--c-surface);color:var(--c-ink);box-shadow:0 0 0 1px var(--c-line)}
+.tab:focus-visible,.seg button:focus-visible{outline:2px solid var(--c-accent);outline-offset:2px}
+.brief{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr) minmax(0,1fr);gap:32px;padding-block:28px}
+.brief h2{margin:0 0 8px;font-size:20px;line-height:1.3;font-weight:650;text-wrap:balance}
+.brief p{margin:0;color:var(--c-muted);max-width:64ch}
+.brief h3{margin:0 0 8px;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--c-muted);font-weight:600}
+.brief ul{margin:0;padding-left:18px;display:grid;gap:4px}
+.brief .risk{margin-top:10px;color:var(--c-ink)}
+.sw{display:flex;gap:6px;margin-bottom:10px}.sw i{width:26px;height:26px;border-radius:6px;box-shadow:inset 0 0 0 1px rgba(0,0,0,.12)}
+.viewbar{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:12px;flex-wrap:wrap}
+.seg{display:inline-flex;background:var(--c-surface);border:1px solid var(--c-line);border-radius:10px;padding:3px}
+.seg button{border:0;background:transparent;color:var(--c-muted);font:600 13px/1 system-ui,sans-serif;padding:9px 14px;border-radius:7px;cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--c-ink);color:var(--c-bg)}
+.viewbar span{color:var(--c-muted);font-size:13px}
+.desk{border:1px solid var(--c-line);border-radius:12px;overflow:hidden;margin-bottom:56px;background:#fff}
+.phone-wrap{display:flex;justify-content:center;margin-bottom:56px}
+.phone{width:390px;max-width:100%;height:800px;overflow-y:auto;border:10px solid #1B1A19;border-radius:44px;background:#fff;scrollbar-width:none}
+.diag{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:40px;padding-block:28px 64px}
+.diag h2{font-size:20px;margin:0 0 12px;font-weight:650}
+.diag h3{font-size:15px;margin:0 0 4px;font-weight:650}
+.issues{list-style:none;margin:0;padding:0;display:grid;gap:0;border-top:1px solid var(--c-line)}
+.issues li{padding:14px 0;border-bottom:1px solid var(--c-line)}
+.issues p,.diag p{margin:0;color:var(--c-muted)}
+.ia{margin:0;padding-left:22px;display:grid;gap:10px}
+.ia li::marker{color:var(--c-muted);font-variant-numeric:tabular-nums}
+.ia span{display:block;color:var(--c-muted);font-size:14px}
+.sys{margin-top:28px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.sys div{background:var(--c-surface);border:1px solid var(--c-line);border-radius:10px;padding:14px}
+.sys p{font-size:14px}
+@media (max-width:900px){.brief,.diag{grid-template-columns:1fr}.sys{grid-template-columns:1fr}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+
+/* ---------- Mockup base (container queries: same markup, desktop or phone) ---------- */
+.mk{container-type:inline-size;background:var(--bg);color:var(--ink);font:400 var(--fs,17px)/1.6 var(--body);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+.mk *{margin:0}
+.mk img{display:block;max-width:100%}
+.mk a{color:inherit;text-decoration:none}
+.mk h1,.mk h2,.mk h3{font-family:var(--display);color:var(--ink);text-wrap:balance}
+.mk h1{font-size:var(--h1);line-height:var(--h1-lh,1.05);font-weight:var(--h-w,500);letter-spacing:var(--h1-ls,-.02em)}
+.mk h2{font-size:var(--h2);line-height:1.12;font-weight:var(--h-w,500);letter-spacing:var(--h2-ls,-.015em)}
+.mk h3{font-size:18px;line-height:1.35;font-weight:600;font-family:var(--body);letter-spacing:0}
+.mk p{text-wrap:pretty}
+.mk .w{max-width:1200px;margin-inline:auto;padding-inline:48px}
+.mk .sec{padding-block:var(--sec,112px)}
+.mk .tint{background:var(--tint)}
+.mk .eyebrow{font:600 13px/1 var(--body);letter-spacing:.06em;text-transform:uppercase;color:var(--accent-text);margin-bottom:16px}
+.mk .lead{font-size:20px;line-height:1.55;color:var(--muted);max-width:34em;margin-top:24px}
+.mk .body{color:var(--muted);max-width:36em;margin-top:16px}
+.mk .sh{margin-bottom:56px;max-width:44rem}
+.mk .sh.center{margin-inline:auto;text-align:center}
+.mk .sh.center .body{margin-inline:auto}
+.mk .two{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:64px;align-items:start}
+.mk .lm{width:28px;height:20px;flex:0 0 auto}
+.mk .ck{width:20px;height:20px;flex:0 0 auto;color:var(--accent-text)}
+.mk .ar{width:18px;height:18px}
+.mk .mn{width:24px;height:24px}
+
+/* buttons: one height, one radius, two variants */
+.mk .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:52px;padding-inline:24px;border-radius:var(--btn-r,999px);font:600 16px/1 var(--body);white-space:nowrap;transition:background-color .15s,box-shadow .15s}
+.mk .btn-sm{height:40px;padding-inline:16px;font-size:14px}
+.mk .btn-block{width:100%}
+.mk .btn-p{background:var(--accent);color:var(--on-accent)}
+.mk .btn-p:hover{background:var(--accent-hover)}
+.mk .btn-s{box-shadow:inset 0 0 0 1px var(--line-strong);color:var(--ink)}
+.mk .btn-s:hover{box-shadow:inset 0 0 0 1px var(--ink)}
+.mk .btn:focus-visible,.mk a:focus-visible,.mk summary:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.mk .link{display:inline-flex;align-items:center;gap:6px;font-weight:600;color:var(--accent-text);margin-top:24px}
+.mk .ctas{display:flex;flex-wrap:wrap;gap:12px;margin-top:40px;align-items:center}
+.mk .micro{margin-top:20px;font-size:14px;color:var(--muted)}
+
+/* nav */
+.mk .nav{border-bottom:1px solid var(--line)}
+.mk .nav-in{display:flex;align-items:center;justify-content:space-between;height:72px;gap:24px}
+.mk .brand{display:inline-flex;align-items:center;gap:10px;font:600 18px/1 var(--body);letter-spacing:-.01em;color:var(--ink)}
+.mk .brand .lm{color:var(--logo,#DA5F6F)}
+.mk .links{display:flex;gap:32px;font-size:15px;color:var(--muted)}
+.mk .links a:hover{color:var(--ink)}
+.mk .nav-r{display:flex;align-items:center;gap:8px}
+.mk .burger{display:none;border:0;background:transparent;color:var(--ink);width:40px;height:40px;align-items:center;justify-content:center;border-radius:8px}
+
+/* steps */
+.mk .steps{list-style:none;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:48px}
+.mk .steps li{display:grid;gap:20px;align-content:start}
+.mk .sn{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;font:600 16px/1 var(--body);font-variant-numeric:tabular-nums;background:var(--accent-soft);color:var(--accent-text)}
+.mk .steps p{color:var(--muted);margin-top:8px;font-size:16px}
+
+/* includes */
+.mk .incl{list-style:none;padding:0;display:grid;gap:0}
+.mk .incl li{display:flex;gap:16px;padding-block:20px;border-top:1px solid var(--line)}
+.mk .incl li:last-child{border-bottom:1px solid var(--line)}
+.mk .incl strong{display:block;font-weight:600;color:var(--ink)}
+.mk .incl span{display:block;color:var(--muted);font-size:16px;margin-top:2px}
+.mk .chips{list-style:none;padding:0;display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.mk .chips li{font-size:14px;line-height:1;padding:10px 14px;border-radius:999px;background:var(--surface);box-shadow:inset 0 0 0 1px var(--line);color:var(--ink)}
+.mk .focus{margin-top:48px}
+.mk .focus h3{font-size:16px}
+
+/* plans */
+.mk .plans{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px;max-width:880px;margin-inline:auto}
+.mk .plan{display:flex;flex-direction:column;gap:16px;padding:40px;border-radius:var(--card-r,16px);background:var(--surface);box-shadow:inset 0 0 0 1px var(--line)}
+.mk .plan.rec{box-shadow:inset 0 0 0 2px var(--accent)}
+.mk .plan-hd{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:center;min-height:28px}
+.mk .plan-who{font-size:14px;color:var(--muted)}
+.mk .plan-tag{font:600 12px/1 var(--body);padding:8px 10px;border-radius:999px;background:var(--accent-soft);color:var(--accent-text)}
+.mk .plan h3{font-size:22px}
+.mk .plan-price{font-size:16px;color:var(--muted)}
+.mk .plan-price span{font:600 48px/1 var(--display);letter-spacing:-.02em;color:var(--ink);font-variant-numeric:lining-nums tabular-nums;margin-right:4px}
+.mk .plan-desc{color:var(--muted);font-size:16px;flex:1}
+.mk .pay{text-align:center;color:var(--muted);font-size:14px;margin-top:32px}
+
+/* quotes */
+.mk .quotes{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px}
+.mk .quote{display:flex;flex-direction:column;justify-content:space-between;gap:32px;padding:32px;border-radius:var(--card-r,16px);background:var(--surface);box-shadow:inset 0 0 0 1px var(--line)}
+.mk .quote blockquote{font-size:17px;line-height:1.6;color:var(--ink)}
+.mk figcaption{display:flex;align-items:center;gap:12px;font-size:14px;color:var(--muted)}
+.mk figcaption img{width:40px;height:40px;border-radius:50%;object-fit:cover}
+.mk figcaption strong{display:block;color:var(--ink);font-weight:600}
+
+/* faq */
+.mk .qa{border-top:1px solid var(--line)}
+.mk .qa:last-child{border-bottom:1px solid var(--line)}
+.mk .qa summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;gap:24px;padding-block:24px;font-weight:600;color:var(--ink)}
+.mk .qa summary::-webkit-details-marker{display:none}
+.mk .qa summary::after{content:"";flex:0 0 auto;width:10px;height:10px;margin-top:6px;border-right:1.5px solid var(--muted);border-bottom:1.5px solid var(--muted);transform:rotate(45deg);transition:transform .2s}
+.mk .qa[open] summary::after{transform:rotate(-135deg);margin-top:10px}
+.mk .qa p{padding-bottom:24px;color:var(--muted);max-width:40em}
+
+/* final + footer + sticky */
+.mk .final{padding-block:96px;background:var(--final-bg,var(--tint))}
+.mk .final-in{display:flex;flex-direction:column;align-items:flex-start;gap:16px}
+.mk .final-in p{color:var(--muted)}
+.mk .final-in .btn{margin-top:16px}
+.mk .foot{border-top:1px solid var(--line);padding-block:64px 32px;font-size:15px;color:var(--muted);background:var(--bg)}
+.mk .foot-in{display:flex;justify-content:space-between;gap:48px;flex-wrap:wrap}
+.mk .foot-brand p{margin-top:12px;max-width:24em}
+.mk .foot-cols{display:grid;grid-template-columns:repeat(3,auto);gap:64px}
+.mk .foot h4{font:600 13px/1 var(--body);letter-spacing:.06em;text-transform:uppercase;color:var(--ink);margin-bottom:16px}
+.mk .foot-cols a{display:block;padding-block:4px}
+.mk .foot-legal{margin-top:48px;padding-top:24px;border-top:1px solid var(--line);font-size:13px}
+.mk .sticky{display:none}
+
+/* plan preview document */
+.mk .doc{background:#fff;border-radius:12px;box-shadow:0 1px 2px rgba(20,18,24,.06),0 12px 32px -8px rgba(20,18,24,.14),0 0 0 1px rgba(20,18,24,.06);padding:28px;font-family:var(--body);color:#1B1A1F;font-size:14px}
+.mk .doc-hd{display:flex;justify-content:space-between;align-items:center;padding-bottom:16px;border-bottom:1px solid #ECEBEF}
+.mk .doc-hd div{display:flex;align-items:center;gap:10px}
+.mk .doc-hd .lm{color:#DA5F6F;width:22px;height:16px}
+.mk .doc-hd strong{font-size:15px}
+.mk .doc-hd span{font-size:12px;color:#6A6872;background:#F3F2F5;padding:5px 8px;border-radius:6px}
+.mk .doc-meta{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;padding-block:16px}
+.mk .doc-meta dt{font-size:12px;color:#6A6872}
+.mk .doc-meta dd{font-size:13px;font-weight:600;margin-top:2px;line-height:1.35}
+.mk .doc-t{width:100%;border-collapse:collapse;font-size:13px}
+.mk .doc-t caption{text-align:left;font-weight:600;font-size:13px;padding-bottom:8px}
+.mk .doc-t th,.mk .doc-t td{text-align:left;padding:10px 8px 10px 0;border-top:1px solid #ECEBEF;vertical-align:top}
+.mk .doc-t thead th{font-weight:500;color:#6A6872;font-size:12px}
+.mk .doc-t tbody th{font-weight:600}
+.mk .doc-t td:nth-child(2){font-variant-numeric:tabular-nums;color:#6A6872;white-space:nowrap}
+.mk .doc-eq{margin-top:16px;padding:14px;border-radius:8px;background:#F7F6F9}
+.mk .doc-eq span{font-size:12px;color:#6A6872}
+.mk .doc-eq ul{list-style:none;padding:0;display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.mk .doc-eq li{font-size:13px;background:#fff;box-shadow:inset 0 0 0 1px #E4E2E8;border-radius:6px;padding:6px 9px}
+
+/* ---------- Phone layout (container width ≤ 720px) ---------- */
+@container (max-width:720px){
+  .mk{--h1:var(--h1-m);--h2:var(--h2-m);--sec:72px}
+  .mk .w{padding-inline:20px}
+  .mk .links,.mk .nav-r .btn{display:none}
+  .mk .burger{display:inline-flex}
+  .mk .nav-in{height:60px}
+  .mk .lead{font-size:18px;margin-top:16px}
+  .mk .ctas{margin-top:28px;flex-direction:column;align-items:stretch}
+  .mk .ctas .btn{width:100%}
+  .mk .two,.mk .steps,.mk .plans,.mk .quotes{grid-template-columns:1fr;gap:32px}
+  .mk .steps li{grid-template-columns:40px 1fr;gap:16px}
+  .mk .sh{margin-bottom:36px}
+  .mk .plan,.mk .quote{padding:28px}
+  .mk .foot-cols{grid-template-columns:1fr 1fr;gap:32px}
+  .mk .foot{padding-bottom:96px}
+  .mk .final{padding-block:64px}
+  .mk .doc{padding:20px}
+  .mk .doc-meta{grid-template-columns:1fr 1fr}
+  .mk .doc-meta div:last-child{grid-column:1/-1}
+  .mk .sticky{display:flex;position:sticky;bottom:0;z-index:5;align-items:center;justify-content:space-between;gap:12px;padding:12px 20px calc(12px + env(safe-area-inset-bottom,0px));background:var(--surface);box-shadow:0 -1px 0 var(--line),0 -8px 24px -12px rgba(0,0,0,.18);font-size:13px;color:var(--muted)}
+  .mk .sticky strong{display:block;color:var(--ink);font-size:15px}
+}
+
+/* =========================== A · Evolución =========================== */
+.oA{--display:"Newsreader",Georgia,serif;--body:"Inter",system-ui,sans-serif;--bg:#FFFFFF;--surface:#FFFFFF;--tint:#FBF5F5;--ink:#1F1A1B;--muted:#5F5557;--line:#EDE4E5;--line-strong:#D6C9CB;--accent:#B8404F;--accent-hover:#A33645;--on-accent:#fff;--accent-text:#B03C4B;--accent-soft:#FBE9EB;
+  --h1:clamp(48px,5.6cqi,68px);--h1-m:40px;--h2:44px;--h2-m:32px;--h-w:450;--h1-ls:-.025em}
+.oA .hero{background:var(--tint)}
+.oA .hero-g{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:64px;align-items:center;padding-block:88px}
+.oA .hero-img{border-radius:20px;overflow:hidden;aspect-ratio:4/5}
+.oA .hero-img img{width:100%;height:100%;object-fit:cover;object-position:50% 30%}
+.oA .proof{border-bottom:1px solid var(--line)}
+.oA .proof-g{display:grid;grid-template-columns:repeat(3,minmax(0,1fr))}
+.oA .proof-g div{padding:32px 32px 32px 0}
+.oA .proof-g div+div{padding-left:32px;border-left:1px solid var(--line)}
+.oA .proof strong{display:block;font:500 24px/1.2 var(--display);color:var(--ink)}
+.oA .proof span{font-size:15px;color:var(--muted)}
+.oA .about{align-items:center}
+.oA .about-img{border-radius:20px;overflow:hidden;aspect-ratio:1}
+.oA .about-img img{width:100%;height:100%;object-fit:cover}
+.oA .final{background:var(--ink)}
+.oA .final h2{color:#fff}.oA .final-in p{color:#CFC5C7}
+@container (max-width:720px){
+  .oA .hero-g{grid-template-columns:1fr;gap:40px;padding-block:48px}
+  .oA .proof-g{grid-template-columns:1fr}
+  .oA .proof-g div,.oA .proof-g div+div{padding:20px 0;border-left:0}
+  .oA .proof-g div+div{border-top:1px solid var(--line)}
+}
+
+/* =========================== B · Suizo =========================== */
+.oB{--display:"Geist",system-ui,sans-serif;--body:"Geist",system-ui,sans-serif;--bg:#FFFFFF;--surface:#FFFFFF;--tint:#F4F3F2;--ink:#111111;--muted:#5E5A58;--line:#E4E2E0;--line-strong:#111111;--accent:#B83A4D;--accent-hover:#A13143;--on-accent:#fff;--accent-text:#111111;--accent-soft:#F4F3F2;--btn-r:4px;--card-r:4px;
+  --h1:clamp(56px,7.4cqi,96px);--h1-m:44px;--h2:32px;--h2-m:28px;--h-w:600;--h1-ls:-.045em;--h2-ls:-.03em;--h1-lh:.98}
+.oB .eyebrow{font:500 13px/1 "Geist Mono",monospace;letter-spacing:0;text-transform:none;color:var(--muted)}
+.oB .brand .lm{color:#111}
+.oB .g12{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:24px}
+.oB .hero{padding-block:72px 0}
+.oB .hero h1{max-width:12ch}
+.oB .hero-g{margin-top:56px;padding-bottom:112px;border-bottom:1px solid var(--ink)}
+.oB .hero-img{grid-column:1/span 8;aspect-ratio:3/2;overflow:hidden}
+.oB .hero-img img{width:100%;height:100%;object-fit:cover;object-position:50% 28%}
+.oB .hero-side{grid-column:9/span 4;display:flex;flex-direction:column;gap:32px}
+.oB .hero-side .lead{margin-top:0;font-size:18px}
+.oB .facts{display:grid;gap:0;border-top:1px solid var(--line)}
+.oB .facts div{display:flex;justify-content:space-between;gap:16px;padding-block:12px;border-bottom:1px solid var(--line);font-size:15px}
+.oB .facts dt{color:var(--muted)}
+.oB .facts dd{font-weight:500;text-align:right;font-variant-numeric:tabular-nums}
+.oB .sec{border-bottom:1px solid var(--line)}
+.oB .c-l{grid-column:1/span 4}
+.oB .c-r{grid-column:5/span 8}
+.oB .steps{grid-template-columns:1fr;gap:0}
+.oB .steps li{grid-template-columns:64px 1fr;gap:0;padding-block:28px;border-top:1px solid var(--line)}
+.oB .steps li:first-child{border-top:0;padding-top:0}
+.oB .sn{background:none;width:auto;height:auto;display:block;font:500 15px/1.6 "Geist Mono",monospace;color:var(--muted)}
+.oB .sn::before{content:"0"}
+.oB .tbl{overflow-x:auto}
+.oB .cmp{width:100%;border-collapse:collapse;font-size:16px;min-width:520px}
+.oB .cmp th,.oB .cmp td{padding:16px 16px 16px 0;border-bottom:1px solid var(--line);text-align:left;vertical-align:middle}
+.oB .cmp thead th{font-weight:600;vertical-align:bottom;border-bottom:1px solid var(--ink)}
+.oB .cmp thead th span{display:block;font-weight:400;color:var(--muted);font-size:14px}
+.oB .cmp tbody th{font-weight:400;color:var(--ink)}
+.oB .cmp td{width:26%}
+.oB .cmp .pr td{font-size:28px;font-weight:600;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.oB .cmp .pr small{font-size:14px;font-weight:400;color:var(--muted);letter-spacing:0}
+.oB .cmp tfoot td{border-bottom:0;padding-top:24px}
+.oB .ck{color:var(--ink)}
+.oB .vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+.oB .pay{text-align:left}
+.oB .bigq blockquote{font-size:32px;line-height:1.3;letter-spacing:-.02em;font-weight:500;max-width:24em}
+.oB .bigq figcaption{margin-top:24px;font-size:15px}
+.oB .smallq{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:56px;padding-top:32px;border-top:1px solid var(--line)}
+.oB .smallq blockquote{font-size:16px;color:var(--muted)}
+.oB .smallq figcaption{margin-top:12px;color:var(--ink);font-weight:500}
+.oB .about{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:24px}
+.oB .about figure{aspect-ratio:4/5;overflow:hidden}
+.oB .about img{width:100%;height:100%;object-fit:cover}
+.oB .about .body{margin-top:0;margin-bottom:32px}
+.oB .faqdl{display:grid;gap:0;border-top:1px solid var(--ink)}
+.oB .faqdl div{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:24px;padding-block:24px;border-bottom:1px solid var(--line)}
+.oB .faqdl dt{font-weight:600}
+.oB .faqdl dd{color:var(--muted)}
+.oB .final{background:#111}
+.oB .final-in{flex-direction:row;justify-content:space-between;align-items:center}
+.oB .final h2{color:#fff;font-size:var(--h1);letter-spacing:-.045em;line-height:1}
+.oB .final .btn{margin-top:0}
+@container (max-width:720px){
+  .oB .g12{grid-template-columns:1fr;row-gap:28px}
+  .oB .hero{padding-top:40px}
+  .oB .hero-g{margin-top:32px;padding-bottom:64px}
+  .oB .hero-img,.oB .hero-side,.oB .c-l,.oB .c-r{grid-column:1/-1}
+  .oB .steps li{grid-template-columns:48px 1fr}
+  .oB .bigq blockquote{font-size:24px}
+  .oB .smallq,.oB .about,.oB .faqdl div{grid-template-columns:1fr}
+  .oB .faqdl div{gap:8px}
+  .oB .final-in{flex-direction:column;align-items:stretch}
+  .oB .final h2{font-size:44px}
+  .oB .cmp{min-width:0;font-size:14px}
+  .oB .cmp th,.oB .cmp td{padding:12px 8px 12px 0}
+  .oB .cmp td{width:30%}
+  .oB .cmp .pr td{font-size:20px}
+  .oB .cmp .pr small{display:block;font-size:12px}
+  .oB .cmp tfoot .btn{padding-inline:8px;font-size:14px}
+}
+
+/* =========================== C · Producto =========================== */
+.oC{--display:"Plus Jakarta Sans",system-ui,sans-serif;--body:"Plus Jakarta Sans",system-ui,sans-serif;--bg:#FFFFFF;--surface:#FFFFFF;--tint:#F6F6F7;--ink:#17161B;--muted:#5C5A63;--line:#E6E5EA;--line-strong:#CFCDD6;--accent:#B8404F;--accent-hover:#A33645;--on-accent:#fff;--accent-text:#B03C4B;--accent-soft:#FBEDEF;--btn-r:10px;--card-r:14px;--fs:16px;
+  --h1:clamp(44px,5cqi,60px);--h1-m:36px;--h2:40px;--h2-m:30px;--h-w:700;--h1-ls:-.035em;--h2-ls:-.03em;--h1-lh:1.05}
+.oC .eyebrow{text-transform:none;letter-spacing:0;font-size:14px}
+.oC .hero{background:linear-gradient(var(--tint),var(--tint)) bottom/100% 30% no-repeat}
+.oC .hero-g{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:64px;align-items:center;padding-block:80px}
+.oC .byline{display:flex;align-items:center;gap:12px;margin-top:40px;font-size:14px;color:var(--muted)}
+.oC .byline img{width:44px;height:44px;border-radius:50%;object-fit:cover}
+.oC .byline strong{display:block;color:var(--ink)}
+.oC .logos{background:var(--tint);border-block:1px solid var(--line)}
+.oC .logos-in{display:flex;justify-content:space-between;gap:24px;padding-block:24px;font-size:15px;font-weight:600;color:var(--muted);flex-wrap:wrap}
+.oC .feat{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px}
+.oC .fc{padding:28px;border-radius:var(--card-r);box-shadow:inset 0 0 0 1px var(--line);display:grid;gap:10px;align-content:start}
+.oC .fc .ck{width:32px;height:32px;padding:6px;border-radius:8px;background:var(--accent-soft)}
+.oC .fc h3{margin-top:8px}
+.oC .fc p{color:var(--muted);font-size:15px}
+.oC .steps{position:relative}
+.oC .steps li{padding:28px;background:var(--surface);border-radius:var(--card-r);box-shadow:inset 0 0 0 1px var(--line)}
+.oC .about-mini{display:grid;grid-template-columns:72px 1fr;gap:16px;margin-top:32px;padding:20px;border-radius:var(--card-r);background:var(--tint)}
+.oC .about-mini img{width:72px;height:72px;border-radius:50%;object-fit:cover}
+.oC .about-mini p{font-size:15px;color:var(--muted)}
+.oC .final{background:var(--ink)}
+.oC .final-in{flex-direction:row;justify-content:space-between;align-items:center}
+.oC .final h2{color:#fff}.oC .final-in p{color:#B9B7C0;margin-top:8px}
+.oC .final .btn{margin-top:0}
+@container (max-width:720px){
+  .oC .hero{background:none}
+  .oC .hero-g{grid-template-columns:1fr;gap:40px;padding-block:40px 56px}
+  .oC .logos-in{flex-direction:column;gap:8px}
+  .oC .feat{grid-template-columns:1fr;gap:12px}
+  .oC .steps li{grid-template-columns:40px 1fr}
+  .oC .final-in{flex-direction:column;align-items:stretch}
+}
+
+/* =========================== D · Retrato =========================== */
+.oD{--display:"Source Serif 4",Georgia,serif;--body:"Source Sans 3",system-ui,sans-serif;--bg:#FFFFFF;--surface:#FFFFFF;--tint:#F7F2F2;--ink:#2A2224;--muted:#665B5E;--line:#EADFE0;--line-strong:#CDBDC0;--accent:#A93D4E;--accent-hover:#933343;--on-accent:#fff;--accent-text:#A93D4E;--accent-soft:#F6E4E6;--fs:18px;--btn-r:999px;--card-r:4px;
+  --h1:clamp(48px,5.4cqi,72px);--h1-m:40px;--h2:42px;--h2-m:32px;--h-w:400;--h1-ls:-.02em}
+.oD em{font-style:italic;color:var(--accent-text)}
+.oD .eyebrow{text-transform:none;letter-spacing:0;font-size:15px;font-weight:600;color:var(--muted)}
+.oD .hero{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);min-height:640px;background:var(--tint)}
+.oD .hero-t{display:flex;justify-content:flex-end}
+.oD .hero-t-in{width:100%;max-width:600px;padding:96px 64px 96px 48px;display:flex;flex-direction:column;justify-content:center}
+.oD .hero-img{position:relative;min-height:100%}
+.oD .hero-img img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 25%}
+.oD .ctas .link{margin-top:0;height:52px}
+.oD .feature-q figure{max-width:880px;margin-inline:auto;text-align:center}
+.oD .feature-q blockquote{font:400 36px/1.35 var(--display);letter-spacing:-.01em;color:var(--ink)}
+.oD .feature-q figcaption{justify-content:center;margin-top:32px}
+.oD .how{align-items:center}
+.oD .how h2{margin-bottom:48px}
+.oD .how .steps{grid-template-columns:1fr;gap:32px}
+.oD .how .steps li{grid-template-columns:40px 1fr;gap:20px}
+.oD .sn{background:transparent;box-shadow:inset 0 0 0 1px var(--line-strong);font:400 18px/1 var(--display);color:var(--ink)}
+.oD .how-img{aspect-ratio:4/5;overflow:hidden}
+.oD .how-img img{width:100%;height:100%;object-fit:cover}
+.oD .quote{box-shadow:none;background:var(--tint)}
+.oD .quote blockquote{font:400 21px/1.5 var(--display)}
+.oD .two-q{grid-template-columns:repeat(2,minmax(0,1fr))}
+.oD .plans{margin-inline:0;max-width:none}
+.oD .plan{box-shadow:inset 0 0 0 1px var(--line)}
+.oD .plan.rec{box-shadow:inset 0 0 0 1px var(--ink)}
+.oD .plan-tag{background:transparent;padding:0;color:var(--accent-text)}
+.oD .plan-price span{font-weight:400}
+.oD .pay{text-align:left}
+.oD .sig{margin-top:24px;font:italic 400 28px/1 var(--display);color:var(--ink)}
+.oD .faq-h{font:400 28px/1.2 var(--display);margin-bottom:16px}
+.oD .final{background:var(--bg);border-top:1px solid var(--line)}
+.oD .final-in{align-items:center;text-align:center}
+@container (max-width:720px){
+  .oD .hero{grid-template-columns:1fr;min-height:0}
+  .oD .hero-img{order:-1;aspect-ratio:1}
+  .oD .hero-t-in{padding:40px 20px 56px}
+  .oD .ctas .link{justify-content:center}
+  .oD .feature-q blockquote{font-size:26px}
+  .oD .two-q{grid-template-columns:1fr}
+  .oD .how-img{display:none}
+}
+
+/* =========================== E · Marca =========================== */
+.oE{--display:"Bricolage Grotesque",system-ui,sans-serif;--body:"Figtree",system-ui,sans-serif;--bg:#FFFFFF;--surface:#FFFFFF;--tint:#FCEEEF;--ink:#231B1D;--muted:#6A5C5F;--line:#EFE1E3;--line-strong:#D9C3C7;--accent:#B8404F;--accent-hover:#A33645;--on-accent:#fff;--accent-text:#B03C4B;--accent-soft:#FCEEEF;--btn-r:999px;--card-r:24px;
+  --h1:clamp(56px,6.6cqi,88px);--h1-m:48px;--h2:48px;--h2-m:34px;--h-w:700;--h1-ls:-.04em;--h2-ls:-.03em;--h1-lh:.98}
+.oE .hero-wrap{background:#B8404F;color:#fff}
+.oE .hero-wrap .nav{border-color:rgba(255,255,255,.2)}
+.oE .hero-wrap .brand,.oE .hero-wrap .burger{color:#fff}
+.oE .hero-wrap .links{color:rgba(255,255,255,.82)}
+.oE .hero-wrap .links a:hover{color:#fff}
+.oE .hero-wrap .btn-p{background:#fff;color:#8E2B3A}
+.oE .hero h1{color:#fff}
+.oE .hero-g{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:64px;align-items:end;padding-block:80px 0}
+.oE .hero-t{padding-bottom:88px}
+.oE .hero .lead{color:rgba(255,255,255,.9)}
+.oE .btn-w{background:#fff;color:#8E2B3A}
+.oE .btn-w:hover{background:#FCEEEF}
+.oE .btn-o{box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.6);color:#fff}
+.oE .btn-o:hover{box-shadow:inset 0 0 0 1.5px #fff}
+.oE .hero-facts{list-style:none;padding:0;display:flex;flex-wrap:wrap;gap:8px 24px;margin-top:32px;font-size:15px;color:rgba(255,255,255,.85)}
+.oE .hero-facts li{display:flex;align-items:center;gap:8px}
+.oE .hero-facts li::before{content:"";width:6px;height:6px;border-radius:50%;background:#fff}
+.oE .hero-img{border-radius:24px 24px 0 0;overflow:hidden;aspect-ratio:4/5}
+.oE .hero-img img{width:100%;height:100%;object-fit:cover;object-position:50% 30%}
+.oE .sn{width:56px;height:56px;font:700 24px/1 var(--display);background:var(--tint)}
+.oE .blush{background:var(--tint)}
+.oE .blush .chips li{background:#fff;box-shadow:none}
+.oE .incl li{border-color:#EBD2D5}
+.oE .ink{background:#231B1D;--surface:#2E2527;--ink:#FFFFFF;--muted:#C7B9BC;--line:#43383A;--line-strong:#6A5C5F;color:#fff}
+.oE .ink h2,.oE .ink h3{color:#fff}
+.oE .ink .plan.rec{box-shadow:inset 0 0 0 2px #F08C99}
+.oE .ink .plan-tag{background:#F08C99;color:#231B1D}
+.oE .ink .btn-p{background:#fff;color:#8E2B3A}
+.oE .ink .btn-s{color:#fff}
+.oE .ink .plan-price span{color:#fff}
+.oE .quote{background:var(--tint);box-shadow:none}
+.oE .about{align-items:center}
+.oE .about-img{border-radius:24px;overflow:hidden;aspect-ratio:1}
+.oE .about-img img{width:100%;height:100%;object-fit:cover}
+.oE .stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:32px}
+.oE .stats div{background:#fff;border-radius:16px;padding:16px}
+.oE .stats dt{font-size:13px;color:var(--muted)}
+.oE .stats dd{font:700 17px/1.3 var(--display);margin-top:4px}
+.oE .final{background:#B8404F}
+.oE .final-in{align-items:center;text-align:center}
+.oE .final h2{color:#fff;font-size:var(--h1);letter-spacing:-.04em}
+@container (max-width:720px){
+  .oE .hero-g{grid-template-columns:1fr;gap:40px;padding-top:40px}
+  .oE .hero-t{padding-bottom:0}
+  .oE .hero-img{aspect-ratio:1}
+  .oE .stats{grid-template-columns:1fr}
+  .oE .final h2{font-size:48px}
+  .oE .sn{width:40px;height:40px;font-size:18px}
+}
+`;
+
+/* ------------------------------------------------------------------ */
+/* Page                                                                 */
+/* ------------------------------------------------------------------ */
+const diagnosis = `
+<section id="p-diag" role="tabpanel" aria-labelledby="t-diag">
+<div class="diag">
+  <div>
+    <h2>Qué falla en la página actual</h2>
+    <ul class="issues">
+      <li><h3>La tipografía de títulos es la serif del sistema</h3><p>El sitio usa <code>font-serif</code> sin cargar una fuente, así que cada dispositivo muestra su serif por defecto (Georgia o Times). Es la razón principal de que se vea genérico.</p></li>
+      <li><h3>Los botones rosas no cumplen contraste AA</h3><p>Texto blanco sobre #DA5F6F da 3.6:1 y el mínimo para texto normal es 4.5:1. Con #B8404F el contraste sube a 5.4:1 y se conserva el tono.</p></li>
+      <li><h3>El orden de las secciones no sigue la decisión de compra</h3><p>Los precios aparecen antes de explicar cómo funciona, y la sección “Así funciona” llega en cuarto lugar. Hay siete botones hacia los planes compitiendo entre sí.</p></li>
+      <li><h3>Secciones que no ayudan a vender</h3><p>El reloj de zonas horarias no aporta a un servicio asíncrono. El teléfono de WhatsApp muestra chats inventados donde “Marialy” aparece como paciente, lo que resta credibilidad.</p></li>
+      <li><h3>Precios con información duplicada</h3><p>Las dos tarjetas repiten las mismas seis viñetas. Basta con listar lo que incluye una sola vez y dejar que las tarjetas expliquen la diferencia.</p></li>
+      <li><h3>Texto pequeño y gris</h3><p>Gran parte del cuerpo está en 13–14px gris claro. En móvil, donde llega la mayoría del tráfico de Instagram, cuesta leerlo.</p></li>
+      <li><h3>“Acerca de mí” compite con la marca</h3><p>Etiquetas flotantes, tarjetas, insignias e iconos de redes en un solo bloque. Hay demasiados estilos de componente para una sección de confianza.</p></li>
+    </ul>
+  </div>
+  <div>
+    <h2>Estructura propuesta (igual en las 5 opciones)</h2>
+    <ol class="ia">
+      <li>Hero<span>Qué es, para quién, precio y un solo CTA.</span></li>
+      <li>Credenciales<span>Ibero con Mención Honorífica, 780K seguidores, 6 continentes.</span></li>
+      <li>Cómo funciona<span>Tres pasos: la duda principal de un plan sin consulta.</span></li>
+      <li>Qué incluye<span>Los seis entregables, listados una sola vez.</span></li>
+      <li>Planes<span>Inicial y seguimiento, métodos de pago y tiempo de entrega.</span></li>
+      <li>Testimonios</li>
+      <li>Sobre Marialy</li>
+      <li>Preguntas frecuentes</li>
+      <li>CTA final y pie de página<span>En móvil, una barra fija con precio y botón.</span></li>
+    </ol>
+    <div class="sys">
+      <div><h3>Espaciado</h3><p>Escala de 8px (8 · 16 · 24 · 32 · 48 · 64 · 112) usada en todo.</p></div>
+      <div><h3>Tipografía</h3><p>Cuerpo de 16–18px, títulos en escala fija y líneas de máximo ~65 caracteres.</p></div>
+      <div><h3>Componentes</h3><p>Un botón primario y uno secundario, siempre de 52px de alto (40px en navegación).</p></div>
+      <div><h3>Accesibilidad</h3><p>Contraste AA, foco visible y objetivos táctiles de 44px o más.</p></div>
+    </div>
+  </div>
+</div>
+</section>`;
+
+const panel = (o) => `
+<section id="p-${o.k}" role="tabpanel" aria-labelledby="t-${o.k}" hidden>
+  <div class="brief">
+    <div><h2>${o.title}</h2><p>${o.why}</p></div>
+    <div><h3>Ideal si…</h3><ul>${o.fit.map((f) => `<li>${f}</li>`).join("")}</ul><p class="risk"><strong>Riesgo:</strong> ${o.risk}</p></div>
+    <div><h3>Paleta y tipografía</h3><div class="sw">${o.pal.map((c) => `<i style="background:${c}" title="${c}"></i>`).join("")}</div><p>${o.type}</p></div>
+  </div>
+  <div class="viewbar"><div class="seg" role="group" aria-label="Vista"><button type="button" data-view="desk" aria-pressed="true">Escritorio</button><button type="button" data-view="phone" aria-pressed="false">Móvil</button></div><span>Misma página, adaptada por ancho</span></div>
+  <div class="desk">${o.html}</div>
+  <div class="phone-wrap" hidden><div class="phone"></div></div>
+</section>`;
+
+const html = `<title>Nutralech Redesign Directions</title>
+<meta name="description" content="Diagnóstico de la página principal de Nutralech y cinco direcciones de rediseño.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,450;6..72,500&family=Inter:wght@400;500;600&family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;1,8..60,400&family=Source+Sans+3:wght@400;600&family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=Figtree:wght@400;500;600&display=swap">
+<style>${css}</style>
+<div class="chrome">
+  <header class="top"><h1>Nutralech · Rediseño de la página principal</h1><p>Empieza por el diagnóstico. Cada dirección usa la misma estructura y el contenido real del sitio, con un sistema de espaciado, tipografía y componentes propio. Revisa cada una en escritorio y en móvil.</p></header>
+  <div class="tabs" role="tablist" aria-label="Secciones">
+    <button class="tab" role="tab" id="t-diag" aria-controls="p-diag" aria-selected="true" data-k="diagnostico">Diagnóstico</button>
+    ${options.map((o) => `<button class="tab" role="tab" id="t-${o.k}" aria-controls="p-${o.k}" aria-selected="false" data-k="${o.k}">${o.name}<small>${o.tag}</small></button>`).join("")}
+  </div>
+  ${diagnosis}
+  ${options.map(panel).join("")}
+</div>
+<script>
+(function(){
+  var tabs=[].slice.call(document.querySelectorAll('.tab'));
+  function show(i,focus){
+    tabs.forEach(function(t,j){var on=i===j;t.setAttribute('aria-selected',on);t.tabIndex=on?0:-1;document.getElementById(t.getAttribute('aria-controls')).hidden=!on;});
+    if(focus)tabs[i].focus();
+    try{history.replaceState(null,'','#'+tabs[i].dataset.k)}catch(e){}
+    try{localStorage.setItem('nl-tab',String(i))}catch(e){}
+  }
+  tabs.forEach(function(t,i){
+    t.addEventListener('click',function(){show(i)});
+    t.addEventListener('keydown',function(e){if(e.key==='ArrowRight')show((i+1)%tabs.length,true);if(e.key==='ArrowLeft')show((i-1+tabs.length)%tabs.length,true);});
+  });
+  var h=(location.hash||'').slice(1),start=0;
+  tabs.forEach(function(t,i){if(t.dataset.k===h)start=i});
+  if(!h){try{var s=parseInt(localStorage.getItem('nl-tab'),10);if(s>=0&&s<tabs.length)start=s}catch(e){}}
+  show(start);
+  // Desktop / phone toggle: the phone view is a clone of the same markup in a 370px container.
+  document.querySelectorAll('[role="tabpanel"]').forEach(function(p){
+    var btns=p.querySelectorAll('.seg button');if(!btns.length)return;
+    var desk=p.querySelector('.desk'),pw=p.querySelector('.phone-wrap'),ph=p.querySelector('.phone');
+    btns.forEach(function(b){b.addEventListener('click',function(){
+      var phone=b.dataset.view==='phone';
+      btns.forEach(function(x){x.setAttribute('aria-pressed',x===b)});
+      if(phone&&!ph.firstChild)ph.appendChild(desk.firstElementChild.cloneNode(true));
+      desk.hidden=phone;pw.hidden=!phone;
+    });});
+  });
+  document.addEventListener('click',function(e){var a=e.target.closest('.mk a');if(a)e.preventDefault();});
+})();
+</script>
+`;
+
+writeFileSync(join(here, "index.html"), html);
+console.log("wrote index.html", html.length, "bytes");

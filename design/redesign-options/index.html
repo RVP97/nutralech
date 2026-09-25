@@ -1,714 +1,896 @@
 <title>Nutralech Redesign Directions</title>
-<meta name="description" content="Cinco direcciones de diseño para la página principal de Nutralech.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..700&family=Hanken+Grotesk:wght@400;500;600;700&family=DM+Mono:wght@400;500&family=Schibsted+Grotesk:wght@400;500;600;700;800&family=Big+Shoulders+Display:wght@700;800;900&family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Fraunces:ivar,opsz,wght,SOFT@0,9..144,300..700,100;1,9..144,300..700,100&family=Figtree:wght@400;500;600;700&family=Libre+Caslon+Display&family=Manrope:wght@400;500;600;700&display=swap">
+<meta name="description" content="Diagnóstico de la página principal de Nutralech y cinco direcciones de rediseño.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,450;6..72,500&family=Inter:wght@400;500;600&family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;1,8..60,400&family=Source+Sans+3:wght@400;600&family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=Figtree:wght@400;500;600&display=swap">
 <style>
-/* ---------- Chrome (switcher + rationale), theme-aware ---------- */
-:root{
-  --c-bg:#F5F3F4; --c-surface:#FFFFFF; --c-ink:#1D1719; --c-muted:#6A5F63; --c-line:#E3DDE0; --c-accent:#C24C5E; --c-accent-ink:#FFFFFF;
-}
-@media (prefers-color-scheme: dark){
-  :root:not([data-theme="light"]){ color-scheme:dark;
-    --c-bg:#141113; --c-surface:#1E1A1C; --c-ink:#F1EBED; --c-muted:#A89CA1; --c-line:#342D30; --c-accent:#F08596; --c-accent-ink:#1A0E11; }
-}
-:root[data-theme="dark"]{ color-scheme:dark;
-  --c-bg:#141113; --c-surface:#1E1A1C; --c-ink:#F1EBED; --c-muted:#A89CA1; --c-line:#342D30; --c-accent:#F08596; --c-accent-ink:#1A0E11; }
-
-*{box-sizing:border-box}
-body{background:var(--c-bg);color:var(--c-ink);font:15px/1.55 "Manrope",system-ui,sans-serif;margin:0}
-.chrome{padding-inline:16px;max-width:1240px;margin-inline:auto}
-.top{padding-block:28px 8px;display:flex;flex-wrap:wrap;gap:12px 32px;align-items:end;justify-content:space-between}
-.top h1{font:600 22px/1.2 "Manrope",sans-serif;margin:0;letter-spacing:-.01em}
-.top p{margin:4px 0 0;color:var(--c-muted);max-width:60ch}
-.tabs{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:var(--c-bg);padding-block:12px;display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;border-bottom:1px solid var(--c-line)}
-.tabs button{flex:0 0 auto;font:600 13px/1 "Manrope",sans-serif;border:1px solid var(--c-line);background:var(--c-surface);color:var(--c-ink);padding:10px 14px;border-radius:999px;cursor:pointer;display:flex;gap:8px;align-items:center}
-.tabs button span{color:var(--c-muted);font-weight:500}
-.tabs button[aria-selected="true"]{background:var(--c-ink);color:var(--c-bg);border-color:var(--c-ink)}
-.tabs button[aria-selected="true"] span{color:inherit;opacity:.7}
-.tabs button:focus-visible{outline:2px solid var(--c-accent);outline-offset:2px}
-.brief{display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:24px;padding-block:24px}
-.brief h2{font:700 26px/1.15 "Manrope",sans-serif;margin:0 0 8px;letter-spacing:-.015em;text-wrap:balance}
-.brief p{margin:0;color:var(--c-muted);max-width:58ch}
-.brief h3{font:700 11px/1 "Manrope",sans-serif;letter-spacing:.12em;text-transform:uppercase;color:var(--c-muted);margin:0 0 10px}
+/* ---------- Review chrome (theme-aware) ---------- */
+:root{--c-bg:#F3F2F1;--c-surface:#FFFFFF;--c-ink:#1B1A19;--c-muted:#63605D;--c-line:#DEDBD8;--c-accent:#B8404F;color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--c-bg:#151414;--c-surface:#1F1E1D;--c-ink:#EEECEA;--c-muted:#A29E9A;--c-line:#34312F;--c-accent:#F08C99;color-scheme:dark}}
+:root[data-theme="dark"]{--c-bg:#151414;--c-surface:#1F1E1D;--c-ink:#EEECEA;--c-muted:#A29E9A;--c-line:#34312F;--c-accent:#F08C99;color-scheme:dark}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--c-bg);color:var(--c-ink);font:15px/1.55 system-ui,-apple-system,"Segoe UI",sans-serif}
+.chrome{max-width:1360px;margin-inline:auto;padding-inline:16px}
+.top{padding-block:32px 16px}
+.top h1{margin:0;font-size:22px;line-height:1.25;font-weight:650;letter-spacing:-.01em}
+.top p{margin:6px 0 0;color:var(--c-muted);max-width:72ch}
+.tabs{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;display:flex;gap:4px;overflow-x:auto;scrollbar-width:none;padding-block:10px;background:var(--c-bg);border-bottom:1px solid var(--c-line)}
+.tab{flex:0 0 auto;border:0;background:transparent;color:var(--c-muted);font:600 14px/1 system-ui,sans-serif;padding:10px 14px;border-radius:8px;cursor:pointer}
+.tab small{font-weight:500;margin-left:6px;opacity:.8}
+.tab[aria-selected="true"]{background:var(--c-surface);color:var(--c-ink);box-shadow:0 0 0 1px var(--c-line)}
+.tab:focus-visible,.seg button:focus-visible{outline:2px solid var(--c-accent);outline-offset:2px}
+.brief{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr) minmax(0,1fr);gap:32px;padding-block:28px}
+.brief h2{margin:0 0 8px;font-size:20px;line-height:1.3;font-weight:650;text-wrap:balance}
+.brief p{margin:0;color:var(--c-muted);max-width:64ch}
+.brief h3{margin:0 0 8px;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--c-muted);font-weight:600}
 .brief ul{margin:0;padding-left:18px;display:grid;gap:4px}
-.sw{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}
-.sw i{width:28px;height:28px;border-radius:6px;border:1px solid var(--c-line);display:block}
-.fonts{font-size:13px;color:var(--c-ink)}
-.frame{border:1px solid var(--c-line);border-radius:14px;overflow:hidden;background:var(--c-surface);margin-bottom:48px}
-.bar{display:flex;align-items:center;gap:6px;padding:10px 14px;border-bottom:1px solid var(--c-line);font:500 12px "DM Mono",monospace;color:var(--c-muted)}
-.bar i{width:9px;height:9px;border-radius:50%;background:var(--c-line);display:block}
-.bar b{font-weight:500;margin-left:10px}
-.stage{overflow:hidden}
-@media (max-width:860px){.brief{grid-template-columns:1fr}}
-@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+.brief .risk{margin-top:10px;color:var(--c-ink)}
+.sw{display:flex;gap:6px;margin-bottom:10px}.sw i{width:26px;height:26px;border-radius:6px;box-shadow:inset 0 0 0 1px rgba(0,0,0,.12)}
+.viewbar{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:12px;flex-wrap:wrap}
+.seg{display:inline-flex;background:var(--c-surface);border:1px solid var(--c-line);border-radius:10px;padding:3px}
+.seg button{border:0;background:transparent;color:var(--c-muted);font:600 13px/1 system-ui,sans-serif;padding:9px 14px;border-radius:7px;cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--c-ink);color:var(--c-bg)}
+.viewbar span{color:var(--c-muted);font-size:13px}
+.desk{border:1px solid var(--c-line);border-radius:12px;overflow:hidden;margin-bottom:56px;background:#fff}
+.phone-wrap{display:flex;justify-content:center;margin-bottom:56px}
+.phone{width:390px;max-width:100%;height:800px;overflow-y:auto;border:10px solid #1B1A19;border-radius:44px;background:#fff;scrollbar-width:none}
+.diag{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:40px;padding-block:28px 64px}
+.diag h2{font-size:20px;margin:0 0 12px;font-weight:650}
+.diag h3{font-size:15px;margin:0 0 4px;font-weight:650}
+.issues{list-style:none;margin:0;padding:0;display:grid;gap:0;border-top:1px solid var(--c-line)}
+.issues li{padding:14px 0;border-bottom:1px solid var(--c-line)}
+.issues p,.diag p{margin:0;color:var(--c-muted)}
+.ia{margin:0;padding-left:22px;display:grid;gap:10px}
+.ia li::marker{color:var(--c-muted);font-variant-numeric:tabular-nums}
+.ia span{display:block;color:var(--c-muted);font-size:14px}
+.sys{margin-top:28px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.sys div{background:var(--c-surface);border:1px solid var(--c-line);border-radius:10px;padding:14px}
+.sys p{font-size:14px}
+@media (max-width:900px){.brief,.diag{grid-template-columns:1fr}.sys{grid-template-columns:1fr}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
 
-/* Shared mock primitives */
+/* ---------- Mockup base (container queries: same markup, desktop or phone) ---------- */
+.mk{container-type:inline-size;background:var(--bg);color:var(--ink);font:400 var(--fs,17px)/1.6 var(--body);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+.mk *{margin:0}
 .mk img{display:block;max-width:100%}
-.mk a{color:inherit}
-.mk .wrap{max-width:1120px;margin-inline:auto;padding-inline:clamp(16px,4vw,48px)}
-.mk h1,.mk h2,.mk h3,.mk p{margin:0}
-.mk h1,.mk h2{text-wrap:balance}
+.mk a{color:inherit;text-decoration:none}
+.mk h1,.mk h2,.mk h3{font-family:var(--display);color:var(--ink);text-wrap:balance}
+.mk h1{font-size:var(--h1);line-height:var(--h1-lh,1.05);font-weight:var(--h-w,500);letter-spacing:var(--h1-ls,-.02em)}
+.mk h2{font-size:var(--h2);line-height:1.12;font-weight:var(--h-w,500);letter-spacing:var(--h2-ls,-.015em)}
+.mk h3{font-size:18px;line-height:1.35;font-weight:600;font-family:var(--body);letter-spacing:0}
+.mk p{text-wrap:pretty}
+.mk .w{max-width:1200px;margin-inline:auto;padding-inline:48px}
+.mk .sec{padding-block:var(--sec,112px)}
+.mk .tint{background:var(--tint)}
+.mk .eyebrow{font:600 13px/1 var(--body);letter-spacing:.06em;text-transform:uppercase;color:var(--accent-text);margin-bottom:16px}
+.mk .lead{font-size:20px;line-height:1.55;color:var(--muted);max-width:34em;margin-top:24px}
+.mk .body{color:var(--muted);max-width:36em;margin-top:16px}
+.mk .sh{margin-bottom:56px;max-width:44rem}
+.mk .sh.center{margin-inline:auto;text-align:center}
+.mk .sh.center .body{margin-inline:auto}
+.mk .two{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:64px;align-items:start}
+.mk .lm{width:28px;height:20px;flex:0 0 auto}
+.mk .ck{width:20px;height:20px;flex:0 0 auto;color:var(--accent-text)}
+.mk .ar{width:18px;height:18px}
+.mk .mn{width:24px;height:24px}
 
-/* =====================================================
-   OPCIÓN 1 · PORTADA — fashion/culture magazine cover
-   ===================================================== */
-.o1{--ink:#161214;--paper:#FFFFFF;--rose:#C8374E;--blush:#FBE7EA;--grey:#6E6468;background:var(--paper);color:var(--ink);font:16px/1.6 "Hanken Grotesk",sans-serif}
-.o1 nav{display:flex;justify-content:space-between;align-items:center;padding-block:14px;font:600 12px/1 "Hanken Grotesk";letter-spacing:.14em;text-transform:uppercase;border-bottom:1px solid var(--ink)}
-.o1 nav .l{display:flex;gap:22px}
-.o1 nav .cta{background:var(--ink);color:#fff;padding:10px 16px;text-decoration:none}
-.o1 .cover{position:relative;display:grid;grid-template-columns:1fr;background:#111;color:#fff;overflow:hidden}
-.o1 .cover img{width:100%;height:clamp(520px,78vw,760px);object-fit:cover;object-position:50% 22%;filter:contrast(1.05)}
-.o1 .cover .mast{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.35) 0%,rgba(0,0,0,0) 28%,rgba(0,0,0,0) 50%,rgba(0,0,0,.72) 100%);display:flex;flex-direction:column;justify-content:space-between;padding:clamp(16px,3vw,36px)}
-.o1 .mast .row{display:flex;justify-content:space-between;font:600 11px/1.3 "Hanken Grotesk";letter-spacing:.16em;text-transform:uppercase}
-.o1 .mast h1{font:900 clamp(56px,14.5vw,188px)/.82 "Bodoni Moda",serif;letter-spacing:-.035em;text-align:center;margin-top:8px;color:#fff}
-.o1 .lines{display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:end}
-.o1 .lines .big{font:italic 500 clamp(28px,4.4vw,56px)/1.02 "Bodoni Moda",serif;max-width:12ch}
-.o1 .lines .big em{color:#FFB3BF;font-style:normal}
-.o1 .lines ul{list-style:none;padding:0;margin:0;justify-self:end;text-align:right;display:grid;gap:10px;font:600 13px/1.25 "Hanken Grotesk";letter-spacing:.06em;text-transform:uppercase}
-.o1 .lines ul b{display:block;font:italic 400 26px/1 "Bodoni Moda",serif;text-transform:none;letter-spacing:0;color:#FFB3BF}
-.o1 .btn{display:inline-block;background:var(--rose);color:#fff;text-decoration:none;font:600 13px/1 "Hanken Grotesk";letter-spacing:.12em;text-transform:uppercase;padding:18px 26px}
-.o1 .toc{display:grid;grid-template-columns:200px 1fr;gap:32px;padding-block:64px;border-bottom:1px solid var(--ink)}
-.o1 .kick{font:600 11px/1 "Hanken Grotesk";letter-spacing:.18em;text-transform:uppercase;color:var(--rose)}
-.o1 .toc ol{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,1fr);gap:0}
-.o1 .toc li{padding:0 24px;border-left:1px solid #DDD5D8}
-.o1 .toc li:first-child{border-left:0;padding-left:0}
-.o1 .toc .n{font:400 64px/1 "Bodoni Moda",serif;color:var(--rose)}
-.o1 .toc h3{font:600 18px/1.25 "Hanken Grotesk";margin:12px 0 8px}
-.o1 .toc p{color:var(--grey);font-size:15px}
-.o1 .feature{display:grid;grid-template-columns:1fr 1fr;gap:56px;padding-block:72px;align-items:center}
-.o1 .feature img{aspect-ratio:4/5;object-fit:cover;width:100%}
-.o1 .feature h2{font:500 clamp(34px,4.6vw,60px)/1.02 "Bodoni Moda",serif;letter-spacing:-.02em;margin:14px 0 20px}
-.o1 .dropcap::first-letter{font:700 76px/.8 "Bodoni Moda",serif;float:left;margin:6px 10px 0 0;color:var(--rose)}
-.o1 .feature p+p{margin-top:14px}
-.o1 .creds{display:flex;flex-wrap:wrap;gap:8px 24px;margin-top:24px;font:600 12px/1.3 "Hanken Grotesk";letter-spacing:.1em;text-transform:uppercase}
-.o1 .quote{background:var(--blush);padding-block:80px;text-align:center}
-.o1 .quote blockquote{margin:0 auto;max-width:22ch;font:italic 400 clamp(30px,4.4vw,54px)/1.12 "Bodoni Moda",serif}
-.o1 .quote cite{display:block;margin-top:22px;font:600 12px/1 "Hanken Grotesk";letter-spacing:.14em;text-transform:uppercase;font-style:normal}
-.o1 .plans{padding-block:72px}
-.o1 .plans h2{font:500 clamp(34px,4.6vw,56px)/1 "Bodoni Moda",serif;margin:12px 0 40px}
-.o1 .pgrid{display:grid;grid-template-columns:1fr 1fr;border-top:2px solid var(--ink)}
-.o1 .plan{padding:28px 32px 32px 0;display:flex;flex-direction:column;gap:14px}
-.o1 .plan+.plan{padding-left:32px;border-left:1px solid var(--ink)}
-.o1 .plan .price{font:400 64px/1 "Bodoni Moda",serif;font-variant-numeric:lining-nums}
-.o1 .plan .price small{font:600 13px "Hanken Grotesk";letter-spacing:.1em;margin-left:6px}
-.o1 .plan ul{margin:0;padding-left:18px;color:#3D3438;font-size:15px}
-.o1 .plan .btn{align-self:flex-start;margin-top:8px}
-.o1 .plan .btn.alt{background:var(--ink)}
-.o1 footer{background:var(--ink);color:#fff;padding-block:40px;display:flex}
-.o1 footer .wrap{display:flex;justify-content:space-between;align-items:end;gap:24px;flex-wrap:wrap;width:100%}
-.o1 footer .m{font:900 44px/1 "Bodoni Moda",serif}
-@media (max-width:760px){
-  .o1 nav .l{display:none}
-  .o1 .lines{grid-template-columns:1fr}.o1 .lines ul{justify-self:start;text-align:left}
-  .o1 .toc{grid-template-columns:1fr}.o1 .toc ol{grid-template-columns:1fr;gap:28px}.o1 .toc li{border:0;padding:0}
-  .o1 .feature,.o1 .pgrid{grid-template-columns:1fr}.o1 .plan+.plan{border-left:0;border-top:1px solid var(--ink);padding-left:0}
+/* buttons: one height, one radius, two variants */
+.mk .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:52px;padding-inline:24px;border-radius:var(--btn-r,999px);font:600 16px/1 var(--body);white-space:nowrap;transition:background-color .15s,box-shadow .15s}
+.mk .btn-sm{height:40px;padding-inline:16px;font-size:14px}
+.mk .btn-block{width:100%}
+.mk .btn-p{background:var(--accent);color:var(--on-accent)}
+.mk .btn-p:hover{background:var(--accent-hover)}
+.mk .btn-s{box-shadow:inset 0 0 0 1px var(--line-strong);color:var(--ink)}
+.mk .btn-s:hover{box-shadow:inset 0 0 0 1px var(--ink)}
+.mk .btn:focus-visible,.mk a:focus-visible,.mk summary:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.mk .link{display:inline-flex;align-items:center;gap:6px;font-weight:600;color:var(--accent-text);margin-top:24px}
+.mk .ctas{display:flex;flex-wrap:wrap;gap:12px;margin-top:40px;align-items:center}
+.mk .micro{margin-top:20px;font-size:14px;color:var(--muted)}
+
+/* nav */
+.mk .nav{border-bottom:1px solid var(--line)}
+.mk .nav-in{display:flex;align-items:center;justify-content:space-between;height:72px;gap:24px}
+.mk .brand{display:inline-flex;align-items:center;gap:10px;font:600 18px/1 var(--body);letter-spacing:-.01em;color:var(--ink)}
+.mk .brand .lm{color:var(--logo,#DA5F6F)}
+.mk .links{display:flex;gap:32px;font-size:15px;color:var(--muted)}
+.mk .links a:hover{color:var(--ink)}
+.mk .nav-r{display:flex;align-items:center;gap:8px}
+.mk .burger{display:none;border:0;background:transparent;color:var(--ink);width:40px;height:40px;align-items:center;justify-content:center;border-radius:8px}
+
+/* steps */
+.mk .steps{list-style:none;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:48px}
+.mk .steps li{display:grid;gap:20px;align-content:start}
+.mk .sn{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;font:600 16px/1 var(--body);font-variant-numeric:tabular-nums;background:var(--accent-soft);color:var(--accent-text)}
+.mk .steps p{color:var(--muted);margin-top:8px;font-size:16px}
+
+/* includes */
+.mk .incl{list-style:none;padding:0;display:grid;gap:0}
+.mk .incl li{display:flex;gap:16px;padding-block:20px;border-top:1px solid var(--line)}
+.mk .incl li:last-child{border-bottom:1px solid var(--line)}
+.mk .incl strong{display:block;font-weight:600;color:var(--ink)}
+.mk .incl span{display:block;color:var(--muted);font-size:16px;margin-top:2px}
+.mk .chips{list-style:none;padding:0;display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.mk .chips li{font-size:14px;line-height:1;padding:10px 14px;border-radius:999px;background:var(--surface);box-shadow:inset 0 0 0 1px var(--line);color:var(--ink)}
+.mk .focus{margin-top:48px}
+.mk .focus h3{font-size:16px}
+
+/* plans */
+.mk .plans{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px;max-width:880px;margin-inline:auto}
+.mk .plan{display:flex;flex-direction:column;gap:16px;padding:40px;border-radius:var(--card-r,16px);background:var(--surface);box-shadow:inset 0 0 0 1px var(--line)}
+.mk .plan.rec{box-shadow:inset 0 0 0 2px var(--accent)}
+.mk .plan-hd{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:center;min-height:28px}
+.mk .plan-who{font-size:14px;color:var(--muted)}
+.mk .plan-tag{font:600 12px/1 var(--body);padding:8px 10px;border-radius:999px;background:var(--accent-soft);color:var(--accent-text)}
+.mk .plan h3{font-size:22px}
+.mk .plan-price{font-size:16px;color:var(--muted)}
+.mk .plan-price span{font:600 48px/1 var(--display);letter-spacing:-.02em;color:var(--ink);font-variant-numeric:lining-nums tabular-nums;margin-right:4px}
+.mk .plan-desc{color:var(--muted);font-size:16px;flex:1}
+.mk .pay{text-align:center;color:var(--muted);font-size:14px;margin-top:32px}
+
+/* quotes */
+.mk .quotes{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px}
+.mk .quote{display:flex;flex-direction:column;justify-content:space-between;gap:32px;padding:32px;border-radius:var(--card-r,16px);background:var(--surface);box-shadow:inset 0 0 0 1px var(--line)}
+.mk .quote blockquote{font-size:17px;line-height:1.6;color:var(--ink)}
+.mk figcaption{display:flex;align-items:center;gap:12px;font-size:14px;color:var(--muted)}
+.mk figcaption img{width:40px;height:40px;border-radius:50%;object-fit:cover}
+.mk figcaption strong{display:block;color:var(--ink);font-weight:600}
+
+/* faq */
+.mk .qa{border-top:1px solid var(--line)}
+.mk .qa:last-child{border-bottom:1px solid var(--line)}
+.mk .qa summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;gap:24px;padding-block:24px;font-weight:600;color:var(--ink)}
+.mk .qa summary::-webkit-details-marker{display:none}
+.mk .qa summary::after{content:"";flex:0 0 auto;width:10px;height:10px;margin-top:6px;border-right:1.5px solid var(--muted);border-bottom:1.5px solid var(--muted);transform:rotate(45deg);transition:transform .2s}
+.mk .qa[open] summary::after{transform:rotate(-135deg);margin-top:10px}
+.mk .qa p{padding-bottom:24px;color:var(--muted);max-width:40em}
+
+/* final + footer + sticky */
+.mk .final{padding-block:96px;background:var(--final-bg,var(--tint))}
+.mk .final-in{display:flex;flex-direction:column;align-items:flex-start;gap:16px}
+.mk .final-in p{color:var(--muted)}
+.mk .final-in .btn{margin-top:16px}
+.mk .foot{border-top:1px solid var(--line);padding-block:64px 32px;font-size:15px;color:var(--muted);background:var(--bg)}
+.mk .foot-in{display:flex;justify-content:space-between;gap:48px;flex-wrap:wrap}
+.mk .foot-brand p{margin-top:12px;max-width:24em}
+.mk .foot-cols{display:grid;grid-template-columns:repeat(3,auto);gap:64px}
+.mk .foot h4{font:600 13px/1 var(--body);letter-spacing:.06em;text-transform:uppercase;color:var(--ink);margin-bottom:16px}
+.mk .foot-cols a{display:block;padding-block:4px}
+.mk .foot-legal{margin-top:48px;padding-top:24px;border-top:1px solid var(--line);font-size:13px}
+.mk .sticky{display:none}
+
+/* plan preview document */
+.mk .doc{background:#fff;border-radius:12px;box-shadow:0 1px 2px rgba(20,18,24,.06),0 12px 32px -8px rgba(20,18,24,.14),0 0 0 1px rgba(20,18,24,.06);padding:28px;font-family:var(--body);color:#1B1A1F;font-size:14px}
+.mk .doc-hd{display:flex;justify-content:space-between;align-items:center;padding-bottom:16px;border-bottom:1px solid #ECEBEF}
+.mk .doc-hd div{display:flex;align-items:center;gap:10px}
+.mk .doc-hd .lm{color:#DA5F6F;width:22px;height:16px}
+.mk .doc-hd strong{font-size:15px}
+.mk .doc-hd span{font-size:12px;color:#6A6872;background:#F3F2F5;padding:5px 8px;border-radius:6px}
+.mk .doc-meta{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;padding-block:16px}
+.mk .doc-meta dt{font-size:12px;color:#6A6872}
+.mk .doc-meta dd{font-size:13px;font-weight:600;margin-top:2px;line-height:1.35}
+.mk .doc-t{width:100%;border-collapse:collapse;font-size:13px}
+.mk .doc-t caption{text-align:left;font-weight:600;font-size:13px;padding-bottom:8px}
+.mk .doc-t th,.mk .doc-t td{text-align:left;padding:10px 8px 10px 0;border-top:1px solid #ECEBEF;vertical-align:top}
+.mk .doc-t thead th{font-weight:500;color:#6A6872;font-size:12px}
+.mk .doc-t tbody th{font-weight:600}
+.mk .doc-t td:nth-child(2){font-variant-numeric:tabular-nums;color:#6A6872;white-space:nowrap}
+.mk .doc-eq{margin-top:16px;padding:14px;border-radius:8px;background:#F7F6F9}
+.mk .doc-eq span{font-size:12px;color:#6A6872}
+.mk .doc-eq ul{list-style:none;padding:0;display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.mk .doc-eq li{font-size:13px;background:#fff;box-shadow:inset 0 0 0 1px #E4E2E8;border-radius:6px;padding:6px 9px}
+
+/* ---------- Phone layout (container width ≤ 720px) ---------- */
+@container (max-width:720px){
+  .mk{--h1:var(--h1-m);--h2:var(--h2-m);--sec:72px}
+  .mk .w{padding-inline:20px}
+  .mk .links,.mk .nav-r .btn{display:none}
+  .mk .burger{display:inline-flex}
+  .mk .nav-in{height:60px}
+  .mk .lead{font-size:18px;margin-top:16px}
+  .mk .ctas{margin-top:28px;flex-direction:column;align-items:stretch}
+  .mk .ctas .btn{width:100%}
+  .mk .two,.mk .steps,.mk .plans,.mk .quotes{grid-template-columns:1fr;gap:32px}
+  .mk .steps li{grid-template-columns:40px 1fr;gap:16px}
+  .mk .sh{margin-bottom:36px}
+  .mk .plan,.mk .quote{padding:28px}
+  .mk .foot-cols{grid-template-columns:1fr 1fr;gap:32px}
+  .mk .foot{padding-bottom:96px}
+  .mk .final{padding-block:64px}
+  .mk .doc{padding:20px}
+  .mk .doc-meta{grid-template-columns:1fr 1fr}
+  .mk .doc-meta div:last-child{grid-column:1/-1}
+  .mk .sticky{display:flex;position:sticky;bottom:0;z-index:5;align-items:center;justify-content:space-between;gap:12px;padding:12px 20px calc(12px + env(safe-area-inset-bottom,0px));background:var(--surface);box-shadow:0 -1px 0 var(--line),0 -8px 24px -12px rgba(0,0,0,.18);font-size:13px;color:var(--muted)}
+  .mk .sticky strong{display:block;color:var(--ink);font-size:15px}
 }
 
-/* =====================================================
-   OPCIÓN 2 · EXPEDIENTE — the plan as a document
-   ===================================================== */
-.o2{--ink:#1F1D2B;--paper:#F6F6F3;--sheet:#FFFFFF;--grid:#E6E5EE;--rose:#D04E61;--hl:#FFE68C;--muted:#6B6879;background:var(--paper);color:var(--ink);font:16px/1.6 "Schibsted Grotesk",sans-serif;
-  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:24px 24px}
-.o2 .mono{font-family:"DM Mono",monospace}
-.o2 nav{display:flex;justify-content:space-between;align-items:center;padding-block:18px;gap:16px}
-.o2 .logo{font:800 20px/1 "Schibsted Grotesk";letter-spacing:-.02em}
-.o2 .logo span{color:var(--rose)}
-.o2 nav .l{display:flex;gap:20px;font:500 13px "DM Mono",monospace;color:var(--muted)}
-.o2 .btn{display:inline-flex;align-items:center;gap:10px;background:var(--ink);color:#fff;text-decoration:none;font:600 15px/1 "Schibsted Grotesk";padding:15px 20px;border-radius:4px}
-.o2 .btn.rose{background:var(--rose)}
-.o2 .hero{display:grid;grid-template-columns:1.05fr 1fr;gap:48px;padding-block:48px 72px;align-items:center}
-.o2 .tag{font:500 12px/1 "DM Mono",monospace;text-transform:uppercase;letter-spacing:.08em;color:var(--rose)}
-.o2 h1{font:800 clamp(38px,5.4vw,68px)/1 "Schibsted Grotesk";letter-spacing:-.035em;margin:16px 0 20px}
-.o2 h1 mark{background:linear-gradient(transparent 58%,var(--hl) 58%);color:inherit;padding:0 .08em}
-.o2 .lead{font-size:18px;color:#45424F;max-width:44ch}
-.o2 .hero .acts{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-top:28px}
-.o2 .hero .acts small{font:500 13px "DM Mono",monospace;color:var(--muted)}
-.o2 .sheet{background:var(--sheet);border:1px solid #D9D7E2;box-shadow:0 1px 0 #D9D7E2,6px 6px 0 -1px var(--sheet),6px 6px 0 0 #D9D7E2;padding:28px;position:relative;transform:rotate(.6deg)}
-.o2 .sheet h3{font:700 15px/1.2 "Schibsted Grotesk";display:flex;justify-content:space-between;border-bottom:2px solid var(--ink);padding-bottom:10px;margin-bottom:6px}
-.o2 .sheet h3 span{font:500 12px "DM Mono";color:var(--muted)}
-.o2 .field{display:grid;grid-template-columns:130px 1fr;gap:12px;padding:11px 0;border-bottom:1px dashed #CFCDD9;font-size:15px}
-.o2 .field label{font:500 11px/1.6 "DM Mono";text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
-.o2 .field div{font-family:"DM Mono",monospace;color:#2B2F7A}
-.o2 .stamp{position:absolute;right:-10px;bottom:-26px;transform:rotate(-8deg);border:3px solid var(--rose);color:var(--rose);font:500 13px/1.3 "DM Mono";text-transform:uppercase;letter-spacing:.08em;padding:10px 14px;text-align:center;background:rgba(255,255,255,.85)}
-.o2 .stamp b{display:block;font-size:20px}
-.o2 section.s{padding-block:64px;border-top:1px solid #D9D7E2}
-.o2 .sh{display:flex;justify-content:space-between;align-items:end;gap:24px;flex-wrap:wrap;margin-bottom:32px}
-.o2 h2{font:800 clamp(30px,3.8vw,46px)/1.05 "Schibsted Grotesk";letter-spacing:-.03em;max-width:18ch}
-.o2 .tl{display:grid;grid-template-columns:repeat(3,1fr);gap:0;background:var(--sheet);border:1px solid #D9D7E2}
-.o2 .tl>div{padding:24px;border-left:1px solid #D9D7E2}
-.o2 .tl>div:first-child{border-left:0}
-.o2 .tl .d{font:500 12px "DM Mono";color:var(--rose);text-transform:uppercase;letter-spacing:.06em}
-.o2 .tl h3{font:700 19px/1.25 "Schibsted Grotesk";margin:10px 0 8px}
-.o2 .tl p{color:#4E4B5A;font-size:15px}
-.o2 .eq{display:grid;grid-template-columns:1fr 1.2fr;gap:40px;align-items:start}
-.o2 .eq p{color:#45424F;max-width:44ch}
-.o2 .tbl{overflow-x:auto;background:var(--sheet);border:1px solid #D9D7E2}
-.o2 table{border-collapse:collapse;width:100%;min-width:420px;font:400 14px/1.4 "DM Mono",monospace}
-.o2 th,.o2 td{text-align:left;padding:11px 14px;border-bottom:1px solid #E7E6EE}
-.o2 th{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:500;background:#FAFAFC}
-.o2 td:last-child{color:var(--rose)}
-.o2 .note{font:400 12px "DM Mono";color:var(--muted);padding:10px 14px}
-.o2 .inv{display:grid;grid-template-columns:1fr 1fr;gap:24px}
-.o2 .receipt{background:var(--sheet);border:1px solid #D9D7E2;padding:28px;display:flex;flex-direction:column;gap:16px}
-.o2 .receipt.hot{outline:3px solid var(--ink);outline-offset:-3px}
-.o2 .receipt .hd{display:flex;justify-content:space-between;font:500 12px "DM Mono";text-transform:uppercase;color:var(--muted);letter-spacing:.06em}
-.o2 .receipt h3{font:800 26px/1.1 "Schibsted Grotesk";letter-spacing:-.02em}
-.o2 .lines2{font:400 14px/1.4 "DM Mono";display:grid;gap:8px;padding:14px 0;border-block:1px dashed #CFCDD9}
-.o2 .lines2 div{display:flex;justify-content:space-between;gap:12px}
-.o2 .tot{display:flex;justify-content:space-between;align-items:baseline;font:800 38px/1 "Schibsted Grotesk";font-variant-numeric:tabular-nums}
-.o2 .tot small{font:500 12px "DM Mono";color:var(--muted)}
-.o2 .said{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
-.o2 .said figure{margin:0;background:var(--sheet);border:1px solid #D9D7E2;padding:22px}
-.o2 .said blockquote{margin:0;font-size:15px}
-.o2 .said figcaption{margin-top:14px;display:flex;gap:10px;align-items:center;font:500 12px "DM Mono";color:var(--muted)}
-.o2 .said img{width:32px;height:32px;border-radius:50%;object-fit:cover}
-.o2 footer{border-top:2px solid var(--ink);padding-block:28px;font:500 12px "DM Mono";color:var(--muted);background:var(--paper)}
-.o2 footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
-@media (max-width:820px){
-  .o2 nav .l{display:none}.o2 .hero,.o2 .eq,.o2 .inv{grid-template-columns:1fr}
-  .o2 .tl,.o2 .said{grid-template-columns:1fr}.o2 .tl>div{border-left:0;border-top:1px solid #D9D7E2}.o2 .tl>div:first-child{border-top:0}
-  .o2 .field{grid-template-columns:1fr;gap:2px}.o2 .sheet{transform:none}.o2 .stamp{right:8px}
+/* =========================== A · Evolución =========================== */
+.oA{--display:"Newsreader",Georgia,serif;--body:"Inter",system-ui,sans-serif;--bg:#FFFFFF;--surface:#FFFFFF;--tint:#FBF5F5;--ink:#1F1A1B;--muted:#5F5557;--line:#EDE4E5;--line-strong:#D6C9CB;--accent:#B8404F;--accent-hover:#A33645;--on-accent:#fff;--accent-text:#B03C4B;--accent-soft:#FBE9EB;
+  --h1:clamp(48px,5.6cqi,68px);--h1-m:40px;--h2:44px;--h2-m:32px;--h-w:450;--h1-ls:-.025em}
+.oA .hero{background:var(--tint)}
+.oA .hero-g{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:64px;align-items:center;padding-block:88px}
+.oA .hero-img{border-radius:20px;overflow:hidden;aspect-ratio:4/5}
+.oA .hero-img img{width:100%;height:100%;object-fit:cover;object-position:50% 30%}
+.oA .proof{border-bottom:1px solid var(--line)}
+.oA .proof-g{display:grid;grid-template-columns:repeat(3,minmax(0,1fr))}
+.oA .proof-g div{padding:32px 32px 32px 0}
+.oA .proof-g div+div{padding-left:32px;border-left:1px solid var(--line)}
+.oA .proof strong{display:block;font:500 24px/1.2 var(--display);color:var(--ink)}
+.oA .proof span{font-size:15px;color:var(--muted)}
+.oA .about{align-items:center}
+.oA .about-img{border-radius:20px;overflow:hidden;aspect-ratio:1}
+.oA .about-img img{width:100%;height:100%;object-fit:cover}
+.oA .final{background:var(--ink)}
+.oA .final h2{color:#fff}.oA .final-in p{color:#CFC5C7}
+@container (max-width:720px){
+  .oA .hero-g{grid-template-columns:1fr;gap:40px;padding-block:48px}
+  .oA .proof-g{grid-template-columns:1fr}
+  .oA .proof-g div,.oA .proof-g div+div{padding:20px 0;border-left:0}
+  .oA .proof-g div+div{border-top:1px solid var(--line)}
 }
 
-/* =====================================================
-   OPCIÓN 3 · MERCADO — loud, color-blocked, IG-native
-   ===================================================== */
-.o3{--rosa:#E23A6E;--mango:#FFB32E;--nopal:#17613F;--ink:#2A1510;--crema:#FFF3EA;--leche:#FFFFFF;background:var(--crema);color:var(--ink);font:16px/1.55 "Bricolage Grotesque",sans-serif}
-.o3 .disp{font-family:"Big Shoulders Display",sans-serif;text-transform:uppercase;letter-spacing:-.005em}
-.o3 nav{display:flex;justify-content:space-between;align-items:center;padding-block:16px;gap:12px}
-.o3 .logo{font:900 30px/1 "Big Shoulders Display";text-transform:uppercase;color:var(--rosa)}
-.o3 nav .l{display:flex;gap:6px}
-.o3 nav .l a{font:600 14px/1 "Bricolage Grotesque";text-decoration:none;padding:10px 14px;border-radius:999px;border:2px solid var(--ink)}
-.o3 .btn{display:inline-flex;align-items:center;gap:8px;font:800 16px/1 "Bricolage Grotesque";text-decoration:none;background:var(--ink);color:var(--mango);padding:18px 24px;border-radius:999px;box-shadow:4px 4px 0 var(--rosa)}
-.o3 .hero{display:grid;grid-template-columns:1.15fr 1fr;gap:32px;align-items:center;padding-block:24px 56px}
-.o3 h1{font:900 clamp(60px,9.5vw,124px)/.84 "Big Shoulders Display";text-transform:uppercase}
-.o3 h1 .r{color:var(--rosa)}
-.o3 h1 .g{color:var(--nopal)}
-.o3 .hero p{font-size:19px;max-width:40ch;margin:22px 0 28px}
-.o3 .ph{position:relative;justify-self:center;width:min(100%,440px)}
-.o3 .ph .blob{aspect-ratio:1;border-radius:50%;overflow:hidden;background:var(--mango);border:4px solid var(--ink)}
-.o3 .ph img{width:100%;height:100%;object-fit:cover;mix-blend-mode:multiply}
-.o3 .stk{position:absolute;font:900 20px/1 "Big Shoulders Display";text-transform:uppercase;padding:12px 16px;border:3px solid var(--ink);border-radius:14px;background:var(--leche);text-align:center}
-.o3 .stk b{display:block;font-size:40px}
-.o3 .stk.a{top:4%;left:-6%;transform:rotate(-9deg);background:var(--rosa);color:#fff}
-.o3 .stk.b{bottom:6%;right:-4%;transform:rotate(7deg);background:var(--nopal);color:#fff}
-.o3 .stk.c{bottom:-4%;left:4%;transform:rotate(-3deg);font-size:16px}
-.o3 .marq{background:var(--ink);color:var(--crema);overflow:hidden;white-space:nowrap;padding-block:16px;border-block:4px solid var(--ink)}
-.o3 .marq div{display:inline-block;animation:o3m 32s linear infinite;font:800 26px/1 "Big Shoulders Display";text-transform:uppercase}
-.o3 .marq span{color:var(--mango);margin-inline:18px}
-@keyframes o3m{to{transform:translateX(-50%)}}
-.o3 .how{padding-block:72px}
-.o3 h2{font:900 clamp(44px,7vw,88px)/.9 "Big Shoulders Display";text-transform:uppercase;margin-bottom:36px}
-.o3 .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
-.o3 .card{border:3px solid var(--ink);border-radius:26px;padding:26px;display:flex;flex-direction:column;gap:10px}
-.o3 .card:nth-child(1){background:var(--rosa);color:#fff}
-.o3 .card:nth-child(2){background:var(--mango)}
-.o3 .card:nth-child(3){background:var(--nopal);color:#fff}
-.o3 .card .n{font:900 72px/.8 "Big Shoulders Display"}
-.o3 .card h3{font:800 22px/1.15 "Bricolage Grotesque"}
-.o3 .price{background:var(--leche);border-block:4px solid var(--ink);padding-block:72px}
-.o3 .pg{display:grid;grid-template-columns:1fr 1fr;gap:22px}
-.o3 .pc{border:3px solid var(--ink);border-radius:26px;padding:30px;display:flex;flex-direction:column;gap:14px;background:var(--crema)}
-.o3 .pc.hot{background:var(--mango);box-shadow:8px 8px 0 var(--ink)}
-.o3 .pc .t{display:inline-block;align-self:flex-start;font:700 13px/1 "Bricolage Grotesque";background:var(--ink);color:var(--crema);padding:8px 12px;border-radius:999px}
-.o3 .pc .amt{font:900 84px/.85 "Big Shoulders Display";font-variant-numeric:tabular-nums}
-.o3 .pc .amt small{font:800 20px "Big Shoulders Display";margin-left:6px}
-.o3 .pc ul{margin:0;padding-left:20px;display:grid;gap:6px}
-.o3 .pc .btn{align-self:flex-start}
-.o3 .voices{padding-block:72px;display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
-.o3 .voices figure{margin:0;background:var(--leche);border:3px solid var(--ink);border-radius:26px;padding:24px;display:flex;flex-direction:column;justify-content:space-between;gap:16px}
-.o3 .voices figure:nth-child(2){transform:rotate(1.2deg);background:#FFE0EA}
-.o3 .voices blockquote{margin:0;font:600 17px/1.45 "Bricolage Grotesque"}
-.o3 .voices figcaption{display:flex;align-items:center;gap:10px;font-weight:700}
-.o3 .voices img{width:40px;height:40px;border-radius:50%;border:2px solid var(--ink);object-fit:cover}
-.o3 footer{background:var(--rosa);color:#fff;padding-block:48px}
-.o3 footer .wrap{display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap}
-.o3 footer .disp{font-weight:900;font-size:clamp(40px,6vw,72px);line-height:.9}
-.o3 footer .btn{background:var(--leche);color:var(--ink);box-shadow:4px 4px 0 var(--ink)}
-@media (max-width:820px){.o3 nav .l{display:none}.o3 .hero,.o3 .pg{grid-template-columns:1fr}.o3 .cards,.o3 .voices{grid-template-columns:1fr}.o3 .voices figure:nth-child(2){transform:none}.o3 .stk.a{left:0}.o3 .stk.b{right:0}}
+/* =========================== B · Suizo =========================== */
+.oB{--display:"Geist",system-ui,sans-serif;--body:"Geist",system-ui,sans-serif;--bg:#FFFFFF;--surface:#FFFFFF;--tint:#F4F3F2;--ink:#111111;--muted:#5E5A58;--line:#E4E2E0;--line-strong:#111111;--accent:#B83A4D;--accent-hover:#A13143;--on-accent:#fff;--accent-text:#111111;--accent-soft:#F4F3F2;--btn-r:4px;--card-r:4px;
+  --h1:clamp(56px,7.4cqi,96px);--h1-m:44px;--h2:32px;--h2-m:28px;--h-w:600;--h1-ls:-.045em;--h2-ls:-.03em;--h1-lh:.98}
+.oB .eyebrow{font:500 13px/1 "Geist Mono",monospace;letter-spacing:0;text-transform:none;color:var(--muted)}
+.oB .brand .lm{color:#111}
+.oB .g12{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:24px}
+.oB .hero{padding-block:72px 0}
+.oB .hero h1{max-width:12ch}
+.oB .hero-g{margin-top:56px;padding-bottom:112px;border-bottom:1px solid var(--ink)}
+.oB .hero-img{grid-column:1/span 8;aspect-ratio:3/2;overflow:hidden}
+.oB .hero-img img{width:100%;height:100%;object-fit:cover;object-position:50% 28%}
+.oB .hero-side{grid-column:9/span 4;display:flex;flex-direction:column;gap:32px}
+.oB .hero-side .lead{margin-top:0;font-size:18px}
+.oB .facts{display:grid;gap:0;border-top:1px solid var(--line)}
+.oB .facts div{display:flex;justify-content:space-between;gap:16px;padding-block:12px;border-bottom:1px solid var(--line);font-size:15px}
+.oB .facts dt{color:var(--muted)}
+.oB .facts dd{font-weight:500;text-align:right;font-variant-numeric:tabular-nums}
+.oB .sec{border-bottom:1px solid var(--line)}
+.oB .c-l{grid-column:1/span 4}
+.oB .c-r{grid-column:5/span 8}
+.oB .steps{grid-template-columns:1fr;gap:0}
+.oB .steps li{grid-template-columns:64px 1fr;gap:0;padding-block:28px;border-top:1px solid var(--line)}
+.oB .steps li:first-child{border-top:0;padding-top:0}
+.oB .sn{background:none;width:auto;height:auto;display:block;font:500 15px/1.6 "Geist Mono",monospace;color:var(--muted)}
+.oB .sn::before{content:"0"}
+.oB .tbl{overflow-x:auto}
+.oB .cmp{width:100%;border-collapse:collapse;font-size:16px;min-width:520px}
+.oB .cmp th,.oB .cmp td{padding:16px 16px 16px 0;border-bottom:1px solid var(--line);text-align:left;vertical-align:middle}
+.oB .cmp thead th{font-weight:600;vertical-align:bottom;border-bottom:1px solid var(--ink)}
+.oB .cmp thead th span{display:block;font-weight:400;color:var(--muted);font-size:14px}
+.oB .cmp tbody th{font-weight:400;color:var(--ink)}
+.oB .cmp td{width:26%}
+.oB .cmp .pr td{font-size:28px;font-weight:600;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.oB .cmp .pr small{font-size:14px;font-weight:400;color:var(--muted);letter-spacing:0}
+.oB .cmp tfoot td{border-bottom:0;padding-top:24px}
+.oB .ck{color:var(--ink)}
+.oB .vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+.oB .pay{text-align:left}
+.oB .bigq blockquote{font-size:32px;line-height:1.3;letter-spacing:-.02em;font-weight:500;max-width:24em}
+.oB .bigq figcaption{margin-top:24px;font-size:15px}
+.oB .smallq{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:56px;padding-top:32px;border-top:1px solid var(--line)}
+.oB .smallq blockquote{font-size:16px;color:var(--muted)}
+.oB .smallq figcaption{margin-top:12px;color:var(--ink);font-weight:500}
+.oB .about{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:24px}
+.oB .about figure{aspect-ratio:4/5;overflow:hidden}
+.oB .about img{width:100%;height:100%;object-fit:cover}
+.oB .about .body{margin-top:0;margin-bottom:32px}
+.oB .faqdl{display:grid;gap:0;border-top:1px solid var(--ink)}
+.oB .faqdl div{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:24px;padding-block:24px;border-bottom:1px solid var(--line)}
+.oB .faqdl dt{font-weight:600}
+.oB .faqdl dd{color:var(--muted)}
+.oB .final{background:#111}
+.oB .final-in{flex-direction:row;justify-content:space-between;align-items:center}
+.oB .final h2{color:#fff;font-size:var(--h1);letter-spacing:-.045em;line-height:1}
+.oB .final .btn{margin-top:0}
+@container (max-width:720px){
+  .oB .g12{grid-template-columns:1fr;row-gap:28px}
+  .oB .hero{padding-top:40px}
+  .oB .hero-g{margin-top:32px;padding-bottom:64px}
+  .oB .hero-img,.oB .hero-side,.oB .c-l,.oB .c-r{grid-column:1/-1}
+  .oB .steps li{grid-template-columns:48px 1fr}
+  .oB .bigq blockquote{font-size:24px}
+  .oB .smallq,.oB .about,.oB .faqdl div{grid-template-columns:1fr}
+  .oB .faqdl div{gap:8px}
+  .oB .final-in{flex-direction:column;align-items:stretch}
+  .oB .final h2{font-size:44px}
+  .oB .cmp{min-width:0;font-size:14px}
+  .oB .cmp th,.oB .cmp td{padding:12px 8px 12px 0}
+  .oB .cmp td{width:30%}
+  .oB .cmp .pr td{font-size:20px}
+  .oB .cmp .pr small{display:block;font-size:12px}
+  .oB .cmp tfoot .btn{padding-inline:8px;font-size:14px}
+}
 
-/* =====================================================
-   OPCIÓN 4 · CALMA — soft, rounded, reassuring
-   ===================================================== */
-.o4{--bg:#FBF0EE;--card:#FFFFFF;--plum:#3B1D2C;--rose:#B9475C;--sage:#7E9A7E;--sageT:#E3EBE0;--muted:#7A6570;background:var(--bg);color:var(--plum);font:17px/1.65 "Figtree",sans-serif}
-.o4 .ser{font-family:"Fraunces",serif;font-variation-settings:"SOFT" 100,"WONK" 0}
-.o4 nav{display:flex;justify-content:space-between;align-items:center;padding-block:20px;gap:12px}
-.o4 .logo{font:600 26px/1 "Fraunces";font-variation-settings:"SOFT" 100;letter-spacing:-.01em}
-.o4 .logo i{color:var(--rose)}
-.o4 nav .l{display:flex;gap:28px;font-weight:500;font-size:15px;color:var(--muted)}
-.o4 .btn{display:inline-flex;align-items:center;gap:8px;background:var(--plum);color:#FFF6F4;text-decoration:none;font:600 16px/1 "Figtree";padding:17px 26px;border-radius:999px}
-.o4 .btn.ghost{background:transparent;color:var(--plum);box-shadow:inset 0 0 0 1.5px #D8BFC6}
-.o4 .hero{display:grid;grid-template-columns:1.1fr .9fr;gap:56px;align-items:center;padding-block:40px 80px}
-.o4 h1{font:400 clamp(42px,6vw,78px)/1.02 "Fraunces";font-variation-settings:"SOFT" 100;letter-spacing:-.025em}
-.o4 h1 em{font-style:italic;color:var(--rose)}
-.o4 .hero p{font-size:19px;color:var(--muted);max-width:42ch;margin:24px 0 32px}
-.o4 .acts{display:flex;flex-wrap:wrap;gap:12px}
-.o4 .reass{display:flex;flex-wrap:wrap;gap:8px;margin-top:32px}
-.o4 .reass span{background:var(--sageT);color:#35503A;font:600 13px/1 "Figtree";padding:9px 13px;border-radius:999px}
-.o4 .arch{border-radius:999px 999px 28px 28px;overflow:hidden;aspect-ratio:4/5;background:var(--sageT);max-width:440px;justify-self:center;width:100%;position:relative}
-.o4 .arch img{width:100%;height:100%;object-fit:cover;filter:sepia(.18) contrast(.98)}
-.o4 .note{position:absolute;left:16px;right:16px;bottom:16px;background:rgba(255,255,255,.94);border-radius:20px;padding:14px 16px;font-size:14px;line-height:1.4;display:flex;gap:12px;align-items:center}
-.o4 .note b{display:block;font-size:15px}
-.o4 .dot{width:10px;height:10px;border-radius:50%;background:var(--sage);flex:0 0 auto;box-shadow:0 0 0 4px var(--sageT)}
-.o4 .band{background:var(--card);border-radius:40px;padding-block:72px;margin-inline:clamp(8px,2vw,24px)}
-.o4 h2{font:400 clamp(34px,4.4vw,54px)/1.08 "Fraunces";font-variation-settings:"SOFT" 100;letter-spacing:-.02em;max-width:18ch}
-.o4 .eyebrow{font:600 13px/1 "Figtree";color:var(--sage);letter-spacing:.06em;text-transform:uppercase;margin-bottom:14px}
-.o4 .flow{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;margin-top:44px;position:relative}
-.o4 .flow>div{display:grid;gap:10px}
-.o4 .flow .c{width:56px;height:56px;border-radius:50%;background:var(--bg);display:grid;place-items:center;font:500 22px "Fraunces";color:var(--rose)}
-.o4 .flow h3{font:600 20px/1.3 "Figtree"}
-.o4 .flow p{color:var(--muted);font-size:16px}
-.o4 .pick{padding-block:80px;display:grid;grid-template-columns:.9fr 1.1fr;gap:56px;align-items:start}
-.o4 .seg{display:inline-flex;background:#F1DEDD;border-radius:999px;padding:5px;margin-top:28px}
-.o4 .seg button{border:0;background:transparent;font:600 15px/1 "Figtree";color:var(--plum);padding:12px 18px;border-radius:999px;cursor:pointer}
-.o4 .seg button[aria-pressed="true"]{background:var(--card);box-shadow:0 1px 3px rgba(59,29,44,.12)}
-.o4 .seg button:focus-visible{outline:2px solid var(--rose);outline-offset:2px}
-.o4 .pcard{background:var(--card);border-radius:32px;padding:36px;display:grid;gap:18px}
-.o4 .pcard .amt{font:400 64px/1 "Fraunces";font-variant-numeric:lining-nums tabular-nums}
-.o4 .pcard .amt small{font:500 16px "Figtree";color:var(--muted);margin-left:4px}
-.o4 .pcard ul{list-style:none;margin:0;padding:0;display:grid;gap:10px}
-.o4 .pcard li{display:flex;gap:12px;font-size:16px}
-.o4 .pcard li::before{content:"";flex:0 0 auto;width:20px;height:20px;border-radius:50%;margin-top:3px;background:var(--sageT) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M6 10.5l2.5 2.5L14 7.5' fill='none' stroke='%2335503A' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/20px no-repeat}
-.o4 .pcard .btn{justify-content:center}
-.o4 .meet{display:grid;grid-template-columns:auto 1fr;gap:40px;align-items:center;padding-block:24px 80px}
-.o4 .meet img{width:220px;height:220px;border-radius:50%;object-fit:cover}
-.o4 .meet blockquote{margin:0;font:italic 400 clamp(22px,2.6vw,30px)/1.35 "Fraunces";font-variation-settings:"SOFT" 100}
-.o4 .meet cite{display:block;margin-top:16px;font:600 15px "Figtree";font-style:normal;color:var(--muted)}
-.o4 .faq{padding-block:0 80px;max-width:760px}
-.o4 details{background:var(--card);border-radius:22px;padding:20px 24px;margin-top:10px}
-.o4 summary{cursor:pointer;font-weight:600;list-style:none;display:flex;justify-content:space-between;gap:12px}
-.o4 summary::after{content:"+";font:400 24px/1 "Fraunces";color:var(--rose)}
-.o4 details[open] summary::after{content:"–"}
-.o4 details p{color:var(--muted);margin-top:10px;font-size:16px}
-.o4 footer{padding-block:32px;border-top:1px solid #EAD3D3;color:var(--muted);font-size:14px}
-.o4 footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
-@media (max-width:820px){.o4 nav .l{display:none}.o4 .hero,.o4 .pick{grid-template-columns:1fr}.o4 .flow{grid-template-columns:1fr}.o4 .meet{grid-template-columns:1fr}.o4 .meet img{width:140px;height:140px}}
+/* =========================== C · Producto =========================== */
+.oC{--display:"Plus Jakarta Sans",system-ui,sans-serif;--body:"Plus Jakarta Sans",system-ui,sans-serif;--bg:#FFFFFF;--surface:#FFFFFF;--tint:#F6F6F7;--ink:#17161B;--muted:#5C5A63;--line:#E6E5EA;--line-strong:#CFCDD6;--accent:#B8404F;--accent-hover:#A33645;--on-accent:#fff;--accent-text:#B03C4B;--accent-soft:#FBEDEF;--btn-r:10px;--card-r:14px;--fs:16px;
+  --h1:clamp(44px,5cqi,60px);--h1-m:36px;--h2:40px;--h2-m:30px;--h-w:700;--h1-ls:-.035em;--h2-ls:-.03em;--h1-lh:1.05}
+.oC .eyebrow{text-transform:none;letter-spacing:0;font-size:14px}
+.oC .hero{background:linear-gradient(var(--tint),var(--tint)) bottom/100% 30% no-repeat}
+.oC .hero-g{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:64px;align-items:center;padding-block:80px}
+.oC .byline{display:flex;align-items:center;gap:12px;margin-top:40px;font-size:14px;color:var(--muted)}
+.oC .byline img{width:44px;height:44px;border-radius:50%;object-fit:cover}
+.oC .byline strong{display:block;color:var(--ink)}
+.oC .logos{background:var(--tint);border-block:1px solid var(--line)}
+.oC .logos-in{display:flex;justify-content:space-between;gap:24px;padding-block:24px;font-size:15px;font-weight:600;color:var(--muted);flex-wrap:wrap}
+.oC .feat{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px}
+.oC .fc{padding:28px;border-radius:var(--card-r);box-shadow:inset 0 0 0 1px var(--line);display:grid;gap:10px;align-content:start}
+.oC .fc .ck{width:32px;height:32px;padding:6px;border-radius:8px;background:var(--accent-soft)}
+.oC .fc h3{margin-top:8px}
+.oC .fc p{color:var(--muted);font-size:15px}
+.oC .steps{position:relative}
+.oC .steps li{padding:28px;background:var(--surface);border-radius:var(--card-r);box-shadow:inset 0 0 0 1px var(--line)}
+.oC .about-mini{display:grid;grid-template-columns:72px 1fr;gap:16px;margin-top:32px;padding:20px;border-radius:var(--card-r);background:var(--tint)}
+.oC .about-mini img{width:72px;height:72px;border-radius:50%;object-fit:cover}
+.oC .about-mini p{font-size:15px;color:var(--muted)}
+.oC .final{background:var(--ink)}
+.oC .final-in{flex-direction:row;justify-content:space-between;align-items:center}
+.oC .final h2{color:#fff}.oC .final-in p{color:#B9B7C0;margin-top:8px}
+.oC .final .btn{margin-top:0}
+@container (max-width:720px){
+  .oC .hero{background:none}
+  .oC .hero-g{grid-template-columns:1fr;gap:40px;padding-block:40px 56px}
+  .oC .logos-in{flex-direction:column;gap:8px}
+  .oC .feat{grid-template-columns:1fr;gap:12px}
+  .oC .steps li{grid-template-columns:40px 1fr}
+  .oC .final-in{flex-direction:column;align-items:stretch}
+}
 
-/* =====================================================
-   OPCIÓN 5 · LA CARTA — dark wine, premium, menu metaphor
-   ===================================================== */
-.o5{--bg:#1A0A0F;--bg2:#241015;--ink:#F7E9EB;--muted:#C4A6AD;--rose:#F07F90;--line:#4A2830;background:var(--bg);color:var(--ink);font:16px/1.65 "Manrope",sans-serif}
-.o5 .cas{font-family:"Libre Caslon Display",serif;font-weight:400}
-.o5 nav{display:flex;justify-content:space-between;align-items:center;padding-block:22px;gap:12px;border-bottom:1px solid var(--line)}
-.o5 .logo{font:400 26px/1 "Libre Caslon Display";letter-spacing:.02em}
-.o5 nav .l{display:flex;gap:28px;font:500 13px/1 "Manrope";letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
-.o5 .btn{display:inline-flex;align-items:center;gap:10px;background:var(--rose);color:#240A10;text-decoration:none;font:700 14px/1 "Manrope";letter-spacing:.08em;text-transform:uppercase;padding:18px 26px;border-radius:2px}
-.o5 .btn.line{background:transparent;color:var(--ink);box-shadow:inset 0 0 0 1px var(--line)}
-.o5 .hero{display:grid;grid-template-columns:1fr 1fr;min-height:620px;align-items:stretch}
-.o5 .hero .txt{padding:clamp(28px,5vw,72px) clamp(16px,4vw,56px) clamp(28px,5vw,72px) 0;display:flex;flex-direction:column;justify-content:center;gap:26px}
-.o5 .eb{font:600 12px/1 "Manrope";letter-spacing:.2em;text-transform:uppercase;color:var(--rose)}
-.o5 h1{font:400 clamp(46px,6.6vw,96px)/.98 "Libre Caslon Display";letter-spacing:-.015em}
-.o5 h1 i{color:var(--rose)}
-.o5 .hero p{color:var(--muted);font-size:18px;max-width:40ch}
-.o5 .acts{display:flex;gap:12px;flex-wrap:wrap}
-.o5 .portrait{position:relative;overflow:hidden;min-height:420px}
-.o5 .portrait img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 30%;filter:grayscale(1) contrast(1.08) brightness(.9)}
-.o5 .portrait::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,var(--bg) 0%,rgba(26,10,15,0) 35%),linear-gradient(0deg,rgba(26,10,15,.7),rgba(26,10,15,0) 40%)}
-.o5 .portrait figcaption{position:absolute;right:20px;bottom:20px;z-index:1;text-align:right;font:500 12px/1.5 "Manrope";letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
-.o5 .portrait figcaption b{display:block;font:400 22px "Libre Caslon Display";letter-spacing:0;text-transform:none;color:var(--ink)}
-.o5 .creds{display:grid;grid-template-columns:repeat(3,1fr);border-block:1px solid var(--line)}
-.o5 .creds>div{padding:26px clamp(16px,3vw,32px);border-left:1px solid var(--line)}
-.o5 .creds>div:first-child{border-left:0;padding-left:0}
-.o5 .creds b{display:block;font:400 30px/1.1 "Libre Caslon Display";color:var(--ink)}
-.o5 .creds span{color:var(--muted);font-size:14px}
-.o5 .menu{padding-block:88px;display:grid;grid-template-columns:.8fr 1.2fr;gap:64px}
-.o5 h2{font:400 clamp(36px,4.8vw,64px)/1.02 "Libre Caslon Display"}
-.o5 h2 i{color:var(--rose)}
-.o5 .menu .intro p{color:var(--muted);margin-top:18px;max-width:38ch}
-.o5 .dish{padding-block:26px;border-bottom:1px solid var(--line)}
-.o5 .dish:first-child{border-top:1px solid var(--line)}
-.o5 .dish .row{display:flex;align-items:baseline;gap:12px}
-.o5 .dish h3{font:400 28px/1.15 "Libre Caslon Display";white-space:nowrap}
-.o5 .dish .lead{flex:1;border-bottom:1px dotted #7A4A55;transform:translateY(-6px);min-width:24px}
-.o5 .dish .pr{font:600 20px/1 "Manrope";font-variant-numeric:tabular-nums;white-space:nowrap}
-.o5 .dish .pr small{font-size:12px;color:var(--muted);margin-left:4px;letter-spacing:.08em}
-.o5 .dish p{color:var(--muted);font-size:15px;margin-top:8px;max-width:56ch}
-.o5 .dish .tg{display:inline-block;font:600 11px/1 "Manrope";letter-spacing:.14em;text-transform:uppercase;color:var(--rose);margin-bottom:8px}
-.o5 .incl{margin-top:26px;display:grid;grid-template-columns:1fr 1fr;gap:10px 28px;font-size:14px;color:var(--muted)}
-.o5 .incl div::before{content:"— ";color:var(--rose)}
-.o5 .testi{background:var(--bg2);padding-block:88px}
-.o5 .testi blockquote{margin:0;font:400 clamp(26px,3.4vw,42px)/1.25 "Libre Caslon Display";max-width:28ch}
-.o5 .testi blockquote::before{content:"“";display:block;font-size:90px;line-height:.6;color:var(--rose)}
-.o5 .who{display:flex;gap:14px;align-items:center;margin-top:28px}
-.o5 .who img{width:48px;height:48px;border-radius:50%;object-fit:cover;filter:grayscale(1)}
-.o5 .who b{display:block}
-.o5 .who span{color:var(--muted);font-size:14px}
-.o5 .dots{display:flex;gap:8px;margin-top:32px}
-.o5 .dots i{width:28px;height:2px;background:var(--line);display:block}
-.o5 .dots i:first-child{background:var(--rose)}
-.o5 footer{padding-block:56px;text-align:center}
-.o5 footer h2{margin-bottom:28px}
-.o5 footer small{display:block;margin-top:40px;color:var(--muted);font-size:13px}
-@media (max-width:860px){.o5 nav .l{display:none}.o5 .hero{grid-template-columns:1fr}.o5 .hero .txt{padding-right:0;order:2}.o5 .portrait{min-height:420px}.o5 .portrait::after{background:linear-gradient(0deg,var(--bg),rgba(26,10,15,0) 50%)}
-  .o5 .menu{grid-template-columns:1fr;gap:32px}.o5 .creds{grid-template-columns:1fr}.o5 .creds>div{border-left:0;padding-left:0;border-top:1px solid var(--line)}.o5 .creds>div:first-child{border-top:0}
-  .o5 .dish h3{white-space:normal;font-size:24px}.o5 .incl{grid-template-columns:1fr}}
+/* =========================== D · Retrato =========================== */
+.oD{--display:"Source Serif 4",Georgia,serif;--body:"Source Sans 3",system-ui,sans-serif;--bg:#FFFFFF;--surface:#FFFFFF;--tint:#F7F2F2;--ink:#2A2224;--muted:#665B5E;--line:#EADFE0;--line-strong:#CDBDC0;--accent:#A93D4E;--accent-hover:#933343;--on-accent:#fff;--accent-text:#A93D4E;--accent-soft:#F6E4E6;--fs:18px;--btn-r:999px;--card-r:4px;
+  --h1:clamp(48px,5.4cqi,72px);--h1-m:40px;--h2:42px;--h2-m:32px;--h-w:400;--h1-ls:-.02em}
+.oD em{font-style:italic;color:var(--accent-text)}
+.oD .eyebrow{text-transform:none;letter-spacing:0;font-size:15px;font-weight:600;color:var(--muted)}
+.oD .hero{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);min-height:640px;background:var(--tint)}
+.oD .hero-t{display:flex;justify-content:flex-end}
+.oD .hero-t-in{width:100%;max-width:600px;padding:96px 64px 96px 48px;display:flex;flex-direction:column;justify-content:center}
+.oD .hero-img{position:relative;min-height:100%}
+.oD .hero-img img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 25%}
+.oD .ctas .link{margin-top:0;height:52px}
+.oD .feature-q figure{max-width:880px;margin-inline:auto;text-align:center}
+.oD .feature-q blockquote{font:400 36px/1.35 var(--display);letter-spacing:-.01em;color:var(--ink)}
+.oD .feature-q figcaption{justify-content:center;margin-top:32px}
+.oD .how{align-items:center}
+.oD .how h2{margin-bottom:48px}
+.oD .how .steps{grid-template-columns:1fr;gap:32px}
+.oD .how .steps li{grid-template-columns:40px 1fr;gap:20px}
+.oD .sn{background:transparent;box-shadow:inset 0 0 0 1px var(--line-strong);font:400 18px/1 var(--display);color:var(--ink)}
+.oD .how-img{aspect-ratio:4/5;overflow:hidden}
+.oD .how-img img{width:100%;height:100%;object-fit:cover}
+.oD .quote{box-shadow:none;background:var(--tint)}
+.oD .quote blockquote{font:400 21px/1.5 var(--display)}
+.oD .two-q{grid-template-columns:repeat(2,minmax(0,1fr))}
+.oD .plans{margin-inline:0;max-width:none}
+.oD .plan{box-shadow:inset 0 0 0 1px var(--line)}
+.oD .plan.rec{box-shadow:inset 0 0 0 1px var(--ink)}
+.oD .plan-tag{background:transparent;padding:0;color:var(--accent-text)}
+.oD .plan-price span{font-weight:400}
+.oD .pay{text-align:left}
+.oD .sig{margin-top:24px;font:italic 400 28px/1 var(--display);color:var(--ink)}
+.oD .faq-h{font:400 28px/1.2 var(--display);margin-bottom:16px}
+.oD .final{background:var(--bg);border-top:1px solid var(--line)}
+.oD .final-in{align-items:center;text-align:center}
+@container (max-width:720px){
+  .oD .hero{grid-template-columns:1fr;min-height:0}
+  .oD .hero-img{order:-1;aspect-ratio:1}
+  .oD .hero-t-in{padding:40px 20px 56px}
+  .oD .ctas .link{justify-content:center}
+  .oD .feature-q blockquote{font-size:26px}
+  .oD .two-q{grid-template-columns:1fr}
+  .oD .how-img{display:none}
+}
+
+/* =========================== E · Marca =========================== */
+.oE{--display:"Bricolage Grotesque",system-ui,sans-serif;--body:"Figtree",system-ui,sans-serif;--bg:#FFFFFF;--surface:#FFFFFF;--tint:#FCEEEF;--ink:#231B1D;--muted:#6A5C5F;--line:#EFE1E3;--line-strong:#D9C3C7;--accent:#B8404F;--accent-hover:#A33645;--on-accent:#fff;--accent-text:#B03C4B;--accent-soft:#FCEEEF;--btn-r:999px;--card-r:24px;
+  --h1:clamp(56px,6.6cqi,88px);--h1-m:48px;--h2:48px;--h2-m:34px;--h-w:700;--h1-ls:-.04em;--h2-ls:-.03em;--h1-lh:.98}
+.oE .hero-wrap{background:#B8404F;color:#fff}
+.oE .hero-wrap .nav{border-color:rgba(255,255,255,.2)}
+.oE .hero-wrap .brand,.oE .hero-wrap .burger{color:#fff}
+.oE .hero-wrap .links{color:rgba(255,255,255,.82)}
+.oE .hero-wrap .links a:hover{color:#fff}
+.oE .hero-wrap .btn-p{background:#fff;color:#8E2B3A}
+.oE .hero h1{color:#fff}
+.oE .hero-g{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:64px;align-items:end;padding-block:80px 0}
+.oE .hero-t{padding-bottom:88px}
+.oE .hero .lead{color:rgba(255,255,255,.9)}
+.oE .btn-w{background:#fff;color:#8E2B3A}
+.oE .btn-w:hover{background:#FCEEEF}
+.oE .btn-o{box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.6);color:#fff}
+.oE .btn-o:hover{box-shadow:inset 0 0 0 1.5px #fff}
+.oE .hero-facts{list-style:none;padding:0;display:flex;flex-wrap:wrap;gap:8px 24px;margin-top:32px;font-size:15px;color:rgba(255,255,255,.85)}
+.oE .hero-facts li{display:flex;align-items:center;gap:8px}
+.oE .hero-facts li::before{content:"";width:6px;height:6px;border-radius:50%;background:#fff}
+.oE .hero-img{border-radius:24px 24px 0 0;overflow:hidden;aspect-ratio:4/5}
+.oE .hero-img img{width:100%;height:100%;object-fit:cover;object-position:50% 30%}
+.oE .sn{width:56px;height:56px;font:700 24px/1 var(--display);background:var(--tint)}
+.oE .blush{background:var(--tint)}
+.oE .blush .chips li{background:#fff;box-shadow:none}
+.oE .incl li{border-color:#EBD2D5}
+.oE .ink{background:#231B1D;--surface:#2E2527;--ink:#FFFFFF;--muted:#C7B9BC;--line:#43383A;--line-strong:#6A5C5F;color:#fff}
+.oE .ink h2,.oE .ink h3{color:#fff}
+.oE .ink .plan.rec{box-shadow:inset 0 0 0 2px #F08C99}
+.oE .ink .plan-tag{background:#F08C99;color:#231B1D}
+.oE .ink .btn-p{background:#fff;color:#8E2B3A}
+.oE .ink .btn-s{color:#fff}
+.oE .ink .plan-price span{color:#fff}
+.oE .quote{background:var(--tint);box-shadow:none}
+.oE .about{align-items:center}
+.oE .about-img{border-radius:24px;overflow:hidden;aspect-ratio:1}
+.oE .about-img img{width:100%;height:100%;object-fit:cover}
+.oE .stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:32px}
+.oE .stats div{background:#fff;border-radius:16px;padding:16px}
+.oE .stats dt{font-size:13px;color:var(--muted)}
+.oE .stats dd{font:700 17px/1.3 var(--display);margin-top:4px}
+.oE .final{background:#B8404F}
+.oE .final-in{align-items:center;text-align:center}
+.oE .final h2{color:#fff;font-size:var(--h1);letter-spacing:-.04em}
+@container (max-width:720px){
+  .oE .hero-g{grid-template-columns:1fr;gap:40px;padding-top:40px}
+  .oE .hero-t{padding-bottom:0}
+  .oE .hero-img{aspect-ratio:1}
+  .oE .stats{grid-template-columns:1fr}
+  .oE .final h2{font-size:48px}
+  .oE .sn{width:40px;height:40px;font-size:18px}
+}
 </style>
-
 <div class="chrome">
-  <header class="top">
-    <div>
-      <h1>Nutralech · 5 direcciones de rediseño</h1>
-      <p>Cada opción es la misma página principal (hero, cómo funciona, planes, testimonios, cierre) con el contenido real del sitio. Elige una, o dime qué partes de cada una te gustan y las combino.</p>
+  <header class="top"><h1>Nutralech · Rediseño de la página principal</h1><p>Empieza por el diagnóstico. Cada dirección usa la misma estructura y el contenido real del sitio, con un sistema de espaciado, tipografía y componentes propio. Revisa cada una en escritorio y en móvil.</p></header>
+  <div class="tabs" role="tablist" aria-label="Secciones">
+    <button class="tab" role="tab" id="t-diag" aria-controls="p-diag" aria-selected="true" data-k="diagnostico">Diagnóstico</button>
+    <button class="tab" role="tab" id="t-a" aria-controls="p-a" aria-selected="false" data-k="a">A · Evolución<small>Menor riesgo</small></button><button class="tab" role="tab" id="t-b" aria-controls="p-b" aria-selected="false" data-k="b">B · Suizo<small>Precisión</small></button><button class="tab" role="tab" id="t-c" aria-controls="p-c" aria-selected="false" data-k="c">C · Producto<small>Claridad</small></button><button class="tab" role="tab" id="t-d" aria-controls="p-d" aria-selected="false" data-k="d">D · Retrato<small>Cercanía</small></button><button class="tab" role="tab" id="t-e" aria-controls="p-e" aria-selected="false" data-k="e">E · Marca<small>Impacto</small></button>
+  </div>
+  
+<section id="p-diag" role="tabpanel" aria-labelledby="t-diag">
+<div class="diag">
+  <div>
+    <h2>Qué falla en la página actual</h2>
+    <ul class="issues">
+      <li><h3>La tipografía de títulos es la serif del sistema</h3><p>El sitio usa <code>font-serif</code> sin cargar una fuente, así que cada dispositivo muestra su serif por defecto (Georgia o Times). Es la razón principal de que se vea genérico.</p></li>
+      <li><h3>Los botones rosas no cumplen contraste AA</h3><p>Texto blanco sobre #DA5F6F da 3.6:1 y el mínimo para texto normal es 4.5:1. Con #B8404F el contraste sube a 5.4:1 y se conserva el tono.</p></li>
+      <li><h3>El orden de las secciones no sigue la decisión de compra</h3><p>Los precios aparecen antes de explicar cómo funciona, y la sección “Así funciona” llega en cuarto lugar. Hay siete botones hacia los planes compitiendo entre sí.</p></li>
+      <li><h3>Secciones que no ayudan a vender</h3><p>El reloj de zonas horarias no aporta a un servicio asíncrono. El teléfono de WhatsApp muestra chats inventados donde “Marialy” aparece como paciente, lo que resta credibilidad.</p></li>
+      <li><h3>Precios con información duplicada</h3><p>Las dos tarjetas repiten las mismas seis viñetas. Basta con listar lo que incluye una sola vez y dejar que las tarjetas expliquen la diferencia.</p></li>
+      <li><h3>Texto pequeño y gris</h3><p>Gran parte del cuerpo está en 13–14px gris claro. En móvil, donde llega la mayoría del tráfico de Instagram, cuesta leerlo.</p></li>
+      <li><h3>“Acerca de mí” compite con la marca</h3><p>Etiquetas flotantes, tarjetas, insignias e iconos de redes en un solo bloque. Hay demasiados estilos de componente para una sección de confianza.</p></li>
+    </ul>
+  </div>
+  <div>
+    <h2>Estructura propuesta (igual en las 5 opciones)</h2>
+    <ol class="ia">
+      <li>Hero<span>Qué es, para quién, precio y un solo CTA.</span></li>
+      <li>Credenciales<span>Ibero con Mención Honorífica, 780K seguidores, 6 continentes.</span></li>
+      <li>Cómo funciona<span>Tres pasos: la duda principal de un plan sin consulta.</span></li>
+      <li>Qué incluye<span>Los seis entregables, listados una sola vez.</span></li>
+      <li>Planes<span>Inicial y seguimiento, métodos de pago y tiempo de entrega.</span></li>
+      <li>Testimonios</li>
+      <li>Sobre Marialy</li>
+      <li>Preguntas frecuentes</li>
+      <li>CTA final y pie de página<span>En móvil, una barra fija con precio y botón.</span></li>
+    </ol>
+    <div class="sys">
+      <div><h3>Espaciado</h3><p>Escala de 8px (8 · 16 · 24 · 32 · 48 · 64 · 112) usada en todo.</p></div>
+      <div><h3>Tipografía</h3><p>Cuerpo de 16–18px, títulos en escala fija y líneas de máximo ~65 caracteres.</p></div>
+      <div><h3>Componentes</h3><p>Un botón primario y uno secundario, siempre de 52px de alto (40px en navegación).</p></div>
+      <div><h3>Accesibilidad</h3><p>Contraste AA, foco visible y objetivos táctiles de 44px o más.</p></div>
     </div>
-  </header>
-
-  <nav class="tabs" role="tablist" aria-label="Direcciones de diseño">
-    <button role="tab" id="t1" aria-controls="p1" aria-selected="true" data-k="portada">1 · Portada <span>Revista</span></button>
-    <button role="tab" id="t2" aria-controls="p2" aria-selected="false" data-k="expediente">2 · Expediente <span>Documento</span></button>
-    <button role="tab" id="t3" aria-controls="p3" aria-selected="false" data-k="mercado">3 · Mercado <span>Color</span></button>
-    <button role="tab" id="t4" aria-controls="p4" aria-selected="false" data-k="calma">4 · Calma <span>Suave</span></button>
-    <button role="tab" id="t5" aria-controls="p5" aria-selected="false" data-k="carta">5 · La Carta <span>Premium</span></button>
-  </nav>
-
-  <!-- ======================= 1 ======================= -->
-  <section id="p1" role="tabpanel" aria-labelledby="t1">
-    <div class="brief">
-      <div>
-        <h2>Portada: Marialy como la portada de una revista</h2>
-        <p>Tus fotos en blanco y negro ya tienen calidad editorial. Esta dirección las trata como portada de revista de moda y cultura: masthead enorme, titulares tipo portada y una cita grande como pausa. Tiene mucha autoridad y personalidad, y usa el rosa solo como tinta.</p>
-      </div>
-      <div>
-        <h3>Ideal si…</h3>
-        <ul><li>Quieres que la marca personal (780K seguidores) sea la protagonista</li><li>Te importa verte premium, no “clínica”</li><li>Riesgo: requiere fotos nuevas de buena calidad con regularidad</li></ul>
-      </div>
-      <div>
-        <h3>Paleta y tipografía</h3>
-        <div class="sw"><i style="background:#161214"></i><i style="background:#FFFFFF"></i><i style="background:#C8374E"></i><i style="background:#FBE7EA"></i><i style="background:#6E6468"></i></div>
-        <div class="fonts">Bodoni Moda (títulos) · Hanken Grotesk (texto)</div>
-      </div>
-    </div>
-    <div class="frame"><div class="bar"><i></i><i></i><i></i><b>nutralech.com</b></div><div class="stage">
-      <div class="mk o1">
-        <div class="wrap"><nav><div class="l"><span>Plan a distancia</span><span>Blog</span><span>Herramientas</span><span>Acerca de mí</span></div><strong style="letter-spacing:.2em">Nutralech</strong><a class="cta" href="#p1">Empezar</a></nav></div>
-        <div class="cover">
-          <img src="img/marialy.webp" alt="Marialy Alonso, nutrióloga, sonriendo">
-          <div class="mast">
-            <div class="row"><span>No. 01 · Plan a distancia</span><span>México · 2026</span></div>
-            <h1>NUTRALECH</h1>
-            <div class="lines">
-              <p class="big">Planes que se adaptan a tu vida, <em>no al revés.</em></p>
-              <ul>
-                <li><b>$1,200 MXN</b>Tu primer plan, 100% personalizado</li>
-                <li><b>5–7 días</b>Hábiles para recibirlo</li>
-                <li><b>0 videollamadas</b>Tú llenas un documento</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-        <div class="wrap">
-          <div class="toc">
-            <div><p class="kick">En este número</p><p style="font:500 28px/1.1 'Bodoni Moda',serif;margin-top:12px">Así funciona tu plan</p></div>
-            <ol>
-              <li><span class="n">1</span><h3>Compras y llenas tu documento</h3><p>Tus datos, objetivos, hábitos, rutina y lo que te gusta comer.</p></li>
-              <li><span class="n">2</span><h3>Recibes tu plan personalizado</h3><p>Con equivalencias, menú ejemplo y recomendaciones para tu vida real.</p></li>
-              <li><span class="n">3</span><h3>Lo aplicas con apoyo</h3><p>Dudas por WhatsApp y, cuando lo necesites, un Plan de seguimiento.</p></li>
-            </ol>
-          </div>
-          <div class="feature">
-            <img src="img/marialy-2.webp" alt="Retrato de Marialy Alonso">
-            <div>
-              <p class="kick">Perfil</p>
-              <h2>La nutrióloga que prefiere hábitos a dietas</h2>
-              <p class="dropcap">Marialy Alonso estudió Nutrición en la Universidad Iberoamericana y se tituló con Mención Honorífica. Su enfoque va más allá de las dietas restrictivas: crear hábitos sostenibles que mejoren tu salud a largo plazo.</p>
-              <p>Trabaja relación con la comida, SOP, resistencia a la insulina, pérdida de grasa y rendimiento, y se coordina con tu médico cuando hace falta.</p>
-              <div class="creds"><span>Ibero · Mención Honorífica</span><span>780K seguidores</span><span>Pacientes en 6 continentes</span></div>
-            </div>
-          </div>
-        </div>
-        <div class="quote"><div class="wrap"><blockquote>“Obtuve súper buenos resultados sin hacer nada extremo ni estar en dietas restrictivas.”</blockquote><cite>Emma Pinto · @chefeemmapinto</cite></div></div>
-        <div class="wrap plans">
-          <p class="kick">Planes</p><h2>Elige cómo empezar</h2>
-          <div class="pgrid">
-            <div class="plan"><p class="kick">Primera vez</p><h3 style="font:600 22px 'Hanken Grotesk'">Plan inicial</h3><div class="price">$1,200<small>MXN</small></div><ul><li>Plan de alimentación personalizado</li><li>Sistema de equivalencias</li><li>Menú ejemplo</li><li>Estrategias para comer fuera</li></ul><a class="btn" href="#p1">Empezar plan inicial</a></div>
-            <div class="plan"><p class="kick">Ya soy paciente</p><h3 style="font:600 22px 'Hanken Grotesk'">Plan de seguimiento</h3><div class="price">$1,000<small>MXN</small></div><ul><li>Ajustes según tus avances</li><li>Nuevos objetivos y hábitos</li><li>Mismas equivalencias y menú</li><li>Soporte por WhatsApp</li></ul><a class="btn alt" href="#p1">Actualizar mi plan</a></div>
-          </div>
-        </div>
-        <footer><div class="wrap"><span class="m">Nutralech</span><span style="font:600 12px 'Hanken Grotesk';letter-spacing:.14em;text-transform:uppercase">Instagram · TikTok · YouTube · Blog</span></div></footer>
-      </div>
-    </div></div>
-  </section>
-
-  <!-- ======================= 2 ======================= -->
-  <section id="p2" role="tabpanel" aria-labelledby="t2" hidden>
-    <div class="brief">
-      <div>
-        <h2>Expediente: la página se ve como tu plan</h2>
-        <p>Lo que vendes es literalmente un documento: el cuestionario que llena el paciente y el plan que recibe. Esta dirección diseña el sitio como ese papel: hoja cuadriculada, formulario lleno a mano, un sello de “plan listo”, tabla de equivalencias y precios en forma de recibo. Es la opción más clara y la que mejor explica el producto.</p>
-      </div>
-      <div>
-        <h3>Ideal si…</h3>
-        <ul><li>La gente todavía no entiende cómo funciona un plan sin consulta</li><li>Quieres transmitir rigor y método</li><li>Riesgo: menos emocional; el rostro de Marialy pasa a segundo plano</li></ul>
-      </div>
-      <div>
-        <h3>Paleta y tipografía</h3>
-        <div class="sw"><i style="background:#1F1D2B"></i><i style="background:#F6F6F3"></i><i style="background:#D04E61"></i><i style="background:#FFE68C"></i><i style="background:#2B2F7A"></i></div>
-        <div class="fonts">Schibsted Grotesk (títulos y texto) · DM Mono (datos y etiquetas)</div>
-      </div>
-    </div>
-    <div class="frame"><div class="bar"><i></i><i></i><i></i><b>nutralech.com</b></div><div class="stage">
-      <div class="mk o2">
-        <div class="wrap"><nav><span class="logo">nutralech<span>.</span></span><div class="l"><span>/plan</span><span>/blog</span><span>/herramientas</span><span>/acerca-de-mi</span></div><a class="btn rose" href="#p2">Empezar mi plan</a></nav></div>
-        <div class="wrap hero">
-          <div>
-            <p class="tag">Plan a distancia · sin videollamada</p>
-            <h1>Tú llenas un documento. Yo te devuelvo <mark>un plan hecho para tu vida.</mark></h1>
-            <p class="lead">Plan de alimentación 100% personalizado según tus objetivos, hábitos, horarios y gustos. Por Marialy Alonso, nutrióloga (Ibero, Mención Honorífica).</p>
-            <div class="acts"><a class="btn rose" href="#p2">Empezar · $1,200 MXN</a><small>Entrega en 5–7 días hábiles</small></div>
-          </div>
-          <div class="sheet" aria-label="Ejemplo del documento que llenas">
-            <h3>Tu documento <span>ejemplo · pág. 1/4</span></h3>
-            <div class="field"><label>Objetivo</label><div>Tener energía en la tarde y bajar grasa sin dejar las tortillas</div></div>
-            <div class="field"><label>Rutina</label><div>Trabajo 9–18 h, entreno 7:00 am 4×/sem</div></div>
-            <div class="field"><label>No me gusta</label><div>Hígado, betabel</div></div>
-            <div class="field"><label>Como fuera</label><div>2–3 veces por semana (oficina)</div></div>
-            <div class="field"><label>Condición</label><div>Resistencia a la insulina</div></div>
-            <div class="stamp">Plan listo<b>5–7 días</b></div>
-          </div>
-        </div>
-        <section class="s"><div class="wrap">
-          <div class="sh"><h2>Del documento al plan, en tres pasos</h2><span class="tag">Proceso</span></div>
-          <div class="tl">
-            <div><span class="d">Día 0</span><h3>Compras y recibes el documento</h3><p>Pagas en línea (tarjeta, OXXO o transferencia) y te llega el cuestionario.</p></div>
-            <div><span class="d">Cuando lo envías</span><h3>Elaboro tu plan</h3><p>Con tus datos, objetivos, hábitos, horarios y preferencias.</p></div>
-            <div><span class="d">+5 a 7 días hábiles</span><h3>Recibes tu plan y lo aplicas</h3><p>Dudas por WhatsApp. Cuando quieras ajustes, Plan de seguimiento.</p></div>
-          </div>
-        </div></section>
-        <section class="s"><div class="wrap eq">
-          <div><p class="tag">Qué recibes</p><h2 style="margin:12px 0 16px">Equivalencias para no depender de un menú rígido</h2><p>Tu plan incluye un sistema de equivalencias para cambiar un alimento por otro del mismo grupo, un menú ejemplo y estrategias para cuando comes fuera de casa.</p></div>
-          <div class="tbl"><table>
-            <thead><tr><th>Grupo</th><th>1 equivalente es…</th><th>o también</th></tr></thead>
-            <tbody>
-              <tr><td>Cereal</td><td>1 tortilla de maíz</td><td>⅓ taza de avena</td></tr>
-              <tr><td>Fruta</td><td>1 manzana chica</td><td>1 taza de papaya</td></tr>
-              <tr><td>Verdura</td><td>½ taza de nopal cocido</td><td>1 jitomate</td></tr>
-              <tr><td>Leguminosa</td><td>½ taza de frijol cocido</td><td>½ taza de lenteja</td></tr>
-            </tbody>
-          </table><p class="note">Ejemplo ilustrativo. Tus porciones dependen de tu plan.</p></div>
-        </div></section>
-        <section class="s"><div class="wrap">
-          <div class="sh"><h2>Precios, sin letras chiquitas</h2><span class="tag">Visa · Mastercard · Amex · OXXO · SPEI</span></div>
-          <div class="inv">
-            <div class="receipt hot"><div class="hd"><span>Primera vez</span><span>Más elegido</span></div><h3>Plan inicial</h3>
-              <div class="lines2"><div><span>Plan personalizado</span><span>✓</span></div><div><span>Equivalencias</span><span>✓</span></div><div><span>Menú ejemplo</span><span>✓</span></div><div><span>Comer fuera de casa</span><span>✓</span></div><div><span>Dudas por WhatsApp</span><span>✓</span></div></div>
-              <div class="tot"><small>Total</small>$1,200 <small>MXN</small></div><a class="btn rose" href="#p2">Empezar plan inicial</a></div>
-            <div class="receipt"><div class="hd"><span>Ya soy paciente</span><span></span></div><h3>Plan de seguimiento</h3>
-              <div class="lines2"><div><span>Ajustes por avances</span><span>✓</span></div><div><span>Objetivos nuevos</span><span>✓</span></div><div><span>Equivalencias actualizadas</span><span>✓</span></div><div><span>Menú ejemplo nuevo</span><span>✓</span></div><div><span>Dudas por WhatsApp</span><span>✓</span></div></div>
-              <div class="tot"><small>Total</small>$1,000 <small>MXN</small></div><a class="btn" href="#p2">Actualizar mi plan</a></div>
-          </div>
-        </div></section>
-        <section class="s"><div class="wrap said">
-          <figure><blockquote>“Su conocimiento y enfoque personalizado son excepcionales.”</blockquote><figcaption><img src="img/rodrigo.webp" alt="">Rodrigo V. · paciente</figcaption></figure>
-          <figure><blockquote>“Todo mi plan fue muy balanceado y diario me apoya en todas mis dudas.”</blockquote><figcaption><img src="img/emma.webp" alt="">Emma P. · paciente</figcaption></figure>
-          <figure><blockquote>“Tengo una mejor relación con la comida.”</blockquote><figcaption><img src="img/helena.webp" alt="">Helena M. · paciente</figcaption></figure>
-        </div></section>
-        <footer><div class="wrap"><span>nutralech.com · Marialy Alonso</span><span>WhatsApp +52 744 346 8252 · marialyalonso@gmail.com</span></div></footer>
-      </div>
-    </div></div>
-  </section>
-
-  <!-- ======================= 3 ======================= -->
-  <section id="p3" role="tabpanel" aria-labelledby="t3" hidden>
-    <div class="brief">
-      <div>
-        <h2>Mercado: color de mercado mexicano, energía de Instagram</h2>
-        <p>La dirección más atrevida. Toma sus colores del mercado (rosa mexicano, mango y nopal) y usa tipografía condensada gigante, stickers y bloques de color. Se siente como la continuación natural de tus redes y rompe por completo con la estética de “clínica de nutrición”. Tiene mucha personalidad, aunque es menos sobria.</p>
-      </div>
-      <div>
-        <h3>Ideal si…</h3>
-        <ul><li>La mayoría de tus visitas llegan desde Instagram o TikTok</li><li>Tu público es joven y quieres que la marca se recuerde</li><li>Riesgo: puede sentirse menos “profesional de salud” para un público mayor</li></ul>
-      </div>
-      <div>
-        <h3>Paleta y tipografía</h3>
-        <div class="sw"><i style="background:#E23A6E"></i><i style="background:#FFB32E"></i><i style="background:#17613F"></i><i style="background:#2A1510"></i><i style="background:#FFF3EA"></i></div>
-        <div class="fonts">Big Shoulders Display (títulos) · Bricolage Grotesque (texto)</div>
-      </div>
-    </div>
-    <div class="frame"><div class="bar"><i></i><i></i><i></i><b>nutralech.com</b></div><div class="stage">
-      <div class="mk o3">
-        <div class="wrap"><nav><span class="logo">Nutralech</span><div class="l"><a href="#p3">Plan</a><a href="#p3">Blog</a><a href="#p3">Calculadoras</a></div><a class="btn" href="#p3">Quiero mi plan</a></nav></div>
-        <div class="wrap hero">
-          <div>
-            <h1>Come <span class="r">rico.</span><br>Come <span class="g">real.</span></h1>
-            <p>Sin dietas raras. Un plan de alimentación hecho para tu vida, tus horarios y lo que sí te gusta comer. Sin videollamada: llenas un documento y en 5–7 días hábiles tienes tu plan.</p>
-            <a class="btn" href="#p3">Empezar por $1,200 MXN →</a>
-          </div>
-          <div class="ph">
-            <div class="blob"><img src="img/marialy-2.webp" alt="Marialy Alonso"></div>
-            <div class="stk a"><b>780K</b>te siguen</div>
-            <div class="stk b"><b>6</b>continentes</div>
-            <div class="stk c">Nutrióloga · Ibero</div>
-          </div>
-        </div>
-        <div class="marq" aria-hidden="true"><div>Relación con la comida<span>✺</span>SOP<span>✺</span>Resistencia a la insulina<span>✺</span>Pérdida de grasa<span>✺</span>Masa muscular<span>✺</span>Salud hormonal<span>✺</span>Rendimiento<span>✺</span>Relación con la comida<span>✺</span>SOP<span>✺</span>Resistencia a la insulina<span>✺</span>Pérdida de grasa<span>✺</span>Masa muscular<span>✺</span>Salud hormonal<span>✺</span>Rendimiento<span>✺</span></div></div>
-        <div class="wrap how">
-          <h2>Así de fácil</h2>
-          <div class="cards">
-            <div class="card"><span class="n">1</span><h3>Compras y llenas tu documento</h3><p>Tus objetivos, rutina, horarios y gustos.</p></div>
-            <div class="card"><span class="n">2</span><h3>Armo tu plan</h3><p>Con equivalencias y un menú ejemplo para tu día a día.</p></div>
-            <div class="card"><span class="n">3</span><h3>Lo aplicas con apoyo</h3><p>Me escribes por WhatsApp cuando tengas dudas.</p></div>
-          </div>
-        </div>
-        <div class="price"><div class="wrap">
-          <h2>Elige tu plan</h2>
-          <div class="pg">
-            <div class="pc hot"><span class="t">Primera vez</span><h3 style="font:800 26px 'Bricolage Grotesque'">Plan inicial</h3><div class="amt">$1,200<small>MXN</small></div><ul><li>Plan 100% personalizado</li><li>Sistema de equivalencias</li><li>Menú ejemplo</li><li>Tips para comer fuera</li></ul><a class="btn" href="#p3">Lo quiero</a></div>
-            <div class="pc"><span class="t">Ya soy paciente</span><h3 style="font:800 26px 'Bricolage Grotesque'">Plan de seguimiento</h3><div class="amt">$1,000<small>MXN</small></div><ul><li>Ajustes según tus avances</li><li>Objetivos nuevos</li><li>Equivalencias actualizadas</li><li>Soporte por WhatsApp</li></ul><a class="btn" href="#p3">Actualizar mi plan</a></div>
-          </div>
-        </div></div>
-        <div class="wrap voices">
-          <figure><blockquote>“¡La mejor nutrióloga! Súper buenos resultados sin hacer nada extremo.”</blockquote><figcaption><img src="img/emma.webp" alt="">@chefeemmapinto</figcaption></figure>
-          <figure><blockquote>“No solo cumplo mis metas, tengo una mejor relación con la comida.”</blockquote><figcaption><img src="img/helena.webp" alt="">@helenamolinar</figcaption></figure>
-          <figure><blockquote>“Logré mis objetivos de salud con facilidad. ¡Totalmente recomendado!”</blockquote><figcaption><img src="img/rodrigo.webp" alt="">@rodrigo.vallep</figcaption></figure>
-        </div>
-        <footer><div class="wrap"><span class="disp">¿Lista, listo?<br>Empecemos.</span><a class="btn" href="#p3">Empezar mi plan →</a></div></footer>
-      </div>
-    </div></div>
-  </section>
-
-  <!-- ======================= 4 ======================= -->
-  <section id="p4" role="tabpanel" aria-labelledby="t4" hidden>
-    <div class="brief">
-      <div>
-        <h2>Calma: un lugar seguro para hablar de comida</h2>
-        <p>Muchas visitas llegan con ansiedad por su cuerpo o su alimentación. Esta dirección baja el volumen: rosa empolvado, ciruela profundo y salvia, formas redondas, foto en arco y un tono cálido. El precio es una sola tarjeta con selector (primera vez o ya soy paciente) y las preguntas frecuentes van justo debajo. Es la versión más cercana a tu sitio actual, pero con identidad propia.</p>
-      </div>
-      <div>
-        <h3>Ideal si…</h3>
-        <ul><li>Tu especialidad fuerte es relación con la comida y SOP</li><li>Quieres que se sienta humano y sin presión</li><li>Riesgo: si no se ejecuta con precisión, puede parecer otra marca de “wellness”</li></ul>
-      </div>
-      <div>
-        <h3>Paleta y tipografía</h3>
-        <div class="sw"><i style="background:#FBF0EE"></i><i style="background:#3B1D2C"></i><i style="background:#B9475C"></i><i style="background:#7E9A7E"></i><i style="background:#E3EBE0"></i></div>
-        <div class="fonts">Fraunces Soft (títulos) · Figtree (texto)</div>
-      </div>
-    </div>
-    <div class="frame"><div class="bar"><i></i><i></i><i></i><b>nutralech.com</b></div><div class="stage">
-      <div class="mk o4">
-        <div class="wrap"><nav><span class="logo">nutra<i>lech</i></span><div class="l"><span>Cómo funciona</span><span>Planes</span><span>Blog</span><span>Sobre mí</span></div><a class="btn" href="#p4">Empezar</a></nav></div>
-        <div class="wrap hero">
-          <div>
-            <h1>Comer bien <em>sin pelearte</em> con la comida.</h1>
-            <p>Un plan de alimentación a tu medida, pensado para tus horarios, tus gustos y tu ritmo. Sin extremos, sin culpa y sin videollamadas.</p>
-            <div class="acts"><a class="btn" href="#p4">Ver mi plan</a><a class="btn ghost" href="#p4">Conoce a Marialy</a></div>
-            <div class="reass"><span>Sin dietas restrictivas</span><span>Dudas por WhatsApp</span><span>Coordinado con tu médico</span></div>
-          </div>
-          <div class="arch"><img src="img/marialy-2.webp" alt="Marialy Alonso"><div class="note"><span class="dot"></span><span><b>Marialy responde tus dudas</b>Por WhatsApp, durante tu plan</span></div></div>
-        </div>
-        <div class="band"><div class="wrap">
-          <p class="eyebrow">Cómo funciona</p>
-          <h2>Tres pasos, a tu ritmo</h2>
-          <div class="flow">
-            <div><span class="c">1</span><h3>Me cuentas de ti</h3><p>Llenas un documento con tus objetivos, rutina, horarios y lo que te gusta comer.</p></div>
-            <div><span class="c">2</span><h3>Preparo tu plan</h3><p>En 5–7 días hábiles recibes tu plan con equivalencias y un menú ejemplo.</p></div>
-            <div><span class="c">3</span><h3>Te acompaño</h3><p>Me escribes cuando tengas dudas y actualizamos el plan cuando lo necesites.</p></div>
-          </div>
-        </div></div>
-        <div class="wrap pick">
-          <div><p class="eyebrow">Planes</p><h2>Un solo plan, a tu medida</h2><p style="color:var(--muted);margin-top:16px;max-width:36ch">Si es tu primera vez, empieza con el Plan inicial. Si ya tienes un plan conmigo, el de seguimiento lo ajusta a tus avances.</p>
-            <div class="seg" role="group" aria-label="Tipo de plan"><button type="button" id="o4a" aria-pressed="true">Primera vez</button><button type="button" id="o4b" aria-pressed="false">Ya soy paciente</button></div></div>
-          <div class="pcard">
-            <h3 id="o4name" style="font:600 22px 'Figtree'">Plan inicial</h3>
-            <div class="amt"><span id="o4amt">$1,200</span><small>MXN · pago único</small></div>
-            <ul><li>Plan de alimentación personalizado</li><li>Sistema de equivalencias para variar tus alimentos</li><li>Un menú ejemplo para visualizar tus comidas</li><li>Estrategias para cuando comes fuera de casa</li></ul>
-            <a class="btn" id="o4cta" href="#p4">Empezar plan inicial</a>
-          </div>
-        </div>
-        <div class="wrap meet">
-          <img src="img/marialy.webp" alt="Marialy Alonso">
-          <div><blockquote>“La idea no es darte una dieta genérica, sino una guía que puedas aplicar de manera realista en tu día a día.”</blockquote><cite>Marialy Alonso · Nutrióloga, Universidad Iberoamericana</cite></div>
-        </div>
-        <div class="wrap faq">
-          <p class="eyebrow">Preguntas frecuentes</p>
-          <details open><summary>¿Incluye videollamada?</summary><p>No. El plan es completamente asíncrono: tú envías tu información por el documento y yo te entrego el plan listo para aplicar.</p></details>
-          <details><summary>¿Cuánto tarda en llegar mi plan?</summary><p>Aproximadamente 5 a 7 días hábiles después de recibir tu documento completo.</p></details>
-          <details><summary>¿Trabajas con condiciones médicas?</summary><p>Sí, con diabetes, hipertensión y enfermedades autoinmunes, siempre en coordinación con tu equipo médico.</p></details>
-        </div>
-        <footer><div class="wrap"><span>© Nutralech · Marialy Alonso</span><span>Instagram · TikTok · YouTube</span></div></footer>
-      </div>
-    </div></div>
-  </section>
-
-  <!-- ======================= 5 ======================= -->
-  <section id="p5" role="tabpanel" aria-labelledby="t5" hidden>
-    <div class="brief">
-      <div>
-        <h2>La Carta: servicio premium, presentado como un menú</h2>
-        <p>Fondo vino oscuro, serif clásica y los planes presentados como la carta de un restaurante fino: nombre, línea punteada y precio. Hace que $1,200 MXN se sienta como una experiencia curada y no como un producto de oferta. Las credenciales van en una franja propia y un solo testimonio grande hace de pausa.</p>
-      </div>
-      <div>
-        <h3>Ideal si…</h3>
-        <ul><li>Quieres subir la percepción de valor o los precios más adelante</li><li>Te interesa atraer pacientes fuera de México (6 continentes)</li><li>Riesgo: el fondo oscuro es menos común en salud; hay que cuidar el contraste de los formularios</li></ul>
-      </div>
-      <div>
-        <h3>Paleta y tipografía</h3>
-        <div class="sw"><i style="background:#1A0A0F"></i><i style="background:#241015"></i><i style="background:#F7E9EB"></i><i style="background:#F07F90"></i><i style="background:#C4A6AD"></i></div>
-        <div class="fonts">Libre Caslon Display (títulos) · Manrope (texto)</div>
-      </div>
-    </div>
-    <div class="frame"><div class="bar"><i></i><i></i><i></i><b>nutralech.com</b></div><div class="stage">
-      <div class="mk o5">
-        <div class="wrap"><nav><span class="logo">Nutralech</span><div class="l"><span>La carta</span><span>Sobre mí</span><span>Diario</span></div><a class="btn line" href="#p5">Reservar</a></nav></div>
-        <div class="wrap hero">
-          <div class="txt">
-            <p class="eb">Nutrición personalizada a distancia</p>
-            <h1>Tu plan,<br><i>hecho a mano.</i></h1>
-            <p>Cada plan se escribe desde cero con tus objetivos, tus horarios y lo que te gusta comer. Sin videollamada y sin plantillas.</p>
-            <div class="acts"><a class="btn" href="#p5">Ver la carta</a><a class="btn line" href="#p5">Conoce a Marialy</a></div>
-          </div>
-          <figure class="portrait" style="margin:0"><img src="img/marialy.webp" alt="Marialy Alonso"><figcaption><b>Marialy Alonso</b>Nutrióloga · Ibero</figcaption></figure>
-        </div>
-        <div class="wrap"><div class="creds">
-          <div><b>Mención Honorífica</b><span>Universidad Iberoamericana</span></div>
-          <div><b>780K</b><span>personas siguen su contenido</span></div>
-          <div><b>6 continentes</b><span>pacientes atendidos a distancia</span></div>
-        </div></div>
-        <div class="wrap menu">
-          <div class="intro"><p class="eb">La carta</p><h2 style="margin-top:14px">Dos planes, <i>un solo enfoque.</i></h2><p>Entrega en 5 a 7 días hábiles después de recibir tu documento. Pago con tarjeta, OXXO o transferencia.</p></div>
-          <div>
-            <div class="dish"><span class="tg">Primera vez · recomendado</span><div class="row"><h3>Plan inicial</h3><span class="lead"></span><span class="pr">$1,200<small>MXN</small></span></div><p>Un documento para conocer tus datos, objetivos, hábitos y rutina. A partir de ahí, un plan 100% personalizado.</p></div>
-            <div class="dish"><span class="tg">Ya soy paciente</span><div class="row"><h3>Plan de seguimiento</h3><span class="lead"></span><span class="pr">$1,000<small>MXN</small></span></div><p>Actualiza tu plan con base en tus avances, cambios de hábitos y nuevos objetivos.</p></div>
-            <div class="incl"><div>Sistema de equivalencias</div><div>Menú ejemplo</div><div>Estrategias para comer fuera</div><div>Dudas por WhatsApp</div></div>
-            <div style="margin-top:32px"><a class="btn" href="#p5">Empezar plan inicial</a></div>
-          </div>
-        </div>
-        <div class="testi"><div class="wrap">
-          <blockquote>No solo me ayuda a cumplir mis metas, sino que tengo una mejor relación con la comida.</blockquote>
-          <div class="who"><img src="img/helena.webp" alt=""><div><b>Helena Molina</b><span>@helenamolinar</span></div></div>
-          <div class="dots" aria-hidden="true"><i></i><i></i><i></i></div>
-        </div></div>
-        <footer><div class="wrap"><h2>¿Empezamos <i style="color:var(--rose)">tu plan</i>?</h2><a class="btn" href="#p5">Empezar · $1,200 MXN</a><small>© Nutralech · Marialy Alonso · WhatsApp +52 744 346 8252</small></div></footer>
-      </div>
-    </div></div>
-  </section>
-
-  <p style="color:var(--c-muted);padding-block:0 40px;max-width:70ch">Todas las opciones mantienen lo que ya funciona: Stripe, transferencia SPEI, WhatsApp, blog, calculadoras y SEO. Solo cambia la capa visual y el orden de las secciones. Las calculadoras y el pago seguirían con un estilo más sobrio, como pide la guía de diseño actual.</p>
+  </div>
 </div>
+</section>
+  
+<section id="p-a" role="tabpanel" aria-labelledby="t-a" hidden>
+  <div class="brief">
+    <div><h2>Evolución: tu marca actual, bien ejecutada</h2><p>Mantiene el rosa, la foto y el tono actuales, y corrige los fundamentos: una serif real (Newsreader) en lugar de Times, texto de 17px con contraste AA, un orden de secciones que sigue la decisión de compra y un solo CTA primario. Tus pacientes actuales reconocen el sitio.</p></div>
+    <div><h3>Ideal si…</h3><ul><li>Quieres mejorar conversión sin cambiar la identidad</li><li>Es la opción más rápida de implementar</li></ul><p class="risk"><strong>Riesgo:</strong> Es la menos memorable de las cinco.</p></div>
+    <div><h3>Paleta y tipografía</h3><div class="sw"><i style="background:#FFFFFF" title="#FFFFFF"></i><i style="background:#FBF5F5" title="#FBF5F5"></i><i style="background:#1F1A1B" title="#1F1A1B"></i><i style="background:#5F5557" title="#5F5557"></i><i style="background:#B8404F" title="#B8404F"></i><i style="background:#DA5F6F" title="#DA5F6F"></i></div><p>Newsreader (títulos) · Inter (texto)</p></div>
+  </div>
+  <div class="viewbar"><div class="seg" role="group" aria-label="Vista"><button type="button" data-view="desk" aria-pressed="true">Escritorio</button><button type="button" data-view="phone" aria-pressed="false">Móvil</button></div><span>Misma página, adaptada por ancho</span></div>
+  <div class="desk">
+<div class="mk oA">
 
+<header class="nav"><div class="w nav-in">
+  <a class="brand" href="#"><svg class="lm" viewBox="0 0 49 34" aria-hidden="true"><path fill="currentColor" d="M 4.071 11.084 C 4.071 11.084 2.168 26.266 18.051 26.266 C 18.051 26.266 22.01 11.084 4.071 11.084 Z"/><path fill="currentColor" d="M 44.429 4.722 C 22.823 4.722 20.824 18.311 21.221 25.288 C 24.871 14.76 34.822 12.436 34.822 12.436 C 25.322 18.179 23.374 28.546 23.247 29.278 C 47.374 28.347 44.429 4.722 44.429 4.722 Z"/></svg><span>Nutralech</span></a>
+  <nav class="links"><a href="#">Cómo funciona</a><a href="#">Planes</a><a href="#">Sobre mí</a><a href="#">Blog</a><a href="#">Herramientas</a></nav>
+  <div class="nav-r"><a class="btn btn-p btn-sm" href="#">Empezar mi plan</a><button class="burger" type="button" aria-label="Menú"><svg class="mn" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button></div>
+</div></header>
+<section class="hero"><div class="w hero-g">
+  <div class="hero-t">
+    <p class="eyebrow">Plan de alimentación a distancia</p>
+    <h1>Planes que se adaptan a tu vida, no al revés</h1>
+    <p class="lead">Un plan 100% personalizado según tus objetivos, hábitos y rutina. Llenas un documento y en 5–7 días hábiles recibes una guía realista para tu día a día.</p>
+    <div class="ctas"><a class="btn btn-p" href="#">Empezar · $1,200 MXN</a><a class="btn btn-s" href="#">Cómo funciona</a></div>
+    <p class="micro">Sin videollamada · Dudas por WhatsApp · Pagos con tarjeta, OXXO o SPEI</p>
+  </div>
+  <figure class="hero-img"><img src="img/marialy.webp" alt="Marialy Alonso, nutrióloga"></figure>
+</div></section>
+<section class="proof"><div class="w proof-g">
+  <div><strong>Universidad Iberoamericana</strong><span>Nutrióloga, Mención Honorífica</span></div>
+  <div><strong>780K</strong><span>personas siguen su contenido</span></div>
+  <div><strong>6 continentes</strong><span>pacientes atendidos a distancia</span></div>
+</div></section>
+<section class="sec"><div class="w">
+  <div class="sh"><p class="eyebrow">Cómo funciona</p><h2>Tres pasos, sin citas ni horarios</h2></div>
+  <ol class="steps"><li><span class="sn">1</span><div><h3>Compras tu plan y llenas el documento</h3><p>Pagas en línea y recibes un documento para contarme tus datos, objetivos, hábitos, rutina, horarios y gustos.</p></div></li><li><span class="sn">2</span><div><h3>Elaboro tu plan personalizado</h3><p>Con esa información preparo tu plan. Lo recibes en 5 a 7 días hábiles después de enviar el documento completo.</p></div></li><li><span class="sn">3</span><div><h3>Lo aplicas con acompañamiento</h3><p>Me escribes por WhatsApp con dudas sobre tu plan. Cuando quieras ajustes, lo actualizamos con el Plan de seguimiento.</p></div></li></ol>
+</div></section>
+<section class="sec tint"><div class="w two">
+  <div><p class="eyebrow">Qué recibes</p><h2>Una guía que puedes aplicar de verdad</h2><p class="body">La idea no es darte una dieta genérica, sino un plan que se adapte a ti y que puedas sostener.</p>
+    <div class="focus"><h3>Áreas en las que te puedo ayudar</h3><ul class="chips"><li>Relación con la comida</li><li>Síndrome de ovario poliquístico</li><li>Resistencia a la insulina</li><li>Pérdida de grasa</li><li>Aumento de masa muscular</li><li>Salud hormonal</li><li>Rendimiento deportivo</li><li>Aprender a comer bien</li></ul></div></div>
+  <ul class="incl"><li><svg class="ck" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 10.5l3.2 3.2L15 7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><div><strong>Plan de alimentación personalizado</strong><span>Diseñado para tus objetivos, horarios y preferencias.</span></div></li><li><svg class="ck" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 10.5l3.2 3.2L15 7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><div><strong>Sistema de equivalencias</strong><span>Para variar tus alimentos sin depender de un menú rígido.</span></div></li><li><svg class="ck" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 10.5l3.2 3.2L15 7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><div><strong>Menú ejemplo</strong><span>Para visualizar cómo organizar tus comidas del día.</span></div></li><li><svg class="ck" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 10.5l3.2 3.2L15 7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><div><strong>Recomendaciones personalizadas</strong><span>De acuerdo con tus hábitos y objetivos.</span></div></li><li><svg class="ck" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 10.5l3.2 3.2L15 7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><div><strong>Estrategias para comer fuera</strong><span>Opciones para restaurantes, oficina y viajes.</span></div></li><li><svg class="ck" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 10.5l3.2 3.2L15 7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><div><strong>Tips para tu rutina</strong><span>Recomendaciones prácticas para que el plan se adapte a tu vida.</span></div></li></ul>
+</div></section>
+<section class="sec"><div class="w">
+  <div class="sh center"><p class="eyebrow">Planes</p><h2>Elige cómo empezar</h2><p class="body">Ambos planes incluyen todo lo anterior. La diferencia es si es tu primera vez.</p></div>
+  <div class="plans"><article class="plan rec">
+  <div class="plan-hd"><span class="plan-who">Primera vez</span><span class="plan-tag">Recomendado para empezar</span></div>
+  <h3>Plan inicial</h3>
+  <p class="plan-price"><span>$1,200</span> MXN</p>
+  <p class="plan-desc">Tu primer plan a distancia, elaborado desde cero con la información de tu documento.</p>
+  <a class="btn btn-p btn-block" href="#">Empezar plan inicial</a>
+</article><article class="plan">
+  <div class="plan-hd"><span class="plan-who">Ya tienes un plan conmigo</span></div>
+  <h3>Plan de seguimiento</h3>
+  <p class="plan-price"><span>$1,000</span> MXN</p>
+  <p class="plan-desc">Actualizo tu plan según tus avances, cambios de hábitos y nuevos objetivos.</p>
+  <a class="btn btn-s btn-block" href="#">Actualizar mi plan</a>
+</article></div><p class="pay">Entrega en 5–7 días hábiles · Pago con tarjeta, OXXO o transferencia SPEI</p>
+</div></section>
+<section class="sec tint"><div class="w">
+  <div class="sh"><p class="eyebrow">Testimonios</p><h2>Lo que dicen mis pacientes</h2></div>
+  <div class="quotes"><figure class="quote"><blockquote>“Obtuve súper buenos resultados sin hacer nada extremo ni estar en dietas restrictivas. Me encanta que todo mi plan fue muy balanceado y que diario me apoya en todas mis dudas.”</blockquote><figcaption><img src="img/emma.webp" alt=""><span><strong>Emma Pinto</strong>@chefeemmapinto</span></figcaption></figure><figure class="quote"><blockquote>“No solo me ayuda a cumplir mis metas, sino que tengo una mejor relación con la comida. La recomiendo 100% a quien esté buscando a una nutrióloga.”</blockquote><figcaption><img src="img/helena.webp" alt=""><span><strong>Helena Molina</strong>@helenamolinar</span></figcaption></figure><figure class="quote"><blockquote>“He logrado mis objetivos de salud con facilidad y eficacia. Su conocimiento y enfoque personalizado son excepcionales.”</blockquote><figcaption><img src="img/rodrigo.webp" alt=""><span><strong>Rodrigo Valle</strong>@rodrigo.vallep</span></figcaption></figure></div>
+</div></section>
+<section class="sec"><div class="w two about">
+  <figure class="about-img"><img src="img/marialy-2.webp" alt="Retrato de Marialy Alonso"></figure>
+  <div><p class="eyebrow">Sobre mí</p><h2>Hola, soy Marialy</h2><p class="body">Estudié Nutrición en la Universidad Iberoamericana y me titulé con Mención Honorífica. Mi enfoque va más allá de las dietas restrictivas: construir hábitos sostenibles que mejoren tu salud y tu calidad de vida a largo plazo, con base en evidencia científica.</p><a class="link" href="#">Conoce mi historia <svg class="ar" viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h11m-4-4 4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a></div>
+</div></section>
+<section class="sec tint"><div class="w two faq">
+  <div><p class="eyebrow">Preguntas frecuentes</p><h2>Antes de empezar</h2><p class="body">¿Otra duda? Escríbeme por WhatsApp al +52 744 346 8252.</p></div>
+  <div><details class="qa" open><summary>¿Incluye videollamada?</summary><p>No. El plan es asíncrono: tú envías tu información por el documento y yo te entrego el plan listo para aplicar.</p></details><details class="qa"><summary>¿Cuánto tarda en llegar mi plan?</summary><p>Aproximadamente 5 a 7 días hábiles después de recibir tu documento completo.</p></details><details class="qa"><summary>¿Qué diferencia hay entre el Plan inicial y el de seguimiento?</summary><p>El Plan inicial ($1,200 MXN) es para tu primera vez. El de seguimiento ($1,000 MXN) actualiza un plan que ya tienes, según tus avances u objetivos nuevos.</p></details><details class="qa"><summary>¿Trabajas con condiciones médicas?</summary><p>Sí, tengo experiencia con diabetes, hipertensión y enfermedades autoinmunes. Trabajo en coordinación con tu equipo médico cuando es relevante.</p></details><details class="qa"><summary>¿Cómo puedo pagar?</summary><p>Con tarjeta (Visa, Mastercard, American Express), en efectivo en OXXO o por transferencia SPEI.</p></details></div>
+</div></section>
+<section class="final"><div class="w final-in"><h2>Empieza tu plan hoy</h2><p>Recíbelo en 5–7 días hábiles después de enviar tu documento.</p><a class="btn btn-p" href="#">Empezar · $1,200 MXN</a></div></section>
+
+<footer class="foot"><div class="w foot-in">
+  <div class="foot-brand"><a class="brand" href="#"><svg class="lm" viewBox="0 0 49 34" aria-hidden="true"><path fill="currentColor" d="M 4.071 11.084 C 4.071 11.084 2.168 26.266 18.051 26.266 C 18.051 26.266 22.01 11.084 4.071 11.084 Z"/><path fill="currentColor" d="M 44.429 4.722 C 22.823 4.722 20.824 18.311 21.221 25.288 C 24.871 14.76 34.822 12.436 34.822 12.436 C 25.322 18.179 23.374 28.546 23.247 29.278 C 47.374 28.347 44.429 4.722 44.429 4.722 Z"/></svg><span>Nutralech</span></a><p>Nutrición personalizada a distancia con Marialy Alonso.</p></div>
+  <div class="foot-cols">
+    <div><h4>Sitio</h4><a href="#">Planes</a><a href="#">Sobre mí</a><a href="#">Blog</a><a href="#">Herramientas</a></div>
+    <div><h4>Contacto</h4><a href="#">WhatsApp +52 744 346 8252</a><a href="#">contacto@nutralech.com</a></div>
+    <div><h4>Redes</h4><a href="#">Instagram</a><a href="#">TikTok</a><a href="#">YouTube</a></div>
+  </div>
+</div><div class="w foot-legal">© 2026 Nutralech. La asesoría nutricional no sustituye la atención médica.</div></footer><div class="sticky"><div><strong>Plan inicial</strong><span>$1,200 MXN · 5–7 días hábiles</span></div><a class="btn btn-p btn-sm" href="#">Empezar</a></div>
+</div></div>
+  <div class="phone-wrap" hidden><div class="phone"></div></div>
+</section>
+<section id="p-b" role="tabpanel" aria-labelledby="t-b" hidden>
+  <div class="brief">
+    <div><h2>Suizo: información clara en una retícula estricta</h2><p>Una sola familia tipográfica (Geist), retícula de 12 columnas con títulos a la izquierda y contenido a la derecha, y nada decorativo. Los datos clave (precio, entrega, formato, soporte) están en el hero, los precios en una tabla comparativa y las preguntas frecuentes abiertas, sin clics. Transmite rigor científico.</p></div>
+    <div><h3>Ideal si…</h3><ul><li>Tu público valora la evidencia y la claridad</li><li>Quieres diferenciarte de las marcas de wellness</li></ul><p class="risk"><strong>Riesgo:</strong> Es más fría. La calidez depende de la fotografía.</p></div>
+    <div><h3>Paleta y tipografía</h3><div class="sw"><i style="background:#FFFFFF" title="#FFFFFF"></i><i style="background:#F4F3F2" title="#F4F3F2"></i><i style="background:#111111" title="#111111"></i><i style="background:#5E5A58" title="#5E5A58"></i><i style="background:#B83A4D" title="#B83A4D"></i></div><p>Geist (todo) · Geist Mono (números)</p></div>
+  </div>
+  <div class="viewbar"><div class="seg" role="group" aria-label="Vista"><button type="button" data-view="desk" aria-pressed="true">Escritorio</button><button type="button" data-view="phone" aria-pressed="false">Móvil</button></div><span>Misma página, adaptada por ancho</span></div>
+  <div class="desk">
+<div class="mk oB">
+
+<header class="nav"><div class="w nav-in">
+  <a class="brand" href="#"><svg class="lm" viewBox="0 0 49 34" aria-hidden="true"><path fill="currentColor" d="M 4.071 11.084 C 4.071 11.084 2.168 26.266 18.051 26.266 C 18.051 26.266 22.01 11.084 4.071 11.084 Z"/><path fill="currentColor" d="M 44.429 4.722 C 22.823 4.722 20.824 18.311 21.221 25.288 C 24.871 14.76 34.822 12.436 34.822 12.436 C 25.322 18.179 23.374 28.546 23.247 29.278 C 47.374 28.347 44.429 4.722 44.429 4.722 Z"/></svg><span>Nutralech</span></a>
+  <nav class="links"><a href="#">Cómo funciona</a><a href="#">Planes</a><a href="#">Sobre mí</a><a href="#">Blog</a><a href="#">Herramientas</a></nav>
+  <div class="nav-r"><a class="btn btn-p btn-sm" href="#">Empezar</a><button class="burger" type="button" aria-label="Menú"><svg class="mn" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button></div>
+</div></header>
+<section class="hero"><div class="w">
+  <h1>Nutrición personalizada, a&nbsp;distancia.</h1>
+  <div class="g12 hero-g">
+    <figure class="hero-img"><img src="img/marialy.webp" alt="Marialy Alonso, nutrióloga"></figure>
+    <div class="hero-side">
+      <p class="lead">Un plan de alimentación hecho para tus objetivos, hábitos y rutina por Marialy Alonso, nutrióloga por la Universidad Iberoamericana.</p>
+      <dl class="facts"><div><dt>Precio</dt><dd>$1,200 MXN</dd></div><div><dt>Entrega</dt><dd>5–7 días hábiles</dd></div><div><dt>Formato</dt><dd>Documento, sin videollamada</dd></div><div><dt>Soporte</dt><dd>WhatsApp</dd></div></dl>
+      <a class="btn btn-p btn-block" href="#">Empezar mi plan</a>
+    </div>
+  </div>
+</div></section>
+<section class="sec"><div class="w g12">
+  <div class="c-l"><p class="eyebrow">Proceso</p><h2>Cómo funciona</h2></div>
+  <div class="c-r"><ol class="steps"><li><span class="sn">1</span><div><h3>Compras tu plan y llenas el documento</h3><p>Pagas en línea y recibes un documento para contarme tus datos, objetivos, hábitos, rutina, horarios y gustos.</p></div></li><li><span class="sn">2</span><div><h3>Elaboro tu plan personalizado</h3><p>Con esa información preparo tu plan. Lo recibes en 5 a 7 días hábiles después de enviar el documento completo.</p></div></li><li><span class="sn">3</span><div><h3>Lo aplicas con acompañamiento</h3><p>Me escribes por WhatsApp con dudas sobre tu plan. Cuando quieras ajustes, lo actualizamos con el Plan de seguimiento.</p></div></li></ol></div>
+</div></section>
+<section class="sec"><div class="w g12">
+  <div class="c-l"><p class="eyebrow">Planes</p><h2>Precios</h2><p class="body">Ambos planes incluyen lo mismo. El Plan de seguimiento es para quien ya tiene un plan conmigo.</p></div>
+  <div class="c-r"><div class="tbl"><table class="cmp">
+    <thead><tr><th scope="col"><span class="vh">Incluye</span></th><th scope="col">Plan inicial<span>Primera vez</span></th><th scope="col">Seguimiento<span>Ya tienes un plan</span></th></tr></thead>
+    <tbody>
+      <tr class="pr"><th scope="row">Precio</th><td>$1,200 <small>MXN</small></td><td>$1,000 <small>MXN</small></td></tr>
+      <tr><th scope="row">Plan de alimentación personalizado</th><td><svg class="ck" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 10.5l3.2 3.2L15 7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></td><td><svg class="ck" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 10.5l3.2 3.2L15 7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></td></tr><tr><th scope="row">Sistema de equivalencias</th><td><svg class="ck" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 10.5l3.2 3.2L15 7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></td><td><svg class="ck" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 10.5l3.2 3.2L15 7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></td></tr><tr><th scope="row">Menú ejemplo</th><td><svg class="ck" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 10.5l3.2 3.2L15 7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></td><td><svg class="ck" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 10.5l3.2 3.2L15 7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></td></tr><tr><th scope="row">Recomendaciones personalizadas</th><td><svg class="ck" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 10.5l3.2 3.2L15 7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></td><td><svg class="ck" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 10.5l3.2 3.2L15 7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></td></tr><tr><th scope="row">Estrategias para comer fuera</th><td><svg class="ck" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 10.5l3.2 3.2L15 7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></td><td><svg class="ck" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 10.5l3.2 3.2L15 7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></td></tr><tr><th scope="row">Tips para tu rutina</th><td><svg class="ck" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 10.5l3.2 3.2L15 7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></td><td><svg class="ck" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 10.5l3.2 3.2L15 7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></td></tr>
+      <tr><th scope="row">Basado en</th><td>Tu documento inicial</td><td>Tus avances y nuevos objetivos</td></tr>
+    </tbody>
+    <tfoot><tr><td></td><td><a class="btn btn-p btn-block" href="#">Empezar</a></td><td><a class="btn btn-s btn-block" href="#">Actualizar</a></td></tr></tfoot>
+  </table></div><p class="pay">Entrega en 5–7 días hábiles · Pago con tarjeta, OXXO o transferencia SPEI</p></div>
+</div></section>
+<section class="sec"><div class="w g12">
+  <div class="c-l"><p class="eyebrow">Testimonios</p><h2>Pacientes</h2></div>
+  <div class="c-r">
+    <figure class="bigq"><blockquote>“No solo me ayuda a cumplir mis metas, sino que tengo una mejor relación con la comida. La recomiendo 100% a quien esté buscando a una nutrióloga.”</blockquote><figcaption>Helena Molina, @helenamolinar</figcaption></figure>
+    <div class="smallq"><figure><blockquote>“Obtuve súper buenos resultados sin hacer nada extremo ni estar en dietas restrictivas. Me encanta que todo mi plan fue muy balanceado y que diario me apoya en todas mis dudas.”</blockquote><figcaption>Emma Pinto</figcaption></figure><figure><blockquote>“He logrado mis objetivos de salud con facilidad y eficacia. Su conocimiento y enfoque personalizado son excepcionales.”</blockquote><figcaption>Rodrigo Valle</figcaption></figure></div>
+  </div>
+</div></section>
+<section class="sec"><div class="w g12">
+  <div class="c-l"><p class="eyebrow">Sobre mí</p><h2>Marialy Alonso</h2></div>
+  <div class="c-r about">
+    <figure><img src="img/marialy-2.webp" alt="Retrato de Marialy Alonso"></figure>
+    <div><p class="body">Estudié Nutrición en la Universidad Iberoamericana y me titulé con Mención Honorífica. Mi enfoque va más allá de las dietas restrictivas: construir hábitos sostenibles que mejoren tu salud y tu calidad de vida a largo plazo, con base en evidencia científica.</p>
+      <dl class="facts"><div><dt>Formación</dt><dd>Universidad Iberoamericana</dd></div><div><dt>Distinción</dt><dd>Mención Honorífica</dd></div><div><dt>Comunidad</dt><dd>780K seguidores</dd></div><div><dt>Alcance</dt><dd>Pacientes en 6 continentes</dd></div></dl></div>
+  </div>
+</div></section>
+<section class="sec"><div class="w g12">
+  <div class="c-l"><p class="eyebrow">Preguntas</p><h2>Frecuentes</h2></div>
+  <div class="c-r"><dl class="faqdl"><div><dt>¿Incluye videollamada?</dt><dd>No. El plan es asíncrono: tú envías tu información por el documento y yo te entrego el plan listo para aplicar.</dd></div><div><dt>¿Cuánto tarda en llegar mi plan?</dt><dd>Aproximadamente 5 a 7 días hábiles después de recibir tu documento completo.</dd></div><div><dt>¿Qué diferencia hay entre el Plan inicial y el de seguimiento?</dt><dd>El Plan inicial ($1,200 MXN) es para tu primera vez. El de seguimiento ($1,000 MXN) actualiza un plan que ya tienes, según tus avances u objetivos nuevos.</dd></div><div><dt>¿Trabajas con condiciones médicas?</dt><dd>Sí, tengo experiencia con diabetes, hipertensión y enfermedades autoinmunes. Trabajo en coordinación con tu equipo médico cuando es relevante.</dd></div><div><dt>¿Cómo puedo pagar?</dt><dd>Con tarjeta (Visa, Mastercard, American Express), en efectivo en OXXO o por transferencia SPEI.</dd></div></dl></div>
+</div></section>
+<section class="final"><div class="w final-in"><h2>Empieza tu plan.</h2><a class="btn btn-p" href="#">Empezar · $1,200 MXN</a></div></section>
+
+<footer class="foot"><div class="w foot-in">
+  <div class="foot-brand"><a class="brand" href="#"><svg class="lm" viewBox="0 0 49 34" aria-hidden="true"><path fill="currentColor" d="M 4.071 11.084 C 4.071 11.084 2.168 26.266 18.051 26.266 C 18.051 26.266 22.01 11.084 4.071 11.084 Z"/><path fill="currentColor" d="M 44.429 4.722 C 22.823 4.722 20.824 18.311 21.221 25.288 C 24.871 14.76 34.822 12.436 34.822 12.436 C 25.322 18.179 23.374 28.546 23.247 29.278 C 47.374 28.347 44.429 4.722 44.429 4.722 Z"/></svg><span>Nutralech</span></a><p>Nutrición personalizada a distancia con Marialy Alonso.</p></div>
+  <div class="foot-cols">
+    <div><h4>Sitio</h4><a href="#">Planes</a><a href="#">Sobre mí</a><a href="#">Blog</a><a href="#">Herramientas</a></div>
+    <div><h4>Contacto</h4><a href="#">WhatsApp +52 744 346 8252</a><a href="#">contacto@nutralech.com</a></div>
+    <div><h4>Redes</h4><a href="#">Instagram</a><a href="#">TikTok</a><a href="#">YouTube</a></div>
+  </div>
+</div><div class="w foot-legal">© 2026 Nutralech. La asesoría nutricional no sustituye la atención médica.</div></footer><div class="sticky"><div><strong>Plan inicial</strong><span>$1,200 MXN · 5–7 días hábiles</span></div><a class="btn btn-p btn-sm" href="#">Empezar</a></div>
+</div></div>
+  <div class="phone-wrap" hidden><div class="phone"></div></div>
+</section>
+<section id="p-c" role="tabpanel" aria-labelledby="t-c" hidden>
+  <div class="brief">
+    <div><h2>Producto: enseña lo que recibes</h2><p>Hoy el sitio describe el plan pero nunca lo muestra. Esta dirección pone una vista previa del plan en el hero (distribución diaria en equivalentes, tabla de intercambios) para que la gente vea lo que va a comprar. La autoría de Marialy aparece junto al CTA. Sigue el patrón de las mejores páginas de producto: mostrar antes que describir.</p></div>
+    <div><h3>Ideal si…</h3><ul><li>La duda principal es “¿qué me van a entregar?”</li><li>Quieres reducir preguntas por WhatsApp antes de comprar</li></ul><p class="risk"><strong>Riesgo:</strong> La vista previa debe basarse en un plan real (anonimizado).</p></div>
+    <div><h3>Paleta y tipografía</h3><div class="sw"><i style="background:#F6F6F7" title="#F6F6F7"></i><i style="background:#FFFFFF" title="#FFFFFF"></i><i style="background:#17161B" title="#17161B"></i><i style="background:#5C5A63" title="#5C5A63"></i><i style="background:#B8404F" title="#B8404F"></i><i style="background:#FBEDEF" title="#FBEDEF"></i></div><p>Plus Jakarta Sans (todo)</p></div>
+  </div>
+  <div class="viewbar"><div class="seg" role="group" aria-label="Vista"><button type="button" data-view="desk" aria-pressed="true">Escritorio</button><button type="button" data-view="phone" aria-pressed="false">Móvil</button></div><span>Misma página, adaptada por ancho</span></div>
+  <div class="desk">
+<div class="mk oC">
+
+<header class="nav"><div class="w nav-in">
+  <a class="brand" href="#"><svg class="lm" viewBox="0 0 49 34" aria-hidden="true"><path fill="currentColor" d="M 4.071 11.084 C 4.071 11.084 2.168 26.266 18.051 26.266 C 18.051 26.266 22.01 11.084 4.071 11.084 Z"/><path fill="currentColor" d="M 44.429 4.722 C 22.823 4.722 20.824 18.311 21.221 25.288 C 24.871 14.76 34.822 12.436 34.822 12.436 C 25.322 18.179 23.374 28.546 23.247 29.278 C 47.374 28.347 44.429 4.722 44.429 4.722 Z"/></svg><span>Nutralech</span></a>
+  <nav class="links"><a href="#">Cómo funciona</a><a href="#">Planes</a><a href="#">Sobre mí</a><a href="#">Blog</a><a href="#">Herramientas</a></nav>
+  <div class="nav-r"><a class="btn btn-p btn-sm" href="#">Empezar mi plan</a><button class="burger" type="button" aria-label="Menú"><svg class="mn" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button></div>
+</div></header>
+<section class="hero"><div class="w hero-g">
+  <div class="hero-t">
+    <p class="eyebrow">Plan de alimentación a distancia</p>
+    <h1>Tu plan de alimentación, hecho para tu rutina</h1>
+    <p class="lead">Cuéntame tus objetivos, horarios y lo que te gusta comer. Recibe en 5–7 días hábiles un plan con equivalencias, menú ejemplo y recomendaciones para tu vida real.</p>
+    <div class="ctas"><a class="btn btn-p" href="#">Empezar · $1,200 MXN</a><a class="btn btn-s" href="#">Ver qué incluye</a></div>
+    <div class="byline"><img src="img/marialy-2.webp" alt=""><span><strong>Marialy Alonso</strong>Nutrióloga · Universidad Iberoamericana</span></div>
+  </div>
+  <div class="hero-doc">
+<div class="doc" role="img" aria-label="Ejemplo de una página del plan de alimentación">
+  <div class="doc-hd"><div><svg class="lm" viewBox="0 0 49 34" aria-hidden="true"><path fill="currentColor" d="M 4.071 11.084 C 4.071 11.084 2.168 26.266 18.051 26.266 C 18.051 26.266 22.01 11.084 4.071 11.084 Z"/><path fill="currentColor" d="M 44.429 4.722 C 22.823 4.722 20.824 18.311 21.221 25.288 C 24.871 14.76 34.822 12.436 34.822 12.436 C 25.322 18.179 23.374 28.546 23.247 29.278 C 47.374 28.347 44.429 4.722 44.429 4.722 Z"/></svg><strong>Plan de alimentación</strong></div><span>Ejemplo</span></div>
+  <dl class="doc-meta"><div><dt>Paciente</dt><dd>Ana, 29 años</dd></div><div><dt>Objetivo</dt><dd>Más energía y mejor composición corporal</dd></div><div><dt>Rutina</dt><dd>Oficina 9–18 h · entrena 7:00</dd></div></dl>
+  <table class="doc-t"><caption>Distribución diaria en equivalentes</caption>
+    <thead><tr><th scope="col">Tiempo</th><th scope="col">Hora</th><th scope="col">Equivalentes</th></tr></thead>
+    <tbody>
+      <tr><th scope="row">Desayuno</th><td>8:00</td><td>2 cereal · 1 proteína · 1 fruta · 1 grasa</td></tr>
+      <tr><th scope="row">Colación</th><td>11:30</td><td>1 fruta · 1 lácteo</td></tr>
+      <tr><th scope="row">Comida</th><td>15:00</td><td>2 cereal · 3 proteína · 2 verdura · 1 grasa</td></tr>
+      <tr><th scope="row">Cena</th><td>20:30</td><td>1 cereal · 2 proteína · 1 verdura</td></tr>
+    </tbody></table>
+  <div class="doc-eq"><span>1 equivalente de cereal</span><ul><li>1 tortilla de maíz</li><li>⅓ taza de avena</li><li>1 rebanada de pan integral</li></ul></div>
+</div></div>
+</div></section>
+<section class="logos"><div class="w logos-in"><span>780K personas siguen su contenido</span><span>Pacientes en 6 continentes</span><span>Mención Honorífica, Ibero</span></div></section>
+<section class="sec"><div class="w">
+  <div class="sh center"><p class="eyebrow">Qué incluye</p><h2>Todo lo que necesitas para comer bien sin menú rígido</h2></div>
+  <div class="feat"><div class="fc"><svg class="ck" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 10.5l3.2 3.2L15 7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><h3>Plan de alimentación personalizado</h3><p>Diseñado para tus objetivos, horarios y preferencias.</p></div><div class="fc"><svg class="ck" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 10.5l3.2 3.2L15 7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><h3>Sistema de equivalencias</h3><p>Para variar tus alimentos sin depender de un menú rígido.</p></div><div class="fc"><svg class="ck" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 10.5l3.2 3.2L15 7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><h3>Menú ejemplo</h3><p>Para visualizar cómo organizar tus comidas del día.</p></div><div class="fc"><svg class="ck" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 10.5l3.2 3.2L15 7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><h3>Recomendaciones personalizadas</h3><p>De acuerdo con tus hábitos y objetivos.</p></div><div class="fc"><svg class="ck" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 10.5l3.2 3.2L15 7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><h3>Estrategias para comer fuera</h3><p>Opciones para restaurantes, oficina y viajes.</p></div><div class="fc"><svg class="ck" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 10.5l3.2 3.2L15 7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><h3>Tips para tu rutina</h3><p>Recomendaciones prácticas para que el plan se adapte a tu vida.</p></div></div>
+</div></section>
+<section class="sec tint"><div class="w">
+  <div class="sh center"><p class="eyebrow">Cómo funciona</p><h2>Sin citas ni videollamadas</h2></div>
+  <ol class="steps"><li><span class="sn">1</span><div><h3>Compras tu plan y llenas el documento</h3><p>Pagas en línea y recibes un documento para contarme tus datos, objetivos, hábitos, rutina, horarios y gustos.</p></div></li><li><span class="sn">2</span><div><h3>Elaboro tu plan personalizado</h3><p>Con esa información preparo tu plan. Lo recibes en 5 a 7 días hábiles después de enviar el documento completo.</p></div></li><li><span class="sn">3</span><div><h3>Lo aplicas con acompañamiento</h3><p>Me escribes por WhatsApp con dudas sobre tu plan. Cuando quieras ajustes, lo actualizamos con el Plan de seguimiento.</p></div></li></ol>
+</div></section>
+<section class="sec"><div class="w">
+  <div class="sh center"><p class="eyebrow">Planes</p><h2>Un pago único, sin suscripción</h2></div>
+  <div class="plans"><article class="plan rec">
+  <div class="plan-hd"><span class="plan-who">Primera vez</span><span class="plan-tag">Recomendado para empezar</span></div>
+  <h3>Plan inicial</h3>
+  <p class="plan-price"><span>$1,200</span> MXN</p>
+  <p class="plan-desc">Tu primer plan a distancia, elaborado desde cero con la información de tu documento.</p>
+  <a class="btn btn-p btn-block" href="#">Empezar plan inicial</a>
+</article><article class="plan">
+  <div class="plan-hd"><span class="plan-who">Ya tienes un plan conmigo</span></div>
+  <h3>Plan de seguimiento</h3>
+  <p class="plan-price"><span>$1,000</span> MXN</p>
+  <p class="plan-desc">Actualizo tu plan según tus avances, cambios de hábitos y nuevos objetivos.</p>
+  <a class="btn btn-s btn-block" href="#">Actualizar mi plan</a>
+</article></div><p class="pay">Entrega en 5–7 días hábiles · Pago con tarjeta, OXXO o transferencia SPEI</p>
+</div></section>
+<section class="sec tint"><div class="w">
+  <div class="sh center"><p class="eyebrow">Testimonios</p><h2>Resultados sin extremos</h2></div>
+  <div class="quotes"><figure class="quote"><blockquote>“Obtuve súper buenos resultados sin hacer nada extremo ni estar en dietas restrictivas. Me encanta que todo mi plan fue muy balanceado y que diario me apoya en todas mis dudas.”</blockquote><figcaption><img src="img/emma.webp" alt=""><span><strong>Emma Pinto</strong>@chefeemmapinto</span></figcaption></figure><figure class="quote"><blockquote>“No solo me ayuda a cumplir mis metas, sino que tengo una mejor relación con la comida. La recomiendo 100% a quien esté buscando a una nutrióloga.”</blockquote><figcaption><img src="img/helena.webp" alt=""><span><strong>Helena Molina</strong>@helenamolinar</span></figcaption></figure><figure class="quote"><blockquote>“He logrado mis objetivos de salud con facilidad y eficacia. Su conocimiento y enfoque personalizado son excepcionales.”</blockquote><figcaption><img src="img/rodrigo.webp" alt=""><span><strong>Rodrigo Valle</strong>@rodrigo.vallep</span></figcaption></figure></div>
+</div></section>
+<section class="sec"><div class="w two faq">
+  <div><p class="eyebrow">Preguntas frecuentes</p><h2>Resolvemos tus dudas</h2><div class="about-mini"><img src="img/marialy.webp" alt="Marialy Alonso"><p>Estudié Nutrición en la Universidad Iberoamericana y me titulé con Mención Honorífica. Mi enfoque va más allá de las dietas restrictivas: construir hábitos sostenibles que mejoren tu salud y tu calidad de vida a largo plazo, con base en evidencia científica.</p></div></div>
+  <div><details class="qa" open><summary>¿Incluye videollamada?</summary><p>No. El plan es asíncrono: tú envías tu información por el documento y yo te entrego el plan listo para aplicar.</p></details><details class="qa"><summary>¿Cuánto tarda en llegar mi plan?</summary><p>Aproximadamente 5 a 7 días hábiles después de recibir tu documento completo.</p></details><details class="qa"><summary>¿Qué diferencia hay entre el Plan inicial y el de seguimiento?</summary><p>El Plan inicial ($1,200 MXN) es para tu primera vez. El de seguimiento ($1,000 MXN) actualiza un plan que ya tienes, según tus avances u objetivos nuevos.</p></details><details class="qa"><summary>¿Trabajas con condiciones médicas?</summary><p>Sí, tengo experiencia con diabetes, hipertensión y enfermedades autoinmunes. Trabajo en coordinación con tu equipo médico cuando es relevante.</p></details><details class="qa"><summary>¿Cómo puedo pagar?</summary><p>Con tarjeta (Visa, Mastercard, American Express), en efectivo en OXXO o por transferencia SPEI.</p></details></div>
+</div></section>
+<section class="final"><div class="w final-in"><div><h2>Listo para empezar</h2><p>Plan inicial · $1,200 MXN · entrega en 5–7 días hábiles</p></div><a class="btn btn-p" href="#">Empezar mi plan</a></div></section>
+
+<footer class="foot"><div class="w foot-in">
+  <div class="foot-brand"><a class="brand" href="#"><svg class="lm" viewBox="0 0 49 34" aria-hidden="true"><path fill="currentColor" d="M 4.071 11.084 C 4.071 11.084 2.168 26.266 18.051 26.266 C 18.051 26.266 22.01 11.084 4.071 11.084 Z"/><path fill="currentColor" d="M 44.429 4.722 C 22.823 4.722 20.824 18.311 21.221 25.288 C 24.871 14.76 34.822 12.436 34.822 12.436 C 25.322 18.179 23.374 28.546 23.247 29.278 C 47.374 28.347 44.429 4.722 44.429 4.722 Z"/></svg><span>Nutralech</span></a><p>Nutrición personalizada a distancia con Marialy Alonso.</p></div>
+  <div class="foot-cols">
+    <div><h4>Sitio</h4><a href="#">Planes</a><a href="#">Sobre mí</a><a href="#">Blog</a><a href="#">Herramientas</a></div>
+    <div><h4>Contacto</h4><a href="#">WhatsApp +52 744 346 8252</a><a href="#">contacto@nutralech.com</a></div>
+    <div><h4>Redes</h4><a href="#">Instagram</a><a href="#">TikTok</a><a href="#">YouTube</a></div>
+  </div>
+</div><div class="w foot-legal">© 2026 Nutralech. La asesoría nutricional no sustituye la atención médica.</div></footer><div class="sticky"><div><strong>Plan inicial</strong><span>$1,200 MXN · 5–7 días hábiles</span></div><a class="btn btn-p btn-sm" href="#">Empezar</a></div>
+</div></div>
+  <div class="phone-wrap" hidden><div class="phone"></div></div>
+</section>
+<section id="p-d" role="tabpanel" aria-labelledby="t-d" hidden>
+  <div class="brief">
+    <div><h2>Retrato: la persona primero</h2><p>La foto ocupa media pantalla, a sangre, y el primer bloque después del hero es un testimonio grande. La serie tipográfica Source Serif y Source Sans da calidez sin ornamento. Funciona porque la gente compra a Marialy, no a un servicio genérico, y aprovecha que tus fotos en blanco y negro son de buena calidad.</p></div>
+    <div><h3>Ideal si…</h3><ul><li>La mayoría llega desde tus redes y ya te conoce</li><li>Tu diferencial es la relación con la comida</li></ul><p class="risk"><strong>Riesgo:</strong> Depende de tener más fotografía propia de calidad.</p></div>
+    <div><h3>Paleta y tipografía</h3><div class="sw"><i style="background:#FFFFFF" title="#FFFFFF"></i><i style="background:#F7F2F2" title="#F7F2F2"></i><i style="background:#2A2224" title="#2A2224"></i><i style="background:#665B5E" title="#665B5E"></i><i style="background:#A93D4E" title="#A93D4E"></i></div><p>Source Serif 4 (títulos) · Source Sans 3 (texto)</p></div>
+  </div>
+  <div class="viewbar"><div class="seg" role="group" aria-label="Vista"><button type="button" data-view="desk" aria-pressed="true">Escritorio</button><button type="button" data-view="phone" aria-pressed="false">Móvil</button></div><span>Misma página, adaptada por ancho</span></div>
+  <div class="desk">
+<div class="mk oD">
+
+<header class="nav"><div class="w nav-in">
+  <a class="brand" href="#"><svg class="lm" viewBox="0 0 49 34" aria-hidden="true"><path fill="currentColor" d="M 4.071 11.084 C 4.071 11.084 2.168 26.266 18.051 26.266 C 18.051 26.266 22.01 11.084 4.071 11.084 Z"/><path fill="currentColor" d="M 44.429 4.722 C 22.823 4.722 20.824 18.311 21.221 25.288 C 24.871 14.76 34.822 12.436 34.822 12.436 C 25.322 18.179 23.374 28.546 23.247 29.278 C 47.374 28.347 44.429 4.722 44.429 4.722 Z"/></svg><span>Nutralech</span></a>
+  <nav class="links"><a href="#">Cómo funciona</a><a href="#">Planes</a><a href="#">Sobre mí</a><a href="#">Blog</a><a href="#">Herramientas</a></nav>
+  <div class="nav-r"><a class="btn btn-p btn-sm" href="#">Empezar</a><button class="burger" type="button" aria-label="Menú"><svg class="mn" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button></div>
+</div></header>
+<section class="hero">
+  <div class="hero-t"><div class="hero-t-in">
+    <p class="eyebrow">Marialy Alonso · Nutrióloga</p>
+    <h1>Una forma realista de <em>comer mejor</em></h1>
+    <p class="lead">Planes de alimentación personalizados a distancia, pensados para tus horarios, tus gustos y tu ritmo. Sin extremos y sin videollamadas.</p>
+    <div class="ctas"><a class="btn btn-p" href="#">Empezar mi plan</a><a class="link" href="#">Conoce a Marialy <svg class="ar" viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h11m-4-4 4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a></div>
+  </div></div>
+  <figure class="hero-img"><img src="img/marialy-2.webp" alt="Marialy Alonso, nutrióloga"></figure>
+</section>
+<section class="sec"><div class="w feature-q">
+  <figure><blockquote>“No solo me ayuda a cumplir mis metas, sino que tengo una mejor relación con la comida. La recomiendo 100% a quien esté buscando a una nutrióloga.”</blockquote><figcaption><img src="img/helena.webp" alt=""><span><strong>Helena Molina</strong>Paciente</span></figcaption></figure>
+</div></section>
+<section class="sec tint"><div class="w two how">
+  <div><p class="eyebrow">Cómo funciona</p><h2>Tú me cuentas cómo vives. Yo diseño tu plan.</h2><ol class="steps"><li><span class="sn">1</span><div><h3>Compras tu plan y llenas el documento</h3><p>Pagas en línea y recibes un documento para contarme tus datos, objetivos, hábitos, rutina, horarios y gustos.</p></div></li><li><span class="sn">2</span><div><h3>Elaboro tu plan personalizado</h3><p>Con esa información preparo tu plan. Lo recibes en 5 a 7 días hábiles después de enviar el documento completo.</p></div></li><li><span class="sn">3</span><div><h3>Lo aplicas con acompañamiento</h3><p>Me escribes por WhatsApp con dudas sobre tu plan. Cuando quieras ajustes, lo actualizamos con el Plan de seguimiento.</p></div></li></ol></div>
+  <figure class="how-img"><img src="img/marialy.webp" alt="Marialy Alonso sonriendo"></figure>
+</div></section>
+<section class="sec"><div class="w two">
+  <div><p class="eyebrow">Qué recibes</p><h2>Todo lo que incluye tu plan</h2><p class="body">La idea no es darte una dieta genérica, sino una guía que puedas aplicar de manera realista en tu día a día.</p></div>
+  <ul class="incl"><li><svg class="ck" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 10.5l3.2 3.2L15 7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><div><strong>Plan de alimentación personalizado</strong><span>Diseñado para tus objetivos, horarios y preferencias.</span></div></li><li><svg class="ck" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 10.5l3.2 3.2L15 7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><div><strong>Sistema de equivalencias</strong><span>Para variar tus alimentos sin depender de un menú rígido.</span></div></li><li><svg class="ck" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 10.5l3.2 3.2L15 7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><div><strong>Menú ejemplo</strong><span>Para visualizar cómo organizar tus comidas del día.</span></div></li><li><svg class="ck" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 10.5l3.2 3.2L15 7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><div><strong>Recomendaciones personalizadas</strong><span>De acuerdo con tus hábitos y objetivos.</span></div></li><li><svg class="ck" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 10.5l3.2 3.2L15 7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><div><strong>Estrategias para comer fuera</strong><span>Opciones para restaurantes, oficina y viajes.</span></div></li><li><svg class="ck" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 10.5l3.2 3.2L15 7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><div><strong>Tips para tu rutina</strong><span>Recomendaciones prácticas para que el plan se adapte a tu vida.</span></div></li></ul>
+</div></section>
+<section class="sec tint"><div class="w">
+  <div class="sh"><p class="eyebrow">Planes</p><h2>Elige tu plan</h2></div>
+  <div class="plans"><article class="plan rec">
+  <div class="plan-hd"><span class="plan-who">Primera vez</span><span class="plan-tag">Recomendado para empezar</span></div>
+  <h3>Plan inicial</h3>
+  <p class="plan-price"><span>$1,200</span> MXN</p>
+  <p class="plan-desc">Tu primer plan a distancia, elaborado desde cero con la información de tu documento.</p>
+  <a class="btn btn-p btn-block" href="#">Empezar plan inicial</a>
+</article><article class="plan">
+  <div class="plan-hd"><span class="plan-who">Ya tienes un plan conmigo</span></div>
+  <h3>Plan de seguimiento</h3>
+  <p class="plan-price"><span>$1,000</span> MXN</p>
+  <p class="plan-desc">Actualizo tu plan según tus avances, cambios de hábitos y nuevos objetivos.</p>
+  <a class="btn btn-s btn-block" href="#">Actualizar mi plan</a>
+</article></div><p class="pay">Entrega en 5–7 días hábiles · Pago con tarjeta, OXXO o transferencia SPEI</p>
+</div></section>
+<section class="sec"><div class="w">
+  <div class="sh"><p class="eyebrow">Más testimonios</p><h2>Pacientes que ya tienen su plan</h2></div>
+  <div class="quotes two-q"><figure class="quote"><blockquote>“Obtuve súper buenos resultados sin hacer nada extremo ni estar en dietas restrictivas. Me encanta que todo mi plan fue muy balanceado y que diario me apoya en todas mis dudas.”</blockquote><figcaption><img src="img/emma.webp" alt=""><span><strong>Emma Pinto</strong>@chefeemmapinto</span></figcaption></figure><figure class="quote"><blockquote>“He logrado mis objetivos de salud con facilidad y eficacia. Su conocimiento y enfoque personalizado son excepcionales.”</blockquote><figcaption><img src="img/rodrigo.webp" alt=""><span><strong>Rodrigo Valle</strong>@rodrigo.vallep</span></figcaption></figure></div>
+</div></section>
+<section class="sec tint"><div class="w two faq">
+  <div><p class="eyebrow">Sobre mí</p><h2>Hola, soy Marialy</h2><p class="body">Estudié Nutrición en la Universidad Iberoamericana y me titulé con Mención Honorífica. Mi enfoque va más allá de las dietas restrictivas: construir hábitos sostenibles que mejoren tu salud y tu calidad de vida a largo plazo, con base en evidencia científica.</p><p class="sig">Marialy Alonso</p></div>
+  <div><h3 class="faq-h">Preguntas frecuentes</h3><details class="qa" open><summary>¿Incluye videollamada?</summary><p>No. El plan es asíncrono: tú envías tu información por el documento y yo te entrego el plan listo para aplicar.</p></details><details class="qa"><summary>¿Cuánto tarda en llegar mi plan?</summary><p>Aproximadamente 5 a 7 días hábiles después de recibir tu documento completo.</p></details><details class="qa"><summary>¿Qué diferencia hay entre el Plan inicial y el de seguimiento?</summary><p>El Plan inicial ($1,200 MXN) es para tu primera vez. El de seguimiento ($1,000 MXN) actualiza un plan que ya tienes, según tus avances u objetivos nuevos.</p></details><details class="qa"><summary>¿Trabajas con condiciones médicas?</summary><p>Sí, tengo experiencia con diabetes, hipertensión y enfermedades autoinmunes. Trabajo en coordinación con tu equipo médico cuando es relevante.</p></details><details class="qa"><summary>¿Cómo puedo pagar?</summary><p>Con tarjeta (Visa, Mastercard, American Express), en efectivo en OXXO o por transferencia SPEI.</p></details></div>
+</div></section>
+<section class="final"><div class="w final-in"><h2>Empecemos por <em>tu</em> plan</h2><a class="btn btn-p" href="#">Empezar · $1,200 MXN</a></div></section>
+
+<footer class="foot"><div class="w foot-in">
+  <div class="foot-brand"><a class="brand" href="#"><svg class="lm" viewBox="0 0 49 34" aria-hidden="true"><path fill="currentColor" d="M 4.071 11.084 C 4.071 11.084 2.168 26.266 18.051 26.266 C 18.051 26.266 22.01 11.084 4.071 11.084 Z"/><path fill="currentColor" d="M 44.429 4.722 C 22.823 4.722 20.824 18.311 21.221 25.288 C 24.871 14.76 34.822 12.436 34.822 12.436 C 25.322 18.179 23.374 28.546 23.247 29.278 C 47.374 28.347 44.429 4.722 44.429 4.722 Z"/></svg><span>Nutralech</span></a><p>Nutrición personalizada a distancia con Marialy Alonso.</p></div>
+  <div class="foot-cols">
+    <div><h4>Sitio</h4><a href="#">Planes</a><a href="#">Sobre mí</a><a href="#">Blog</a><a href="#">Herramientas</a></div>
+    <div><h4>Contacto</h4><a href="#">WhatsApp +52 744 346 8252</a><a href="#">contacto@nutralech.com</a></div>
+    <div><h4>Redes</h4><a href="#">Instagram</a><a href="#">TikTok</a><a href="#">YouTube</a></div>
+  </div>
+</div><div class="w foot-legal">© 2026 Nutralech. La asesoría nutricional no sustituye la atención médica.</div></footer><div class="sticky"><div><strong>Plan inicial</strong><span>$1,200 MXN · 5–7 días hábiles</span></div><a class="btn btn-p btn-sm" href="#">Empezar</a></div>
+</div></div>
+  <div class="phone-wrap" hidden><div class="phone"></div></div>
+</section>
+<section id="p-e" role="tabpanel" aria-labelledby="t-e" hidden>
+  <div class="brief">
+    <div><h2>Marca: el rosa como campo de color</h2><p>El rosa de tu logotipo deja de ser un acento y se vuelve el fondo del hero. La foto en blanco y negro sobre el rosa crea una imagen propia, y las secciones alternan blanco, rosa claro y un tono tinta para marcar el ritmo. La tipografía (Bricolage Grotesque) tiene carácter sin ser llamativa. Es la más reconocible en una captura de Instagram.</p></div>
+    <div><h3>Ideal si…</h3><ul><li>Quieres una marca que se recuerde</li><li>Tu público es joven y llega por redes</li></ul><p class="risk"><strong>Riesgo:</strong> El rosa se oscurece a #B8404F para cumplir contraste AA con texto blanco.</p></div>
+    <div><h3>Paleta y tipografía</h3><div class="sw"><i style="background:#B8404F" title="#B8404F"></i><i style="background:#FFFFFF" title="#FFFFFF"></i><i style="background:#FCEEEF" title="#FCEEEF"></i><i style="background:#231B1D" title="#231B1D"></i><i style="background:#6A5C5F" title="#6A5C5F"></i></div><p>Bricolage Grotesque (títulos) · Figtree (texto)</p></div>
+  </div>
+  <div class="viewbar"><div class="seg" role="group" aria-label="Vista"><button type="button" data-view="desk" aria-pressed="true">Escritorio</button><button type="button" data-view="phone" aria-pressed="false">Móvil</button></div><span>Misma página, adaptada por ancho</span></div>
+  <div class="desk">
+<div class="mk oE">
+<div class="hero-wrap">
+
+<header class="nav"><div class="w nav-in">
+  <a class="brand" href="#"><svg class="lm" viewBox="0 0 49 34" aria-hidden="true"><path fill="#fff" d="M 4.071 11.084 C 4.071 11.084 2.168 26.266 18.051 26.266 C 18.051 26.266 22.01 11.084 4.071 11.084 Z"/><path fill="#fff" d="M 44.429 4.722 C 22.823 4.722 20.824 18.311 21.221 25.288 C 24.871 14.76 34.822 12.436 34.822 12.436 C 25.322 18.179 23.374 28.546 23.247 29.278 C 47.374 28.347 44.429 4.722 44.429 4.722 Z"/></svg><span>Nutralech</span></a>
+  <nav class="links"><a href="#">Cómo funciona</a><a href="#">Planes</a><a href="#">Sobre mí</a><a href="#">Blog</a><a href="#">Herramientas</a></nav>
+  <div class="nav-r"><a class="btn btn-p btn-sm" href="#">Empezar</a><button class="burger" type="button" aria-label="Menú"><svg class="mn" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button></div>
+</div></header>
+<section class="hero"><div class="w hero-g">
+  <div class="hero-t">
+    <h1>Come bien, a tu manera.</h1>
+    <p class="lead">Un plan de alimentación 100% personalizado, hecho por Marialy Alonso para tus objetivos, tu rutina y lo que te gusta comer. Sin videollamada.</p>
+    <div class="ctas"><a class="btn btn-w" href="#">Empezar · $1,200 MXN</a><a class="btn btn-o" href="#">Cómo funciona</a></div>
+    <ul class="hero-facts"><li>Entrega en 5–7 días hábiles</li><li>Dudas por WhatsApp</li><li>780K seguidores</li></ul>
+  </div>
+  <figure class="hero-img"><img src="img/marialy.webp" alt="Marialy Alonso, nutrióloga"></figure>
+</div></section>
+</div>
+<section class="sec"><div class="w">
+  <div class="sh"><h2>Así funciona</h2></div>
+  <ol class="steps"><li><span class="sn">1</span><div><h3>Compras tu plan y llenas el documento</h3><p>Pagas en línea y recibes un documento para contarme tus datos, objetivos, hábitos, rutina, horarios y gustos.</p></div></li><li><span class="sn">2</span><div><h3>Elaboro tu plan personalizado</h3><p>Con esa información preparo tu plan. Lo recibes en 5 a 7 días hábiles después de enviar el documento completo.</p></div></li><li><span class="sn">3</span><div><h3>Lo aplicas con acompañamiento</h3><p>Me escribes por WhatsApp con dudas sobre tu plan. Cuando quieras ajustes, lo actualizamos con el Plan de seguimiento.</p></div></li></ol>
+</div></section>
+<section class="sec blush"><div class="w two">
+  <div><h2>Qué incluye tu plan</h2><p class="body">Una guía para tu vida real, no una dieta genérica.</p><ul class="chips"><li>Relación con la comida</li><li>Síndrome de ovario poliquístico</li><li>Resistencia a la insulina</li><li>Pérdida de grasa</li><li>Aumento de masa muscular</li><li>Salud hormonal</li><li>Rendimiento deportivo</li><li>Aprender a comer bien</li></ul></div>
+  <ul class="incl"><li><svg class="ck" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 10.5l3.2 3.2L15 7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><div><strong>Plan de alimentación personalizado</strong><span>Diseñado para tus objetivos, horarios y preferencias.</span></div></li><li><svg class="ck" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 10.5l3.2 3.2L15 7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><div><strong>Sistema de equivalencias</strong><span>Para variar tus alimentos sin depender de un menú rígido.</span></div></li><li><svg class="ck" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 10.5l3.2 3.2L15 7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><div><strong>Menú ejemplo</strong><span>Para visualizar cómo organizar tus comidas del día.</span></div></li><li><svg class="ck" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 10.5l3.2 3.2L15 7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><div><strong>Recomendaciones personalizadas</strong><span>De acuerdo con tus hábitos y objetivos.</span></div></li><li><svg class="ck" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 10.5l3.2 3.2L15 7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><div><strong>Estrategias para comer fuera</strong><span>Opciones para restaurantes, oficina y viajes.</span></div></li><li><svg class="ck" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 10.5l3.2 3.2L15 7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><div><strong>Tips para tu rutina</strong><span>Recomendaciones prácticas para que el plan se adapte a tu vida.</span></div></li></ul>
+</div></section>
+<section class="sec ink"><div class="w">
+  <div class="sh"><h2>Planes</h2><p class="body">Un pago único. Sin suscripción.</p></div>
+  <div class="plans"><article class="plan rec">
+  <div class="plan-hd"><span class="plan-who">Primera vez</span><span class="plan-tag">Recomendado para empezar</span></div>
+  <h3>Plan inicial</h3>
+  <p class="plan-price"><span>$1,200</span> MXN</p>
+  <p class="plan-desc">Tu primer plan a distancia, elaborado desde cero con la información de tu documento.</p>
+  <a class="btn btn-p btn-block" href="#">Empezar plan inicial</a>
+</article><article class="plan">
+  <div class="plan-hd"><span class="plan-who">Ya tienes un plan conmigo</span></div>
+  <h3>Plan de seguimiento</h3>
+  <p class="plan-price"><span>$1,000</span> MXN</p>
+  <p class="plan-desc">Actualizo tu plan según tus avances, cambios de hábitos y nuevos objetivos.</p>
+  <a class="btn btn-s btn-block" href="#">Actualizar mi plan</a>
+</article></div><p class="pay">Entrega en 5–7 días hábiles · Pago con tarjeta, OXXO o transferencia SPEI</p>
+</div></section>
+<section class="sec"><div class="w">
+  <div class="sh"><h2>Lo que dicen mis pacientes</h2></div>
+  <div class="quotes"><figure class="quote"><blockquote>“Obtuve súper buenos resultados sin hacer nada extremo ni estar en dietas restrictivas. Me encanta que todo mi plan fue muy balanceado y que diario me apoya en todas mis dudas.”</blockquote><figcaption><img src="img/emma.webp" alt=""><span><strong>Emma Pinto</strong>@chefeemmapinto</span></figcaption></figure><figure class="quote"><blockquote>“No solo me ayuda a cumplir mis metas, sino que tengo una mejor relación con la comida. La recomiendo 100% a quien esté buscando a una nutrióloga.”</blockquote><figcaption><img src="img/helena.webp" alt=""><span><strong>Helena Molina</strong>@helenamolinar</span></figcaption></figure><figure class="quote"><blockquote>“He logrado mis objetivos de salud con facilidad y eficacia. Su conocimiento y enfoque personalizado son excepcionales.”</blockquote><figcaption><img src="img/rodrigo.webp" alt=""><span><strong>Rodrigo Valle</strong>@rodrigo.vallep</span></figcaption></figure></div>
+</div></section>
+<section class="sec blush"><div class="w two about">
+  <figure class="about-img"><img src="img/marialy-2.webp" alt="Retrato de Marialy Alonso"></figure>
+  <div><h2>Hola, soy Marialy</h2><p class="body">Estudié Nutrición en la Universidad Iberoamericana y me titulé con Mención Honorífica. Mi enfoque va más allá de las dietas restrictivas: construir hábitos sostenibles que mejoren tu salud y tu calidad de vida a largo plazo, con base en evidencia científica.</p>
+  <dl class="stats"><div><dt>Formación</dt><dd>Ibero, Mención Honorífica</dd></div><div><dt>Comunidad</dt><dd>780K seguidores</dd></div><div><dt>Alcance</dt><dd>6 continentes</dd></div></dl></div>
+</div></section>
+<section class="sec"><div class="w two faq">
+  <div><h2>Preguntas frecuentes</h2></div>
+  <div><details class="qa" open><summary>¿Incluye videollamada?</summary><p>No. El plan es asíncrono: tú envías tu información por el documento y yo te entrego el plan listo para aplicar.</p></details><details class="qa"><summary>¿Cuánto tarda en llegar mi plan?</summary><p>Aproximadamente 5 a 7 días hábiles después de recibir tu documento completo.</p></details><details class="qa"><summary>¿Qué diferencia hay entre el Plan inicial y el de seguimiento?</summary><p>El Plan inicial ($1,200 MXN) es para tu primera vez. El de seguimiento ($1,000 MXN) actualiza un plan que ya tienes, según tus avances u objetivos nuevos.</p></details><details class="qa"><summary>¿Trabajas con condiciones médicas?</summary><p>Sí, tengo experiencia con diabetes, hipertensión y enfermedades autoinmunes. Trabajo en coordinación con tu equipo médico cuando es relevante.</p></details><details class="qa"><summary>¿Cómo puedo pagar?</summary><p>Con tarjeta (Visa, Mastercard, American Express), en efectivo en OXXO o por transferencia SPEI.</p></details></div>
+</div></section>
+<section class="final"><div class="w final-in"><h2>¿Empezamos?</h2><a class="btn btn-w" href="#">Empezar · $1,200 MXN</a></div></section>
+
+<footer class="foot"><div class="w foot-in">
+  <div class="foot-brand"><a class="brand" href="#"><svg class="lm" viewBox="0 0 49 34" aria-hidden="true"><path fill="currentColor" d="M 4.071 11.084 C 4.071 11.084 2.168 26.266 18.051 26.266 C 18.051 26.266 22.01 11.084 4.071 11.084 Z"/><path fill="currentColor" d="M 44.429 4.722 C 22.823 4.722 20.824 18.311 21.221 25.288 C 24.871 14.76 34.822 12.436 34.822 12.436 C 25.322 18.179 23.374 28.546 23.247 29.278 C 47.374 28.347 44.429 4.722 44.429 4.722 Z"/></svg><span>Nutralech</span></a><p>Nutrición personalizada a distancia con Marialy Alonso.</p></div>
+  <div class="foot-cols">
+    <div><h4>Sitio</h4><a href="#">Planes</a><a href="#">Sobre mí</a><a href="#">Blog</a><a href="#">Herramientas</a></div>
+    <div><h4>Contacto</h4><a href="#">WhatsApp +52 744 346 8252</a><a href="#">contacto@nutralech.com</a></div>
+    <div><h4>Redes</h4><a href="#">Instagram</a><a href="#">TikTok</a><a href="#">YouTube</a></div>
+  </div>
+</div><div class="w foot-legal">© 2026 Nutralech. La asesoría nutricional no sustituye la atención médica.</div></footer><div class="sticky"><div><strong>Plan inicial</strong><span>$1,200 MXN · 5–7 días hábiles</span></div><a class="btn btn-p btn-sm" href="#">Empezar</a></div>
+</div></div>
+  <div class="phone-wrap" hidden><div class="phone"></div></div>
+</section>
+</div>
 <script>
 (function(){
-  var tabs=[].slice.call(document.querySelectorAll('[role="tab"]'));
+  var tabs=[].slice.call(document.querySelectorAll('.tab'));
   function show(i,focus){
     tabs.forEach(function(t,j){var on=i===j;t.setAttribute('aria-selected',on);t.tabIndex=on?0:-1;document.getElementById(t.getAttribute('aria-controls')).hidden=!on;});
     if(focus)tabs[i].focus();
-    try{localStorage.setItem('nl-opt',i)}catch(e){}
     try{history.replaceState(null,'','#'+tabs[i].dataset.k)}catch(e){}
+    try{localStorage.setItem('nl-tab',String(i))}catch(e){}
   }
   tabs.forEach(function(t,i){
-    t.addEventListener('click',function(){show(i);window.scrollTo({top:0});});
-    t.addEventListener('keydown',function(e){if(e.key==='ArrowRight')show((i+1)%tabs.length,true);if(e.key==='ArrowLeft')show((i+tabs.length-1)%tabs.length,true);});
+    t.addEventListener('click',function(){show(i)});
+    t.addEventListener('keydown',function(e){if(e.key==='ArrowRight')show((i+1)%tabs.length,true);if(e.key==='ArrowLeft')show((i-1+tabs.length)%tabs.length,true);});
   });
-  var start=0,h=(location.hash||'').slice(1);
-  tabs.forEach(function(t,i){if(t.dataset.k===h)start=i;});
-  if(!h){try{var s=parseInt(localStorage.getItem('nl-opt'),10);if(s>=0&&s<tabs.length)start=s}catch(e){}}
+  var h=(location.hash||'').slice(1),start=0;
+  tabs.forEach(function(t,i){if(t.dataset.k===h)start=i});
+  if(!h){try{var s=parseInt(localStorage.getItem('nl-tab'),10);if(s>=0&&s<tabs.length)start=s}catch(e){}}
   show(start);
-  document.querySelectorAll('.mk a[href^="#p"]').forEach(function(a){a.addEventListener('click',function(e){e.preventDefault();});});
-  // Opción 4: selector de plan
-  var a=document.getElementById('o4a'),b=document.getElementById('o4b');
-  function pick(first){a.setAttribute('aria-pressed',first);b.setAttribute('aria-pressed',!first);
-    document.getElementById('o4name').textContent=first?'Plan inicial':'Plan de seguimiento';
-    document.getElementById('o4amt').textContent=first?'$1,200':'$1,000';
-    document.getElementById('o4cta').textContent=first?'Empezar plan inicial':'Actualizar mi plan';}
-  a.addEventListener('click',function(){pick(true)});b.addEventListener('click',function(){pick(false)});
+  // Desktop / phone toggle: the phone view is a clone of the same markup in a 370px container.
+  document.querySelectorAll('[role="tabpanel"]').forEach(function(p){
+    var btns=p.querySelectorAll('.seg button');if(!btns.length)return;
+    var desk=p.querySelector('.desk'),pw=p.querySelector('.phone-wrap'),ph=p.querySelector('.phone');
+    btns.forEach(function(b){b.addEventListener('click',function(){
+      var phone=b.dataset.view==='phone';
+      btns.forEach(function(x){x.setAttribute('aria-pressed',x===b)});
+      if(phone&&!ph.firstChild)ph.appendChild(desk.firstElementChild.cloneNode(true));
+      desk.hidden=phone;pw.hidden=!phone;
+    });});
+  });
+  document.addEventListener('click',function(e){var a=e.target.closest('.mk a');if(a)e.preventDefault();});
 })();
 </script>
