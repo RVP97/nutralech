@@ -1,771 +1,45 @@
 "use client";
 
+import { AnimatePresence, motion } from "framer-motion";
 import {
-	Camera,
-	Check,
-	ChevronLeft,
 	Clock,
-	Flame,
-	History,
-	Megaphone,
 	MessageCircle,
-	MoreVertical,
-	Phone,
-	Send,
-	Settings,
-	Sparkles,
+	MousePointerClick,
 	ThumbsUp,
-	Users,
-	Video,
 } from "lucide-react";
-import Link from "next/link";
-import { useCallback, useEffect, useRef, useState } from "react";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { ScrollArea } from "@/components/ui/scroll-area";
+import { useState } from "react";
+import { IPhone } from "@/components/whatsapp-demo/iphone";
+import { WhatsAppDemo } from "@/components/whatsapp-demo/whatsapp-demo";
 
-interface Message {
-	id: number;
-	sender: string;
-	message: string;
-	time: string;
-	read: boolean;
-}
-
-interface Conversations {
-	[key: number]: Message[];
-}
-
-interface TabItem {
-	id: "updates" | "calls" | "communities" | "chats" | "settings";
-	icon: React.ComponentType<{ className?: string }>;
-	label: string;
-	notifications: number;
-}
-
-// Mock conversations for each patient
-const initialConversations = {
-	1: [
-		{
-			id: 1,
-			sender: "You",
-			message: "Hola, ¿cómo te sientes con tu dieta?",
-			time: "10:20 AM",
-			read: true,
-		},
-		{
-			id: 2,
-			sender: "Marialy",
-			message: "Me siento bien, pero tengo dudas sobre el desayuno.",
-			time: "10:21 AM",
-			read: true,
-		},
-		{
-			id: 3,
-			sender: "You",
-			message: "Es importante incluir proteínas. ¿Qué sueles desayunar?",
-			time: "10:21 AM",
-			read: true,
-		},
-		{
-			id: 4,
-			sender: "Marialy",
-			message: "Generalmente solo café.",
-			time: "10:22 AM",
-			read: true,
-		},
-	],
-	2: [
-		{
-			id: 1,
-			sender: "You",
-			message: "Buenos días, ¿cómo va tu progreso?",
-			time: "09:40 AM",
-			read: true,
-		},
-		{
-			id: 2,
-			sender: "Marialy",
-			message: "He perdido un poco de peso, pero me siento cansado.",
-			time: "09:45 AM",
-			read: false,
-		},
-		{
-			id: 3,
-			sender: "You",
-			message: "Recuerda hidratarte bien y comer snacks saludables.",
-			time: "09:45 AM",
-			read: false,
-		},
-	],
-	3: [
-		{
-			id: 1,
-			sender: "You",
-			message: "Aquí tienes tu plan de comidas para la semana.",
-			time: "Yesterday",
-			read: true,
-		},
-		{
-			id: 2,
-			sender: "Marialy",
-			message: "Gracias, lo seguiré al pie de la letra.",
-			time: "Yesterday",
-			read: true,
-		},
-		{
-			id: 3,
-			sender: "You",
-			message: "¿Cómo te fue con las recetas nuevas?",
-			time: "Yesterday",
-			read: true,
-		},
-		{
-			id: 4,
-			sender: "Marialy",
-			message: "¡Excelentes! Especialmente la de quinoa.",
-			time: "10:30 AM",
-			read: false,
-		},
-	],
-	4: [
-		{
-			id: 1,
-			sender: "You",
-			message: "He revisado tus últimos análisis.",
-			time: "Yesterday",
-			read: true,
-		},
-		{
-			id: 2,
-			sender: "Marialy",
-			message: "¿Qué tal están mis resultados?",
-			time: "Yesterday",
-			read: false,
-		},
-		{
-			id: 3,
-			sender: "You",
-			message: "Todo está mejorando, el colesterol bajó significativamente.",
-			time: "11:15 AM",
-			read: true,
-		},
-	],
-	5: [
-		{
-			id: 1,
-			sender: "You",
-			message: "¿Cómo vas con los ejercicios recomendados?",
-			time: "Monday",
-			read: true,
-		},
-		{
-			id: 2,
-			sender: "Marialy",
-			message: "Me está costando mantener la rutina matutina.",
-			time: "Monday",
-			read: true,
-		},
-		{
-			id: 3,
-			sender: "You",
-			message: "Podemos ajustar el horario, ¿qué te parece por la tarde?",
-			time: "09:20 AM",
-			read: true,
-		},
-	],
-	6: [
-		{
-			id: 1,
-			sender: "Marialy",
-			message: "¿Puedo tomar batidos proteicos después de cenar?",
-			time: "Yesterday",
-			read: true,
-		},
-		{
-			id: 2,
-			sender: "You",
-			message: "Es mejor tomarlos post-entrenamiento o en el desayuno",
-			time: "08:45 AM",
-			read: true,
-		},
-	],
-	7: [
-		{
-			id: 1,
-			sender: "You",
-			message: "¿Cómo te sientes después de una semana con el nuevo plan?",
-			time: "Monday",
-			read: true,
-		},
-		{
-			id: 2,
-			sender: "Marialy",
-			message: "¡Tengo mucha más energía! Gracias por los ajustes.",
-			time: "11:30 AM",
-			read: false,
-		},
-	],
-};
-
-// Update the patients array to be a function that gets the last message
-const getPatients = (conversations: Conversations) => [
+const features = [
 	{
-		id: 1,
-		name: "Juan Pérez",
-		lastMessage: conversations[1][conversations[1].length - 1].message,
-		time: conversations[1][conversations[1].length - 1].time,
-		unread: 0,
-		avatar: "/images/avatar/gabriel.webp",
+		icon: MessageCircle,
+		title: "Comunicación Directa",
+		description:
+			"Estoy siempre disponible para responder tus preguntas y brindarte apoyo personalizado a través de nuestra plataforma de mensajería segura.",
 	},
 	{
-		id: 2,
-		name: "Ana Gómez",
-		lastMessage: conversations[2][conversations[2].length - 1].message,
-		time: conversations[2][conversations[2].length - 1].time,
-		unread: 2,
-		avatar: "/images/avatar/luisa.webp",
+		icon: Clock,
+		title: "Respuestas Rápidas",
+		description:
+			"Me comprometo a responder a tus mensajes en un plazo máximo de 24 horas, asegurando que recibas la atención que necesitas de manera oportuna.",
 	},
 	{
-		id: 3,
-		name: "Carla Allens",
-		lastMessage: conversations[3][conversations[3].length - 1].message,
-		time: conversations[3][conversations[3].length - 1].time,
-		unread: 1,
-		avatar: "/images/avatar/maria.webp",
-	},
-	{
-		id: 4,
-		name: "María Sánchez",
-		lastMessage: conversations[4][conversations[4].length - 1].message,
-		time: conversations[4][conversations[4].length - 1].time,
-		unread: 0,
-		avatar: "/images/avatar/sandra.webp",
+		icon: ThumbsUp,
+		title: "Seguimiento Personalizado",
+		description:
+			"Adapto mi enfoque a tus necesidades individuales, ofreciendo consejos y ajustes personalizados a tu plan nutricional según tu progreso.",
 	},
 ];
 
-function Iphone15ProWhatsappLightSmaller() {
-	const [activeView, setActiveView] = useState("main");
-	const [activeConversation, setActiveConversation] = useState<number>(1);
-	const [conversations, setConversations] = useState(initialConversations);
-	const [newMessage, setNewMessage] = useState("");
-	const [activeTab, setActiveTab] = useState("chats");
-	const scrollAreaRef = useRef<HTMLDivElement | null>(null);
-	const [currentTime, setCurrentTime] = useState(() => {
-		return new Date().toLocaleTimeString("en-US", {
-			hour: "numeric",
-			minute: "numeric",
-			hour12: false,
-		});
-	});
-	const [patientsList, setPatientsList] = useState(
-		getPatients(initialConversations),
-	);
-
-	// Update patientsList when conversations change
-	useEffect(() => {
-		setPatientsList(getPatients(conversations));
-	}, [conversations]);
-
-	useEffect(() => {
-		const timer = setInterval(() => {
-			setCurrentTime(
-				new Date().toLocaleTimeString("en-US", {
-					hour: "numeric",
-					minute: "numeric",
-					hour12: false,
-				}),
-			);
-		}, 1000);
-		return () => clearInterval(timer);
-	}, []);
-
-	const openConversation = (patientId: number) => {
-		setActiveConversation(patientId);
-		setActiveView("conversation");
-	};
-
-	const scrollToBottom = useCallback(() => {
-		if (scrollAreaRef.current) {
-			const scrollContainer = (
-				scrollAreaRef.current as HTMLDivElement
-			).querySelector("[data-radix-scroll-area-viewport]");
-			if (scrollContainer) {
-				scrollContainer.scrollTop = scrollContainer.scrollHeight;
-			}
-		}
-	}, []);
-
-	useEffect(() => {
-		if (activeView === "conversation") {
-			scrollToBottom();
-		}
-	}, [activeView, scrollToBottom]);
-
-	const sendMessage = () => {
-		if (newMessage.trim() === "") return;
-
-		const currentTime = new Date().toLocaleTimeString([], {
-			hour: "2-digit",
-			minute: "2-digit",
-		});
-		const newMsg = {
-			id: conversations[activeConversation].length + 1,
-			sender: "You",
-			message: newMessage,
-			time: currentTime,
-			read: true,
-		};
-
-		setConversations((prevConversations) => ({
-			...prevConversations,
-			[activeConversation]: [...prevConversations[activeConversation], newMsg],
-		}));
-
-		setNewMessage("");
-	};
-
-	const tabs: TabItem[] = [
-		{ id: "updates", icon: History, label: "Updates", notifications: 0 },
-		{ id: "calls", icon: Phone, label: "Calls", notifications: 2 },
-		{ id: "communities", icon: Users, label: "Communities", notifications: 0 },
-		{ id: "chats", icon: MessageCircle, label: "Chats", notifications: 3 },
-		{ id: "settings", icon: Settings, label: "Settings", notifications: 0 },
-	];
-
-	const renderMainContent = () => {
-		if (activeTab === "chats") {
-			return (
-				<ScrollArea
-					className="h-[calc(100%-120px)] bg-white overflow-x-hidden"
-					style={{ width: "280px" }}
-				>
-					<div style={{ width: "280px", maxWidth: "280px" }}>
-						{patientsList.map((patient) => (
-							<button
-								key={patient.id}
-								type="button"
-								className="flex w-full items-center px-3 py-2 hover:bg-gray-100 cursor-pointer border-b border-gray-200 overflow-hidden text-left"
-								style={{ width: "280px", maxWidth: "280px" }}
-								onClick={() => openConversation(patient.id)}
-							>
-								<Avatar className="w-10 h-10 rounded-full shrink-0">
-									<AvatarImage src={patient.avatar} alt={patient.name} />
-									<AvatarFallback>
-										{patient.name
-											.split(" ")
-											.map((n) => n[0])
-											.join("")}
-									</AvatarFallback>
-								</Avatar>
-								<div className="flex-1 min-w-0 ml-3 overflow-hidden">
-									<div className="flex justify-between items-baseline gap-2 min-w-0">
-										<h3 className="text-sm font-semibold text-gray-900 truncate flex-1 min-w-0">
-											{patient.name}
-										</h3>
-										<span className="text-xs text-gray-500 whitespace-nowrap shrink-0">
-											{patient.time}
-										</span>
-									</div>
-									<div className="flex justify-between items-center gap-2 min-w-0">
-										<p className="text-xs text-gray-500 truncate flex-1 min-w-0">
-											{patient.lastMessage}
-										</p>
-										{patient.unread > 0 && (
-											<span className="shrink-0 inline-flex items-center justify-center w-4 h-4 bg-[#25D366] text-white rounded-full text-[10px]">
-												{patient.unread}
-											</span>
-										)}
-									</div>
-								</div>
-							</button>
-						))}
-					</div>
-				</ScrollArea>
-			);
-		}
-
-		if (activeTab === "updates") {
-			return (
-				<div className="h-[calc(100%-120px)] bg-[#f8faf9] px-3 py-3 space-y-3 overflow-y-auto">
-					<div className="rounded-xl bg-white border border-gray-200 p-3">
-						<div className="flex items-center gap-2 text-[#008069] mb-2">
-							<Megaphone className="h-4 w-4" />
-							<p className="text-xs font-semibold uppercase tracking-wide">
-								Nutralech Novedades
-							</p>
-						</div>
-						<p className="text-xs text-gray-700">
-							Nuevo artículo publicado: "Cómo crear desayunos altos en proteína
-							en 10 minutos". Ya disponible en el blog.
-						</p>
-					</div>
-					<div className="rounded-xl bg-white border border-gray-200 p-3">
-						<div className="flex items-center gap-2 text-[#008069] mb-2">
-							<Sparkles className="h-4 w-4" />
-							<p className="text-xs font-semibold uppercase tracking-wide">
-								Plan Premium
-							</p>
-						</div>
-						<p className="text-xs text-gray-700">
-							Esta semana: seguimiento express para pacientes activos. Actualiza
-							tu plan desde la sección de precios.
-						</p>
-					</div>
-					<div className="rounded-xl bg-white border border-gray-200 p-3">
-						<div className="flex items-center gap-2 text-[#008069] mb-2">
-							<Flame className="h-4 w-4" />
-							<p className="text-xs font-semibold uppercase tracking-wide">
-								Recetas de temporada
-							</p>
-						</div>
-						<p className="text-xs text-gray-700">
-							Actualización del menú saludable con recetas antiinflamatorias
-							adaptadas a tus objetivos.
-						</p>
-					</div>
-				</div>
-			);
-		}
-
-		if (activeTab === "calls") {
-			return (
-				<div className="h-[calc(100%-120px)] bg-white px-3 py-2 overflow-y-auto">
-					{[
-						{
-							name: "Sesión de seguimiento - Laura",
-							time: "Hoy, 11:00",
-							type: "Video",
-						},
-						{
-							name: "Plan inicial - Carlos",
-							time: "Ayer, 18:45",
-							type: "Voice",
-						},
-						{
-							name: "Revisión de menú - Daniela",
-							time: "Lun, 09:30",
-							type: "Video",
-						},
-					].map((call) => (
-						<div
-							key={call.name}
-							className="border-b border-gray-100 py-3 flex items-center justify-between"
-						>
-							<div>
-								<p className="text-sm font-medium text-gray-900">{call.name}</p>
-								<p className="text-xs text-gray-500">{call.time}</p>
-							</div>
-							<div className="flex items-center gap-2 text-[#008069]">
-								{call.type === "Video" ? (
-									<Video className="h-4 w-4" />
-								) : (
-									<Phone className="h-4 w-4" />
-								)}
-							</div>
-						</div>
-					))}
-				</div>
-			);
-		}
-
-		if (activeTab === "communities") {
-			return (
-				<div className="h-[calc(100%-120px)] bg-[#f8faf9] px-3 py-3 overflow-y-auto space-y-3">
-					<div className="rounded-xl bg-white border border-gray-200 p-3">
-						<p className="text-sm font-semibold text-gray-900">
-							Comunidad Reto 30 Días
-						</p>
-						<p className="text-xs text-gray-600 mt-1">
-							Comparte tus avances diarios de hidratación, descanso y
-							alimentación con otros pacientes.
-						</p>
-					</div>
-					<div className="rounded-xl bg-white border border-gray-200 p-3">
-						<p className="text-sm font-semibold text-gray-900">
-							Recetas Saludables
-						</p>
-						<p className="text-xs text-gray-600 mt-1">
-							Ideas rápidas para desayuno, snacks y cenas alineadas a tu plan
-							nutricional en Nutralech.
-						</p>
-					</div>
-				</div>
-			);
-		}
-
-		return (
-			<div className="h-[calc(100%-120px)] bg-white px-3 py-3 space-y-3">
-				<div className="rounded-xl border border-gray-200 p-3">
-					<p className="text-sm font-semibold text-gray-900">
-						Cuenta profesional
-					</p>
-					<p className="text-xs text-gray-600 mt-1">
-						Sincronizada con tus servicios y contacto de nutralech.com.
-					</p>
-				</div>
-				<div className="rounded-xl border border-gray-200 p-3">
-					<p className="text-sm font-semibold text-gray-900">Notificaciones</p>
-					<p className="text-xs text-gray-600 mt-1">
-						Activas para dudas del plan, entrega de documentos y nuevos recursos.
-					</p>
-				</div>
-			</div>
-		);
-	};
-
-	return (
-		<div className="flex items-center justify-center p-4">
-			<div className="relative w-[300px] h-[650px] bg-black rounded-[45px] shadow-xl overflow-hidden">
-				{/* iPhone frame */}
-				<div className="absolute inset-0 overflow-hidden">
-					{/* Notch */}
-					<div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-[100px] h-[25px] bg-black rounded-b-3xl z-20"></div>
-
-					{/* Screen content */}
-					<div className="absolute top-0 left-0 right-0 bottom-0 bg-white m-[10px] rounded-[35px] overflow-hidden w-[calc(100%-20px)]">
-						{/* Status bar */}
-						<div className="flex justify-between items-center px-4 h-6 bg-[#008069] text-white text-xs">
-							<span className="font-medium">{currentTime}</span>
-							<div className="flex items-center space-x-1">
-								<svg
-									viewBox="0 0 24 24"
-									className="w-3 h-3 fill-current"
-									aria-hidden="true"
-								>
-									<path d="M1 9l2 2c4.97-4.97 13.03-4.97 18 0l2-2C16.93 2.93 7.08 2.93 1 9zm8 8l3 3 3-3c-1.65-1.66-4.34-1.66-6 0zm-4-4l2 2c2.76-2.76 7.24-2.76 10 0l2-2C15.14 9.14 8.87 9.14 5 13z" />
-								</svg>
-								<div className="flex items-center">
-									<div className="w-5 h-2 bg-white rounded-sm relative">
-										<div className="absolute top-0.5 bottom-0.5 left-0.5 right-1 bg-[#008069] rounded-sm" />
-									</div>
-									<span className="text-[8px] ml-0.5">89%</span>
-								</div>
-							</div>
-						</div>
-
-						{activeView === "main" ? (
-							<>
-								{/* Main menu header */}
-								<div className="bg-[#008069] text-white px-3 pb-3 pt-1">
-									<h2 className="text-xl font-bold">WhatsApp</h2>
-								</div>
-
-								{renderMainContent()}
-
-								{/* Bottom Navigation */}
-								<div className="absolute bottom-0 left-0 right-0 h-10 bg-white border-t border-gray-200 flex justify-around items-center">
-									{tabs.map((tab) => (
-										<button
-											type="button"
-											key={tab.id}
-											onClick={() => setActiveTab(tab.id)}
-											className="relative flex flex-col items-center justify-center w-full h-full"
-										>
-											<div
-												className={`flex flex-col items-center ${
-													activeTab === tab.id
-														? "text-[#008069]"
-														: "text-gray-500"
-												}`}
-											>
-												<tab.icon className="w-5 h-5" />
-												<span className="text-[8px] mt-0.5">{tab.label}</span>
-												{tab.notifications > 0 && (
-													<span className="absolute top-0 right-1/4 flex items-center justify-center w-3 h-3 bg-[#25D366] text-white text-[8px] rounded-full">
-														{tab.notifications}
-													</span>
-												)}
-											</div>
-											{activeTab === tab.id && (
-												<div className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#008069]" />
-											)}
-										</button>
-									))}
-								</div>
-							</>
-						) : (
-							<>
-								{/* Conversation header */}
-								<div className="bg-[#008069] text-white p-2 flex items-center space-x-2">
-									<Button
-										variant="ghost"
-										size="icon"
-										className="text-white hover:text-white hover:bg-[#006e5a] p-1"
-										onClick={() => setActiveView("main")}
-									>
-										<ChevronLeft className="h-4 w-4" />
-									</Button>
-									<Avatar className="w-8 h-8">
-										<AvatarImage
-											src={
-												patientsList.find((p) => p.id === activeConversation)
-													?.avatar
-											}
-											alt={
-												patientsList.find((p) => p.id === activeConversation)
-													?.name
-											}
-										/>
-										<AvatarFallback>
-											{patientsList
-												.find((p) => p.id === activeConversation)
-												?.name.split(" ")
-												.map((n) => n[0])
-												.join("")}
-										</AvatarFallback>
-									</Avatar>
-									<div className="flex-1">
-										<h2 className="font-semibold text-sm">
-											{
-												patientsList.find((p) => p.id === activeConversation)
-													?.name
-											}
-										</h2>
-										<p className="text-[10px]">online</p>
-									</div>
-									<Link
-										prefetch={false}
-										href="https://wa.me/message/BLYZCVYW2MOAJ1"
-										target="_blank"
-										rel="noopener noreferrer"
-										className="text-white hover:text-white hover:bg-[#006e5a] p-1 rounded-md"
-									>
-										<Video className="h-4 w-4" />
-									</Link>
-									<Link
-										prefetch={false}
-										href="https://wa.me/message/BLYZCVYW2MOAJ1"
-										target="_blank"
-										rel="noopener noreferrer"
-										className="text-white hover:text-white hover:bg-[#006e5a] p-1 rounded-md"
-									>
-										<Phone className="h-4 w-4" />
-									</Link>
-									<Button
-										variant="ghost"
-										size="icon"
-										className="text-white hover:text-white hover:bg-[#006e5a] p-1"
-									>
-										<MoreVertical className="h-4 w-4" />
-									</Button>
-								</div>
-
-								{/* Chat messages */}
-								<ScrollArea
-									className="h-[calc(100%-118px)] bg-[#efeae2] p-3"
-									ref={scrollAreaRef}
-									data-testid="chat-messages"
-								>
-									<div className="space-y-3 pb-8">
-										{conversations[activeConversation]?.map((msg) => (
-											<div
-												key={msg.id}
-												className={`max-w-[70%] ${
-													msg.sender === "You"
-														? "ml-auto bg-[#d9fdd3]"
-														: "bg-white"
-												} rounded-lg p-2 shadow-xs`}
-											>
-												<p className="text-xs text-gray-800">{msg.message}</p>
-												<div className="flex justify-end items-center mt-1 space-x-1">
-													<p className="text-right text-[10px] text-gray-500">
-														{msg.time}
-													</p>
-													{msg.sender === "You" && (
-														<div className="flex">
-															<Check
-																className={`h-2 w-2 ${
-																	msg.read ? "text-[#53bdeb]" : "text-gray-400"
-																}`}
-															/>
-															<Check
-																className={`h-2 w-2 -ml-1 ${
-																	msg.read ? "text-[#53bdeb]" : "text-gray-400"
-																}`}
-															/>
-														</div>
-													)}
-												</div>
-											</div>
-										))}
-									</div>
-								</ScrollArea>
-
-								{/* Message input */}
-								<div className="absolute bottom-0 left-0 right-0 bg-[#f0f2f5] p-2 flex items-center">
-									<Button
-										variant="ghost"
-										size="icon"
-										className="text-[#54656f] p-1"
-									>
-										<Camera className="h-4 w-4" />
-									</Button>
-									<Input
-										type="text"
-										placeholder="Type a message"
-										className="flex-1 bg-white text-gray-800 placeholder-gray-500 rounded-full mx-1 text-xs h-8 focus:outline-hidden border-none"
-										value={newMessage}
-										onChange={(e) => setNewMessage(e.target.value)}
-										onKeyDown={(e) => {
-											if (e.key === "Enter") {
-												e.preventDefault();
-												sendMessage();
-											}
-										}}
-									/>
-									<Button
-										type="button"
-										variant="ghost"
-										size="icon"
-										className="text-[#54656f] p-1"
-										onClick={sendMessage}
-									>
-										<Send className="h-4 w-4" />
-									</Button>
-								</div>
-							</>
-						)}
-					</div>
-				</div>
-
-				{/* Side buttons */}
-				<div className="absolute top-[100px] left-[-2px] w-[3px] h-[28px] bg-gray-800 rounded-r"></div>
-				<div className="absolute top-[140px] left-[-2px] w-[3px] h-[50px] bg-gray-800 rounded-r"></div>
-				<div className="absolute top-[100px] right-[-2px] w-[3px] h-[80px] bg-gray-800 rounded-l"></div>
-			</div>
-		</div>
-	);
-}
-
 export default function PersonalizedCommunicationSection() {
-	const features = [
-		{
-			icon: MessageCircle,
-			title: "Comunicación Directa",
-			description:
-				"Estoy siempre disponible para responder tus preguntas y brindarte apoyo personalizado a través de nuestra plataforma de mensajería segura.",
-		},
-		{
-			icon: Clock,
-			title: "Respuestas Rápidas",
-			description:
-				"Me comprometo a responder a tus mensajes en un plazo máximo de 24 horas, asegurando que recibas la atención que necesitas de manera oportuna.",
-		},
-		{
-			icon: ThumbsUp,
-			title: "Seguimiento Personalizado",
-			description:
-				"Adapto mi enfoque a tus necesidades individuales, ofreciendo consejos y ajustes personalizados a tu plan nutricional según tu progreso.",
-		},
-	];
+	const [engaged, setEngaged] = useState(false);
 
 	return (
-		<section className="py-24 bg-[oklch(97.5%_0.008_12)]">
+		<section className="overflow-hidden bg-[oklch(97.5%_0.008_12)] py-24">
 			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-				<div className="max-w-2xl mb-14">
-					<p className="text-sm font-medium tracking-wide uppercase text-[#DA5F6F]">
+				<div className="mb-14 max-w-2xl">
+					<p className="text-sm font-medium uppercase tracking-wide text-[#DA5F6F]">
 						Acceso directo
 					</p>
 					<h2 className="mt-3 font-serif text-3xl font-medium tracking-tight text-[oklch(18%_0.005_12)] sm:text-4xl lg:text-5xl">
@@ -773,7 +47,7 @@ export default function PersonalizedCommunicationSection() {
 					</h2>
 				</div>
 
-				<div className="grid gap-12 lg:grid-cols-2 items-center">
+				<div className="grid items-center gap-12 lg:grid-cols-2">
 					<div className="space-y-8">
 						<p className="text-lg leading-relaxed text-[oklch(45%_0.01_12)]">
 							Estoy disponible para responder tus preguntas y apoyarte con
@@ -781,10 +55,10 @@ export default function PersonalizedCommunicationSection() {
 							adaptadas a tu progreso.
 						</p>
 						<div className="space-y-5">
-							{features.map((feature, index) => (
-								<div key={index} className="flex gap-4 items-start">
-									<div className="shrink-0 mt-0.5">
-										<feature.icon className="w-5 h-5 text-[#DA5F6F]" />
+							{features.map((feature) => (
+								<div key={feature.title} className="flex items-start gap-4">
+									<div className="mt-0.5 shrink-0">
+										<feature.icon className="h-5 w-5 text-[#DA5F6F]" />
 									</div>
 									<div>
 										<h3 className="text-base font-medium text-[oklch(22%_0.005_12)]">
@@ -799,8 +73,29 @@ export default function PersonalizedCommunicationSection() {
 						</div>
 					</div>
 
-					<div className="relative mx-auto">
-						<Iphone15ProWhatsappLightSmaller />
+					<div className="relative mx-auto w-full max-w-[360px]">
+						<div
+							aria-hidden
+							className="pointer-events-none absolute -inset-x-16 top-1/4 bottom-1/4 -z-0 rounded-full bg-[radial-gradient(closest-side,rgba(218,95,111,0.18),transparent)] blur-2xl"
+						/>
+						<IPhone maxScale={0.82}>
+							<WhatsAppDemo onEngage={() => setEngaged(true)} />
+						</IPhone>
+						<div className="mt-6 flex h-6 justify-center">
+							<AnimatePresence>
+								{!engaged && (
+									<motion.p
+										initial={{ opacity: 0, y: 4 }}
+										animate={{ opacity: 1, y: 0 }}
+										exit={{ opacity: 0, y: -4 }}
+										className="flex items-center gap-2 text-sm text-[oklch(45%_0.01_12)]"
+									>
+										<MousePointerClick className="h-4 w-4 text-[#DA5F6F]" />
+										Es interactivo: abre el chat y escríbele a Marialy
+									</motion.p>
+								)}
+							</AnimatePresence>
+						</div>
 					</div>
 				</div>
 			</div>
