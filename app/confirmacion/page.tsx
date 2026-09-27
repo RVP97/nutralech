@@ -15,6 +15,7 @@ interface LineItem {
 	quantity: number;
 	currency: string;
 	price: {
+		id: string;
 		product: string;
 	};
 }

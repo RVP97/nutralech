@@ -18,6 +18,9 @@ interface LineItem {
 	amount_discount: number;
 	currency: string;
 	quantity: number;
+	price?: {
+		id: string;
+	};
 }
 
 interface SuccessfulPaymentProps {
@@ -28,8 +31,15 @@ interface SuccessfulPaymentProps {
 	lineItems: LineItem[];
 }
 
-const CLINICAL_FORM =
-	"https://documentos.nutralech.com/historia-clinica/historia-clinica.pdf";
+const CLINICAL_FORMS = {
+	inicial:
+		"https://documentos.nutralech.com/historia-clinica/historia-clinica.pdf",
+	seguimiento:
+		"https://documentos.nutralech.com/historia-clinica/seguimiento.pdf",
+} as const;
+
+// Price ID del Plan de seguimiento (ver pricing-section.tsx).
+const SEGUIMIENTO_PRICE_ID = "price_1UDoZIBoTKroQtb96qUzoQz8";
 
 export default function SuccessfulPayment({
 	receiptUrl,
@@ -38,6 +48,13 @@ export default function SuccessfulPayment({
 	time,
 	lineItems,
 }: SuccessfulPaymentProps) {
+	const isSeguimiento = lineItems.some(
+		(item) => item.price?.id === SEGUIMIENTO_PRICE_ID,
+	);
+	const clinicalForm = isSeguimiento
+		? CLINICAL_FORMS.seguimiento
+		: CLINICAL_FORMS.inicial;
+
 	const total = lineItems.reduce((sum, item) => sum + item.amount_total, 0);
 
 	const orderDate = time && time > 0 ? new Date(time * 1000) : new Date();
@@ -154,7 +171,7 @@ export default function SuccessfulPayment({
 					</div>
 				</CardContent>
 				<CardFooter className="flex flex-col space-y-2 sm:flex-row sm:justify-between sm:space-x-2 sm:space-y-0">
-					<Link prefetch={false} target="_blank" href={CLINICAL_FORM}>
+					<Link prefetch={false} target="_blank" href={clinicalForm}>
 						<Button>
 							Descargar documento <Download className="ml-2 h-4 w-4" />
 						</Button>
