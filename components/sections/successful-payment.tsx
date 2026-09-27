@@ -10,12 +10,6 @@ import {
 	CardHeader,
 	CardTitle,
 } from "@/components/ui/card";
-import {
-	DropdownMenu,
-	DropdownMenuContent,
-	DropdownMenuItem,
-	DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 
 interface LineItem {
 	id: string;
@@ -34,10 +28,8 @@ interface SuccessfulPaymentProps {
 	lineItems: LineItem[];
 }
 
-const CLINICAL_FORMS = {
-	hombres: "https://documentos.nutralech.com/historia-clinica/hombres.pdf",
-	mujeres: "https://documentos.nutralech.com/historia-clinica/mujeres.pdf",
-} as const;
+const CLINICAL_FORM =
+	"https://documentos.nutralech.com/historia-clinica/historia-clinica.pdf";
 
 export default function SuccessfulPayment({
 	receiptUrl,
@@ -162,35 +154,11 @@ export default function SuccessfulPayment({
 					</div>
 				</CardContent>
 				<CardFooter className="flex flex-col space-y-2 sm:flex-row sm:justify-between sm:space-x-2 sm:space-y-0">
-					<DropdownMenu>
-						<DropdownMenuTrigger asChild>
-							<Button>
-								Descargar documento <Download className="ml-2 h-4 w-4" />
-							</Button>
-						</DropdownMenuTrigger>
-						<DropdownMenuContent>
-							<DropdownMenuItem asChild>
-								<Link
-									prefetch={false}
-									href={CLINICAL_FORMS.hombres}
-									target="_blank"
-									className="w-full"
-								>
-									Hombres
-								</Link>
-							</DropdownMenuItem>
-							<DropdownMenuItem asChild>
-								<Link
-									prefetch={false}
-									href={CLINICAL_FORMS.mujeres}
-									target="_blank"
-									className="w-full"
-								>
-									Mujeres
-								</Link>
-							</DropdownMenuItem>
-						</DropdownMenuContent>
-					</DropdownMenu>
+					<Link prefetch={false} target="_blank" href={CLINICAL_FORM}>
+						<Button>
+							Descargar documento <Download className="ml-2 h-4 w-4" />
+						</Button>
+					</Link>
 					{receiptUrl && (
 						<Link prefetch={false} target="_blank" href={receiptUrl as Route}>
 							<Button variant="outline">
