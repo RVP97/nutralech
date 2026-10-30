@@ -5,6 +5,7 @@ import Footer from "@/components/sections/footer";
 import Navbar from "@/components/sections/navbar";
 
 import "./globals.css";
+import { TapSlop } from "@/components/tap-slop";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -232,9 +233,8 @@ export default function RootLayout({
 	return (
 		<html lang="es">
 			<GoogleTagManager gtmId="GTM-WQGRBVZW" />
-			<body
-				className={`${inter.className} pt-24 flex flex-col min-h-screen`}
-			>
+			<body className={`${inter.className} pt-24 flex flex-col min-h-screen`}>
+				<TapSlop />
 				<script
 					type="application/ld+json"
 					// biome-ignore lint/security/noDangerouslySetInnerHtml: JSON-LD structured data requires dangerouslySetInnerHTML
