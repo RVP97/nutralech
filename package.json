@@ -33,7 +33,9 @@
 		"@tailwindcss/typography": "^0.5.19",
 		"@types/canvas-confetti": "^1.9.0",
 		"@types/node": "^25.2.3",
+		"linkedom": "^0.18.15",
 		"tailwindcss": "^4.1.18",
+		"turndown": "^7.2.4",
 		"typescript": "^5",
 		"wrangler": "4.156.0"
 	}

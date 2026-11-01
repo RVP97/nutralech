@@ -1,0 +1,23 @@
+# Nutralech
+
+> Nutralech es el sitio oficial de Marialy Alonso, nutrióloga. Vende planes de alimentación a distancia 100% personalizados (sin consulta presencial ni videollamada) y publica un blog de nutrición y calculadoras gratuitas. Todo el sitio está en español (México).
+
+Si eres un modelo de lenguaje, cada página del sitio tiene una versión en Markdown en la misma dirección terminada en `.md` (la portada es https://www.nutralech.com/index.md). El mapa completo de esas versiones, con una línea por página, está en https://www.nutralech.com/sitemap.md.
+
+## Plan a distancia
+
+- [Portada y precios](https://www.nutralech.com/index.md): cómo funciona el plan, qué incluye, precios (Plan inicial $1,200 MXN; Plan de seguimiento $1,000 MXN), formas de pago y preguntas frecuentes. Se compra en línea en https://www.nutralech.com/#precios.
+- [Acerca de Marialy Alonso](https://www.nutralech.com/acerca-de-mi.md): quién es, su enfoque y sus servicios.
+- [Contacto](https://www.nutralech.com/contacto.md): formulario de contacto; también atiende por WhatsApp en https://wa.me/message/BLYZCVYW2MOAJ1.
+- [Colaboraciones](https://www.nutralech.com/colaboraciones.md): colaboraciones con marcas.
+
+## Contenido
+
+- [Blog](https://www.nutralech.com/blog.md): índice de artículos sobre alimentación, hábitos, metabolismo y relación con la comida.
+- [Herramientas](https://www.nutralech.com/herramientas.md): calculadoras gratuitas (IMC, calorías, macronutrientes, proteína, hidratación, tasa metabólica basal, peso ideal, grasa corporal, frecuencia cardiaca, relación cintura-cadera, calorías quemadas por actividad).
+- [Mapa del sitio en Markdown](https://www.nutralech.com/sitemap.md): todas las páginas, agrupadas en páginas principales, herramientas y blog.
+
+## Notas
+
+- Los artículos y calculadoras son informativos y no sustituyen la valoración de un profesional de la salud.
+- Precios en pesos mexicanos; pueden cambiar. La fuente vigente es la sección de precios de la portada.

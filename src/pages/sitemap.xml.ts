@@ -20,6 +20,7 @@ export async function GET() {
 		),
 	];
 	const body = `<?xml version="1.0" encoding="UTF-8"?>
+<!-- Markdown version of every page listed here (same URL ending in .md): https://www.nutralech.com/sitemap.md -->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${entries
 	.map(

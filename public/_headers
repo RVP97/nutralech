@@ -16,6 +16,13 @@
   ! Cache-Control
   Cache-Control: public, max-age=31536000, immutable
 
+# Markdown versions of the pages (integrations/markdown-pages.mjs).
+/*.md
+  Content-Type: text/markdown; charset=utf-8
+
+/llms.txt
+  Content-Type: text/plain; charset=utf-8
+
 # The preview host stays out of search results.
 https://astro.nutralech.com/*
   X-Robots-Tag: noindex

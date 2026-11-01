@@ -3,6 +3,7 @@ import { fileURLToPath } from "node:url";
 import mdx from "@astrojs/mdx";
 import tailwindcss from "@tailwindcss/vite";
 import { defineConfig } from "astro/config";
+import markdownPages from "./integrations/markdown-pages.mjs";
 
 const root = fileURLToPath(new URL(".", import.meta.url));
 
@@ -21,7 +22,7 @@ export default defineConfig({
 	// Blog posts (src/content/posts/*.mdx): GFM on, no smart quotes, no syntax highlighting, so
 	// the HTML matches what next-mdx-remote rendered.
 	markdown: { gfm: true, smartypants: false, syntaxHighlight: false },
-	integrations: [mdx()],
+	integrations: [mdx(), markdownPages()],
 	server: process.env.PORT ? { port: Number(process.env.PORT) } : undefined,
 	vite: {
 		plugins: [tailwindcss()],

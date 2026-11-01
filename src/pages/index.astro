@@ -12,6 +12,7 @@ import WhatIOffer from "@/components/sections/WhatIOffer.astro";
 import Whatsapp from "@/components/sections/Whatsapp.astro";
 import Layout from "@/layouts/Layout.astro";
 import { FAQ_JSON_LD } from "@/lib/faq";
+import { SERVICE_JSON_LD } from "@/lib/schema";
 import { pageSeo } from "@/lib/seo";
 
 const seo = pageSeo({
@@ -34,6 +35,7 @@ const seo = pageSeo({
 ---
 <Layout seo={seo}>
 	<JsonLd slot="head" schema={FAQ_JSON_LD} />
+	<JsonLd slot="head" schema={SERVICE_JSON_LD} />
 	<div>
 		<Hero />
 		<WhatIOffer />

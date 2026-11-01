@@ -7,6 +7,7 @@ import Picture from "@/components/Picture.astro";
 import { buttonClass } from "@/components/ui/button";
 import Layout from "@/layouts/Layout.astro";
 import { capitalize, formatPostDate, getPosts, parsePostDate } from "@/lib/posts";
+import { blogPosting, breadcrumbs } from "@/lib/schema";
 import { pageSeo, SITE } from "@/lib/seo";
 
 export async function getStaticPaths() {
@@ -28,22 +29,13 @@ const seo = pageSeo({
 	url,
 });
 
-const articleJsonLd = {
-	"@context": "https://schema.org",
-	"@type": "Article",
-	headline: title,
+const articleJsonLd = blogPosting({
+	url,
+	title,
 	description: seoDescription || excerpt || title,
-	image: `${SITE}/images/marialy.webp`,
-	datePublished: isoDate,
-	dateModified: isoDate,
-	author: { "@type": "Person", name: "Marialy Alonso", url: `${SITE}/acerca-de-mi` },
-	publisher: {
-		"@type": "Organization",
-		name: "Nutralech",
-		logo: { "@type": "ImageObject", url: `${SITE}/icons/android-icon-192x192.png` },
-	},
-	mainEntityOfPage: { "@type": "WebPage", "@id": url },
-};
+	date: isoDate,
+	keywords: categories,
+});
 
 const encodedUrl = encodeURIComponent(url);
 const encodedTitle = encodeURIComponent(title);
@@ -55,6 +47,7 @@ const shares = [
 ---
 <Layout seo={seo}>
 	<JsonLd slot="head" schema={articleJsonLd} />
+	<JsonLd slot="head" schema={breadcrumbs(["Blog", "/blog"], [title, `/blog/${slug}`])} />
 	<div>
 		<div
 			data-reading-progress
@@ -67,7 +60,7 @@ const shares = [
 			<header class="mb-12">
 				{
 					categories.length > 0 && (
-						<div class="mb-4 flex flex-wrap gap-3">
+						<div class="mb-4 flex flex-wrap gap-3" data-md-list="Temas">
 							{categories.map((category) => (
 								<span class="text-xs font-medium tracking-wide uppercase text-[#B5404F]">{capitalize(category)}</span>
 							))}

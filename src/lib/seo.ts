@@ -34,10 +34,14 @@ interface PageInput {
 	bareTitle?: boolean;
 }
 
-/** generatePageMetadata() from the Next.js site. */
+/**
+ * generatePageMetadata() from the Next.js site. Titles get " | Nutralech" only while they stay
+ * short enough to show whole in search results; long post titles keep their words instead.
+ */
 export function pageSeo({ title, description, keywords, url, bareTitle }: PageInput): PageSeo {
+	const branded = `${title} | Nutralech`;
 	return {
-		title: bareTitle ? title : `${title} | Nutralech`,
+		title: bareTitle || branded.length > 65 ? title : branded,
 		description,
 		keywords: keywords.join(","),
 		canonical: url,

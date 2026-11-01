@@ -1,6 +1,8 @@
 ---
 import ContactForm from "@/components/sections/ContactForm.astro";
 import Layout from "@/layouts/Layout.astro";
+import JsonLd from "@/components/JsonLd.astro";
+import { breadcrumbs } from "@/lib/schema";
 import { pageSeo } from "@/lib/seo";
 import { WA_LINK } from "@/lib/site";
 
@@ -13,6 +15,7 @@ const seo = pageSeo({
 });
 ---
 <Layout seo={seo}>
+	<JsonLd slot="head" schema={breadcrumbs(["Contacto", "/contacto"])} />
 		<section class="relative">
 			{/* Hero */}
 			<div class="bg-[oklch(96%_0.015_12)] py-12">

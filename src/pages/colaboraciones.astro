@@ -3,6 +3,8 @@ import { Mail } from "@lucide/astro";
 import Picture from "@/components/Picture.astro";
 import Iphone15Pro from "@/components/ui/Iphone15Pro.astro";
 import Layout from "@/layouts/Layout.astro";
+import JsonLd from "@/components/JsonLd.astro";
+import { breadcrumbs } from "@/lib/schema";
 import { pageSeo } from "@/lib/seo";
 
 const brandLogos = [
@@ -38,6 +40,7 @@ const seo = pageSeo({
 });
 ---
 <Layout seo={seo}>
+	<JsonLd slot="head" schema={breadcrumbs(["Colaboraciones", "/colaboraciones"])} />
 		<div class="bg-[oklch(99%_0.005_12)]">
 			{/* Hero */}
 			<section class="pt-32 pb-20 px-4">

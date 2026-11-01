@@ -2,3 +2,6 @@ User-agent: *
 Allow: /
 
 Sitemap: https://www.nutralech.com/sitemap.xml
+
+# Markdown version of every page (same URL ending in .md): https://www.nutralech.com/sitemap.md
+# Site guide for language models: https://www.nutralech.com/llms.txt

@@ -2,6 +2,8 @@
 import { ChevronDown, ChevronLeft, ChevronRight, Filter } from "@lucide/astro";
 import Layout from "@/layouts/Layout.astro";
 import { capitalize, formatPostDate, getPosts } from "@/lib/posts";
+import JsonLd from "@/components/JsonLd.astro";
+import { breadcrumbs } from "@/lib/schema";
 import { pageSeo } from "@/lib/seo";
 
 const POSTS_PER_PAGE = 10;
@@ -17,6 +19,7 @@ const seo = pageSeo({
 });
 ---
 <Layout seo={seo}>
+	<JsonLd slot="head" schema={breadcrumbs(["Blog", "/blog"])} />
 	<div class="py-28 px-4">
 		<div class="mx-auto max-w-5xl">
 			<div class="mb-14">

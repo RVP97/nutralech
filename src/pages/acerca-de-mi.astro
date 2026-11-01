@@ -5,6 +5,8 @@ import { buttonClass } from "@/components/ui/button";
 import Card from "@/components/ui/Card.astro";
 import CardContent from "@/components/ui/CardContent.astro";
 import Layout from "@/layouts/Layout.astro";
+import JsonLd from "@/components/JsonLd.astro";
+import { PROFILE_JSON_LD } from "@/lib/schema";
 import { pageSeo } from "@/lib/seo";
 
 const services = [
@@ -44,6 +46,7 @@ const seo = pageSeo({
 });
 ---
 <Layout seo={seo}>
+	<JsonLd slot="head" schema={PROFILE_JSON_LD} />
 		<div class="min-h-screen py-12 md:py-0 bg-linear-to-b from-white via-pink-50/50 to-white">
 			<div class="pointer-events-none absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMSIgY3k9IjEiIHI9IjEiIGZpbGw9InJnYmEoMjE4LCA5NSwgMTExLCAwLjA3KSIvPjwvc3ZnPg==')] opacity-40" />
 			<div class="absolute top-20 right-0 w-96 h-96 rounded-full bg-[#DA5F6F]/20 blur-[128px]" />

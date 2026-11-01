@@ -8,6 +8,8 @@ import CardDescription from "@/components/ui/CardDescription.astro";
 import CardHeader from "@/components/ui/CardHeader.astro";
 import CardTitle from "@/components/ui/CardTitle.astro";
 import Layout from "@/layouts/Layout.astro";
+import JsonLd from "@/components/JsonLd.astro";
+import { toolSchema } from "@/lib/schema";
 import { pageSeo } from "@/lib/seo";
 
 const seo = pageSeo({
@@ -19,6 +21,7 @@ const seo = pageSeo({
 });
 ---
 <Layout seo={seo}>
+	{toolSchema("/herramientas/calculadora-proteina").map((schema) => <JsonLd slot="head" schema={schema} />)}
 <div class="max-w-7xl mx-auto px-4 py-20">
 	<nav class="flex items-center gap-2 text-sm text-muted-foreground mb-8">
 		<a href="/">Inicio</a>
