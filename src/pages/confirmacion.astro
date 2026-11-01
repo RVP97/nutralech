@@ -1,0 +1,227 @@
+---
+/**
+ * Stripe's return page after the embedded checkout (?session_id=cs_…). The page is static; its
+ * script reads the session from /api/checkout_sessions and fills in the receipt.
+ */
+import { CircleCheck, Download } from "@lucide/astro";
+import { buttonClass } from "@/components/ui/button";
+import Card from "@/components/ui/Card.astro";
+import CardContent from "@/components/ui/CardContent.astro";
+import CardDescription from "@/components/ui/CardDescription.astro";
+import CardFooter from "@/components/ui/CardFooter.astro";
+import CardHeader from "@/components/ui/CardHeader.astro";
+import Layout from "@/layouts/Layout.astro";
+import { defaultSeo } from "@/lib/seo";
+import { WA_LINK } from "@/lib/site";
+---
+<Layout seo={defaultSeo(true)}>
+	<div class="mt-14 md:mt-0" data-confirmation>
+		<div class="min-h-screen bg-linear-to-b from-pink-50/50 to-white flex items-center justify-center p-4">
+			<!-- Shown while the session loads (after a short delay, so a fast answer never flashes it). -->
+			<div data-state="loading" hidden class="w-full max-w-2xl animate-pulse space-y-4 rounded-xl border bg-white p-6" aria-label="Cargando tu pago">
+				<div class="mx-auto h-16 w-16 rounded-full bg-gray-100"></div>
+				<div class="mx-auto h-6 w-48 rounded bg-gray-100"></div>
+				<div class="h-24 rounded bg-gray-100"></div>
+				<div class="h-48 rounded bg-gray-100"></div>
+			</div>
+
+			<div data-state="error" hidden class="w-full max-w-xl text-center space-y-4">
+				<h1 class="text-2xl font-semibold text-gray-800">No encontramos este pago</h1>
+				<p class="text-gray-600">
+					Si ya pagaste, revisa tu correo o escríbeme por
+					<a href={WA_LINK} target="_blank" rel="noopener noreferrer" class="font-semibold text-[#B5404F] underline underline-offset-2">WhatsApp</a>.
+				</p>
+				<a href="/" class={buttonClass({ class: "mt-2" })}>Volver al inicio</a>
+			</div>
+
+			<Card data-state="ready" hidden class="w-full max-w-2xl">
+				<CardHeader class="text-center">
+					<div class="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-green-100">
+						<CircleCheck class="h-8 w-8 text-green-600" />
+					</div>
+					<h1 class="text-2xl font-bold leading-none tracking-tight">¡Pago Exitoso!</h1>
+					<CardDescription>Gracias por tu compra. Tu Plan a distancia está listo para comenzar.</CardDescription>
+				</CardHeader>
+				<CardContent class="space-y-6">
+					<div class="rounded-lg bg-muted p-4 space-y-2">
+						<p class="text-sm font-medium">Número de Orden: <span data-out="receiptNumber"></span></p>
+						<div class="flex items-center text-sm text-muted-foreground">Email: <span class="ml-1" data-out="email"></span></div>
+					</div>
+					<div class="bg-white border border-gray-200 rounded-lg p-4 font-mono text-sm">
+						<div class="text-center mb-4">
+							<h2 class="font-bold text-lg">Marialy Alonso: Nutralech</h2>
+							<p>Recibo de Compra</p>
+						</div>
+						<div class="mb-4">
+							<p>Fecha: <span data-out="date"></span></p>
+							<p>Hora: <span data-out="time"></span></p>
+							<p>Orden: <span data-out="receiptNumber"></span></p>
+						</div>
+						<div class="border-t border-b border-dashed border-gray-300 py-2 mb-4" data-part="items"></div>
+						<div class="flex justify-between font-bold">
+							<span>Total</span>
+							<span data-out="total"></span>
+						</div>
+						<div class="mt-4 text-center text-xs">
+							<p>Gracias por tu compra</p>
+							<p>www.nutralech.com</p>
+						</div>
+					</div>
+					<div class="space-y-2">
+						<h2 class="font-semibold">Próximos pasos</h2>
+						<ol class="ml-6 list-decimal space-y-2 text-sm">
+							<li class="pl-2">Recibirás un email de confirmación a <span class="font-semibold" data-out="email"></span>.</li>
+							<li class="pl-2">
+								Descarga el documento, llénalo con tus datos, objetivos, hábitos, rutina y preferencias, y envíamelo a{" "}
+								<span class="font-semibold">marialyalonso@gmail.com</span> o por WhatsApp al{" "}
+								<a target="_blank" rel="noopener noreferrer" href={WA_LINK} class="font-bold whitespace-nowrap">+52 744 346 8252</a>.
+							</li>
+							<li class="pl-2">En aproximadamente 5–7 días hábiles después de recibir tu documento completo, te entregaré tu plan personalizado.</li>
+						</ol>
+					</div>
+				</CardContent>
+				<CardFooter class="flex flex-col space-y-2 sm:flex-row sm:justify-between sm:space-x-2 sm:space-y-0">
+					<a target="_blank" rel="noopener" href="https://documentos.nutralech.com/historia-clinica/historia-clinica.pdf" data-part="form" class={buttonClass()}>
+						Descargar documento <Download class="ml-2 h-4 w-4" />
+					</a>
+					<a target="_blank" rel="noopener" href="#" data-part="receipt" hidden class={buttonClass({ variant: "outline" })}>
+						<Download class="mr-2 h-4 w-4" /> Descargar Recibo
+					</a>
+				</CardFooter>
+			</Card>
+		</div>
+	</div>
+</Layout>
+
+<script>
+	import { SEGUIMIENTO_PRICE_ID } from "@/lib/plans";
+
+	interface LineItem {
+		id: string;
+		description: string;
+		amount_total: number;
+		amount_discount: number;
+		currency: string;
+		quantity: number;
+		price: { id: string } | null;
+	}
+	interface Session {
+		status: string;
+		paymentIntentID: string | null;
+		receiptUrl: string | null;
+		receiptNumber: string | null;
+		time: number | null;
+		customer_email: string | null;
+		total: number | null;
+		currency: string;
+		lineItems: LineItem[];
+	}
+
+	const FORMS = {
+		inicial: "https://documentos.nutralech.com/historia-clinica/historia-clinica.pdf",
+		seguimiento: "https://documentos.nutralech.com/historia-clinica/seguimiento.pdf",
+	};
+	const money = (cents: number, currency: string) => `$${(cents / 100).toFixed(2)} ${currency.toUpperCase()}`;
+
+	async function load(root: HTMLElement) {
+		if (root.dataset.ready) return;
+		root.dataset.ready = "true";
+		const state = (name: string) => {
+			for (const el of root.querySelectorAll<HTMLElement>("[data-state]")) el.hidden = el.dataset.state !== name;
+		};
+		const skeleton = setTimeout(() => state("loading"), 60);
+		let session: Session;
+		try {
+			const id = new URLSearchParams(location.search).get("session_id");
+			if (!id) throw new Error("missing session_id");
+			const response = await fetch(`/api/checkout_sessions?session_id=${encodeURIComponent(id)}`);
+			if (!response.ok) throw new Error(`HTTP ${response.status}`);
+			session = await response.json();
+			if (session.status !== "complete") throw new Error("incomplete");
+		} catch {
+			clearTimeout(skeleton);
+			state("error");
+			return;
+		}
+		clearTimeout(skeleton);
+
+		const items = session.lineItems ?? [];
+		const set = (name: string, text: string) => {
+			for (const el of root.querySelectorAll<HTMLElement>(`[data-out="${name}"]`)) el.textContent = text;
+		};
+		const date = session.time && session.time > 0 ? new Date(session.time * 1000) : new Date();
+		set("receiptNumber", session.receiptNumber ?? "");
+		set("email", session.customer_email ?? "");
+		set("date", date.toLocaleDateString("es-ES", { year: "numeric", month: "long", day: "numeric" }));
+		set("time", date.toLocaleTimeString("es-ES", { hour: "2-digit", minute: "2-digit" }));
+		const total = items.reduce((sum, item) => sum + item.amount_total, 0);
+		set("total", items[0] ? money(total, items[0].currency) : "");
+
+		const list = root.querySelector<HTMLElement>('[data-part="items"]');
+		list?.replaceChildren(
+			...items.map((item) => {
+				const row = document.createElement("div");
+				row.className = "flex justify-between";
+				const name = document.createElement("span");
+				name.textContent = item.description;
+				const amounts = document.createElement("div");
+				amounts.className = "text-right";
+				if (item.amount_discount > 0) {
+					const before = document.createElement("span");
+					before.className = "block text-gray-500 line-through";
+					before.textContent = money(item.amount_total + item.amount_discount, item.currency);
+					amounts.append(before);
+				}
+				const now = document.createElement("span");
+				now.textContent = money(item.amount_total, item.currency);
+				amounts.append(now);
+				row.append(name, amounts);
+				return row;
+			}),
+		);
+
+		const seguimiento = items.some((item) => item.price?.id === SEGUIMIENTO_PRICE_ID);
+		root.querySelector<HTMLAnchorElement>('[data-part="form"]')?.setAttribute("href", seguimiento ? FORMS.seguimiento : FORMS.inicial);
+		const receipt = root.querySelector<HTMLAnchorElement>('[data-part="receipt"]');
+		if (receipt && session.receiptUrl?.startsWith("https://")) {
+			receipt.href = session.receiptUrl;
+			receipt.hidden = false;
+		}
+		state("ready");
+
+		// Google Tag Manager purchase event (as the Next.js page pushed it).
+		const w = window as unknown as { dataLayer?: unknown[] };
+		w.dataLayer = w.dataLayer || [];
+		w.dataLayer.push({
+			event: "purchase",
+			ecommerce: {
+				transaction_id: session.paymentIntentID,
+				value: session.total ? session.total / 100 : 0,
+				currency: session.currency,
+				items: items.map((item) => ({
+					item_id: item.id,
+					item_name: item.description,
+					price: item.amount_total / 100,
+					currency: item.currency,
+					quantity: item.quantity,
+				})),
+			},
+		});
+
+		const { default: confetti } = await import("canvas-confetti");
+		confetti({
+			particleCount: 500,
+			spread: 300,
+			origin: { y: 0.5 },
+			startVelocity: 50,
+			decay: 0.9,
+			gravity: 0.8,
+			disableForReducedMotion: true,
+		});
+	}
+
+	document.addEventListener("astro:page-load", () => {
+		const root = document.querySelector<HTMLElement>("[data-confirmation]");
+		if (root) void load(root);
+	});
+</script>

@@ -1,0 +1,98 @@
+---
+import { Facebook, Instagram, Mail, Youtube } from "@lucide/astro";
+import Logo from "@/components/icons/Logo.astro";
+import TikTok from "@/components/icons/TikTok.astro";
+import { WA_LINK } from "@/lib/site";
+
+const navLinks = [
+	{ href: "/", label: "Inicio" },
+	{ href: "/acerca-de-mi", label: "Acerca de mí" },
+	{ href: "/blog", label: "Blog" },
+	{ href: "/herramientas", label: "Herramientas" },
+	{ href: "/colaboraciones", label: "Colaboraciones" },
+	{ href: "/contacto", label: "Contacto" },
+	{ href: "/#precios", label: "Planes" },
+];
+
+const socialLinks = [
+	{ href: "https://www.instagram.com/nutralech/", label: "Instagram", icon: Instagram },
+	{ href: "https://www.tiktok.com/@nutralech", label: "TikTok", icon: null },
+	{ href: "https://www.facebook.com/nutralech/", label: "Facebook", icon: Facebook },
+	{ href: "https://www.youtube.com/@Nutralech", label: "YouTube", icon: Youtube },
+];
+---
+<footer class="border-t border-[oklch(92%_0.005_12)] bg-[oklch(98.5%_0.005_12)]">
+	<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
+		<div class="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-4">
+			<div>
+				<a href="/" class="group inline-flex items-center gap-2">
+					<Logo class="h-7 w-7" />
+					<span class="text-lg font-semibold text-[oklch(22%_0.005_12)]">Nutralech</span>
+				</a>
+				<p class="mt-4 text-sm leading-relaxed text-[oklch(45%_0.01_12)] max-w-xs">
+					Nutrición personalizada con Marialy Alonso. Plan a distancia para todo el mundo, sin consulta presencial.
+				</p>
+			</div>
+
+			<div>
+				<h2 class="text-xs font-medium tracking-wide uppercase text-[oklch(45%_0.005_12)] mb-4">Navegación</h2>
+				<nav class="flex flex-col gap-1" aria-label="Pie de página">
+					{
+						navLinks.map((link) => (
+							<a
+								href={link.href}
+								class="py-1 text-sm text-[oklch(40%_0.005_12)] transition-colors duration-150 hover:text-[#C54B5B]"
+							>
+								{link.label}
+							</a>
+						))
+					}
+				</nav>
+			</div>
+
+			<div>
+				<h2 class="text-xs font-medium tracking-wide uppercase text-[oklch(45%_0.005_12)] mb-4">Contacto</h2>
+				<div class="flex flex-col gap-3">
+					<a
+						href={WA_LINK}
+						target="_blank"
+						rel="noopener noreferrer"
+						class="text-sm text-[oklch(40%_0.005_12)] transition-colors duration-150 hover:text-[#C54B5B]"
+					>
+						+52 744 346 8252
+					</a>
+					<a
+						href="mailto:contacto@nutralech.com"
+						class="inline-flex items-center gap-1.5 text-sm text-[oklch(40%_0.005_12)] transition-colors duration-150 hover:text-[#C54B5B]"
+					>
+						<Mail class="h-3.5 w-3.5" />
+						contacto@nutralech.com
+					</a>
+				</div>
+			</div>
+
+			<div>
+				<h2 class="text-xs font-medium tracking-wide uppercase text-[oklch(45%_0.005_12)] mb-4">Redes sociales</h2>
+				<div class="flex gap-2">
+					{
+						socialLinks.map((social) => (
+							<a
+								target="_blank"
+								rel="noopener noreferrer"
+								href={social.href}
+								class="flex h-10 w-10 items-center justify-center text-[oklch(45%_0.005_12)] transition-colors duration-150 hover:text-[#C54B5B]"
+								aria-label={social.label}
+							>
+								{social.icon ? <social.icon class="h-5 w-5" /> : <TikTok class="h-5 w-5" />}
+							</a>
+						))
+					}
+				</div>
+			</div>
+		</div>
+
+		<div class="mt-14 border-t border-[oklch(92%_0.005_12)] pt-6 text-center text-xs text-[oklch(45%_0.005_12)]">
+			Nutralech © {new Date().getFullYear()}
+		</div>
+	</div>
+</footer>

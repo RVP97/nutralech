@@ -1,0 +1,62 @@
+---
+import { FileText } from "@lucide/astro";
+import Picture from "@/components/Picture.astro";
+---
+<section class="relative min-h-screen overflow-hidden bg-[oklch(98.5%_0.008_12)]">
+	<div class="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-white to-transparent"></div>
+
+	<div class="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+		<div class="grid min-h-screen items-center gap-8 lg:grid-cols-[1fr_0.9fr] lg:gap-16">
+			<div class="space-y-8 pt-4 lg:pt-0">
+				<p class="text-sm font-medium tracking-wide uppercase text-[#B5404F]">Plan a distancia</p>
+
+				<h1 class="font-serif text-4xl font-medium tracking-tight text-[oklch(18%_0.005_12)] sm:text-5xl lg:text-6xl xl:text-7xl" style="line-height:1.08">
+					Planes que se adaptan a tu vida, no al revés
+				</h1>
+
+				<p class="max-w-lg text-lg leading-relaxed text-[oklch(45%_0.01_12)]">
+					Un plan de alimentación 100% personalizado, diseñado según tus objetivos, hábitos y rutina, sin consulta presencial. Tú llenas un documento; yo elaboro tu guía realista para el día a día.
+				</p>
+
+				<div class="flex flex-wrap items-center gap-4 pt-2">
+					<a
+						href="#precios"
+						class="inline-flex h-14 items-center justify-center gap-2.5 rounded-full bg-[#C54B5B] px-8 text-[15px] font-medium text-white transition-colors duration-200 hover:bg-[#B03F4F] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#DA5F6F]"
+					>
+						<FileText class="h-5 w-5" />
+						Ver plan a distancia
+					</a>
+
+					<a
+						href="/acerca-de-mi"
+						class="inline-flex h-14 items-center justify-center gap-2 rounded-full border border-[oklch(85%_0.01_12)] px-8 text-[15px] font-medium text-[oklch(30%_0.01_12)] transition-colors duration-200 hover:border-[#DA5F6F]/40 hover:text-[#C54B5B] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#DA5F6F]"
+					>
+						Conoce a Marialy
+					</a>
+				</div>
+
+				<div class="flex flex-wrap items-center gap-6 pt-4 text-sm text-[oklch(45%_0.01_12)]">
+					<span>Sin videollamada</span>
+					<span class="h-1 w-1 rounded-full bg-[oklch(75%_0.01_12)]"></span>
+					<span>Pacientes en 6 continentes</span>
+					<span class="h-1 w-1 rounded-full bg-[oklch(75%_0.01_12)]"></span>
+					<span>Soporte por WhatsApp</span>
+				</div>
+			</div>
+
+			{/* One photo for every width (the Next.js page had separate phone and desktop copies). */}
+			<div class="relative">
+				<div class="relative aspect-[4/5] w-full overflow-hidden rounded-2xl lg:aspect-auto lg:h-[min(85vh,720px)] lg:rounded-3xl">
+					<Picture
+						src="/images/marialy.webp"
+						alt="Marialy Alonso, nutricionista profesional de Nutralech"
+						fill
+						sizes="(max-width: 1024px) 100vw, 600px"
+						class="object-cover"
+						priority
+					/>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>

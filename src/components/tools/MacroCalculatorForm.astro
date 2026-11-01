@@ -1,0 +1,130 @@
+---
+import { Calculator } from "@lucide/astro";
+import Card from "@/components/ui/Card.astro";
+import CardContent from "@/components/ui/CardContent.astro";
+import CardDescription from "@/components/ui/CardDescription.astro";
+import CardHeader from "@/components/ui/CardHeader.astro";
+import CardTitle from "@/components/ui/CardTitle.astro";
+import { calcButtonClass, inputClass, labelClass } from "./form";
+import Select from "./Select.astro";
+import { MACRO_PREFERENCES } from "./macros";
+---
+<Card class="w-full h-full flex flex-col">
+	<CardHeader>
+		<CardTitle as="h2" class="text-2xl">Calcula tus Macronutrientes</CardTitle>
+		<CardDescription>Ingresa tus datos para calcular tus macronutrientes ideales</CardDescription>
+	</CardHeader>
+	<CardContent class="grow space-y-6">
+		<form data-calc="macros" novalidate class="space-y-4">
+			<div class="space-y-2">
+				<label for="preference" class={labelClass}>Preferencia de Macros</label>
+				<Select id="preference" name="preference" value="balanced" options={Object.entries(MACRO_PREFERENCES).map(([value, p]) => ({ value, label: p.label }))} />
+			</div>
+			<div class="space-y-2">
+				<label for="calories" class={labelClass}>Calorías Diarias</label>
+				<input id="calories" name="calories" type="number" inputmode="numeric" placeholder="2000" class={inputClass} />
+			</div>
+			<p data-part="error" role="alert" hidden class="text-red-600 text-sm mt-2"></p>
+			<button type="submit" class:list={[calcButtonClass, "mt-4"]}>Calcular Macronutrientes</button>
+		</form>
+
+		<div data-part="result" class="space-y-4" aria-live="polite">
+			<div class="rounded-lg border p-4 space-y-4">
+				<div class="flex items-center gap-2">
+					<Calculator class="h-5 w-5 text-muted-foreground" />
+					<span class="font-medium">Distribución de Macronutrientes</span>
+				</div>
+				<div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+					<div class="p-3 bg-blue-50 rounded-lg">
+						<div class="text-sm text-blue-700 font-medium">Proteína</div>
+						<div class="text-xl font-bold"><span data-out="protein">0</span>g</div>
+					</div>
+					<div class="p-3 bg-green-50 rounded-lg">
+						<div class="text-sm text-green-700 font-medium">Carbohidratos</div>
+						<div class="text-xl font-bold"><span data-out="carbs">0</span>g</div>
+					</div>
+					<div class="p-3 bg-yellow-50 rounded-lg">
+						<div class="text-sm text-yellow-700 font-medium">Grasas</div>
+						<div class="text-xl font-bold"><span data-out="fat">0</span>g</div>
+					</div>
+				</div>
+			</div>
+			<div class="rounded-lg bg-gray-50 p-4 space-y-2">
+				<div class="font-medium">Información del Plan</div>
+				<p class="text-sm text-muted-foreground" data-out="description">{MACRO_PREFERENCES.balanced.description}</p>
+			</div>
+		</div>
+
+		<div class="mt-6">
+			<h3 class="text-lg font-semibold mb-2">Distribución por Preferencia</h3>
+			<div class="hidden md:block overflow-x-auto">
+				<table class="w-full text-sm table-fixed">
+					<thead>
+						<tr class="bg-gray-100">
+							<th class="p-2 text-left">Preferencia</th>
+							<th class="p-2 text-left">Proteína</th>
+							<th class="p-2 text-left">Carbohidratos</th>
+							<th class="p-2 text-left">Grasas</th>
+						</tr>
+					</thead>
+					<tbody>
+						{Object.values(MACRO_PREFERENCES).map((p, i, all) => {
+							const cell = i < all.length - 1 ? "p-2 border-b" : "p-2";
+							return (
+								<tr>
+									<td class={cell}>{p.label}</td>
+									<td class={cell}>{Math.round(p.protein * 100)}%</td>
+									<td class={cell}>{Math.round(p.carbs * 100)}%</td>
+									<td class={cell}>{Math.round(p.fat * 100)}%</td>
+								</tr>
+							);
+						})}
+					</tbody>
+				</table>
+			</div>
+			<div class="md:hidden space-y-4">
+				{Object.values(MACRO_PREFERENCES).map((p) => (
+					<div class="bg-white rounded-lg border p-4">
+						<div class="font-medium mb-2">{p.label}</div>
+						<div class="grid grid-cols-3 gap-2 text-sm">
+							<div class="bg-blue-50 p-2 rounded">
+								<div class="text-blue-700 font-medium">Proteína</div>
+								<div>{Math.round(p.protein * 100)}%</div>
+							</div>
+							<div class="bg-green-50 p-2 rounded">
+								<div class="text-green-700 font-medium">Carbos</div>
+								<div>{Math.round(p.carbs * 100)}%</div>
+							</div>
+							<div class="bg-yellow-50 p-2 rounded">
+								<div class="text-yellow-700 font-medium">Grasas</div>
+								<div>{Math.round(p.fat * 100)}%</div>
+							</div>
+						</div>
+					</div>
+				))}
+			</div>
+		</div>
+	</CardContent>
+</Card>
+
+<script>
+	import { error, num, out, part, register, str } from "@/scripts/tools/calc";
+	import { MACRO_PREFERENCES } from "./macros";
+
+	register("macros", (form) => {
+		const result = part(form.parentElement as HTMLElement, "result");
+		form.addEventListener("submit", (event) => {
+			event.preventDefault();
+			const calories = num(form, "calories");
+			if (!calories) return error(form, "Por favor, ingresa las calorías diarias.");
+			if (calories <= 0 || calories > 10000)
+				return error(form, "Por favor, ingresa un valor de calorías válido (entre 1 y 10000).");
+			error(form, "");
+			const p = MACRO_PREFERENCES[str(form, "preference")] ?? MACRO_PREFERENCES.balanced;
+			out(result, "protein", Math.round((calories * p.protein) / 4));
+			out(result, "carbs", Math.round((calories * p.carbs) / 4));
+			out(result, "fat", Math.round((calories * p.fat) / 9));
+			out(result, "description", p.description);
+		});
+	});
+</script>

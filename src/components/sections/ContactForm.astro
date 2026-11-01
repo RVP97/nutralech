@@ -1,0 +1,51 @@
+---
+/** Contact form: a plain HTML form; src/scripts/contact-form.ts adds Turnstile and the AJAX send. */
+import { ChevronsUpDown } from "@lucide/astro";
+
+const INQUIRY_OPTIONS = [
+	{ value: "Consulta General", label: "Duda general" },
+	{ value: "Solicitar Cita", label: "Quiero el Plan a distancia" },
+	{ value: "Colaboración", label: "Colaboración profesional" },
+	{ value: "Comentarios", label: "Comentarios" },
+	{ value: "Otro", label: "Otro" },
+];
+const fieldClass =
+	"flex w-full rounded-lg border border-[oklch(90%_0.005_12)] bg-[oklch(97%_0.005_12)] px-3 py-1 text-sm text-[oklch(18%_0.005_12)] shadow-xs transition-colors placeholder:text-[oklch(50%_0.005_12)] focus-visible:outline-hidden focus-visible:ring-1 focus-visible:ring-[#DA5F6F]/30 focus-visible:border-[#DA5F6F]/50 aria-invalid:border-red-400";
+---
+<form method="post" action="/api/contact" data-contact-form novalidate class="space-y-5">
+	<div class="grid sm:grid-cols-2 gap-5">
+		<input type="text" name="name" placeholder="Nombre" autocomplete="name" required aria-label="Nombre" class={`h-10 ${fieldClass}`} />
+		<input type="email" name="email" placeholder="Correo electrónico" autocomplete="email" required aria-label="Correo electrónico" class={`h-10 ${fieldClass}`} />
+	</div>
+	<div class="grid sm:grid-cols-2 gap-5">
+		<input type="tel" name="phone" placeholder="Teléfono (opcional)" autocomplete="tel" aria-label="Número de teléfono (opcional)" class={`h-10 ${fieldClass}`} />
+		<div>
+			<div class="relative">
+				<select name="inquiryType" required aria-label="Tipo de consulta" aria-describedby="inquiry-error" class={`h-10 appearance-none pr-9 invalid:text-[oklch(50%_0.005_12)] ${fieldClass}`}>
+					<option value="" disabled selected>Tipo de consulta</option>
+					{INQUIRY_OPTIONS.map((o) => <option value={o.value} class="text-[oklch(18%_0.005_12)]">{o.label}</option>)}
+				</select>
+				<ChevronsUpDown class="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 opacity-50" />
+			</div>
+			<p id="inquiry-error" data-error="inquiryType" hidden class="mt-1.5 text-xs text-red-600">Selecciona un tipo de consulta.</p>
+		</div>
+	</div>
+	<textarea name="message" placeholder="Tu mensaje" required aria-label="Mensaje" class={`min-h-[140px] resize-y py-2 ${fieldClass}`}></textarea>
+
+	<div data-turnstile></div>
+
+	<button
+		type="submit"
+		class="inline-flex h-12 w-full items-center justify-center rounded-full bg-[#C54B5B] text-sm font-medium text-white transition-colors hover:bg-[#B03F4F] disabled:pointer-events-none disabled:opacity-50 sm:w-auto sm:px-10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#DA5F6F]"
+	>
+		Enviar mensaje
+	</button>
+
+	<p data-status role="status" aria-live="polite" class="text-sm empty:hidden"></p>
+
+	<p class="text-xs leading-relaxed text-[oklch(50%_0.005_12)]">
+		Protegido por Cloudflare Turnstile. Aplican la{" "}
+		<a href="https://www.cloudflare.com/privacypolicy/" class="underline underline-offset-2 hover:text-[#B5404F]" target="_blank" rel="noopener noreferrer">Política de Privacidad</a>{" "}
+		de Cloudflare.
+	</p>
+</form>

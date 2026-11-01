@@ -1,0 +1,107 @@
+---
+import { Info, Scale } from "@lucide/astro";
+import Card from "@/components/ui/Card.astro";
+import CardContent from "@/components/ui/CardContent.astro";
+import CardDescription from "@/components/ui/CardDescription.astro";
+import CardHeader from "@/components/ui/CardHeader.astro";
+import CardTitle from "@/components/ui/CardTitle.astro";
+import { calcButtonClass, inputClass, labelClass } from "./form";
+import Select from "./Select.astro";
+
+const unitText = '{"field":"unit","metric":"cm","imperial":"in"}';
+---
+<Card class="w-full h-full flex flex-col">
+	<CardHeader>
+		<CardTitle as="h2" class="text-2xl">Calculadora de Relación Cintura-Cadera</CardTitle>
+		<CardDescription>Calcula tu índice cintura-cadera para evaluar la distribución de grasa corporal</CardDescription>
+	</CardHeader>
+	<CardContent class="grow space-y-6">
+		<form data-calc="cintura-cadera" novalidate class="space-y-4">
+			<div class="space-y-2">
+				<label for="gender" class={labelClass}>Género</label>
+				<Select id="gender" name="gender" value="female" options={[{ value: "male", label: "Masculino" }, { value: "female", label: "Femenino" }]} />
+			</div>
+			<div class="space-y-2">
+				<label for="unitSystem" class={labelClass}>Sistema de Medidas</label>
+				<Select id="unitSystem" name="unit" value="metric" options={[{ value: "metric", label: "Métrico (cm)" }, { value: "imperial", label: "Imperial (ft-in)" }]} />
+			</div>
+			<div class="space-y-2">
+				<label for="waist" class={labelClass}>Medida de Cintura (<span data-text-when={unitText}>cm</span>)</label>
+				<input id="waist" name="waist" type="number" inputmode="decimal" placeholder="80" class={inputClass} />
+				<p data-error="waist" hidden class="text-sm text-red-600">Por favor, ingresa la medida de tu cintura</p>
+			</div>
+			<div class="space-y-2">
+				<label for="hip" class={labelClass}>Medida de Caderas (<span data-text-when={unitText}>cm</span>)</label>
+				<input id="hip" name="hip" type="number" inputmode="decimal" placeholder="100" class={inputClass} />
+				<p data-error="hip" hidden class="text-sm text-red-600">Por favor, ingresa la medida de tus caderas</p>
+			</div>
+			<button type="submit" class:list={[calcButtonClass, "mt-4"]}>Calcular Relación</button>
+		</form>
+
+		<div data-part="result" hidden class="space-y-4" aria-live="polite">
+			<div class="rounded-lg border p-4 space-y-2" data-risk-color>
+				<div class="flex items-center gap-2">
+					<Scale class="h-5 w-5" />
+					<span class="font-medium">Índice Cintura-Cadera (ICC)</span>
+				</div>
+				<div class="text-sm" data-out="summary"></div>
+			</div>
+			<div class="rounded-lg p-4" data-risk-color>
+				<div class="font-medium">Resultado</div>
+				<div class="text-2xl font-bold" data-out="ratio"></div>
+				<div class="text-sm font-medium">Nivel de Riesgo: <span data-out="risk"></span></div>
+				<div class="text-sm" data-out="description"></div>
+			</div>
+			<div class="rounded-lg bg-gray-50 p-4 space-y-3 border">
+				<div class="flex items-center gap-2">
+					<Info class="h-5 w-5 text-muted-foreground" />
+					<span class="font-medium">Consideraciones Importantes</span>
+				</div>
+				<ul class="list-disc pl-5 space-y-1">
+					<li class="text-sm text-muted-foreground">Un ICC elevado indica mayor riesgo cardiovascular</li>
+					<li class="text-sm text-muted-foreground">La distribución de grasa abdominal es un indicador importante de salud</li>
+					<li class="text-sm text-muted-foreground">Mantén una dieta equilibrada y actividad física regular</li>
+					<li class="text-sm text-muted-foreground">Consulta con un profesional de la salud para una evaluación completa</li>
+				</ul>
+			</div>
+		</div>
+	</CardContent>
+</Card>
+
+<script>
+	import { num, out, part, register, required, str } from "@/scripts/tools/calc";
+
+	const COLORS = {
+		Bajo: "bg-green-50 text-green-700 border-green-200",
+		Moderado: "bg-yellow-50 text-yellow-700 border-yellow-200",
+		Alto: "bg-red-50 text-red-700 border-red-200",
+	};
+	const DESCRIPTIONS = {
+		Bajo: "Distribución de grasa corporal saludable",
+		Moderado: "Riesgo moderado para la salud",
+		Alto: "Mayor riesgo de problemas de salud",
+	};
+
+	register("cintura-cadera", (form) => {
+		const result = part(form.parentElement as HTMLElement, "result");
+		const boxes = [...result.querySelectorAll<HTMLElement>("[data-risk-color]")];
+		const baseClasses = boxes.map((el) => el.className);
+		form.addEventListener("submit", (event) => {
+			event.preventDefault();
+			const waist = num(form, "waist");
+			const hip = num(form, "hip");
+			if (!required(form, { waist: !waist, hip: !hip })) return;
+			const ratio = waist / hip;
+			const [low, moderate] = str(form, "gender") === "male" ? [0.85, 0.95] : [0.75, 0.85];
+			const risk = ratio <= low ? "Bajo" : ratio <= moderate ? "Moderado" : "Alto";
+			boxes.forEach((el, i) => {
+				el.className = `${baseClasses[i]} ${COLORS[risk]}`;
+			});
+			out(result, "summary", `Tu índice cintura-cadera es ${ratio.toFixed(2)}, lo que indica un riesgo ${risk.toLowerCase()}.`);
+			out(result, "ratio", ratio.toFixed(2));
+			out(result, "risk", risk);
+			out(result, "description", DESCRIPTIONS[risk]);
+			result.hidden = false;
+		});
+	});
+</script>

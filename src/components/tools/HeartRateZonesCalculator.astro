@@ -1,0 +1,69 @@
+---
+import Card from "@/components/ui/Card.astro";
+import CardContent from "@/components/ui/CardContent.astro";
+import CardDescription from "@/components/ui/CardDescription.astro";
+import CardHeader from "@/components/ui/CardHeader.astro";
+import CardTitle from "@/components/ui/CardTitle.astro";
+import { calcButtonClass, inputClass, labelClass } from "./form";
+
+const ZONES = [
+	["Zona 1 - Calentamiento", "50-60%", "Actividad muy ligera, recuperación activa", "bg-blue-50 border-blue-200 hover:bg-blue-100"],
+	["Zona 2 - Quema de Grasa", "60-70%", "Actividad ligera, mejora la resistencia básica", "bg-green-50 border-green-200 hover:bg-green-100"],
+	["Zona 3 - Aeróbica", "70-80%", "Intensidad moderada, mejora la eficiencia cardiovascular", "bg-yellow-50 border-yellow-200 hover:bg-yellow-100"],
+	["Zona 4 - Anaeróbica", "80-90%", "Intensidad alta, mejora el rendimiento de velocidad", "bg-orange-50 border-orange-200 hover:bg-orange-100"],
+	["Zona 5 - Máxima", "90-100%", "Intensidad máxima, intervalos cortos", "bg-red-50 border-red-200 hover:bg-red-100"],
+];
+---
+<Card class="w-full h-full flex flex-col">
+	<CardHeader>
+		<CardTitle as="h2" class="text-2xl">Calculadora de Zonas de Frecuencia Cardíaca</CardTitle>
+		<CardDescription>Calcula tus zonas de entrenamiento para optimizar tus ejercicios</CardDescription>
+	</CardHeader>
+	<CardContent class="grow space-y-6">
+		<form data-calc="frecuencia" novalidate class="space-y-4">
+			<div class="space-y-2">
+				<label for="age" class={labelClass}>Edad</label>
+				<input id="age" name="age" type="number" inputmode="numeric" placeholder="30" class={inputClass} />
+				<p data-error="age" hidden class="text-sm text-red-600">Por favor, ingresa tu edad</p>
+			</div>
+			<div class="space-y-2">
+				<label for="restingHR" class={labelClass}>Frecuencia Cardíaca en Reposo (bpm)</label>
+				<input id="restingHR" name="restingHR" type="number" inputmode="numeric" placeholder="60" class={inputClass} />
+				<p data-error="restingHR" hidden class="text-sm text-red-600">Por favor, ingresa tu frecuencia cardíaca en reposo</p>
+			</div>
+			<button type="submit" class:list={[calcButtonClass, "mt-4"]}>Calcular Zonas</button>
+		</form>
+
+		<div data-part="result" hidden class="space-y-4" aria-live="polite">
+			{ZONES.map(([zone, range, description, color], i) => (
+				<div class={`rounded-lg border p-4 space-y-2 transition-colors ${color}`}>
+					<div class="flex justify-between items-center">
+						<span class="font-medium">{zone}</span>
+						<span class="text-sm text-muted-foreground">{range}</span>
+					</div>
+					<div class="text-xl font-bold"><span data-out={`zone${i}`}></span> BPM</div>
+					<p class="text-sm text-muted-foreground">{description}</p>
+				</div>
+			))}
+		</div>
+	</CardContent>
+</Card>
+
+<script>
+	import { num, out, part, register, required } from "@/scripts/tools/calc";
+
+	register("frecuencia", (form) => {
+		const result = part(form.parentElement as HTMLElement, "result");
+		form.addEventListener("submit", (event) => {
+			event.preventDefault();
+			const age = num(form, "age");
+			if (!required(form, { age: !age, restingHR: !num(form, "restingHR") })) return;
+			const max = 220 - Math.trunc(age);
+			[0.5, 0.6, 0.7, 0.8, 0.9].forEach((low, i) => {
+				const high = i === 4 ? max : Math.round(max * (low + 0.1));
+				out(result, `zone${i}`, `${Math.round(max * low)}-${high}`);
+			});
+			result.hidden = false;
+		});
+	});
+</script>

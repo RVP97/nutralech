@@ -1,0 +1,37 @@
+---
+import Accordion from "@/components/ui/Accordion.astro";
+import { FAQ } from "@/lib/faq";
+---
+<section id="faq" class="py-24 bg-[oklch(97.5%_0.008_12)]">
+	<div class="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
+		<div class="text-center mb-12">
+			<p class="text-sm font-medium tracking-wide uppercase text-[#B5404F]">Preguntas frecuentes</p>
+			<h2 class="mt-3 font-serif text-3xl font-medium tracking-tight text-[oklch(18%_0.005_12)] sm:text-4xl">¿Tienes alguna pregunta?</h2>
+		</div>
+
+		<div class="w-full space-y-2">
+			{
+				FAQ.map((item) => (
+					<Accordion
+						name="faq"
+						question={item.question}
+						class="rounded-xl bg-white px-6"
+						summaryClass="text-left text-[15px] font-medium text-[oklch(22%_0.005_12)] py-5"
+						contentClass="text-sm leading-relaxed text-[oklch(45%_0.01_12)] pb-5"
+					>
+						<Fragment set:html={item.html ?? item.answer} />
+					</Accordion>
+				))
+			}
+		</div>
+
+		<div class="mt-10 text-center">
+			<a
+				href="#precios"
+				class="inline-flex h-12 items-center justify-center rounded-full bg-[#C54B5B] px-8 text-sm font-medium text-white transition-colors duration-200 hover:bg-[#C54B5B]"
+			>
+				Ver plan a distancia
+			</a>
+		</div>
+	</div>
+</section>

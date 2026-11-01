@@ -1,0 +1,21 @@
+---
+/** A native <select> styled like the shadcn/ui Select trigger. */
+import { ChevronDown } from "@lucide/astro";
+import type { HTMLAttributes } from "astro/types";
+
+interface Props extends HTMLAttributes<"select"> {
+	options: { value: string; label: string }[];
+	placeholder?: string;
+}
+const { options, placeholder, value, class: className, ...rest } = Astro.props;
+---
+<div class:list={["relative", className]}>
+	<select
+		{...rest}
+		class="flex h-9 w-full appearance-none items-center rounded-md border border-input bg-transparent py-2 pl-3 pr-9 text-sm shadow-xs focus:outline-hidden focus:ring-1 focus:ring-ring disabled:cursor-not-allowed disabled:opacity-50 invalid:text-muted-foreground"
+	>
+		{placeholder && <option value="" disabled selected={!value}>{placeholder}</option>}
+		{options.map((o) => <option value={o.value} selected={o.value === value} class="text-foreground">{o.label}</option>)}
+	</select>
+	<ChevronDown class="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 opacity-50" />
+</div>

@@ -1,0 +1,174 @@
+---
+import { Info, Scale } from "@lucide/astro";
+import Card from "@/components/ui/Card.astro";
+import CardContent from "@/components/ui/CardContent.astro";
+import CardDescription from "@/components/ui/CardDescription.astro";
+import CardHeader from "@/components/ui/CardHeader.astro";
+import CardTitle from "@/components/ui/CardTitle.astro";
+import BodyFields from "./BodyFields.astro";
+import { ACTIVITY_OPTIONS, calcButtonClass, GOAL_OPTIONS, labelClass } from "./form";
+import Select from "./Select.astro";
+---
+<Card class="w-full h-full flex flex-col">
+	<CardHeader>
+		<CardTitle as="h2" class="text-2xl">Calcula tus Calorías</CardTitle>
+		<CardDescription>Ingresa tus datos para calcular tus necesidades calóricas diarias</CardDescription>
+	</CardHeader>
+	<CardContent class="grow space-y-6">
+		<form data-calc="calorias" novalidate class="space-y-4">
+			<BodyFields />
+			<div class="space-y-2">
+				<label for="activity" class={labelClass}>Nivel de Actividad</label>
+				<Select
+					id="activity"
+					name="activity"
+					value="sedentary"
+					options={ACTIVITY_OPTIONS}
+				/>
+			</div>
+			<div class="space-y-2">
+				<label for="weightGoal" class={labelClass}>Objetivo de Peso</label>
+				<Select
+					id="weightGoal"
+					name="goal"
+					value="maintain"
+					options={GOAL_OPTIONS}
+				/>
+			</div>
+			<button type="submit" class:list={[calcButtonClass, "mt-4"]}>Calcular Calorías</button>
+		</form>
+
+		<div data-part="result" hidden class="space-y-4" aria-live="polite">
+			<div class="rounded-lg border p-4 space-y-2">
+				<div class="flex items-center gap-2">
+					<Scale class="h-5 w-5 text-muted-foreground" />
+					<span class="font-medium">Tus Calorías Diarias Recomendadas</span>
+				</div>
+				<div class="text-2xl font-bold"><span data-out="calories"></span> kcal</div>
+			</div>
+			<div class="rounded-lg bg-gray-50 p-4 space-y-3">
+				<div class="flex items-center gap-2">
+					<Info class="h-5 w-5 text-muted-foreground" />
+					<span class="font-medium" data-out="title"></span>
+				</div>
+				<p class="text-sm text-muted-foreground leading-relaxed" data-out="description"></p>
+				<div class="pt-2 space-y-2">
+					<div class="text-sm font-medium">Recomendaciones personalizadas:</div>
+					<ul class="list-disc pl-5 space-y-1" data-part="points"></ul>
+				</div>
+			</div>
+		</div>
+	</CardContent>
+</Card>
+
+<script>
+	import { harrisBenedict, list, out, part, readBody, register, str } from "@/scripts/tools/calc";
+
+	const ACTIVITY: Record<string, number> = {
+		sedentary: 1.2,
+		lightlyActive: 1.375,
+		moderatelyActive: 1.55,
+		active: 1.725,
+		veryActive: 1.9,
+	};
+	const GOAL: Record<string, number> = { loseExtreme: -500, loseMild: -250, maintain: 0, gainMild: 250, gainExtreme: 500 };
+
+	function suggestion(calories: number, gender: string, heightCm: number, weight: number, goal: string, metric: boolean) {
+		const weightKg = metric ? weight : weight * 0.453592;
+		const weightUnit = metric ? "kg" : "lb";
+		const bmi = weightKg / ((heightCm / 100) * (heightCm / 100));
+		const isUnderweight = bmi < 18.5;
+		const isOverweight = bmi > 25;
+		const female = gender === "female";
+		const person = female ? "una mujer" : "un hombre";
+
+		if (calories < 1200)
+			return {
+				title: "Precaución: Nivel Muy Bajo de Calorías",
+				description: `Este nivel de calorías está por debajo de lo recomendado para una persona de ${heightCm}cm y ${weight}${weightUnit}. ${
+					isUnderweight ? "Especialmente considerando que tu IMC indica que podrías estar en bajo peso, " : ""
+				}es crucial que consultes con un profesional de la salud antes de seguir una dieta tan restrictiva.`,
+				keyPoints: [
+					"Considera aumentar gradualmente tu ingesta calórica",
+					"Prioriza proteínas magras y grasas saludables",
+					"Monitorea tu energía y estado de ánimo",
+					"Realiza chequeos regulares con un profesional",
+				],
+			};
+		if (goal.includes("lose")) {
+			const extreme = goal === "loseExtreme";
+			return {
+				title: extreme ? "Déficit Calórico Significativo" : "Déficit Calórico Moderado",
+				description: `Para ${person} de ${heightCm}cm, este nivel calórico permite una pérdida de peso saludable${
+					isOverweight ? ", especialmente considerando tu IMC actual" : ""
+				}. ${
+					extreme
+						? `Con un déficit de 500 calorías, podrías perder aproximadamente ${metric ? "0.5kg" : "1lb"} por semana.`
+						: `Con un déficit de 250 calorías, podrías perder aproximadamente ${metric ? "0.25kg" : "0.5lb"} por semana.`
+				}`,
+				keyPoints: [
+					`Asegura una ingesta mínima de ${female ? "1.6" : "1.8"}g de proteína por ${weightUnit} de peso`,
+					"Distribuye tus calorías en 4-5 comidas para controlar el hambre",
+					"Prioriza alimentos ricos en fibra para mayor saciedad",
+					`Mantén una hidratación de ${female ? "2-2.5" : "2.5-3"} litros diarios`,
+				],
+			};
+		}
+		if (goal.includes("gain")) {
+			const extreme = goal === "gainExtreme";
+			return {
+				title: extreme ? "Superávit Calórico Significativo" : "Superávit Calórico Moderado",
+				description: `Para ${person} de ${heightCm}cm, este nivel calórico permite una ganancia de peso controlada${
+					isUnderweight ? ", apropiada para tu IMC actual" : ""
+				}. ${
+					extreme
+						? "Con un superávit de 500 calorías, podrías ganar aproximadamente 0.5kg por semana."
+						: "Con un superávit de 250 calorías, podrías ganar aproximadamente 0.25kg por semana."
+				}`,
+				keyPoints: [
+					`Consume ${female ? "1.8-2" : "2-2.2"}g de proteína por kg de peso`,
+					"Incluye carbohidratos complejos para energía sostenida",
+					"Añade grasas saludables para alcanzar tus calorías objetivo",
+					"Considera el entrenamiento de fuerza para optimizar la ganancia muscular",
+				],
+			};
+		}
+		return {
+			title: "Mantenimiento del Peso Actual",
+			description: `Este nivel calórico está diseñado para mantener tu peso actual de ${weight}${weightUnit}. ${
+				isUnderweight
+					? "Considera aumentar gradualmente tus calorías para alcanzar un peso más saludable."
+					: isOverweight
+						? "Podrías beneficiarte de un ligero déficit calórico para mejorar tu composición corporal."
+						: "Tu IMC está en un rango saludable, este nivel calórico te ayudará a mantenerlo."
+			}`,
+			keyPoints: [
+				`Mantén una ingesta de ${female ? "1.6-1.8" : "1.8-2"}g de proteína por kg de peso`,
+				"Equilibra macronutrientes según tu nivel de actividad",
+				"Ajusta las calorías según cambios en tu actividad diaria",
+				"Monitorea tu peso y energía semanalmente",
+			],
+		};
+	}
+
+	register("calorias", (form) => {
+		const card = form.parentElement as HTMLElement;
+		form.addEventListener("submit", (event) => {
+			event.preventDefault();
+			const body = readBody(form);
+			if (!body) return;
+			const { age, gender, metric, heightCm, weight, weightKg } = body;
+			const bmr = harrisBenedict(gender, weightKg, heightCm, age);
+			const goal = str(form, "goal");
+			const calories = Math.round(bmr * (ACTIVITY[str(form, "activity")] ?? 1) + (GOAL[goal] ?? 0));
+			const rec = suggestion(calories, gender, Math.round(heightCm), weight, goal, metric);
+
+			const result = part(card, "result");
+			out(result, "calories", calories);
+			out(result, "title", rec.title);
+			out(result, "description", rec.description);
+			list(part(result, "points"), rec.keyPoints);
+			result.hidden = false;
+		});
+	});
+</script>

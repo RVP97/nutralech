@@ -1,0 +1,72 @@
+---
+import { Clock, MessageCircle, MousePointerClick, ThumbsUp } from "@lucide/astro";
+import IPhone from "@/components/whatsapp-demo/IPhone.astro";
+
+const features = [
+	{
+		icon: MessageCircle,
+		title: "Comunicación Directa",
+		description:
+			"Estoy siempre disponible para responder tus preguntas y brindarte apoyo personalizado a través de nuestra plataforma de mensajería segura.",
+	},
+	{
+		icon: Clock,
+		title: "Respuestas Rápidas",
+		description:
+			"Me comprometo a responder a tus mensajes en un plazo máximo de 24 horas, asegurando que recibas la atención que necesitas de manera oportuna.",
+	},
+	{
+		icon: ThumbsUp,
+		title: "Seguimiento Personalizado",
+		description:
+			"Adapto mi enfoque a tus necesidades individuales, ofreciendo consejos y ajustes personalizados a tu plan nutricional según tu progreso.",
+	},
+];
+---
+<section class="overflow-hidden bg-[oklch(97.5%_0.008_12)] py-24">
+	<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+		<div class="mb-14 max-w-2xl">
+			<p class="text-sm font-medium uppercase tracking-wide text-[#B5404F]">Acceso directo</p>
+			<h2 class="mt-3 font-serif text-3xl font-medium tracking-tight text-[oklch(18%_0.005_12)] sm:text-4xl lg:text-5xl">
+				Comunicación personalizada
+			</h2>
+		</div>
+
+		<div class="grid items-center gap-12 lg:grid-cols-2">
+			<div class="space-y-8">
+				<p class="text-lg leading-relaxed text-[oklch(45%_0.01_12)]">
+					Estoy disponible para responder tus preguntas y apoyarte con ajustes a tu plan. Respuestas en un plazo máximo de 24 horas, adaptadas a tu progreso.
+				</p>
+				<div class="space-y-5">
+					{
+						features.map((feature) => (
+							<div class="flex items-start gap-4">
+								<div class="mt-0.5 shrink-0">
+									<feature.icon class="h-5 w-5 text-[#B5404F]" />
+								</div>
+								<div>
+									<h3 class="text-base font-medium text-[oklch(22%_0.005_12)]">{feature.title}</h3>
+									<p class="mt-1 text-sm text-[oklch(50%_0.01_12)]">{feature.description}</p>
+								</div>
+							</div>
+						))
+					}
+				</div>
+			</div>
+
+			<div class="relative mx-auto w-full max-w-[360px]">
+				<div
+					aria-hidden="true"
+					class="pointer-events-none absolute -inset-x-16 top-1/4 bottom-1/4 -z-0 rounded-full bg-[radial-gradient(closest-side,rgba(218,95,111,0.18),transparent)] blur-2xl"
+				></div>
+				<IPhone maxScale={0.82} />
+				<div class="mt-6 flex h-6 justify-center">
+					<p data-wa-hint class="flex items-center gap-2 text-sm text-[oklch(45%_0.01_12)] transition-[opacity,transform] duration-300">
+						<MousePointerClick class="h-4 w-4 text-[#B5404F]" />
+						Es interactivo: abre el chat y escríbele a Marialy
+					</p>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>

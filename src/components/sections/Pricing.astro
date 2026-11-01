@@ -1,0 +1,181 @@
+---
+import { Check, Copy, X } from "@lucide/astro";
+import { PLANS } from "@/lib/plans";
+import { WA_LINK } from "@/lib/site";
+
+const sharedFeatures = [
+	"Plan de alimentación personalizado.",
+	"Sistema de equivalencias para que puedas variar tus alimentos y no depender de un menú rígido.",
+	"Una opción de menú ejemplo para ayudarte a visualizar cómo organizar tus comidas.",
+	"Recomendaciones personalizadas de acuerdo con tus hábitos y objetivos.",
+	"Opciones y estrategias para cuando comes fuera de casa.",
+	"Recomendaciones prácticas para que puedas adaptar el plan a tu rutina y estilo de vida.",
+];
+
+const bank = [
+	{ label: "Banco", value: "BBVA Bancomer", copyValue: "BBVA Bancomer" },
+	{ label: "Titular", value: "Marialy Alonso Echenique", copyValue: "Marialy Alonso Echenique" },
+	{ label: "Cuenta", value: "159 382 7239", copyValue: "1593827239" },
+	{ label: "CLABE", value: "0121 8001 5938 272395", copyValue: "012180015938272395" },
+];
+const dialogClass =
+	"fixed m-auto rounded-xl border bg-background p-6 shadow-lg backdrop:bg-black/80 open:flex open:flex-col";
+---
+<dialog id="checkout-dialog" aria-labelledby="checkout-title" class={`${dialogClass} w-[95vw] max-w-[95vw] sm:max-w-[90vw] h-[90vh] max-h-[90vh]`}>
+	<div class="flex shrink-0 items-center justify-between">
+		<h2 id="checkout-title" class="text-lg font-semibold leading-none tracking-tight text-[oklch(18%_0.005_12)]">Completar pago</h2>
+		<button type="button" data-dialog-close class="flex h-8 w-8 items-center justify-center rounded-sm opacity-70 transition-opacity hover:opacity-100" aria-label="Cerrar">
+			<X class="h-4 w-4" />
+		</button>
+	</div>
+	<div class="mt-4 flex-1 overflow-y-auto" data-checkout-mount>
+		<div data-checkout-loading class="flex h-full w-full items-center justify-center">
+			<div class="h-6 w-6 animate-spin rounded-full border-2 border-[oklch(85%_0.01_12)] border-t-[#DA5F6F]"></div>
+		</div>
+	</div>
+</dialog>
+
+<section id="precios" class="py-24 bg-white">
+	<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+		<div class="text-center mb-6">
+			<p class="text-sm font-medium tracking-wide uppercase text-[#B5404F]">Precios</p>
+			<h2 class="mt-3 font-serif text-3xl font-medium tracking-tight text-[oklch(18%_0.005_12)] sm:text-4xl lg:text-5xl">Plan a distancia</h2>
+			<p class="mt-4 text-base text-[oklch(50%_0.01_12)] max-w-2xl mx-auto leading-relaxed">
+				Recibe un plan de alimentación 100% personalizado, diseñado de acuerdo con tus objetivos, hábitos, estilo de vida y rutina, sin necesidad de realizar una consulta presencial.
+			</p>
+		</div>
+
+		<div class="mx-auto mb-12 max-w-2xl rounded-2xl border border-[oklch(92%_0.005_12)] bg-[oklch(98.5%_0.005_12)] px-6 py-5 text-left">
+			<p class="text-sm font-medium text-[oklch(18%_0.005_12)]">¿Cómo funciona?</p>
+			<p class="mt-2 text-sm leading-relaxed text-[oklch(45%_0.01_12)]">
+				Al contratar tu plan recibirás un documento que deberás llenar con información sobre ti: tus datos, objetivos, hábitos de alimentación, rutina, actividad física, estilo de vida, horarios, gustos y preferencias. Con base en toda esta información elaboraré un plan de alimentación completamente personalizado y adaptado a tu día a día.
+			</p>
+			<p class="mt-3 text-sm font-medium text-[oklch(30%_0.005_12)]">
+				Entrega aproximada: 5–7 días hábiles después de recibir tu documento completo.
+			</p>
+		</div>
+
+		<div class="grid gap-6 md:grid-cols-2 max-w-4xl mx-auto">
+			{
+				PLANS.map((plan) => (
+					<div
+						class:list={[
+							"relative flex flex-col rounded-2xl border p-8 transition-shadow duration-200",
+							plan.popular
+								? "border-[#DA5F6F]/30 bg-[oklch(98.5%_0.01_12)] shadow-sm"
+								: "border-[oklch(92%_0.005_12)] bg-white hover:shadow-sm",
+						]}
+					>
+						{plan.popular && (
+							<span class="absolute -top-3 left-6 rounded-full bg-[#C54B5B] px-3.5 py-1 text-xs font-medium text-white">
+								Más popular
+							</span>
+						)}
+
+						<p class="text-xs font-medium uppercase tracking-wide text-[#B5404F]">{plan.badge}</p>
+						<h3 class="mt-1 text-lg font-medium text-[oklch(18%_0.005_12)]">{plan.name}</h3>
+						<p class="mt-2 text-sm leading-relaxed text-[oklch(50%_0.01_12)]">{plan.description}</p>
+
+						<div class="mt-6 flex items-baseline gap-2">
+							<span class="text-3xl font-semibold tabular-nums text-[oklch(18%_0.005_12)]">${plan.price}</span>
+							<span class="text-sm text-[oklch(48%_0.01_12)]">MXN</span>
+						</div>
+
+						<ul class="mt-8 flex-1 space-y-3">
+							{sharedFeatures.map((feature) => (
+								<li class="flex items-start gap-2.5">
+									<Check class="mt-0.5 h-4 w-4 shrink-0 text-[#B5404F]" />
+									<span class="text-sm leading-relaxed text-[oklch(35%_0.005_12)]">{feature}</span>
+								</li>
+							))}
+						</ul>
+
+						<button
+							type="button"
+							data-checkout={plan.priceId}
+							class:list={[
+								"mt-8 flex h-12 w-full items-center justify-center rounded-full text-sm font-medium transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-offset-2",
+								plan.popular
+									? "bg-[#C54B5B] text-white hover:bg-[#C54B5B] focus-visible:outline-[#DA5F6F]"
+									: "bg-[oklch(18%_0.005_12)] text-white hover:bg-[oklch(25%_0.005_12)] focus-visible:outline-[oklch(18%_0.005_12)]",
+							]}
+						>
+							{plan.popular ? "Empezar plan inicial" : "Actualizar mi plan"}
+						</button>
+					</div>
+				))
+			}
+		</div>
+
+		<p class="mt-10 mx-auto max-w-2xl text-center text-sm leading-relaxed text-[oklch(50%_0.01_12)]">
+			La idea no es darte una dieta genérica, sino crear una guía que puedas aplicar de manera realista en tu día a día y que se adapte a ti.
+		</p>
+
+		<div class="mt-16 flex flex-col items-center gap-4">
+			<p class="text-xs font-medium tracking-wide uppercase text-[oklch(48%_0.005_12)]">Métodos de pago</p>
+			<div class="flex items-center gap-6">
+				<img src="/images/logos/visa.svg" alt="Visa" width="48" height="24" loading="lazy" class="h-6 w-auto object-contain opacity-60" />
+				<img src="/images/logos/mastercard.svg" alt="Mastercard" width="48" height="24" loading="lazy" class="h-6 w-auto object-contain opacity-60" />
+				<img src="/images/logos/amex.svg" alt="American Express" width="48" height="24" loading="lazy" class="h-8 w-auto object-contain opacity-60" />
+				<img src="/images/logos/oxxo-logo.svg" alt="OXXO" width="48" height="24" loading="lazy" class="h-6 w-auto object-contain opacity-60" />
+			</div>
+
+			<button
+				type="button"
+				data-dialog-open="transfer-dialog"
+				class="mt-1 inline-flex items-center gap-2 text-sm text-[oklch(50%_0.01_12)] underline underline-offset-4 decoration-[oklch(85%_0.005_12)] transition-colors duration-200 hover:text-[#B5404F] hover:decoration-[#DA5F6F]/30"
+			>
+				<img src="/images/logos/spei.svg" alt="" width="20" height="20" loading="lazy" class="h-4 w-auto object-contain" />
+				Ver datos para transferencia
+			</button>
+
+			<dialog id="transfer-dialog" aria-labelledby="transfer-title" class={`${dialogClass} w-full max-w-[calc(100%-2rem)] sm:max-w-md`}>
+				<div class="flex items-center justify-between">
+					<h2 id="transfer-title" class="text-lg font-semibold leading-none tracking-tight text-[oklch(18%_0.005_12)]">Transferencia bancaria</h2>
+					<button type="button" data-dialog-close class="flex h-8 w-8 items-center justify-center rounded-sm opacity-70 transition-opacity hover:opacity-100" aria-label="Cerrar">
+						<X class="h-4 w-4" />
+					</button>
+				</div>
+				<div class="space-y-4 pt-6">
+					<div class="space-y-3">
+						{
+							bank.map((item) => (
+								<div class="flex items-center justify-between gap-2 rounded-lg bg-[oklch(97.5%_0.005_12)] px-4 py-3">
+									<div class="text-sm">
+										<span class="text-[oklch(45%_0.01_12)]">{item.label}: </span>
+										<span class="font-medium text-[oklch(22%_0.005_12)]">{item.value}</span>
+									</div>
+									<button
+										type="button"
+										data-copy={item.copyValue}
+										aria-label={`Copiar ${item.label.toLowerCase()}`}
+										class="inline-flex h-8 shrink-0 items-center gap-1 rounded-md px-3 text-[oklch(45%_0.01_12)] transition-colors hover:bg-accent hover:text-[#B5404F]"
+									>
+										<Copy class="h-3.5 w-3.5" />
+										<span class="text-xs" data-copy-label>Copiar</span>
+									</button>
+								</div>
+							))
+						}
+					</div>
+					<p class="text-sm leading-relaxed text-[oklch(45%_0.01_12)]">
+						Envía el comprobante a{" "}
+						<a href="mailto:pagos@nutralech.com" class="font-medium text-[oklch(22%_0.005_12)] hover:text-[#B5404F]">pagos@nutralech.com</a>{" "}
+						o por WhatsApp al{" "}
+						<a href={WA_LINK} class="font-medium text-[oklch(22%_0.005_12)] hover:text-[#B5404F]">+52 744 346 8252</a>
+					</p>
+				</div>
+			</dialog>
+		</div>
+	</div>
+</section>
+
+<script>
+	// Plan buttons open the payment dialog with Stripe's embedded checkout; Stripe.js is only
+	// downloaded on the first click.
+	document.addEventListener("click", (event) => {
+		const button = (event.target as Element | null)?.closest?.<HTMLElement>("[data-checkout]");
+		if (!button?.dataset.checkout) return;
+		void import("@/scripts/checkout").then((m) => m.openCheckout(button.dataset.checkout as string));
+	});
+</script>

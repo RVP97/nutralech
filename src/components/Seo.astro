@@ -1,0 +1,70 @@
+---
+/** <title>, meta and link tags for search engines and link previews (see src/lib/seo.ts). */
+import type { PageSeo } from "@/lib/seo";
+
+interface Props {
+	seo: PageSeo;
+}
+
+const { seo } = Astro.props;
+const IMAGE = "https://www.nutralech.com/images/marialy.webp";
+const icons = [
+	["favicon-16x16", 16],
+	["favicon-32x32", 32],
+	["favicon-96x96", 96],
+	["android-icon-36x36", 36],
+	["android-icon-48x48", 48],
+	["android-icon-72x72", 72],
+	["android-icon-96x96", 96],
+	["android-icon-144x144", 144],
+	["android-icon-192x192", 192],
+] as const;
+const appleIcons = [57, 60, 72, 76, 114, 120, 144, 152, 180];
+const msIcons = [70, 144, 150, 310];
+---
+<title>{seo.title}</title>
+<meta name="description" content={seo.description} />
+<meta name="application-name" content="Nutralech" />
+<meta name="author" content="Nutralech" />
+<link rel="manifest" href="/site.webmanifest" />
+<meta name="keywords" content={seo.keywords} />
+<meta name="creator" content="Nutralech" />
+<meta name="publisher" content="Nutralech" />
+{
+	seo.noindex ? (
+		<meta name="robots" content="noindex" />
+	) : (
+		<>
+			<meta name="robots" content="index, follow" />
+			<meta
+				name="googlebot"
+				content="index, follow, max-video-preview:-1, max-image-preview:large, max-snippet:-1"
+			/>
+		</>
+	)
+}
+<meta name="category" content="Health &amp; Fitness" />
+<link rel="canonical" href={seo.canonical} />
+<meta name="format-detection" content="telephone=no, address=no, email=no" />
+<meta property="og:title" content={seo.og.title} />
+<meta property="og:description" content={seo.og.description} />
+<meta property="og:url" content={seo.og.url} />
+<meta property="og:site_name" content={seo.og.siteName} />
+<meta property="og:locale" content="es_MX" />
+<meta property="og:image" content={IMAGE} />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content={seo.og.imageAlt} />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary_large_image" />
+{seo.twitter.site && <meta name="twitter:site" content={seo.twitter.site} />}
+{seo.twitter.site && <meta name="twitter:creator" content={seo.twitter.site} />}
+<meta name="twitter:title" content={seo.twitter.title} />
+<meta name="twitter:description" content={seo.twitter.description} />
+<meta name="twitter:image" content={IMAGE} />
+<link rel="icon" href="/icons/favicon.ico" sizes="any" />
+{icons.map(([name, size]) => <link rel="icon" href={`/icons/${name}.png`} sizes={`${size}x${size}`} type="image/png" />)}
+{appleIcons.map((size) => <link rel="apple-touch-icon" href={`/icons/apple-icon-${size}x${size}.png`} sizes={`${size}x${size}`} type="image/png" />)}
+<link rel="apple-touch-icon" href="/icons/apple-icon-precomposed.png" sizes="180x180" type="image/png" />
+<link rel="apple-touch-icon" href="/icons/apple-icon.png" sizes="180x180" type="image/png" />
+{msIcons.map((size) => <link rel="icon" href={`/icons/ms-icon-${size}x${size}.png`} sizes={`${size}x${size}`} />)}

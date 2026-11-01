@@ -1,0 +1,72 @@
+---
+import { Info, Scale } from "@lucide/astro";
+import Card from "@/components/ui/Card.astro";
+import CardContent from "@/components/ui/CardContent.astro";
+import CardDescription from "@/components/ui/CardDescription.astro";
+import CardHeader from "@/components/ui/CardHeader.astro";
+import CardTitle from "@/components/ui/CardTitle.astro";
+import BodyFields from "./BodyFields.astro";
+import { calcButtonClass } from "./form";
+---
+<Card class="w-full h-full flex flex-col">
+	<CardHeader>
+		<CardTitle as="h2" class="text-2xl">Calculadora de Tasa Metabólica Basal</CardTitle>
+		<CardDescription>Calcula las calorías que tu cuerpo necesita en reposo completo</CardDescription>
+	</CardHeader>
+	<CardContent class="grow space-y-6">
+		<form data-calc="tmb" novalidate class="space-y-4">
+			<BodyFields />
+			<button type="submit" class:list={[calcButtonClass, "mt-4"]}>Calcular TMB</button>
+		</form>
+
+		<div data-part="result" hidden class="space-y-4" aria-live="polite">
+			<div class="rounded-lg border p-4 space-y-2">
+				<div class="flex items-center gap-2">
+					<Scale class="h-5 w-5 text-muted-foreground" />
+					<span class="font-medium">Tu Tasa Metabólica Basal (TMB)</span>
+				</div>
+				<div class="text-2xl font-bold"><span data-out="calories"></span> kcal</div>
+			</div>
+			<div class="rounded-lg bg-gray-50 p-4 space-y-3">
+				<div class="flex items-center gap-2">
+					<Info class="h-5 w-5 text-muted-foreground" />
+					<span class="font-medium">Tu Tasa Metabólica Basal (TMB)</span>
+				</div>
+				<p class="text-sm text-muted-foreground leading-relaxed" data-out="description"></p>
+				<div class="pt-2 space-y-2">
+					<div class="text-sm font-medium">Recomendaciones personalizadas:</div>
+					<ul class="list-disc pl-5 space-y-1">
+						<li class="pl-1 marker:text-foreground">La TMB representa tus necesidades calóricas básicas en reposo</li>
+						<li class="pl-1 marker:text-foreground">Para calcular tus necesidades diarias totales, multiplica tu TMB por tu factor de actividad</li>
+						<li class="pl-1 marker:text-foreground">Factores que aumentan la TMB: masa muscular, ejercicio regular, edad joven</li>
+						<li class="pl-1 marker:text-foreground">Factores que disminuyen la TMB: pérdida muscular, dietas muy restrictivas, edad avanzada</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</CardContent>
+</Card>
+
+<script>
+	import { harrisBenedict, out, part, readBody, register } from "@/scripts/tools/calc";
+
+	register("tmb", (form) => {
+		const result = part(form.parentElement as HTMLElement, "result");
+		form.addEventListener("submit", (event) => {
+			event.preventDefault();
+			const body = readBody(form);
+			if (!body) return;
+			const { age, gender, metric, heightCm, feet, inches, weight, weightKg } = body;
+			out(result, "calories", Math.round(harrisBenedict(gender, weightKg, heightCm, age)));
+			const height = metric ? `${heightCm}cm` : `${feet}'${inches}"`;
+			out(
+				result,
+				"description",
+				`Tu TMB es la cantidad de energía que tu cuerpo necesita para mantener las funciones vitales en reposo completo. Para ${
+					gender === "female" ? "una mujer" : "un hombre"
+				} de ${height} y ${Math.round(weight)}${metric ? "kg" : "lb"}, este es el mínimo de calorías que tu cuerpo necesita diariamente.`,
+			);
+			result.hidden = false;
+		});
+	});
+</script>

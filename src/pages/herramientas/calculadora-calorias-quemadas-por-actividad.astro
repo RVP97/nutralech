@@ -1,0 +1,249 @@
+---
+import { Activity, Book, Calendar, Info, Ruler, Scale } from "@lucide/astro";
+import CaloriesBurnedCalculator from "@/components/tools/CaloriesBurnedCalculator.astro";
+import { buttonClass } from "@/components/ui/button";
+import Card from "@/components/ui/Card.astro";
+import CardContent from "@/components/ui/CardContent.astro";
+import CardHeader from "@/components/ui/CardHeader.astro";
+import CardTitle from "@/components/ui/CardTitle.astro";
+import Layout from "@/layouts/Layout.astro";
+import { pageSeo } from "@/lib/seo";
+
+const seo = pageSeo({
+	title: "Calculadora de Calorías Quemadas por Actividad",
+	description:
+		"Calcula las calorías quemadas durante diferentes actividades físicas y ejercicios. Herramienta precisa basada en valores MET estándar.",
+	keywords: ["calculadora calorías quemadas, ejercicio, actividad física, MET, gasto calórico, fitness, salud, nutrición, nutralech"],
+	url: "https://www.nutralech.com/herramientas/calculadora-calorias-quemadas-por-actividad",
+});
+---
+<Layout seo={seo}>
+<div class="max-w-7xl mx-auto px-4 py-20">
+	<nav class="flex items-center gap-2 text-sm text-muted-foreground mb-8">
+		<a href="/">Inicio</a>
+		<span>{">"}</span>
+		<a href="/herramientas">Herramientas</a>
+		<span>{">"}</span>
+		<span class="text-foreground">
+			Calculadora de Calorías Quemadas por Actividad
+		</span>
+	</nav>
+
+	<div class="text-center mb-12">
+		<div class="text-sm font-medium text-primary mb-2">
+			HERRAMIENTAS
+		</div>
+		<h1 class="text-4xl font-bold tracking-tight mb-4">
+			Calculadora de Calorías Quemadas por Actividad
+		</h1>
+		<p class="text-xl text-muted-foreground max-w-[800px] mx-auto">
+			Calcula con precisión las calorías que quemas durante diferentes
+			actividades físicas y ejercicios basado en tu peso y la intensidad del
+			ejercicio.
+		</p>
+	</div>
+
+	<div class="grid lg:grid-cols-2 gap-6">
+		<CaloriesBurnedCalculator />
+
+		<div class="space-y-6">
+			<Card>
+				<CardHeader>
+					<CardTitle as="h2" class="flex items-center gap-2">
+						<Info class="h-5 w-5" />
+						¿Qué es el MET?
+					</CardTitle>
+				</CardHeader>
+				<CardContent>
+					<p class="mb-3">
+						El MET (Equivalente Metabólico) es una medida que indica la
+						intensidad de una actividad física:
+					</p>
+					<ul class="list-disc pl-5 space-y-2">
+						<li>
+							<strong>1 MET:</strong> Energía consumida en reposo
+						</li>
+						<li>
+							<strong>Actividad Ligera:</strong> 2-3 METs
+						</li>
+						<li>
+							<strong>Actividad Moderada:</strong> 3-6 METs
+						</li>
+						<li>
+							<strong>Actividad Vigorosa:</strong> 6+ METs
+						</li>
+					</ul>
+				</CardContent>
+			</Card>
+
+			<Card>
+				<CardHeader>
+					<CardTitle as="h2" class="flex items-center gap-2">
+						<Ruler class="h-5 w-5" />
+						Factores que Influyen
+					</CardTitle>
+				</CardHeader>
+				<CardContent>
+					<ul class="list-disc pl-5 space-y-2">
+						<li>
+							<strong>Peso Corporal:</strong> A mayor peso, mayor gasto
+							calórico durante la misma actividad
+						</li>
+						<li>
+							<strong>Intensidad del Ejercicio:</strong> El esfuerzo
+							realizado determina significativamente las calorías quemadas
+						</li>
+						<li>
+							<strong>Nivel de Condición Física:</strong> Las personas
+							entrenadas suelen quemar calorías más eficientemente
+						</li>
+						<li>
+							<strong>Composición Corporal:</strong> El músculo quema más
+							calorías que la grasa, incluso en reposo
+						</li>
+						<li>
+							<strong>Edad:</strong> El metabolismo tiende a ralentizarse
+							con la edad, afectando el gasto calórico
+						</li>
+						<li>
+							<strong>Temperatura Ambiente:</strong> El cuerpo puede quemar
+							más calorías en ambientes fríos o muy calientes
+						</li>
+					</ul>
+				</CardContent>
+			</Card>
+
+			<Card>
+				<CardHeader>
+					<CardTitle as="h2" class="flex items-center gap-2">
+						<Activity class="h-5 w-5" />
+						Interpretación de Resultados
+					</CardTitle>
+				</CardHeader>
+				<CardContent>
+					<p class="mb-3">
+						Es importante entender que el peso ideal es una referencia, no
+						un objetivo estricto:
+					</p>
+					<ul class="list-disc pl-5 space-y-1">
+						<li>Considéralo como un rango, no un número exacto.</li>
+						<li>
+							Evalúa tu salud general, no solo el número en la báscula.
+						</li>
+						<li>
+							Ten en cuenta tu nivel de actividad física y estilo de vida.
+						</li>
+						<li>
+							Consulta con profesionales para objetivos personalizados.
+						</li>
+						<li>Considera otros indicadores de salud además del peso.</li>
+					</ul>
+				</CardContent>
+			</Card>
+			<Card>
+				<CardHeader>
+					<CardTitle as="h2" class="flex items-center gap-2">
+						<Book class="h-5 w-5" />
+						Recursos Adicionales
+					</CardTitle>
+				</CardHeader>
+				<CardContent>
+					<ul class="space-y-2">
+						<li>
+							<a
+								href="/herramientas/calculadora-calorias"
+								class="text-blue-700 underline hover:no-underline"
+							>
+								Calculadora de Calorías Diarias
+							</a>
+						</li>
+						<li>
+							<a
+								href="/herramientas/calculadora-imc"
+								class="text-blue-700 underline hover:no-underline"
+							>
+								Calculadora de IMC
+							</a>
+						</li>
+						<li>
+							<a
+								href="/herramientas/calculadora-tasa-metabolica-basal"
+								class="text-blue-700 underline hover:no-underline"
+							>
+								Calculadora de Metabolismo Basal
+							</a>
+						</li>
+						<li>
+							<a
+								href="/herramientas/calculadora-macronutrientes"
+								class="text-blue-700 underline hover:no-underline"
+							>
+								Calculadora de Macronutrientes
+							</a>
+						</li>
+					</ul>
+				</CardContent>
+			</Card>
+		</div>
+	</div>
+
+	<Card class="mt-6">
+		<CardHeader>
+			<CardTitle as="h2" class="flex items-center gap-2">
+				<Scale class="h-5 w-5" />
+				Consejos para Maximizar el Gasto Calórico
+			</CardTitle>
+		</CardHeader>
+		<CardContent>
+			<p class="mb-3">
+				Para optimizar la quema de calorías durante el ejercicio:
+			</p>
+			<ul class="list-disc pl-5 space-y-1">
+				<li>
+					Mantén una intensidad apropiada para tu nivel de condición física
+				</li>
+				<li>
+					Combina ejercicios cardiovasculares con entrenamiento de fuerza
+				</li>
+				<li>Incorpora intervalos de alta intensidad en tu rutina</li>
+				<li>Mantén una buena hidratación durante el ejercicio</li>
+				<li>Asegura una recuperación adecuada entre sesiones</li>
+			</ul>
+		</CardContent>
+	</Card>
+
+	<div class="mt-8 text-center max-w-2xl mx-auto">
+		<p class="text-muted-foreground mb-4">
+			Recuerda que esta calculadora proporciona una estimación. Para un plan
+			personalizado que considere tu historial médico y objetivos
+			específicos,{" "}
+			<a
+				href="/#precios"
+				class="text-blue-700 underline hover:no-underline"
+			>
+				conoce el Plan a distancia
+			</a>{" "}
+			con nuestros especialistas.
+		</p>
+	</div>
+
+	<div class="mt-12 bg-linear-to-r from-[#C54B5B] to-[#B03F4F] rounded-lg shadow-lg">
+		<div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:py-16 lg:px-8 lg:flex lg:items-center lg:justify-between">
+			<h2 class="text-3xl font-extrabold tracking-tight text-white sm:text-4xl">
+				<span class="block">¿Quieres un plan personalizado?</span>
+				<span class="block text-gray-100">
+					Obtén asesoría profesional para alcanzar tu peso ideal.
+				</span>
+			</h2>
+			<div class="mt-8 flex lg:mt-0 lg:shrink-0">
+				<div class="inline-flex rounded-md shadow-sm">
+					<a href="/#precios" class={buttonClass({ variant: "plain", class: "inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-[#B5404F] bg-white hover:bg-gray-50" })}>
+							<Calendar class="w-5 h-5 mr-2" />
+							Ver plan a distancia
+						</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</Layout>

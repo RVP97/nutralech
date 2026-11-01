@@ -1,0 +1,92 @@
+---
+import ContactForm from "@/components/sections/ContactForm.astro";
+import Layout from "@/layouts/Layout.astro";
+import { pageSeo } from "@/lib/seo";
+import { WA_LINK } from "@/lib/site";
+
+const seo = pageSeo({
+	title: "Contacta a Marialy Alonso",
+	description:
+		"Contacta a Marialy Alonso, mejor conocida como Nutralech, para asesoría nutricional personalizada y consejos para un bienestar equilibrado y sostenible.",
+	keywords: ["salud", "bienestar", "contacto", "nutrición", "asesoría personalizada", "nutralech", "marialy alonso"],
+	url: "https://www.nutralech.com/contacto",
+});
+---
+<Layout seo={seo}>
+		<section class="relative">
+			{/* Hero */}
+			<div class="bg-[oklch(96%_0.015_12)] py-12">
+				<div class="container px-4 mx-auto">
+					<div class="grid lg:grid-cols-2 gap-12 items-center py-16 md:py-24">
+						<div class="space-y-6 max-w-xl">
+							<h1 class="text-4xl md:text-5xl lg:text-6xl font-serif font-medium tracking-tight text-[oklch(18%_0.005_12)]">
+								Hablemos de tu salud
+							</h1>
+							<p class="text-base md:text-lg leading-relaxed text-[oklch(40%_0.01_12)]">
+								Si tienes dudas sobre el Plan a distancia, precios o cómo
+								funciona el proceso, escríbeme directamente. También puedes
+								revisar las{" "}
+								<a
+									href="/#faq"
+									class="text-[#B5404F] underline underline-offset-4 decoration-[#DA5F6F]/30 hover:decoration-[#DA5F6F]"
+								>
+									preguntas frecuentes
+								</a>
+								.
+							</p>
+							<div class="flex flex-wrap items-center gap-x-6 gap-y-3 text-sm text-[oklch(45%_0.01_12)]">
+								<span>Respuesta en menos de 24 horas</span>
+								<span class="hidden sm:inline text-[oklch(85%_0.005_12)]">|</span>
+								<a
+									href={WA_LINK} target="_blank" rel="noopener noreferrer"
+									class="inline-flex items-center gap-2 text-[#B5404F] hover:underline underline-offset-4"
+								>
+									WhatsApp directo
+								</a>
+							</div>
+						</div>
+						<div class="relative h-[280px] lg:h-[380px] rounded-2xl overflow-hidden">
+							<img src="/images/contact-drawing.svg" alt="Contacto" width="826" height="506" fetchpriority="high" class="absolute inset-0 h-full w-full rounded-2xl object-contain" />
+						</div>
+					</div>
+				</div>
+			</div>
+
+			{/* Form */}
+			<div id="contact-form" class="py-20 px-4">
+				<div class="max-w-xl mx-auto">
+					<h2 class="font-serif text-2xl font-medium tracking-tight text-[oklch(18%_0.005_12)] mb-2">
+						Envíame un mensaje
+					</h2>
+					<p class="text-sm leading-relaxed text-[oklch(45%_0.01_12)] mb-10">
+						Llena el formulario y te respondo lo antes posible.
+					</p>
+					<ContactForm />
+				</div>
+			</div>
+
+			{/* FAQ nudge */}
+			<div class="border-t border-[oklch(92%_0.005_12)]">
+				<div class="container px-4 mx-auto py-12 flex flex-col sm:flex-row items-center gap-6">
+					<div class="flex-1 text-center sm:text-left">
+						<h2 class="text-lg font-medium text-[oklch(18%_0.005_12)]">
+							Preguntas frecuentes
+						</h2>
+						<p class="mt-1 text-sm text-[oklch(45%_0.01_12)]">
+							Respuestas rápidas sobre el plan a distancia, pagos y seguimiento.
+						</p>
+					</div>
+					<a
+						href="/#faq"
+						class="rounded-full border border-[oklch(85%_0.005_12)] px-6 py-2.5 text-sm font-medium text-[oklch(30%_0.005_12)] transition-colors duration-200 hover:border-[#DA5F6F] hover:text-[#B5404F]"
+					>
+						Ver preguntas frecuentes
+					</a>
+				</div>
+			</div>
+		</section>
+</Layout>
+<script>
+	import { initContactForms } from "@/scripts/contact-form";
+	document.addEventListener("astro:page-load", initContactForms);
+</script>

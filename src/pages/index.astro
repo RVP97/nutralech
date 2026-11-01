@@ -1,0 +1,49 @@
+---
+import JsonLd from "@/components/JsonLd.astro";
+import AboutMe from "@/components/sections/AboutMe.astro";
+import FaqSection from "@/components/sections/FaqSection.astro";
+import GlobalConsultations from "@/components/sections/GlobalConsultations.astro";
+import Hero from "@/components/sections/Hero.astro";
+import PersonalizedAttention from "@/components/sections/PersonalizedAttention.astro";
+import Pricing from "@/components/sections/Pricing.astro";
+import StickyPlanCta from "@/components/sections/StickyPlanCta.astro";
+import Testimonials from "@/components/sections/Testimonials.astro";
+import WhatIOffer from "@/components/sections/WhatIOffer.astro";
+import Whatsapp from "@/components/sections/Whatsapp.astro";
+import Layout from "@/layouts/Layout.astro";
+import { FAQ_JSON_LD } from "@/lib/faq";
+import { pageSeo } from "@/lib/seo";
+
+const seo = pageSeo({
+	title: "Nutrición y Bienestar con Marialy Alonso: Nutralech",
+	bareTitle: true,
+	description:
+		"Plan de alimentación a distancia 100% personalizado con Marialy Alonso. Sin consulta presencial: llena un documento y recibe tu plan adaptado a tu vida.",
+	keywords: [
+		"salud",
+		"bienestar",
+		"nutrición",
+		"plan a distancia",
+		"plan alimenticio personalizado",
+		"nutralech",
+		"marialy alonso",
+		"nutriologa",
+	],
+	url: "https://www.nutralech.com",
+});
+---
+<Layout seo={seo}>
+	<JsonLd slot="head" schema={FAQ_JSON_LD} />
+	<div>
+		<Hero />
+		<WhatIOffer />
+		<Pricing />
+		<Testimonials />
+		<PersonalizedAttention />
+		<Whatsapp />
+		<AboutMe />
+		<GlobalConsultations />
+		<FaqSection />
+		<StickyPlanCta />
+	</div>
+</Layout>

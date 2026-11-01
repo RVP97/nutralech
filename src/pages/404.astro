@@ -1,0 +1,147 @@
+---
+import Picture from "@/components/Picture.astro";
+import Layout from "@/layouts/Layout.astro";
+import { defaultSeo } from "@/lib/seo";
+---
+<Layout seo={defaultSeo(true)}>
+		<section class="bg-white dark:bg-gray-900">
+			<div class="container min-h-[80vh] px-6 pt-24 mx-auto lg:flex lg:items-center lg:gap-12">
+				<div class="w-full lg:w-1/2">
+					<p class="text-sm font-medium text-[#B5404F] dark:text-[#DA5F6F]">
+						Error 404
+					</p>
+					<h1 class="mt-3 text-2xl font-semibold text-gray-800 dark:text-white md:text-3xl">
+						Hemos perdido esta página
+					</h1>
+					<p class="mt-4 text-gray-500 dark:text-gray-400">
+						Lo sentimos, la página que buscas no existe.
+					</p>
+
+					<div class="flex items-center mt-6 gap-x-3">
+						<a
+							href="/#precios"
+							class="flex items-center justify-center w-1/2 px-5 py-2 text-sm text-gray-700 transition-colors duration-200 bg-white border rounded-lg gap-x-2 sm:w-auto dark:hover:bg-gray-800 dark:bg-gray-900 hover:bg-gray-100 dark:text-gray-200 dark:border-gray-700"
+						>
+							<svg
+								aria-hidden="true"
+								xmlns="http://www.w3.org/2000/svg"
+								fill="none"
+								viewBox="0 0 24 24"
+								stroke-width="1.5"
+								stroke="currentColor"
+								class="w-5 h-5 rtl:rotate-180"
+							>
+								<path
+									stroke-linecap="round"
+									stroke-linejoin="round"
+									d="M6.75 15.75L3 12m0 0l3.75-3.75M3 12h18"
+								/>
+							</svg>
+							<span>Ver plan a distancia</span>
+						</a>
+
+						<a
+							href="/"
+							class="w-1/2 px-5 py-2 text-sm tracking-wide text-white transition-colors duration-200 bg-[#C54B5B] rounded-lg shrink-0 sm:w-auto hover:bg-[#B03F4F] dark:hover:bg-[#DA5F6F]/90 dark:bg-[#C54B5B]"
+						>
+							Ir al inicio
+						</a>
+					</div>
+
+					<div class="mt-10 space-y-6">
+						<div>
+							<a
+								href="/#precios"
+								class="inline-flex items-center text-sm text-[#B5404F] gap-x-2 dark:text-[#DA5F6F] hover:underline"
+							>
+								<span>Planes de Alimentación</span>
+								<svg
+									aria-hidden="true"
+									xmlns="http://www.w3.org/2000/svg"
+									fill="none"
+									viewBox="0 0 24 24"
+									stroke-width="1.5"
+									stroke="currentColor"
+									class="w-5 h-5 rtl:rotate-180"
+								>
+									<path
+										stroke-linecap="round"
+										stroke-linejoin="round"
+										d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3"
+									/>
+								</svg>
+							</a>
+							<p class="mt-2 text-sm text-gray-500 dark:text-gray-400">
+								Descubre todos los planes de alimentación disponibles.
+							</p>
+						</div>
+
+						<div>
+							<a
+								href="/acerca-de-mi"
+								class="inline-flex items-center text-sm text-[#B5404F] gap-x-2 dark:text-[#DA5F6F] hover:underline"
+							>
+								<span>Acerca de Marialy</span>
+								<svg
+									aria-hidden="true"
+									xmlns="http://www.w3.org/2000/svg"
+									fill="none"
+									viewBox="0 0 24 24"
+									stroke-width="1.5"
+									stroke="currentColor"
+									class="w-5 h-5 rtl:rotate-180"
+								>
+									<path
+										stroke-linecap="round"
+										stroke-linejoin="round"
+										d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3"
+									/>
+								</svg>
+							</a>
+							<p class="mt-2 text-sm text-gray-500 dark:text-gray-400">
+								Conoce más sobre mi y mi enfoque en la nutrición.
+							</p>
+						</div>
+
+						<div>
+							<a
+								href="/contacto"
+								class="inline-flex items-center text-sm text-[#B5404F] gap-x-2 dark:text-[#DA5F6F] hover:underline"
+							>
+								<span>Habla conmigo</span>
+								<svg
+									aria-hidden="true"
+									xmlns="http://www.w3.org/2000/svg"
+									fill="none"
+									viewBox="0 0 24 24"
+									stroke-width="1.5"
+									stroke="currentColor"
+									class="w-5 h-5 rtl:rotate-180"
+								>
+									<path
+										stroke-linecap="round"
+										stroke-linejoin="round"
+										d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3"
+									/>
+								</svg>
+							</a>
+							<p class="mt-2 text-sm text-gray-500 dark:text-gray-400">
+								Estoy aquí para ayudarte con cualquier consulta o duda.
+							</p>
+						</div>
+					</div>
+				</div>
+
+				<div class="relative w-full mt-8 lg:w-1/2 lg:mt-0">
+					<Picture
+						src="/images/marialy.webp"
+						alt="Marialy Alonso, nutricionista de Nutralech"
+						width={2070}
+						height={1380}
+						sizes="(max-width: 1024px) 100vw, 50vw"
+						class="w-full lg:h-128 h-80 md:h-96 rounded-lg object-cover"
+					/>
+				</div>
+			</div>
+		</section>
+</Layout>

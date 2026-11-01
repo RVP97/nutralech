@@ -1,0 +1,142 @@
+---
+import { Calendar, Facebook, Linkedin, Share2, Twitter, X } from "@lucide/astro";
+import { render } from "astro:content";
+import JsonLd from "@/components/JsonLd.astro";
+import { mdxComponents } from "@/components/mdx";
+import Picture from "@/components/Picture.astro";
+import { buttonClass } from "@/components/ui/button";
+import Layout from "@/layouts/Layout.astro";
+import { capitalize, formatPostDate, getPosts, parsePostDate } from "@/lib/posts";
+import { pageSeo, SITE } from "@/lib/seo";
+
+export async function getStaticPaths() {
+	const posts = await getPosts();
+	return posts.map((post) => ({ params: { slug: post.id }, props: { post } }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+const slug = post.id;
+const url = `${SITE}/blog/${slug}`;
+const { title, categories, excerpt, seoDescription, publishDate } = post.data;
+const isoDate = parsePostDate(publishDate).toISOString();
+
+const seo = pageSeo({
+	title,
+	description: seoDescription || title,
+	keywords: ["blog", "nutrición", ...categories],
+	url,
+});
+
+const articleJsonLd = {
+	"@context": "https://schema.org",
+	"@type": "Article",
+	headline: title,
+	description: seoDescription || excerpt || title,
+	image: `${SITE}/images/marialy.webp`,
+	datePublished: isoDate,
+	dateModified: isoDate,
+	author: { "@type": "Person", name: "Marialy Alonso", url: `${SITE}/acerca-de-mi` },
+	publisher: {
+		"@type": "Organization",
+		name: "Nutralech",
+		logo: { "@type": "ImageObject", url: `${SITE}/icons/android-icon-192x192.png` },
+	},
+	mainEntityOfPage: { "@type": "WebPage", "@id": url },
+};
+
+const encodedUrl = encodeURIComponent(url);
+const encodedTitle = encodeURIComponent(title);
+const shares = [
+	{ label: "Compartir en Twitter", href: `https://twitter.com/intent/tweet?url=${encodedUrl}&text=${encodedTitle}`, icon: Twitter },
+	{ label: "Compartir en Facebook", href: `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}`, icon: Facebook },
+	{ label: "Compartir en LinkedIn", href: `https://www.linkedin.com/shareArticle?mini=true&url=${encodedUrl}&title=${encodedTitle}`, icon: Linkedin },
+];
+---
+<Layout seo={seo}>
+	<JsonLd slot="head" schema={articleJsonLd} />
+	<div>
+		<div
+			data-reading-progress
+			aria-hidden="true"
+			class="fixed top-0 left-0 z-50 h-2 w-full origin-left bg-[#C54B5B]"
+			style="transform:scaleX(0);visibility:hidden"
+		></div>
+
+		<article id="blog-post" class="mx-auto max-w-3xl px-4 pt-28 pb-16">
+			<header class="mb-12">
+				{
+					categories.length > 0 && (
+						<div class="mb-4 flex flex-wrap gap-3">
+							{categories.map((category) => (
+								<span class="text-xs font-medium tracking-wide uppercase text-[#B5404F]">{capitalize(category)}</span>
+							))}
+						</div>
+					)
+				}
+
+				<h1 class="font-serif text-3xl font-medium tracking-tight text-[oklch(18%_0.005_12)] sm:text-4xl lg:text-5xl">{title}</h1>
+
+				{excerpt && <p class="mt-4 text-lg leading-relaxed text-[oklch(45%_0.01_12)]">{excerpt}</p>}
+
+				<div class="mt-6 flex items-center gap-3">
+					<Picture src="/images/marialy.webp" alt="Marialy Alonso" width={36} height={36} class="rounded-full" />
+					<div class="text-sm">
+						<p class="font-medium text-[oklch(22%_0.005_12)]">Marialy Alonso</p>
+						<div class="flex items-center gap-1.5 text-[oklch(48%_0.01_12)]">
+							<Calendar class="h-3 w-3" aria-hidden="true" />
+							<time datetime={isoDate}>{formatPostDate(publishDate)}</time>
+						</div>
+					</div>
+				</div>
+			</header>
+
+			<div class="prose prose-lg max-w-none">
+				<Content components={mdxComponents} />
+			</div>
+
+			<div class="group/share fixed bottom-4 right-4 z-50" data-share>
+				<div class="flex flex-col-reverse items-end space-y-4 space-y-reverse mb-4 transition-all duration-300 ease-in-out invisible opacity-0 translate-y-10 pointer-events-none group-data-open/share:visible group-data-open/share:opacity-100 group-data-open/share:translate-y-0 group-data-open/share:pointer-events-auto">
+					{
+						shares.map((share) => (
+							<a
+								href={share.href}
+								target="_blank"
+								rel="noopener noreferrer"
+								aria-label={share.label}
+								class={buttonClass({ variant: "outline", size: "icon", class: "bg-white shadow-lg h-12 w-12 [&_svg]:size-5" })}
+							>
+								<share.icon class="h-5 w-5" />
+							</a>
+						))
+					}
+				</div>
+				<button
+					type="button"
+					data-share-toggle
+					aria-expanded="false"
+					aria-label="Compartir artículo"
+					class={buttonClass({ size: "icon", class: "group shadow-lg h-12 w-12 [&_svg]:size-5" })}
+				>
+					<Share2 class="h-5 w-5 group-aria-expanded:hidden" />
+					<X class="h-5 w-5 hidden group-aria-expanded:block" />
+				</button>
+			</div>
+		</article>
+
+		<div class="border-t border-[oklch(92%_0.005_12)]">
+			<div class="mx-auto max-w-3xl px-4 py-16 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
+				<div>
+					<h2 class="font-serif text-xl font-medium text-[oklch(18%_0.005_12)]">Quieres un plan personalizado?</h2>
+					<p class="mt-1 text-sm text-[oklch(50%_0.01_12)]">Conoce el Plan a distancia para recomendaciones adaptadas a ti.</p>
+				</div>
+				<a
+					href="/#precios"
+					class="shrink-0 inline-flex h-11 items-center rounded-full bg-[#C54B5B] px-7 text-sm font-medium text-white transition-colors duration-200 hover:bg-[#C54B5B]"
+				>
+					Ver plan a distancia
+				</a>
+			</div>
+		</div>
+	</div>
+</Layout>

@@ -1,0 +1,11 @@
+---
+/** One Schema.org JSON-LD script. */
+import { safeJsonLd } from "@/lib/seo";
+
+interface Props {
+	schema: object;
+}
+
+const { schema } = Astro.props;
+---
+<script is:inline type="application/ld+json" set:html={safeJsonLd(schema)} />

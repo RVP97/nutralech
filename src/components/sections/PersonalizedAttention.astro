@@ -1,0 +1,74 @@
+---
+import Picture from "@/components/Picture.astro";
+
+const steps = [
+	{
+		number: "01",
+		title: "Compras y llenas tu documento",
+		description:
+			"Eliges tu plan, pagas en línea y recibes un documento para compartir tus datos, objetivos, hábitos, rutina y preferencias.",
+	},
+	{
+		number: "02",
+		title: "Recibes tu plan personalizado",
+		description:
+			"Con esa información elaboro tu plan de alimentación con equivalencias, menú ejemplo y recomendaciones adaptadas a tu vida.",
+	},
+	{
+		number: "03",
+		title: "Lo aplicas con apoyo continuo",
+		description:
+			"Puedes escribirme por WhatsApp para dudas del plan y, cuando lo necesites, actualizarlo con el Plan de seguimiento.",
+	},
+];
+---
+<section id="servicios" class="py-24 bg-white">
+	<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+		<div class="grid gap-16 lg:grid-cols-2 items-center">
+			<div>
+				<p class="text-sm font-medium tracking-wide uppercase text-[#B5404F]">Cada plan es único</p>
+				<h2 class="mt-3 font-serif text-3xl font-medium tracking-tight text-[oklch(18%_0.005_12)] sm:text-4xl lg:text-5xl">
+					Así funciona el plan a distancia
+				</h2>
+				<p class="mt-6 text-lg leading-relaxed text-[oklch(45%_0.01_12)] max-w-xl">
+					Sin citas ni videollamadas. Un proceso claro para que recibas una guía realista, personalizada y fácil de aplicar en tu día a día.
+				</p>
+
+				<div class="mt-12 space-y-10">
+					{
+						steps.map((step) => (
+							<div class="flex gap-5">
+								<div class="shrink-0 pt-1">
+									<span class="block text-xs font-medium text-[#B5404F] tabular-nums">{step.number}</span>
+								</div>
+								<div>
+									<h3 class="text-base font-medium text-[oklch(22%_0.005_12)]">{step.title}</h3>
+									<p class="mt-2 text-sm leading-relaxed text-[oklch(50%_0.01_12)]">{step.description}</p>
+								</div>
+							</div>
+						))
+					}
+				</div>
+
+				<a
+					href="#precios"
+					class="mt-10 inline-flex h-12 items-center justify-center rounded-full bg-[#C54B5B] px-8 text-sm font-medium text-white transition-colors duration-200 hover:bg-[#C54B5B]"
+				>
+					Empezar mi plan
+				</a>
+			</div>
+
+			<div class="relative">
+				<div class="relative aspect-[4/5] overflow-hidden rounded-2xl">
+					<Picture
+						src="/images/marialy-2.webp"
+						alt="Plan de nutrición personalizado a distancia con Marialy Alonso"
+						class="object-cover"
+						fill
+						sizes="(max-width: 1024px) 100vw, 50vw"
+					/>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>

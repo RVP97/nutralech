@@ -1,0 +1,104 @@
+---
+import { Info, Scale } from "@lucide/astro";
+import Card from "@/components/ui/Card.astro";
+import CardContent from "@/components/ui/CardContent.astro";
+import CardDescription from "@/components/ui/CardDescription.astro";
+import CardHeader from "@/components/ui/CardHeader.astro";
+import CardTitle from "@/components/ui/CardTitle.astro";
+import { ACTIVITIES } from "./activities";
+import { calcButtonClass, inputClass, labelClass } from "./form";
+import Select from "./Select.astro";
+
+const activityOptions = Object.entries(ACTIVITIES)
+	.map(([value, a]) => ({ value, label: a.label }))
+	.sort((a, b) => a.label.localeCompare(b.label));
+---
+<Card class="w-full h-full flex flex-col">
+	<CardHeader>
+		<CardTitle as="h2" class="text-2xl">Calculadora de Calorías Quemadas</CardTitle>
+		<CardDescription>Calcula las calorías quemadas según tu actividad física</CardDescription>
+	</CardHeader>
+	<CardContent class="grow space-y-6">
+		<form data-calc="calorias-quemadas" novalidate class="space-y-4">
+			<div class="space-y-2">
+				<label for="unitSystem" class={labelClass}>Sistema de Medidas</label>
+				<Select id="unitSystem" name="unit" value="metric" options={[{ value: "metric", label: "Métrico (kg)" }, { value: "imperial", label: "Imperial (lb)" }]} />
+			</div>
+			<div class="space-y-2">
+				<label for="weight" class={labelClass}>Peso (<span data-text-when='{"field":"unit","metric":"kg","imperial":"lb"}'>kg</span>)</label>
+				<input id="weight" name="weight" type="number" inputmode="decimal" placeholder="70" class={inputClass} />
+				<p data-error="weight" hidden class="text-sm text-red-600">Por favor, ingresa tu peso</p>
+			</div>
+			<div class="space-y-2">
+				<label for="activity" class={labelClass}>Actividad</label>
+				<Select id="activity" name="activity" value="caminar" options={activityOptions} />
+			</div>
+			<div class="space-y-2">
+				<label for="intensity" class={labelClass}>Intensidad</label>
+				<Select id="intensity" name="intensity" value="1" options={[{ value: "0", label: "Suave" }, { value: "1", label: "Moderada" }, { value: "2", label: "Vigorosa" }]} />
+			</div>
+			<div class="space-y-2">
+				<label for="duration" class={labelClass}>Duración (minutos)</label>
+				<input id="duration" name="duration" type="number" inputmode="numeric" placeholder="30" class={inputClass} />
+				<p data-error="duration" hidden class="text-sm text-red-600">Por favor, ingresa la duración de la actividad</p>
+			</div>
+			<button type="submit" class:list={[calcButtonClass, "mt-4"]}>Calcular Calorías</button>
+		</form>
+
+		<div data-part="result" hidden class="space-y-4" aria-live="polite">
+			<div class="rounded-lg border p-4 space-y-2" data-part="summary">
+				<div class="flex items-center gap-2">
+					<Scale class="h-5 w-5" />
+					<span class="font-medium">Calorías Quemadas</span>
+				</div>
+				<div class="text-2xl font-bold"><span data-out="calories"></span> calorías</div>
+				<div class="text-sm">Intensidad: <span data-out="intensity"></span></div>
+			</div>
+			<div class="rounded-lg bg-gray-50 p-4 space-y-3 border">
+				<div class="flex items-center gap-2">
+					<Info class="h-5 w-5 text-muted-foreground" />
+					<span class="font-medium">Información Importante</span>
+				</div>
+				<ul class="list-disc pl-5 space-y-1">
+					<li class="text-sm text-muted-foreground">MET (Metabolic Equivalent): <span data-out="mets"></span> - Indica la intensidad de la actividad comparada con el estado de reposo</li>
+					<li class="text-sm text-muted-foreground">Esta es una estimación basada en promedios. Las calorías reales quemadas pueden variar según factores como edad, composición corporal y nivel de condición física</li>
+					<li class="text-sm text-muted-foreground">La eficiencia del ejercicio mejora con la técnica correcta y la consistencia en el entrenamiento</li>
+					<li class="text-sm text-muted-foreground">Para un plan de ejercicios personalizado y seguro, consulta con un profesional de la salud o entrenador certificado</li>
+					<li class="text-sm text-muted-foreground">Mantén una hidratación adecuada y escucha a tu cuerpo durante el ejercicio</li>
+				</ul>
+			</div>
+		</div>
+	</CardContent>
+</Card>
+
+<script>
+	import { num, out, part, register, required, str } from "@/scripts/tools/calc";
+	import { ACTIVITIES } from "./activities";
+
+	const INTENSITY = [
+		{ name: "Suave", color: "bg-green-50 text-green-700 border-green-200" },
+		{ name: "Moderada", color: "bg-yellow-50 text-yellow-700 border-yellow-200" },
+		{ name: "Vigorosa", color: "bg-red-50 text-red-700 border-red-200" },
+	];
+
+	register("calorias-quemadas", (form) => {
+		const result = part(form.parentElement as HTMLElement, "result");
+		const summary = part(result, "summary");
+		const base = summary.className;
+		form.addEventListener("submit", (event) => {
+			event.preventDefault();
+			const weight = num(form, "weight");
+			const duration = num(form, "duration");
+			if (!required(form, { weight: !weight, duration: !duration })) return;
+			const kg = str(form, "unit") === "imperial" ? weight * 0.453592 : weight;
+			const level = Number(str(form, "intensity"));
+			const mets = (ACTIVITIES[str(form, "activity")] ?? ACTIVITIES.caminar).mets[level];
+			// Calories = MET × weight (kg) × time (hours)
+			out(result, "calories", Math.round(mets * kg * (duration / 60)));
+			out(result, "intensity", INTENSITY[level].name);
+			out(result, "mets", mets);
+			summary.className = `${base} ${INTENSITY[level].color}`;
+			result.hidden = false;
+		});
+	});
+</script>

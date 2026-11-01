@@ -1,0 +1,122 @@
+---
+import { Apple, Book, Facebook, GraduationCap, Heart, Instagram, Star, Youtube } from "@lucide/astro";
+import TikTok from "@/components/icons/TikTok.astro";
+import Picture from "@/components/Picture.astro";
+import Badge from "@/components/ui/Badge.astro";
+import { buttonClass } from "@/components/ui/button";
+import Card from "@/components/ui/Card.astro";
+import CardContent from "@/components/ui/CardContent.astro";
+
+const expertise = [
+	{ icon: Apple, text: "Nutrición Sostenible" },
+	{ icon: Heart, text: "Bienestar Integral" },
+	{ icon: Book, text: "Educación Nutricional" },
+];
+const socials = [
+	{ href: "https://www.instagram.com/nutralech/", label: "Instagram", icon: Instagram },
+	{ href: "https://www.facebook.com/nutralech/", label: "Facebook", icon: Facebook },
+	{ href: "https://www.youtube.com/@Nutralech", label: "YouTube", icon: Youtube },
+	{ href: "https://www.tiktok.com/@nutralech", label: "TikTok", icon: null },
+];
+---
+<section class="py-24 bg-[oklch(97.5%_0.008_12)]">
+	<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+		<div class="max-w-2xl mb-14">
+			<p class="text-sm font-medium tracking-wide uppercase text-[#B5404F]">Conóceme</p>
+			<h2 class="mt-3 font-serif text-3xl font-medium tracking-tight text-[oklch(18%_0.005_12)] sm:text-4xl">Acerca de mí</h2>
+		</div>
+
+		<div class="grid gap-12 lg:grid-cols-2 items-start">
+			<div class="relative lg:sticky lg:top-24 lg:self-start">
+				<div class="relative aspect-square overflow-hidden rounded-2xl">
+					<Picture src="/images/marialy.webp" alt="Marialy, Nutricionista" fill sizes="(max-width: 1024px) 100vw, 50vw" class="object-cover" />
+					<div class="absolute top-4 left-4 hidden md:flex bg-white rounded-full py-2 px-4 shadow-lg items-center gap-2">
+						<Apple class="w-4 h-4 text-[#B5404F]" />
+						<span class="text-sm font-medium">Nutrióloga Certificada</span>
+					</div>
+					<div class="absolute top-4 right-4 md:right-4 bg-white rounded-full py-2 px-4 shadow-lg flex items-center gap-2">
+						<Heart class="w-4 h-4 text-[#B5404F]" />
+						<span class="text-sm font-medium">Enfoque Integral</span>
+					</div>
+					<div class="absolute bottom-4 left-1/2 -translate-x-1/2 bg-white rounded-full py-2 px-4 shadow-lg flex items-center gap-2">
+						<Star class="w-4 h-4 text-[#B5404F]" />
+						<span class="text-sm font-medium">780K+ Seguidores</span>
+					</div>
+				</div>
+			</div>
+
+			<div class="space-y-8">
+				<div>
+					<h3 class="text-3xl font-medium mb-4">Marialy Alonso</h3>
+					<p class="text-xl text-muted-foreground mb-4">Nutrióloga Certificada</p>
+					<div class="flex items-center space-x-2">
+						<GraduationCap class="w-5 h-5 text-[#B5404F]" />
+						<span class="text-sm text-muted-foreground">Universidad Iberoamericana - Mención Honorífica</span>
+					</div>
+				</div>
+
+				<p class="text-lg text-muted-foreground">
+					Con cientos de pacientes transformados, me dedico a cambiar vidas a través de la nutrición personalizada. Mi enfoque va más allá de las dietas restrictivas; creo en crear hábitos sostenibles que mejoren tu salud y calidad de vida a largo plazo.
+				</p>
+
+				<div class="space-y-4">
+					<h4 class="text-xl font-medium">Áreas de Especialización</h4>
+					<div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+						{
+							expertise.map((item) => (
+								<Card>
+									<CardContent class="flex items-center space-x-4 p-4">
+										<item.icon class="w-6 h-6 text-[#B5404F]" />
+										<span class="text-sm font-medium">{item.text}</span>
+									</CardContent>
+								</Card>
+							))
+						}
+					</div>
+				</div>
+
+				<div class="space-y-4">
+					<h4 class="text-xl font-medium">Mi Filosofía</h4>
+					<p class="text-muted-foreground">
+						Creo que la nutrición adecuada es la base de una vida plena y saludable. Mi objetivo es empoderarte con el conocimiento y las herramientas necesarias para hacer elecciones informadas sobre tu alimentación, adaptadas a tu estilo de vida único.
+					</p>
+				</div>
+
+				<div class="flex flex-wrap gap-2">
+					<Badge>Nutrición Basada en Evidencia</Badge>
+					<Badge>Enfoque Holístico</Badge>
+					<Badge>Atención Personalizada</Badge>
+					<Badge>Educación Continua</Badge>
+				</div>
+
+				<div class="space-y-4">
+					<h4 class="text-xl font-medium">Sígueme en Redes Sociales</h4>
+					<p class="text-muted-foreground">
+						Como influencer en el mundo de la nutrición y el bienestar, comparto consejos, recetas y motivación diariamente en mis redes sociales. ¡Únete a nuestra comunidad de salud!
+					</p>
+					<div class="flex space-x-4">
+						{
+							socials.map((social) => (
+								<a
+									href={social.href}
+									target="_blank"
+									rel="noopener noreferrer"
+									aria-label={social.label}
+									class={buttonClass({ variant: "outline", size: "icon", class: "h-10 w-10" })}
+								>
+									{social.icon ? <social.icon class="h-4 w-4" /> : <TikTok size={16} />}
+								</a>
+							))
+						}
+					</div>
+				</div>
+
+				<div>
+					<a href="#precios" class={buttonClass({ variant: "plain", class: "bg-[#C54B5B] hover:bg-[#B03F4F] text-white" })}>
+						Ver plan a distancia
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>

@@ -1,0 +1,243 @@
+---
+import { ChevronDown, ChevronLeft, ChevronRight, Filter } from "@lucide/astro";
+import Layout from "@/layouts/Layout.astro";
+import { capitalize, formatPostDate, getPosts } from "@/lib/posts";
+import { pageSeo } from "@/lib/seo";
+
+const POSTS_PER_PAGE = 10;
+const posts = await getPosts();
+const tags = [...new Set(posts.flatMap((p) => p.data.categories))].sort();
+
+const seo = pageSeo({
+	title: "Blog de Nutrición por Marialy Alonso",
+	description:
+		"Artículos sobre nutrición, salud y bienestar basados en estudios científicos y experiencias prácticas de Marialy Alonso.",
+	keywords: ["blog", "nutrición", "salud", "bienestar", "consejos", "recetas", "nutralech", "marialy alonso"],
+	url: "https://www.nutralech.com/blog",
+});
+---
+<Layout seo={seo}>
+	<div class="py-28 px-4">
+		<div class="mx-auto max-w-5xl">
+			<div class="mb-14">
+				<p class="text-sm font-medium tracking-wide uppercase text-[#B5404F] mb-3">Blog</p>
+				<h1 class="font-serif text-3xl font-medium tracking-tight text-[oklch(18%_0.005_12)] sm:text-4xl lg:text-5xl">
+					Nutrición, salud y hábitos
+				</h1>
+				<p class="mt-4 text-base leading-relaxed text-[oklch(50%_0.01_12)] max-w-xl">
+					Artículos basados en evidencia sobre alimentación, bienestar y las preguntas que más me hacen en consulta.
+				</p>
+			</div>
+
+			<div id="blog-posts" data-blog data-per-page={POSTS_PER_PAGE}>
+				<div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-8">
+					<div class="flex items-center gap-2">
+						<Filter class="h-4 w-4 text-[oklch(48%_0.005_12)]" />
+						<span class="text-sm text-[oklch(48%_0.01_12)]" id="blog-filter-label">Filtrar por tema:</span>
+					</div>
+					<details class="relative w-full sm:w-[280px]" data-blog-filter>
+						<summary
+							aria-labelledby="blog-filter-label"
+							class="flex min-h-10 w-full cursor-pointer items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm shadow-xs"
+						>
+							<span data-blog-filter-summary class="truncate text-muted-foreground">Seleccionar temas</span>
+							<ChevronDown class="accordion-chevron ml-2 h-4 w-4 shrink-0 opacity-50 transition-transform" />
+						</summary>
+						<fieldset class="absolute z-20 mt-1 max-h-72 w-full overflow-y-auto rounded-md border bg-popover p-1 shadow-md">
+							<legend class="sr-only">Temas</legend>
+							{
+								tags.map((tag) => (
+									<label class="flex cursor-pointer items-center gap-2 rounded-sm px-2 py-1.5 text-sm hover:bg-accent">
+										<input type="checkbox" value={tag} class="h-4 w-4 accent-[#C54B5B]" />
+										{capitalize(tag)}
+									</label>
+								))
+							}
+							<button type="button" data-blog-clear class="mt-1 w-full rounded-sm px-2 py-1.5 text-left text-sm text-muted-foreground hover:bg-accent">
+								Limpiar filtros
+							</button>
+						</fieldset>
+					</details>
+				</div>
+
+				<p data-blog-count hidden class="mb-6 text-sm text-[oklch(48%_0.01_12)]"></p>
+
+				<div class="divide-y divide-[oklch(94%_0.005_12)]">
+					{
+						posts.map((post, i) => (
+							<article
+								class="py-6 first:pt-0"
+								data-post
+								data-tags={JSON.stringify(post.data.categories)}
+								hidden={i >= POSTS_PER_PAGE}
+							>
+								<a href={`/blog/${post.id}`} class="group block">
+									<div class="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1 sm:gap-4">
+										<h2 class="text-base font-medium text-[oklch(18%_0.005_12)] group-hover:text-[#B5404F] transition-colors duration-150">
+											{post.data.title}
+										</h2>
+										<time datetime={post.data.publishDate} class="text-sm text-[oklch(48%_0.005_12)] shrink-0">
+											{formatPostDate(post.data.publishDate)}
+										</time>
+									</div>
+									{post.data.excerpt && (
+										<p class="mt-1.5 text-sm leading-relaxed text-[oklch(50%_0.01_12)] max-w-2xl">{post.data.excerpt}</p>
+									)}
+									{post.data.categories.length > 0 && (
+										<div class="mt-2 flex flex-wrap gap-2">
+											{post.data.categories.map((category) => (
+												<span class="text-xs text-[oklch(48%_0.01_12)]">{capitalize(category)}</span>
+											))}
+										</div>
+									)}
+								</a>
+							</article>
+						))
+					}
+				</div>
+
+				<div data-blog-empty hidden class="py-16 text-center">
+					<p class="text-sm text-[oklch(48%_0.01_12)] mb-4">No se encontraron artículos para los temas seleccionados.</p>
+					<button type="button" data-blog-clear class="text-sm text-[#B5404F] underline underline-offset-4 decoration-[#DA5F6F]/30 hover:decoration-[#DA5F6F]">
+						Ver todos los artículos
+					</button>
+				</div>
+
+				<nav data-blog-pagination aria-label="Páginas del blog" class="mt-8 flex flex-col sm:flex-row items-center justify-between gap-4 pt-6 border-t border-[oklch(94%_0.005_12)]" hidden={posts.length <= POSTS_PER_PAGE}>
+					<p class="text-sm text-[oklch(48%_0.01_12)]" data-blog-range>1–{Math.min(POSTS_PER_PAGE, posts.length)} de {posts.length}</p>
+					<div class="flex items-center gap-1">
+						<button type="button" data-blog-prev aria-label="Página anterior" class="inline-flex h-8 items-center rounded-md px-2 text-[oklch(45%_0.005_12)] hover:bg-accent disabled:pointer-events-none disabled:opacity-50">
+							<ChevronLeft class="h-4 w-4" />
+						</button>
+						<span data-blog-pages class="flex items-center gap-1"></span>
+						<button type="button" data-blog-next aria-label="Página siguiente" class="inline-flex h-8 items-center rounded-md px-2 text-[oklch(45%_0.005_12)] hover:bg-accent disabled:pointer-events-none disabled:opacity-50">
+							<ChevronRight class="h-4 w-4" />
+						</button>
+					</div>
+				</nav>
+			</div>
+
+			<div class="mt-16 rounded-2xl bg-[oklch(96.5%_0.01_12)] p-8 sm:p-10">
+				<h2 class="font-serif text-xl font-medium text-[oklch(18%_0.005_12)]">Quieres ir más allá de los artículos?</h2>
+				<p class="mt-2 text-sm leading-relaxed text-[oklch(50%_0.01_12)] max-w-lg">
+					El blog es un punto de partida. Para un plan adaptado a tu cuerpo, objetivos y condiciones, una consulta es el siguiente paso.
+				</p>
+				<a
+					href="/#precios"
+					class="mt-6 inline-flex h-11 items-center rounded-full bg-[#C54B5B] px-7 text-sm font-medium text-white transition-colors duration-200 hover:bg-[#C54B5B]"
+				>
+					Ver planes de consulta
+				</a>
+			</div>
+		</div>
+	</div>
+</Layout>
+
+<script>
+	// Topic filter and pagination over the posts already on the page.
+	const cap = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
+
+	function setup() {
+		const root = document.querySelector<HTMLElement>("[data-blog]");
+		if (!root) return;
+		const perPage = Number(root.dataset.perPage);
+		const posts = [...root.querySelectorAll<HTMLElement>("[data-post]")];
+		const boxes = [...root.querySelectorAll<HTMLInputElement>("[data-blog-filter] input")];
+		const q = <T extends Element>(s: string) => root.querySelector<T>(s);
+		let page = 1;
+
+		const render = (scroll = false) => {
+			const selected = boxes.filter((b) => b.checked).map((b) => b.value);
+			const matching = posts.filter((p) => {
+				if (!selected.length) return true;
+				const tags: string[] = JSON.parse(p.dataset.tags ?? "[]");
+				return selected.some((t) => tags.includes(t));
+			});
+			const pages = Math.max(1, Math.ceil(matching.length / perPage));
+			page = Math.min(page, pages);
+			const start = (page - 1) * perPage;
+			const shown = new Set(matching.slice(start, start + perPage));
+			for (const p of posts) p.hidden = !shown.has(p);
+
+			const summary = q<HTMLElement>("[data-blog-filter-summary]");
+			if (summary) {
+				summary.textContent = selected.length
+					? selected.length > 2
+						? `${selected.slice(0, 2).map(cap).join(", ")} +${selected.length - 2}`
+						: selected.map(cap).join(", ")
+					: "Seleccionar temas";
+				summary.classList.toggle("text-muted-foreground", !selected.length);
+			}
+			const count = q<HTMLElement>("[data-blog-count]");
+			if (count) {
+				count.hidden = !selected.length;
+				count.innerHTML = "";
+				count.append(
+					`${matching.length} artículo${matching.length !== 1 ? "s" : ""} sobre `,
+					Object.assign(document.createElement("span"), {
+						className: "font-medium text-[oklch(30%_0.005_12)]",
+						textContent: selected.map(cap).join(", "),
+					})
+				);
+			}
+			const empty = q<HTMLElement>("[data-blog-empty]");
+			if (empty) empty.hidden = matching.length > 0;
+
+			const nav = q<HTMLElement>("[data-blog-pagination]");
+			if (nav) nav.hidden = pages <= 1;
+			const range = q<HTMLElement>("[data-blog-range]");
+			if (range) range.textContent = `${start + 1}–${Math.min(start + perPage, matching.length)} de ${matching.length}`;
+			const prev = q<HTMLButtonElement>("[data-blog-prev]");
+			const next = q<HTMLButtonElement>("[data-blog-next]");
+			if (prev) prev.disabled = page === 1;
+			if (next) next.disabled = page === pages;
+			const numbers = q<HTMLElement>("[data-blog-pages]");
+			if (numbers) {
+				numbers.innerHTML = "";
+				let first = Math.max(1, page - 2);
+				const last = Math.min(pages, first + 4);
+				first = Math.max(1, last - 4);
+				for (let n = first; n <= last; n++) {
+					const b = document.createElement("button");
+					b.type = "button";
+					b.textContent = String(n);
+					b.dataset.blogPage = String(n);
+					if (n === page) b.setAttribute("aria-current", "page");
+					b.className = `h-8 w-8 rounded-lg text-sm transition-colors duration-150 ${
+						n === page ? "bg-[#C54B5B] text-white" : "text-[oklch(45%_0.005_12)] hover:bg-[oklch(95%_0.005_12)]"
+					}`;
+					numbers.append(b);
+				}
+			}
+			if (scroll) window.scrollTo({ top: 0, behavior: "smooth" });
+		};
+
+		for (const b of boxes)
+			b.addEventListener("change", () => {
+				page = 1;
+				render();
+			});
+		root.addEventListener("click", (e) => {
+			const t = e.target as Element;
+			if (t.closest("[data-blog-clear]")) {
+				for (const b of boxes) b.checked = false;
+				page = 1;
+				render();
+			} else if (t.closest("[data-blog-prev]")) {
+				page--;
+				render(true);
+			} else if (t.closest("[data-blog-next]")) {
+				page++;
+				render(true);
+			} else {
+				const n = t.closest<HTMLElement>("[data-blog-page]");
+				if (n) {
+					page = Number(n.dataset.blogPage);
+					render(true);
+				}
+			}
+		});
+		render();
+	}
+	document.addEventListener("astro:page-load", setup);
+</script>

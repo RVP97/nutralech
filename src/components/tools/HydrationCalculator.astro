@@ -1,0 +1,104 @@
+---
+import { Info, Scale } from "@lucide/astro";
+import Card from "@/components/ui/Card.astro";
+import CardContent from "@/components/ui/CardContent.astro";
+import CardDescription from "@/components/ui/CardDescription.astro";
+import CardHeader from "@/components/ui/CardHeader.astro";
+import CardTitle from "@/components/ui/CardTitle.astro";
+import { ACTIVITY_OPTIONS, calcButtonClass, inputClass, labelClass } from "./form";
+import Select from "./Select.astro";
+---
+<Card class="w-full h-full flex flex-col">
+	<CardHeader>
+		<CardTitle as="h2" class="text-2xl">Calcula tu Hidratación</CardTitle>
+		<CardDescription>Ingresa tus datos para calcular tus necesidades diarias de agua</CardDescription>
+	</CardHeader>
+	<CardContent class="grow space-y-6">
+		<form data-calc="hidratacion" novalidate class="space-y-4">
+			<div class="space-y-2">
+				<label for="unit-system" class={labelClass}>Sistema de Unidades</label>
+				<Select id="unit-system" name="unit" value="metric" options={[{ value: "metric", label: "Métrico (kg)" }, { value: "imperial", label: "Imperial (lbs)" }]} />
+			</div>
+			<div class="space-y-2">
+				<label for="weight" class={labelClass}>Peso (<span data-text-when='{"field":"unit","metric":"kg","imperial":"lbs"}'>kg</span>)</label>
+				<input id="weight" name="weight" type="number" inputmode="decimal" placeholder="70" data-placeholder-when='{"field":"unit","metric":"70","imperial":"154"}' class={inputClass} />
+				<p data-part="error" hidden class="text-sm text-red-600">Por favor, ingresa tu peso</p>
+			</div>
+			<div class="space-y-2">
+				<label for="activity" class={labelClass}>Nivel de Actividad</label>
+				<Select id="activity" name="activity" value="sedentary" options={ACTIVITY_OPTIONS} />
+			</div>
+			<button type="submit" class:list={[calcButtonClass, "mt-4"]}>Calcular Hidratación</button>
+
+			<div data-part="result" hidden aria-live="polite">
+				<div class="space-y-2 mt-4">
+					<label for="water-intake-unit" class={labelClass}>Unidad de Ingesta de Agua</label>
+					<Select id="water-intake-unit" name="intakeUnit" value="liters" options={[{ value: "liters", label: "Litros" }, { value: "ounces", label: "Onzas" }]} />
+				</div>
+				<div class="space-y-4 mt-4">
+					<div class="rounded-lg border p-4 space-y-2">
+						<div class="flex items-center gap-2">
+							<Scale class="h-5 w-5 text-muted-foreground" />
+							<span class="font-medium">Tu Ingesta Diaria Recomendada de Agua</span>
+						</div>
+						<div class="text-2xl font-bold" data-out="intake"></div>
+					</div>
+					<div class="rounded-lg bg-gray-50 p-4 space-y-3">
+						<div class="flex items-center gap-2">
+							<Info class="h-5 w-5 text-muted-foreground" />
+							<span class="font-medium">Recomendación de Hidratación Diaria</span>
+						</div>
+						<p class="text-sm text-muted-foreground leading-relaxed" data-out="description"></p>
+						<div class="pt-2 space-y-2">
+							<div class="text-sm font-medium">Recomendaciones personalizadas:</div>
+							<ul class="list-disc pl-5 space-y-1">
+								<li class="pl-1 marker:text-foreground">Asegúrate de beber agua a lo largo del día, no solo cuando tengas sed.</li>
+								<li class="pl-1 marker:text-foreground">Considera aumentar la ingesta en climas cálidos o durante el ejercicio intenso.</li>
+								<li class="pl-1 marker:text-foreground">Monitorea el color de tu orina para evaluar tu nivel de hidratación.</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>
+	</CardContent>
+</Card>
+
+<script>
+	import { num, out, part, register, str } from "@/scripts/tools/calc";
+
+	const EXTRA: Record<string, number> = { lightlyActive: 0.5, moderatelyActive: 1, active: 1.5, veryActive: 2 };
+
+	register("hidratacion", (form) => {
+		const result = part(form, "result");
+		let liters: number | null = null;
+		let shownWeight = "";
+		let metric = true;
+
+		const render = () => {
+			if (liters === null) return;
+			const intake =
+				str(form, "intakeUnit") === "liters" ? `${liters.toFixed(1)} litros` : `${(liters * 33.814).toFixed(1)} onzas`;
+			out(result, "intake", intake);
+			out(
+				result,
+				"description",
+				`Basado en tu peso de ${shownWeight}${metric ? "kg" : "lbs"} y nivel de actividad, se recomienda consumir aproximadamente ${intake} de agua al día.`,
+			);
+		};
+
+		form.addEventListener("submit", (event) => {
+			event.preventDefault();
+			const weight = num(form, "weight");
+			part(form, "error").hidden = !!weight;
+			if (!weight) return;
+			metric = str(form, "unit") === "metric";
+			const kg = metric ? weight : weight * 0.453592;
+			liters = kg * 0.035 + (EXTRA[str(form, "activity")] ?? 0);
+			shownWeight = weight.toFixed(0);
+			result.hidden = false;
+			render();
+		});
+		(form.elements.namedItem("intakeUnit") as HTMLSelectElement | null)?.addEventListener("change", render);
+	});
+</script>

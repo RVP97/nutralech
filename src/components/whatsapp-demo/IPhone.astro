@@ -1,0 +1,112 @@
+---
+/**
+ * iPhone 18 Pro frame for the WhatsApp demo: 2622 × 1206 px @3x → 402 × 874 pt. Everything
+ * inside the screen is laid out in real iOS points, then the whole device is scaled to fit
+ * (src/scripts/whatsapp-demo/index.ts). The demo itself is only downloaded when the phone
+ * comes near the screen.
+ */
+interface Props {
+	maxScale?: number;
+}
+const { maxScale = 0.8 } = Astro.props;
+
+const SCREEN_W = 402;
+const SCREEN_H = 874;
+const SCREEN_RADIUS = 58;
+const BEZEL = 12;
+const BAND = 5;
+const DEVICE_W = SCREEN_W + (BEZEL + BAND) * 2;
+const DEVICE_H = SCREEN_H + (BEZEL + BAND) * 2;
+const band =
+	"linear-gradient(145deg,#8a4a55 0%,#4a1c26 16%,#3a141c 50%,#4a1c26 84%,#94525e 100%)";
+const button = "linear-gradient(90deg,#3a141c,#6e3440 60%,#3a141c)";
+const sides = [
+	`left:-3px;top:170px;height:34px`,
+	`left:-3px;top:232px;height:64px`,
+	`left:-3px;top:310px;height:64px`,
+	`right:-3px;top:262px;height:104px`,
+	`right:-2px;top:560px;height:58px;width:3px;opacity:0.8`,
+];
+---
+<div
+	data-iphone
+	data-device-w={DEVICE_W}
+	data-max-scale={maxScale}
+	class="relative mx-auto w-full select-none"
+	style={`max-width:${DEVICE_W * maxScale}px;aspect-ratio:${DEVICE_W}/${DEVICE_H}`}
+>
+	<div
+		data-iphone-device
+		class="absolute left-0 top-0 origin-top-left"
+		style={`width:${DEVICE_W}px;height:${DEVICE_H}px;transform:scale(var(--iphone-scale,${maxScale}))`}
+	>
+		{sides.map((s) => <span aria-hidden="true" class="absolute w-[5px] rounded-[2px]" style={`background:${button};${s}`}></span>)}
+		<div
+			class="absolute inset-0"
+			style={`border-radius:${SCREEN_RADIUS + BEZEL + BAND}px;background:${band};box-shadow:inset 0 0 0 1px rgba(255,255,255,0.22), 0 0 0 1px rgba(0,0,0,0.55), 0 60px 90px -30px rgba(74,28,38,0.45), 0 30px 50px -25px rgba(0,0,0,0.4)`}
+		></div>
+		<div
+			class="absolute bg-black"
+			style={`inset:${BAND}px;border-radius:${SCREEN_RADIUS + BEZEL}px;box-shadow:inset 0 0 2px 1px rgba(255,255,255,0.1)`}
+		></div>
+		<div
+			data-phone-screen
+			class="absolute overflow-hidden bg-white antialiased"
+			style={`inset:${BAND + BEZEL}px;width:${SCREEN_W}px;height:${SCREEN_H}px;border-radius:${SCREEN_RADIUS}px;isolation:isolate;font-family:-apple-system, BlinkMacSystemFont, "SF Pro Text", "Inter Variable", system-ui, sans-serif;-webkit-mask-image:-webkit-radial-gradient(white, black)`}
+		>
+			<div data-wa-root class="absolute inset-0 bg-white"></div>
+			<div class="pointer-events-none absolute inset-x-0 top-0 z-[70] flex h-[56px] items-center justify-between pl-[48px] pr-[34px] pt-[4px] text-black">
+				<span data-iphone-clock class="w-[56px] text-center text-[17px] font-semibold tracking-[-0.2px] tabular-nums"></span>
+				<span class="flex items-center gap-[6px]">
+					<svg viewBox="0 0 18 12" width="18" height="12" aria-hidden="true"><rect x="0" y="7.5" width="3" height="4.5" rx="0.8" fill="currentColor"></rect><rect x="5" y="5" width="3" height="7" rx="0.8" fill="currentColor"></rect><rect x="10" y="2.5" width="3" height="9.5" rx="0.8" fill="currentColor"></rect><rect x="15" y="0" width="3" height="12" rx="0.8" fill="currentColor"></rect></svg>
+					<svg viewBox="0 0 17 12" width="17" height="12" aria-hidden="true"><path fill="currentColor" d="M8.5 2.3c2.4 0 4.6.9 6.3 2.5.1.1.3.1.4 0l1.2-1.2c.1-.1.1-.3 0-.4A11 11 0 0 0 8.5 0 11 11 0 0 0 .6 3.2c-.1.1-.1.3 0 .4l1.2 1.2c.1.1.3.1.4 0a9 9 0 0 1 6.3-2.5Zm0 3.8c1.3 0 2.6.5 3.6 1.4.1.1.3.1.4 0l1.2-1.2c.1-.1.1-.3 0-.4a7.4 7.4 0 0 0-10.4 0c-.1.1-.1.3 0 .4l1.2 1.2c.1.1.3.1.4 0 1-.9 2.3-1.4 3.6-1.4Zm2.3 2.7c.1-.1.1-.3 0-.4a3.5 3.5 0 0 0-4.6 0c-.1.1-.1.3 0 .4l2.1 2.1c.1.1.3.1.4 0Z"></path></svg>
+					<svg viewBox="0 0 28 13" width="27" height="13" aria-hidden="true"><rect x="0.5" y="0.5" width="24" height="12" rx="3.8" fill="none" stroke="currentColor" opacity="0.35"></rect><rect x="2" y="2" width="17.22" height="9" rx="2.5" fill="currentColor"></rect><path d="M26 4.4v4.2c.8-.3 1.4-1.1 1.4-2.1S26.8 4.7 26 4.4Z" fill="currentColor" opacity="0.4"></path></svg>
+				</span>
+			</div>
+			<div class="pointer-events-none absolute left-1/2 top-[11px] z-[80] flex h-[33px] w-[100px] -translate-x-1/2 items-center justify-end rounded-full bg-black pr-[11px]">
+				<span class="size-[10px] rounded-full bg-[radial-gradient(circle_at_35%_35%,#2b3a55,#0b0f18_60%)] shadow-[0_0_0_1.5px_#111]"></span>
+			</div>
+			<div class="pointer-events-none absolute bottom-[8px] left-1/2 z-[80] h-[5px] w-[140px] -translate-x-1/2 rounded-full bg-black"></div>
+			<div class="pointer-events-none absolute inset-0 z-[90] bg-[linear-gradient(115deg,rgba(255,255,255,0.07),transparent_38%)]"></div>
+		</div>
+	</div>
+</div>
+
+<script>
+	// Scale the device to its column, keep the status bar clock current, and load the demo once
+	// the phone is near the screen.
+	let clockTimer: ReturnType<typeof setInterval> | undefined;
+	function setup() {
+		clearInterval(clockTimer);
+		const wrap = document.querySelector<HTMLElement>("[data-iphone]");
+		if (!wrap) return;
+		const deviceW = Number(wrap.dataset.deviceW);
+		const max = Number(wrap.dataset.maxScale);
+		new ResizeObserver(([entry]) => {
+			const scale = Math.min(max, entry.contentRect.width / deviceW);
+			wrap.style.setProperty("--iphone-scale", String(scale));
+			wrap.dataset.scale = String(scale);
+		}).observe(wrap);
+
+		const clock = wrap.querySelector("[data-iphone-clock]");
+		const tick = () => {
+			const d = new Date();
+			if (clock) clock.textContent = `${d.getHours()}:${d.getMinutes().toString().padStart(2, "0")}`;
+		};
+		tick();
+		clockTimer = setInterval(tick, 10_000);
+
+		const io = new IntersectionObserver(
+			([entry]) => {
+				if (!entry.isIntersecting) return;
+				io.disconnect();
+				void import("@/scripts/whatsapp-demo/index").then((m) => m.mountWhatsAppDemo(wrap));
+			},
+			{ rootMargin: "600px 0px" }
+		);
+		io.observe(wrap);
+		document.addEventListener("astro:before-swap", () => io.disconnect(), { once: true });
+	}
+	document.addEventListener("astro:page-load", setup);
+	document.addEventListener("astro:before-swap", () => clearInterval(clockTimer));
+</script>

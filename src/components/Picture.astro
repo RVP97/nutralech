@@ -1,0 +1,108 @@
+---
+/**
+ * A responsive photo from public/. scripts/generate-image-variants.mjs writes resized WebP and
+ * AVIF copies of every image at build time (src/lib/image-variants.ts lists the widths), and
+ * this component points srcset at them, with an AVIF <source> for browsers that support it.
+ * The original URL stays the src, so image search and shared links keep working.
+ *
+ * `fill` makes the image cover its positioned parent; otherwise pass `width` and `height`.
+ */
+import type { HTMLAttributes } from 'astro/types';
+import { IMAGE_WIDTHS, isOptimizable, variantUrl } from '@/lib/image-variants';
+import { type StyleObject, styleString } from '@/lib/style';
+
+type Props = Omit<HTMLAttributes<'img'>, 'src' | 'width' | 'height' | 'style'> & {
+	src: string;
+	alt: string;
+	width?: number | string;
+	height?: number | string;
+	fill?: boolean;
+	sizes?: string;
+	/** Above-the-fold image: loaded eagerly with high fetch priority. */
+	priority?: boolean;
+	unoptimized?: boolean;
+	style?: StyleObject | string;
+};
+
+const {
+	src,
+	alt,
+	width,
+	height,
+	fill,
+	sizes,
+	priority,
+	unoptimized,
+	loading,
+	fetchpriority,
+	decoding,
+	style,
+	...rest
+} = Astro.props;
+
+const numericWidth = width === undefined ? undefined : Number(width);
+const numericHeight = height === undefined ? undefined : Number(height);
+const atLeast = (target: number) =>
+	IMAGE_WIDTHS.find((w) => w >= target) ?? IMAGE_WIDTHS[IMAGE_WIDTHS.length - 1];
+
+let srcset: string | undefined;
+let avifSrcset: string | undefined;
+let imgSizes: string | undefined;
+if (!unoptimized && isOptimizable(src)) {
+	if (fill || sizes) {
+		imgSizes = sizes ?? '100vw';
+		srcset = IMAGE_WIDTHS.filter((w) => w >= 384)
+			.map((w) => `${variantUrl(src, w)} ${w}w`)
+			.join(', ');
+	} else if (numericWidth) {
+		const w1 = atLeast(numericWidth);
+		const w2 = atLeast(numericWidth * 2);
+		srcset = w1 === w2 ? undefined : `${variantUrl(src, w1)} 1x, ${variantUrl(src, w2)} 2x`;
+	}
+	// Every variant also exists as AVIF (about half the bytes of the WebP).
+	if (srcset && !/\.avif$/i.test(src)) {
+		avifSrcset = srcset.replace(/(\/_img\/\S+?)( \d+[wx])/g, '$1.avif$2');
+	}
+}
+
+const FILL =
+	'position:absolute;height:100%;width:100%;left:0;top:0;right:0;bottom:0;color:transparent';
+const extra = styleString(style);
+const imgStyle = fill
+	? [FILL, extra].filter(Boolean).join(';')
+	: ['color:transparent', extra].filter(Boolean).join(';');
+---
+{
+	avifSrcset ? (
+		<picture style="display:contents">
+			<source type="image/avif" srcset={avifSrcset} sizes={imgSizes} />
+			<img
+				alt={alt}
+				fetchpriority={fetchpriority ?? (priority ? 'high' : undefined)}
+				loading={priority ? 'eager' : (loading ?? 'lazy')}
+				width={fill ? undefined : numericWidth}
+				height={fill ? undefined : numericHeight}
+				decoding={decoding ?? 'async'}
+				style={imgStyle}
+				sizes={imgSizes}
+				srcset={srcset}
+				src={src}
+				{...rest}
+			/>
+		</picture>
+	) : (
+		<img
+			alt={alt}
+			fetchpriority={fetchpriority ?? (priority ? 'high' : undefined)}
+			loading={priority ? 'eager' : (loading ?? 'lazy')}
+			width={fill ? undefined : numericWidth}
+			height={fill ? undefined : numericHeight}
+			decoding={decoding ?? 'async'}
+			style={imgStyle}
+			sizes={imgSizes}
+			srcset={srcset}
+			src={src}
+			{...rest}
+		/>
+	)
+}

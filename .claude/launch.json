@@ -1,0 +1,12 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "nutralech",
+      "runtimeExecutable": "bunx",
+      "runtimeArgs": ["astro", "dev"],
+      "port": 3000,
+      "autoPort": true
+    }
+  ]
+}

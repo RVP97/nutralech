@@ -1,0 +1,197 @@
+---
+import { Info, Scale } from "@lucide/astro";
+import Card from "@/components/ui/Card.astro";
+import CardContent from "@/components/ui/CardContent.astro";
+import CardDescription from "@/components/ui/CardDescription.astro";
+import CardHeader from "@/components/ui/CardHeader.astro";
+import CardTitle from "@/components/ui/CardTitle.astro";
+import { calcButtonClass, inputClass, labelClass } from "./form";
+import Select from "./Select.astro";
+
+const inches = '{"field":"unit","metric":"cm","imperial":"in"}';
+const placeholder = (metric: string, imperial: string) => JSON.stringify({ field: "unit", metric, imperial });
+---
+<Card class="w-full h-full flex flex-col">
+	<CardHeader>
+		<CardTitle as="h2" class="text-2xl">Calculadora de Grasa Corporal</CardTitle>
+		<CardDescription>Estima tu porcentaje de grasa corporal usando medidas corporales</CardDescription>
+	</CardHeader>
+	<CardContent class="grow space-y-6">
+		<form data-calc="grasa-corporal" novalidate class="space-y-4">
+			<div class="space-y-2">
+				<label for="unitSystem" class={labelClass}>Sistema de Medidas</label>
+				<Select id="unitSystem" name="unit" value="metric" options={[{ value: "metric", label: "Métrico (cm/kg)" }, { value: "imperial", label: "Imperial (ft-in/lb)" }]} />
+			</div>
+			<div class="grid grid-cols-2 gap-4">
+				<div class="space-y-2">
+					<label for="age" class={labelClass}>Edad</label>
+					<input id="age" name="age" type="number" inputmode="numeric" placeholder="30" class={inputClass} />
+					<p data-error="age" hidden class="text-sm text-red-600">Por favor, ingresa tu edad</p>
+				</div>
+				<div class="space-y-2">
+					<label for="gender" class={labelClass}>Género</label>
+					<Select id="gender" name="gender" value="female" options={[{ value: "male", label: "Masculino" }, { value: "female", label: "Femenino" }]} />
+				</div>
+			</div>
+			<div class="space-y-2">
+				<label for="height" data-when="unit:metric" class={labelClass}>Altura (cm)</label>
+				<label for="heightFt" data-when="unit:imperial" hidden class={labelClass}>Altura (ft-in)</label>
+				<input id="height" name="cm" type="number" inputmode="decimal" placeholder="170" data-when="unit:metric" class={inputClass} />
+				<div class="flex gap-2" data-when="unit:imperial" hidden>
+					<input id="heightFt" name="feet" type="number" inputmode="numeric" placeholder="5" aria-label="Pies" class={inputClass} />
+					<input id="heightIn" name="inches" type="number" inputmode="numeric" placeholder="8" aria-label="Pulgadas" class={inputClass} />
+				</div>
+				<p data-error="height" hidden class="text-sm text-red-600">Por favor, ingresa tu altura</p>
+			</div>
+			<div class="space-y-2">
+				<label for="weight" class={labelClass}>Peso (<span data-text-when='{"field":"unit","metric":"kg","imperial":"lb"}'>kg</span>)</label>
+				<input id="weight" name="weight" type="number" inputmode="decimal" placeholder="70" data-placeholder-when={placeholder("70", "154")} class={inputClass} />
+				<p data-error="weight" hidden class="text-sm text-red-600">Por favor, ingresa tu peso</p>
+			</div>
+			<div class="grid grid-cols-2 gap-4">
+				<div class="space-y-2">
+					<label for="waist" class={labelClass}>Cintura (<span data-text-when={inches}>cm</span>)</label>
+					<input id="waist" name="waist" type="number" inputmode="decimal" placeholder="80" data-placeholder-when={placeholder("80", "32")} class={inputClass} />
+					<p data-error="waist" hidden class="text-sm text-red-600">Por favor, ingresa tu medida de cintura</p>
+				</div>
+				<div class="space-y-2">
+					<label for="neck" class={labelClass}>Cuello (<span data-text-when={inches}>cm</span>)</label>
+					<input id="neck" name="neck" type="number" inputmode="decimal" placeholder="35" data-placeholder-when={placeholder("35", "14")} class={inputClass} />
+					<p data-error="neck" hidden class="text-sm text-red-600">Por favor, ingresa tu medida de cuello</p>
+				</div>
+			</div>
+			<div class="space-y-2" data-when="gender:female">
+				<label for="hip" class={labelClass}>Cadera (<span data-text-when={inches}>cm</span>)</label>
+				<input id="hip" name="hip" type="number" inputmode="decimal" placeholder="95" data-placeholder-when={placeholder("95", "37")} class={inputClass} />
+				<p data-error="hip" hidden class="text-sm text-red-600">Por favor, ingresa tu medida de cadera</p>
+			</div>
+			<button type="submit" class:list={[calcButtonClass, "mt-4"]}>Calcular Grasa Corporal</button>
+		</form>
+
+		<div data-part="result" hidden class="space-y-4" aria-live="polite">
+			<div class="rounded-lg border p-4 space-y-2">
+				<div class="flex items-center gap-2">
+					<Scale class="h-5 w-5 text-muted-foreground" />
+					<span class="font-medium">Análisis de Grasa Corporal</span>
+				</div>
+				<div class="text-sm text-muted-foreground" data-out="description"></div>
+				<div class="font-medium" data-part="category"></div>
+			</div>
+			<div class="space-y-3">
+				{[
+					["US Navy", "Método basado en medidas corporales, ampliamente utilizado"],
+					["Deurenberg", "Estimación basada en IMC, edad y género"],
+					["Jackson-Pollock", "Fórmula basada en densidad corporal y medidas antropométricas"],
+				].map(([method, description]) => (
+					<div class="rounded-lg bg-gray-50 p-3">
+						<div class="flex justify-between items-center">
+							<div class="font-medium">{method}</div>
+							<div class="text-lg font-bold" data-out={method}></div>
+						</div>
+						<div class="text-sm text-muted-foreground">{description}</div>
+					</div>
+				))}
+			</div>
+			<div class="rounded-lg bg-gray-50 p-4 space-y-3">
+				<div class="flex items-center gap-2">
+					<Info class="h-5 w-5 text-muted-foreground" />
+					<span class="font-medium">Recomendaciones Personalizadas</span>
+				</div>
+				<ul class="list-disc pl-5 space-y-1" data-part="points"></ul>
+			</div>
+		</div>
+	</CardContent>
+</Card>
+
+<script>
+	import { list, num, out, part, readBody, register, required } from "@/scripts/tools/calc";
+
+	const clamp = (value: number) => Math.max(3, Math.min(50, value));
+
+	// Upper bounds (%) of the first four categories below, for men and women.
+	const CATEGORIES = {
+		male: [6, 14, 18, 25],
+		female: [14, 21, 25, 32],
+	};
+	const LABELS = [
+		["Muy Bajo", "Puede ser poco saludable", "text-blue-600"],
+		["Atlético", "Excelente", "text-green-700"],
+		["Bueno", "Saludable", "text-green-700"],
+		["Aceptable", "Normal", "text-yellow-700"],
+		["Alto", "Mejorable", "text-red-600"],
+	];
+
+	register("grasa-corporal", (form) => {
+		const result = part(form.parentElement as HTMLElement, "result");
+		form.addEventListener("submit", (event) => {
+			event.preventDefault();
+			const body = readBody(form);
+			const male = (form.elements.namedItem("gender") as HTMLSelectElement).value === "male";
+			const waistIn = num(form, "waist");
+			const neckIn = num(form, "neck");
+			const hipIn = num(form, "hip");
+			const ok = required(form, { waist: !waistIn, neck: !neckIn, hip: !male && !hipIn });
+			if (!body || !ok) return;
+			const { age, metric, heightCm, weightKg } = body;
+			const cm = (value: number) => (metric ? value : value * 2.54);
+			const waist = cm(waistIn);
+			const neck = cm(neckIn);
+			const hip = cm(hipIn || 0);
+
+			// US Navy
+			let navy: number;
+			if (male) {
+				const d = waist - neck;
+				navy = d <= 0 ? 5 : 495 / (1.0324 - 0.19077 * Math.log10(d) + 0.15456 * Math.log10(heightCm)) - 450;
+			} else {
+				const d = waist + hip - neck;
+				navy = d <= 0 ? 10 : 495 / (1.29579 - 0.35004 * Math.log10(d) + 0.221 * Math.log10(heightCm)) - 450;
+			}
+			// Deurenberg (BMI based)
+			const bmi = weightKg / ((heightCm / 100) * (heightCm / 100));
+			const deurenberg = Math.max(0, 1.2 * bmi + 0.23 * age - 10.8 * (male ? 1 : 0) - 5.4);
+			// Jackson-Pollock, simplified with the waist (and hip) as proxies
+			const girth = male ? waist : (waist + hip) / 2;
+			const density = male
+				? 1.10938 - 0.0008267 * girth + 0.0000016 * girth ** 2 - 0.0002574 * age
+				: 1.0994921 - 0.0009929 * girth + 0.0000023 * girth ** 2 - 0.0001392 * age;
+			const jackson = (4.95 / density - 4.5) * 100;
+
+			const values = { "US Navy": clamp(navy), Deurenberg: deurenberg, "Jackson-Pollock": clamp(jackson) };
+			for (const [method, value] of Object.entries(values)) out(result, method, `${value.toFixed(1)}%`);
+			const avg = Object.values(values).reduce((a, b) => a + b, 0) / 3;
+			const bounds = male ? CATEGORIES.male : CATEGORIES.female;
+			const index = bounds.findIndex((bound) => avg < bound);
+			const [category, status, color] = LABELS[index === -1 ? 4 : index];
+			out(result, "description", `Tu porcentaje estimado promedio de grasa corporal es ${avg.toFixed(1)}%, lo que se clasifica como "${category}".`);
+			const el = part(result, "category");
+			el.textContent = `${category} - ${status}`;
+			el.className = `font-medium ${color}`;
+			list(
+				part(result, "points"),
+				avg < bounds[0]
+					? [
+							"Un porcentaje muy bajo de grasa puede afectar funciones hormonales",
+							"Considera aumentar gradualmente la ingesta calórica",
+							"Consulta con un profesional de la salud",
+							"Enfócate en grasas saludables en tu dieta",
+						]
+					: avg < bounds[2]
+						? [
+								"Mantén tus hábitos actuales de ejercicio y alimentación",
+								"Continúa con entrenamiento de fuerza para preservar masa muscular",
+								"Asegura una ingesta adecuada de proteínas",
+								"Monitorea tu progreso regularmente",
+							]
+						: [
+								"Un déficit calórico moderado puede ayudar a reducir grasa corporal",
+								"Combina cardio con entrenamiento de fuerza",
+								"Prioriza alimentos integrales y proteínas magras",
+								"Mantén la consistencia en tus hábitos saludables",
+							],
+				"text-sm text-muted-foreground",
+			);
+			result.hidden = false;
+		});
+	});
+</script>

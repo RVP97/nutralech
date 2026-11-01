@@ -1,0 +1,133 @@
+---
+import { Info, Scale } from "@lucide/astro";
+import Card from "@/components/ui/Card.astro";
+import CardContent from "@/components/ui/CardContent.astro";
+import CardDescription from "@/components/ui/CardDescription.astro";
+import CardHeader from "@/components/ui/CardHeader.astro";
+import CardTitle from "@/components/ui/CardTitle.astro";
+import BodyFields from "./BodyFields.astro";
+import { ACTIVITY_OPTIONS, calcButtonClass, GOAL_OPTIONS, labelClass } from "./form";
+import Select from "./Select.astro";
+---
+<Card class="w-full h-full flex flex-col">
+	<CardHeader>
+		<CardTitle as="h2" class="text-2xl">Calcula tu Proteína Diaria</CardTitle>
+		<CardDescription>Ingresa tus datos para calcular tus necesidades de proteína</CardDescription>
+	</CardHeader>
+	<CardContent class="grow space-y-6">
+		<form data-calc="proteina" novalidate class="space-y-4">
+			<BodyFields age={false} height={false} />
+			<div class="space-y-2">
+				<label for="activity" class={labelClass}>Nivel de Actividad</label>
+				<Select id="activity" name="activity" value="sedentary" options={ACTIVITY_OPTIONS} />
+			</div>
+			<div class="space-y-2">
+				<label for="weightGoal" class={labelClass}>Objetivo de Peso</label>
+				<Select id="weightGoal" name="goal" value="maintain" options={GOAL_OPTIONS} />
+			</div>
+			<button type="submit" class:list={[calcButtonClass, "mt-4"]}>Calcular Proteína</button>
+		</form>
+
+		<div data-part="result" hidden class="space-y-4" aria-live="polite">
+			<div class="rounded-lg border p-4 space-y-2">
+				<div class="flex items-center gap-2">
+					<Scale class="h-5 w-5 text-muted-foreground" />
+					<span class="font-medium">Tu Proteína Diaria Recomendada</span>
+				</div>
+				<div class="text-2xl font-bold">
+					<span data-out="target"></span>g
+					<span class="text-sm text-muted-foreground ml-2" data-out="range"></span>
+				</div>
+				<div class="text-sm text-muted-foreground" data-out="meals"></div>
+			</div>
+			<div class="rounded-lg bg-gray-50 p-4 space-y-3">
+				<div class="flex items-center gap-2">
+					<Info class="h-5 w-5 text-muted-foreground" />
+					<span class="font-medium">Recomendación de Proteína Diaria</span>
+				</div>
+				<p class="text-sm text-muted-foreground leading-relaxed" data-out="description"></p>
+				<div class="pt-2 space-y-2">
+					<div class="text-sm font-medium">Recomendaciones personalizadas:</div>
+					<ul class="list-disc pl-5 space-y-1" data-part="points"></ul>
+				</div>
+			</div>
+		</div>
+	</CardContent>
+</Card>
+
+<script>
+	import { list, out, part, readBody, register, str } from "@/scripts/tools/calc";
+
+	// Scientific protein ranges (g/kg/day) by activity level.
+	const RANGES: Record<string, { min: number; target: number; max: number }> = {
+		sedentary: { min: 0.8, target: 1.0, max: 1.2 },
+		lightlyActive: { min: 1.0, target: 1.2, max: 1.4 },
+		moderatelyActive: { min: 1.2, target: 1.4, max: 1.6 },
+		active: { min: 1.4, target: 1.6, max: 1.8 },
+		veryActive: { min: 1.6, target: 1.8, max: 2.0 },
+	};
+	const ACTIVITY_TEXT: Record<string, string> = {
+		sedentary: "sedentario",
+		lightlyActive: "ligeramente activo",
+		moderatelyActive: "moderadamente activo",
+		active: "activo",
+		veryActive: "muy activo",
+	};
+	const GOAL_TEXT: Record<string, string> = {
+		loseExtreme: "pérdida rápida de peso",
+		loseMild: "pérdida gradual de peso",
+		maintain: "mantenimiento de peso",
+		gainMild: "ganancia gradual de masa",
+		gainExtreme: "ganancia rápida de masa",
+	};
+
+	register("proteina", (form) => {
+		const result = part(form.parentElement as HTMLElement, "result");
+		form.addEventListener("submit", (event) => {
+			event.preventDefault();
+			const body = readBody(form);
+			if (!body) return;
+			const { gender, metric, weight, weightKg } = body;
+			const activity = str(form, "activity");
+			const goal = str(form, "goal");
+			let range = RANGES[activity] ?? RANGES.sedentary;
+			if (goal.includes("gain")) range = { min: range.min + 0.2, target: range.target + 0.3, max: range.max + 0.4 };
+			else if (goal.includes("lose")) range = { min: range.min + 0.1, target: range.target + 0.2, max: range.max + 0.3 };
+			const daily = {
+				min: Math.round(weightKg * range.min),
+				target: Math.round(weightKg * range.target),
+				max: Math.round(weightKg * range.max),
+			};
+			const meals = daily.target > 120 ? 5 : 4;
+			const perMeal = { min: Math.round((daily.target / meals) * 0.8), max: Math.round((daily.target / meals) * 1.2) };
+
+			out(result, "target", daily.target);
+			out(result, "range", `(rango: ${daily.min}-${daily.max}g)`);
+			out(result, "meals", `Distribuir en ${meals} comidas (${perMeal.min}-${perMeal.max}g/comida)`);
+			out(
+				result,
+				"description",
+				`Para ${gender === "female" ? "una mujer" : "un hombre"} de ${weight}${metric ? "kg" : "lb"}, con un nivel de actividad ${
+					ACTIVITY_TEXT[activity]
+				} y objetivo de ${GOAL_TEXT[goal]}, se recomienda consumir entre ${daily.min}g y ${daily.max}g de proteína al día.`,
+			);
+			list(
+				part(result, "points"),
+				[
+					`Consumo óptimo: ${Math.round(range.target * 10) / 10}g por kg de peso corporal`,
+					`Distribuye la proteína en ${meals} comidas (${perMeal.min}-${perMeal.max}g por comida)`,
+					"Consume proteína de alta calidad dentro de las 2 horas post-entrenamiento",
+					`Asegura un mínimo de ${Math.round(weightKg * 0.05)}g de leucina por comida principal`,
+					"Combina fuentes animales y vegetales para un perfil completo de aminoácidos",
+					goal.includes("gain")
+						? "Prioriza el consumo de proteína post-entrenamiento para maximizar la síntesis muscular"
+						: goal.includes("lose")
+							? "Mantén un alto consumo de proteína para preservar la masa muscular durante el déficit calórico"
+							: "Mantén un consumo constante de proteína distribuido durante el día",
+				],
+				"pl-1 marker:text-foreground text-sm",
+			);
+			result.hidden = false;
+		});
+	});
+</script>

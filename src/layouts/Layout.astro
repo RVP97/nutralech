@@ -1,0 +1,47 @@
+---
+/**
+ * Every page: the <html>/<head> shell, the navbar and the footer. Pages pass their SEO tags;
+ * extra <head> tags (JSON-LD) go in the "head" slot.
+ */
+import { ClientRouter } from "astro:transitions";
+import interLatin from "@fontsource-variable/inter/files/inter-latin-wght-normal.woff2?url";
+import JsonLd from "@/components/JsonLd.astro";
+import Seo from "@/components/Seo.astro";
+import Footer from "@/components/sections/Footer.astro";
+import Navbar from "@/components/sections/Navbar.astro";
+import { GTM_ID, GTM_SNIPPET } from "@/lib/gtm";
+import { SITE_JSON_LD, type PageSeo } from "@/lib/seo";
+import "@fontsource-variable/inter/wght.css";
+import "@/styles/global.css";
+
+interface Props {
+	seo: PageSeo;
+}
+
+const { seo } = Astro.props;
+---
+<html lang="es" transition:animate="none">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel="preload" href={interLatin} as="font" type="font/woff2" crossorigin />
+		<Seo seo={seo} />
+		<JsonLd schema={SITE_JSON_LD} />
+		<slot name="head" />
+		{/* Client-side navigation: links swap the page in place instead of a full reload, and
+		   internal links are prefetched on hover, touch, or once on screen
+		   (scripts/prefetch-visible). Page scripts re-run their setup on each `astro:page-load`. */}
+		<ClientRouter fallback="swap" />
+		<script is:inline set:html={`window.addEventListener('load',function(){setTimeout(function(){${GTM_SNIPPET}},0)});`} />
+		<script>
+			import "../scripts/site";
+			import "../scripts/prefetch-visible";
+		</script>
+	</head>
+	<body class="pt-24 flex flex-col min-h-screen">
+		<noscript><iframe src={`https://www.googletagmanager.com/ns.html?id=${GTM_ID}`} height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Manager"></iframe></noscript>
+		<Navbar />
+		<main><slot /></main>
+		<Footer />
+	</body>
+</html>

@@ -1,0 +1,319 @@
+---
+import { Activity, Book, Calendar, Info, Ruler } from "@lucide/astro";
+import BodyFatCalculator from "@/components/tools/BodyFatCalculator.astro";
+import { buttonClass } from "@/components/ui/button";
+import Card from "@/components/ui/Card.astro";
+import CardContent from "@/components/ui/CardContent.astro";
+import CardHeader from "@/components/ui/CardHeader.astro";
+import CardTitle from "@/components/ui/CardTitle.astro";
+import Layout from "@/layouts/Layout.astro";
+import { pageSeo } from "@/lib/seo";
+
+const seo = pageSeo({
+	title: "Calculadora de Grasa Corporal",
+	description:
+		"Calcula tu porcentaje de grasa corporal usando métodos científicos precisos. Obtén análisis detallado y recomendaciones personalizadas.",
+	keywords: ["calculadora grasa corporal, porcentaje grasa, composición corporal, US Navy, Deurenberg, Jackson-Pollock, salud, fitness, nutralech"],
+	url: "https://www.nutralech.com/herramientas/calculadora-grasa-corporal",
+});
+---
+<Layout seo={seo}>
+<div class="max-w-7xl mx-auto px-4 py-20">
+	<nav class="flex items-center gap-2 text-sm text-muted-foreground mb-8">
+		<a href="/">Inicio</a>
+		<span>{">"}</span>
+		<a href="/herramientas">Herramientas</a>
+		<span>{">"}</span>
+		<span class="text-foreground">Calculadora de Grasa Corporal</span>
+	</nav>
+
+	<div class="text-center mb-12">
+		<div class="text-sm font-medium text-primary mb-2">
+			HERRAMIENTAS
+		</div>
+		<h1 class="text-4xl font-bold tracking-tight mb-4">
+			Calculadora de Grasa Corporal
+		</h1>
+		<p class="text-xl text-muted-foreground max-w-[800px] mx-auto">
+			Estima tu porcentaje de grasa corporal usando métodos científicos
+			precisos. Obtén un análisis detallado de tu composición corporal y
+			recomendaciones personalizadas.
+		</p>
+	</div>
+
+	<div class="grid lg:grid-cols-2 gap-6">
+		<BodyFatCalculator />
+
+		<div class="space-y-6">
+			<Card>
+				<CardHeader>
+					<CardTitle as="h2" class="flex items-center gap-2">
+						<Info class="h-5 w-5" />
+						¿Por qué es importante el porcentaje de grasa corporal?
+					</CardTitle>
+				</CardHeader>
+				<CardContent>
+					<p class="mb-3">
+						El porcentaje de grasa corporal es un indicador más preciso de
+						la salud que el IMC, ya que distingue entre masa grasa y masa
+						muscular:
+					</p>
+					<ul class="list-disc pl-5 space-y-2">
+						<li>
+							<strong>Función Hormonal:</strong> La grasa corporal afecta la
+							producción de hormonas como estrógeno y testosterona
+						</li>
+						<li>
+							<strong>Riesgo Cardiovascular:</strong> El exceso de grasa,
+							especialmente abdominal, aumenta el riesgo de enfermedades
+							cardíacas
+						</li>
+						<li>
+							<strong>Metabolismo:</strong> La composición corporal influye
+							en la tasa metabólica basal
+						</li>
+						<li>
+							<strong>Rendimiento:</strong> Un porcentaje óptimo mejora el
+							rendimiento físico y la calidad de vida
+						</li>
+					</ul>
+				</CardContent>
+			</Card>
+
+			<Card>
+				<CardHeader>
+					<CardTitle as="h2" class="flex items-center gap-2">
+						<Ruler class="h-5 w-5" />
+						Métodos de Cálculo Utilizados
+					</CardTitle>
+				</CardHeader>
+				<CardContent>
+					<div class="space-y-4">
+						<div>
+							<h3 class="font-medium mb-2">US Navy</h3>
+							<p class="text-sm text-muted-foreground">
+								Método desarrollado por la Marina de EE.UU., basado en
+								circunferencias corporales. Ampliamente validado y preciso
+								para la mayoría de personas.
+							</p>
+						</div>
+						<div>
+							<h3 class="font-medium mb-2">Deurenberg</h3>
+							<p class="text-sm text-muted-foreground">
+								Fórmula que utiliza IMC, edad y género. Especialmente útil
+								para poblaciones generales y tiene en cuenta los cambios
+								relacionados con la edad.
+							</p>
+						</div>
+						<div>
+							<h3 class="font-medium mb-2">Jackson-Pollock</h3>
+							<p class="text-sm text-muted-foreground">
+								Basado en investigación científica extensa. Versión
+								simplificada que proporciona estimaciones confiables sin
+								necesidad de equipos especializados.
+							</p>
+						</div>
+					</div>
+				</CardContent>
+			</Card>
+
+			<Card>
+				<CardHeader>
+					<CardTitle as="h2" class="flex items-center gap-2">
+						<Activity class="h-5 w-5" />
+						Rangos de Grasa Corporal Saludables
+					</CardTitle>
+				</CardHeader>
+				<CardContent>
+					<div class="space-y-4">
+						<div>
+							<h3 class="font-medium mb-2">Hombres</h3>
+							<div class="space-y-1 text-sm">
+								<div class="flex justify-between">
+									<span>Atlético:</span>
+									<span class="text-green-600">6-13%</span>
+								</div>
+								<div class="flex justify-between">
+									<span>Bueno:</span>
+									<span class="text-green-500">14-17%</span>
+								</div>
+								<div class="flex justify-between">
+									<span>Aceptable:</span>
+									<span class="text-yellow-600">18-24%</span>
+								</div>
+								<div class="flex justify-between">
+									<span>Alto:</span>
+									<span class="text-red-600">25%+</span>
+								</div>
+							</div>
+						</div>
+						<div>
+							<h3 class="font-medium mb-2">Mujeres</h3>
+							<div class="space-y-1 text-sm">
+								<div class="flex justify-between">
+									<span>Atlético:</span>
+									<span class="text-green-600">14-20%</span>
+								</div>
+								<div class="flex justify-between">
+									<span>Bueno:</span>
+									<span class="text-green-500">21-24%</span>
+								</div>
+								<div class="flex justify-between">
+									<span>Aceptable:</span>
+									<span class="text-yellow-600">25-31%</span>
+								</div>
+								<div class="flex justify-between">
+									<span>Alto:</span>
+									<span class="text-red-600">32%+</span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</CardContent>
+			</Card>
+
+			<Card>
+				<CardHeader>
+					<CardTitle as="h2" class="flex items-center gap-2">
+						<Book class="h-5 w-5" />
+						Recursos Adicionales
+					</CardTitle>
+				</CardHeader>
+				<CardContent>
+					<ul class="space-y-2">
+						<li>
+							<a
+								href="/herramientas/calculadora-imc"
+								class="text-blue-700 underline hover:no-underline"
+							>
+								Calculadora de IMC
+							</a>
+						</li>
+						<li>
+							<a
+								href="/herramientas/calculadora-relacion-cintura-cadera"
+								class="text-blue-700 underline hover:no-underline"
+							>
+								Calculadora de Relación Cintura-Cadera
+							</a>
+						</li>
+						<li>
+							<a
+								href="/herramientas/calculadora-calorias"
+								class="text-blue-700 underline hover:no-underline"
+							>
+								Calculadora de Calorías
+							</a>
+						</li>
+						<li>
+							<a
+								href="/herramientas/calculadora-macronutrientes"
+								class="text-blue-700 underline hover:no-underline"
+							>
+								Calculadora de Macronutrientes
+							</a>
+						</li>
+					</ul>
+				</CardContent>
+			</Card>
+		</div>
+	</div>
+
+	<Card class="mt-6">
+		<CardHeader>
+			<CardTitle as="h2" class="flex items-center gap-2">
+				<Activity class="h-5 w-5" />
+				Consejos para Mejorar tu Composición Corporal
+			</CardTitle>
+		</CardHeader>
+		<CardContent>
+			<p class="mb-3">
+				Para optimizar tu porcentaje de grasa corporal y mejorar tu salud
+				general:
+			</p>
+			<ul class="list-disc pl-5 space-y-1">
+				<li>
+					Combina entrenamiento de fuerza con ejercicio cardiovascular
+					regular
+				</li>
+				<li>
+					Mantén un déficit calórico moderado si necesitas reducir grasa
+					corporal
+				</li>
+				<li>
+					Prioriza alimentos integrales y proteínas magras en tu dieta
+				</li>
+				<li>Asegura un descanso adecuado de 7-9 horas por noche</li>
+				<li>
+					Mantén niveles de estrés bajo control con técnicas de relajación
+				</li>
+				<li>Hidrata tu cuerpo adecuadamente durante todo el día</li>
+				<li>Sé consistente con tus hábitos saludables a largo plazo</li>
+			</ul>
+		</CardContent>
+	</Card>
+
+	<div class="mt-8 bg-blue-50 rounded-lg p-6">
+		<div class="flex items-start gap-3">
+			<Info class="h-5 w-5 text-blue-600 mt-0.5 shrink-0" />
+			<div>
+				<h3 class="font-medium text-blue-900 mb-2">
+					Importante: Limitaciones de las Estimaciones
+				</h3>
+				<div class="text-sm text-blue-800 space-y-2">
+					<p>
+						Estas calculadoras proporcionan estimaciones basadas en fórmulas
+						científicas, pero pueden tener variaciones según:
+					</p>
+					<ul class="list-disc pl-5 space-y-1">
+						<li>Nivel de hidratación y momento del día</li>
+						<li>Distribución única de masa muscular</li>
+						<li>Diferencias étnicas y genéticas</li>
+						<li>Precisión en las medidas corporales</li>
+					</ul>
+					<p>
+						Para mediciones más precisas, considera métodos como DEXA scan,
+						bioimpedancia profesional, o consulta con especialistas en
+						composición corporal.
+					</p>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="mt-8 text-center max-w-2xl mx-auto">
+		<p class="text-muted-foreground mb-4">
+			Recuerda que estas calculadoras proporcionan estimaciones. Para un
+			análisis completo de composición corporal y un plan personalizado,{" "}
+			<a
+				href="/#precios"
+				class="text-blue-700 underline hover:no-underline"
+			>
+				conoce el Plan a distancia
+			</a>{" "}
+			con nuestros especialistas.
+		</p>
+	</div>
+
+	<div class="mt-12 bg-linear-to-r from-[#C54B5B] to-[#B03F4F] rounded-lg shadow-lg">
+		<div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:py-16 lg:px-8 lg:flex lg:items-center lg:justify-between">
+			<h2 class="text-3xl font-extrabold tracking-tight text-white sm:text-4xl">
+				<span class="block">
+					¿Quieres optimizar tu composición corporal?
+				</span>
+				<span class="block text-gray-100">
+					Obtén un plan personalizado para alcanzar tus objetivos.
+				</span>
+			</h2>
+			<div class="mt-8 flex lg:mt-0 lg:shrink-0">
+				<div class="inline-flex rounded-md shadow-sm">
+					<a href="/#precios" class={buttonClass({ variant: "plain", class: "inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-[#B5404F] bg-white hover:bg-gray-50" })}>
+							<Calendar class="w-5 h-5 mr-2" />
+							Ver plan a distancia
+						</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</Layout>

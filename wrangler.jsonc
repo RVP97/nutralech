@@ -1,0 +1,26 @@
+{
+	// Nutralech on Cloudflare Workers static assets. Pages are served straight from dist/;
+	// worker/index.ts runs only when no file matches (redirects, /api/*, 404s).
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"name": "nutralech",
+	// Rovapin@gmail.com's Account (the nutralech.com zone lives here).
+	"account_id": "0a386cbd8884cf2b1dbdb84125d4a364",
+	"main": "worker/index.ts",
+	"compatibility_date": "2026-10-01",
+	// Served only on its custom domains; no *.workers.dev or preview URLs.
+	"workers_dev": false,
+	"preview_urls": false,
+	"routes": [{ "pattern": "astro.nutralech.com", "custom_domain": true }],
+	"assets": {
+		"directory": "dist",
+		"binding": "ASSETS",
+		"html_handling": "drop-trailing-slash",
+		"not_found_handling": "none",
+		"run_worker_first": ["/api/*", "/_next/*"]
+	},
+	"observability": { "enabled": true },
+	"vars": { "MAILROOM_URL": "https://mailroom.vallepinto.com" }
+	// Secrets (wrangler secret put): MAILROOM_API_KEY (set by mailroom/scripts/connect-app.sh
+	// nutralech), TURNSTILE_SECRET_KEY, STRIPE_SECRET_KEY.
+	// The Turnstile site key and Stripe publishable key are public and live in src/scripts/.
+}

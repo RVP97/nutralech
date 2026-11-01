@@ -1,0 +1,230 @@
+---
+import { ArrowRight, Check, FileText, Leaf, Star } from "@lucide/astro";
+import Picture from "@/components/Picture.astro";
+import { buttonClass } from "@/components/ui/button";
+import Card from "@/components/ui/Card.astro";
+import CardContent from "@/components/ui/CardContent.astro";
+import Layout from "@/layouts/Layout.astro";
+import { pageSeo } from "@/lib/seo";
+
+const services = [
+	{
+		title: "Plan a distancia",
+		description: "Plan alimenticio 100% personalizado sin consulta presencial ni videollamada",
+	},
+	{
+		title: "Asesoramiento Global",
+		description: "Nutrición sin fronteras, desde cualquier parte del mundo",
+	},
+	{
+		title: "Soporte por WhatsApp",
+		description: "Dudas del plan y seguimiento cercano después de la entrega",
+	},
+	{
+		title: "Planes personalizados",
+		description: "Planes por equivalencias con ejemplos de menú adaptados a tus metas",
+	},
+];
+
+const seo = pageSeo({
+	title: "Conoce quién es Marialy Alonso",
+	description:
+		"Marialy Alonso es una nutrióloga e influencer con más de 780k seguidores en redes sociales y ofrece servicios de asesoría nutricional personalizada.",
+	keywords: [
+		"salud",
+		"bienestar",
+		"nutrición",
+		"acerca de",
+		"nutriologa",
+		"asesoría personalizada",
+		"nutralech",
+		"marialy alonso",
+	],
+	url: "https://www.nutralech.com/acerca-de-mi",
+});
+---
+<Layout seo={seo}>
+		<div class="min-h-screen py-12 md:py-0 bg-linear-to-b from-white via-pink-50/50 to-white">
+			<div class="pointer-events-none absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMSIgY3k9IjEiIHI9IjEiIGZpbGw9InJnYmEoMjE4LCA5NSwgMTExLCAwLjA3KSIvPjwvc3ZnPg==')] opacity-40" />
+			<div class="absolute top-20 right-0 w-96 h-96 rounded-full bg-[#DA5F6F]/20 blur-[128px]" />
+			<div class="absolute bottom-0 right-20 w-96 h-96 rounded-full bg-yellow-200/30 blur-[128px]" />
+
+			<div class="container relative px-4 mx-auto">
+				<section class="py-8 md:py-24">
+					<div class="grid lg:grid-cols-2 gap-12 items-center lg:gap-8 xl:gap-16">
+						<div class="space-y-8">
+							<div class="inline-flex items-center gap-2 text-[#B5404F] font-semibold bg-[#DA5F6F]/10 px-4 py-2 rounded-full">
+								<Leaf class="h-5 w-5" />
+								Nutrición & Bienestar
+							</div>
+
+							<h1 class="font-serif text-5xl font-medium tracking-tight sm:text-6xl md:text-7xl text-gray-900">
+								Marialy <span class="text-[#B5404F]">Alonso</span>
+							</h1>
+
+							<p class="text-xl text-gray-600 md:text-2xl max-w-xl leading-relaxed">
+								Transformando vidas a través de la{" "}
+								<span class="font-semibold text-[#B5404F]">
+									nutrición consciente
+								</span>{" "}
+								y el{" "}
+								<span class="font-semibold text-[#B5404F]">
+									bienestar integral
+								</span>
+								.
+							</p>
+
+							<div class="flex flex-wrap gap-4 items-center">
+								<a
+									href="/#precios"
+									class="inline-flex h-14 items-center justify-center gap-2 rounded-full bg-[#C54B5B] px-8 font-medium text-white transition-colors hover:bg-[#B03F4F] text-lg"
+								>
+									<FileText class="h-5 w-5" />
+									Ver plan a distancia
+								</a>
+
+								<a
+									href="/#precios"
+									class="inline-flex h-14 items-center justify-center gap-2 rounded-full border-2 border-[#DA5F6F] bg-transparent px-8 font-medium text-[#B5404F] transition-colors hover:bg-[#DA5F6F]/5 text-lg"
+								>
+									Ver precios
+									<ArrowRight class="h-5 w-5" />
+								</a>
+							</div>
+
+							<div class="flex items-center gap-4 text-gray-600">
+								<div class="flex">
+									{[1, 2, 3, 4, 5].map((star) => (
+										<Star
+											class="h-5 w-5 fill-[#DA5F6F] text-[#B5404F]"
+										/>
+									))}
+								</div>
+								<p class="text-sm">Más de 500 clientes satisfechos</p>
+							</div>
+						</div>
+
+						<div class="relative w-full max-w-lg mx-auto lg:max-w-none">
+							<div class="absolute inset-0 bg-linear-to-br from-[#DA5F6F]/20 to-yellow-200/30 rounded-3xl transform rotate-3"></div>
+							<Picture
+								src="/images/marialy.webp"
+								alt="Marialy Alonso, nutricionista profesional"
+								width={600}
+								height={600}
+								sizes="(max-width: 1024px) min(100vw, 512px), 600px"
+								priority
+								class="rounded-3xl shadow-lg relative z-10 transform -rotate-3 transition-transform hover:rotate-0 duration-300 w-full h-auto"
+							/>
+						</div>
+					</div>
+				</section>
+
+				<section class="py-16" id="servicios">
+					<div class="text-center mb-8">
+						<h2 class="mt-4 text-4xl font-serif font-medium tracking-tight sm:text-5xl">
+							Mis Servicios
+						</h2>
+						<p class="mt-4 text-base text-muted-foreground max-w-2xl mx-auto">
+							Conoce los servicios que ofrezco para ayudarte a alcanzar tus
+							objetivos
+						</p>
+					</div>
+					<div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+						{services.map((service) => (
+							<Card
+								class="bg-white hover:shadow-lg transition-shadow duration-300"
+							>
+								<CardContent class="p-6 flex flex-col items-center text-center h-full">
+									<h3 class="text-xl font-semibold mb-2 text-gray-900">
+										{service.title}
+									</h3>
+									<p class="text-gray-600 mb-4 grow">
+										{service.description}
+									</p>
+									<a
+										href="/#precios"
+										class="text-[#B5404F] hover:text-[#9A3443] p-0 h-auto font-semibold mt-auto inline-flex items-center"
+									>
+										Saber más <ArrowRight class="ml-1 h-4 w-4" />
+									</a>
+								</CardContent>
+							</Card>
+						))}
+					</div>
+				</section>
+
+				<section class="py-8">
+					<div class="text-center mb-8">
+						<h2 class="mt-4 text-4xl font-serif font-medium tracking-tight sm:text-5xl">
+							Mi Enfoque
+						</h2>
+						<p class="mt-4 text-base text-muted-foreground max-w-2xl mx-auto">
+							Conoce mi enfoque para ayudarte a alcanzar tus objetivos
+						</p>
+					</div>
+					<div class="grid md:grid-cols-2 gap-8">
+						<Card class="bg-white">
+							<CardContent class="p-8">
+								<h3 class="text-2xl font-semibold mb-4">Mi Filosofía</h3>
+								<p class="text-gray-700 leading-relaxed mb-6">
+									Creo firmemente en que la nutrición va más allá de contar
+									calorías. Se trata de nutrir tu cuerpo, mente y espíritu de
+									manera integral. Mi enfoque se basa en la ciencia más
+									reciente, pero también en la comprensión profunda de que cada
+									persona es única.
+								</p>
+							</CardContent>
+						</Card>
+						<Card class="bg-white">
+							<CardContent class="p-8">
+								<h3 class="text-2xl font-semibold mb-6">
+									Pilares de mi Trabajo
+								</h3>
+								<ul class="space-y-4">
+									{[
+										"Nutrición personalizada basada en tu estilo de vida",
+										"Integración de hábitos saludables sostenibles",
+										"Apoyo emocional y motivacional continuo",
+										"Educación nutricional para decisiones informadas",
+									].map((item) => (
+										<li class="flex items-start">
+											<Check class="h-6 w-6 text-[#B5404F] mr-2 shrink-0" />
+											<span class="text-gray-700">{item}</span>
+										</li>
+									))}
+								</ul>
+							</CardContent>
+						</Card>
+					</div>
+				</section>
+
+
+				<section class="py-16">
+					<div class="bg-linear-to-br from-[#DA5F6F] to-[#FF8C94] text-white rounded-3xl p-12 relative overflow-hidden">
+						<div class="absolute inset-0 bg-pattern opacity-10"></div>
+						<div class="relative z-10 max-w-4xl mx-auto text-center">
+							<h2 class="text-4xl font-serif font-medium mb-6">
+								¿Listo para transformar tu vida?
+							</h2>
+							<p class="text-xl mb-8 leading-relaxed">
+								Descubre cómo una nutrición personalizada puede elevar cada
+								aspecto de tu vida. Juntos, crearemos un plan que se adapte
+								perfectamente a tus necesidades y metas, guiándote hacia un
+								futuro más saludable y equilibrado.
+							</p>
+							<div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+								<a href="/#precios" class={buttonClass({ variant: "plain", class: "bg-white text-[#B5404F] hover:bg-gray-100 text-lg px-8 py-6 h-auto rounded-full transition-colors duration-300 shadow-lg hover:shadow-xl" })}>
+									Comienza Tu Viaje Nutricional
+								</a>
+								<a href="/#servicios" class={buttonClass({ variant: "plain", class: "bg-transparent hover:text-white border-2 border-white text-white hover:bg-white/10 text-lg px-8 py-6 rounded-full transition-colors duration-300 h-auto" })}>
+									Conoce Más
+								</a>
+							</div>
+						</div>
+						<div class="absolute bottom-0 left-0 w-24 h-24 bg-white/20 rounded-full -mb-12 -ml-12"></div>
+						<div class="absolute top-0 right-0 w-32 h-32 bg-white/20 rounded-full -mt-16 -mr-16"></div>
+					</div>
+				</section>
+			</div>
+		</div>
+</Layout>

@@ -1,0 +1,20 @@
+---
+/** One accordion item (was Radix Accordion): a native <details>, so it works without JavaScript. */
+import { ChevronDown } from "@lucide/astro";
+
+interface Props {
+	question: string;
+	class?: string;
+	summaryClass?: string;
+	contentClass?: string;
+	name?: string;
+}
+const { question, class: className, summaryClass, contentClass, name } = Astro.props;
+---
+<details class:list={["group", className]} name={name}>
+	<summary class:list={["flex flex-1 items-center justify-between gap-4 text-sm font-medium cursor-pointer", summaryClass]}>
+		<h3 class="text-left">{question}</h3>
+		<ChevronDown class="accordion-chevron h-4 w-4 shrink-0 text-muted-foreground transition-transform duration-200" />
+	</summary>
+	<div class:list={["pb-4 pt-0 text-sm", contentClass]}><slot /></div>
+</details>

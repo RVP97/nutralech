@@ -1,0 +1,95 @@
+---
+import { Info, Scale } from "@lucide/astro";
+import Card from "@/components/ui/Card.astro";
+import CardContent from "@/components/ui/CardContent.astro";
+import CardDescription from "@/components/ui/CardDescription.astro";
+import CardHeader from "@/components/ui/CardHeader.astro";
+import CardTitle from "@/components/ui/CardTitle.astro";
+import BodyFields from "./BodyFields.astro";
+import { calcButtonClass } from "./form";
+---
+<Card class="w-full h-full flex flex-col">
+	<CardHeader>
+		<CardTitle as="h2" class="text-2xl">Calculadora de Peso Ideal</CardTitle>
+		<CardDescription>Calcula tu peso ideal basado en diferentes fórmulas médicas</CardDescription>
+	</CardHeader>
+	<CardContent class="grow space-y-6">
+		<form data-calc="peso-ideal" novalidate class="space-y-4">
+			<BodyFields age={false} weight={false} />
+			<button type="submit" class:list={[calcButtonClass, "mt-4"]}>Calcular Peso Ideal</button>
+		</form>
+
+		<div data-part="result" hidden class="space-y-4" aria-live="polite">
+			<div class="rounded-lg border p-4 space-y-2">
+				<div class="flex items-center gap-2">
+					<Scale class="h-5 w-5 text-muted-foreground" />
+					<span class="font-medium">Estimación de Peso Ideal</span>
+				</div>
+				<div class="text-sm text-muted-foreground" data-out="description"></div>
+			</div>
+			<div class="space-y-4">
+				{[
+					["Devine", "Fórmula comúnmente usada en farmacia clínica"],
+					["Robinson", "Considerada más precisa para la población general"],
+					["Miller", "Fórmula que tiende a dar resultados más moderados"],
+				].map(([formula, description]) => (
+					<div class="rounded-lg bg-gray-50 p-4">
+						<div class="font-medium">{formula}</div>
+						<div class="text-2xl font-bold" data-out={formula}></div>
+						<div class="text-sm text-muted-foreground">{description}</div>
+					</div>
+				))}
+			</div>
+			<div class="rounded-lg bg-gray-50 p-4 space-y-3">
+				<div class="flex items-center gap-2">
+					<Info class="h-5 w-5 text-muted-foreground" />
+					<span class="font-medium">Consideraciones Importantes</span>
+				</div>
+				<ul class="list-disc pl-5 space-y-1">
+					<li class="text-sm text-muted-foreground">El peso ideal es solo una referencia y puede variar según factores individuales</li>
+					<li class="text-sm text-muted-foreground">Considera tu estructura corporal y masa muscular</li>
+					<li class="text-sm text-muted-foreground">Consulta con un profesional de la salud para objetivos personalizados</li>
+					<li class="text-sm text-muted-foreground">Mantén hábitos saludables independientemente del peso</li>
+				</ul>
+			</div>
+		</div>
+	</CardContent>
+</Card>
+
+<script>
+	import { out, part, readBody, register } from "@/scripts/tools/calc";
+
+	// [base kg, kg per inch over 5 ft] for men and women.
+	const FORMULAS: Record<string, { male: [number, number]; female: [number, number] }> = {
+		Devine: { male: [50, 2.3], female: [45.5, 2.3] },
+		Robinson: { male: [52, 1.9], female: [49, 1.7] },
+		Miller: { male: [56.2, 1.41], female: [53.1, 1.36] },
+	};
+
+	register("peso-ideal", (form) => {
+		const result = part(form.parentElement as HTMLElement, "result");
+		form.addEventListener("submit", (event) => {
+			event.preventDefault();
+			const body = readBody(form);
+			if (!body) return;
+			const { gender, metric, heightCm, feet, inches } = body;
+			const unit = metric ? "kg" : "lb";
+			const overFiveFeet = (heightCm - 152.4) / 2.54;
+			const weights = Object.entries(FORMULAS).map(([name, f]) => {
+				const [base, perInch] = gender === "male" ? f.male : f.female;
+				const kg = base + perInch * overFiveFeet;
+				const weight = metric ? kg : kg * 2.20462;
+				out(result, name, `${weight.toFixed(1)} ${unit}`);
+				return weight;
+			});
+			const avg = weights.reduce((a, b) => a + b, 0) / weights.length;
+			const height = metric ? `${heightCm}cm` : `${feet}'${inches}"`;
+			out(
+				result,
+				"description",
+				`Para ${gender === "male" ? "un hombre" : "una mujer"} de ${height}, el peso ideal estimado promedio es de ${avg.toFixed(1)}${unit}.`,
+			);
+			result.hidden = false;
+		});
+	});
+</script>

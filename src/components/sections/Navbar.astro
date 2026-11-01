@@ -1,0 +1,120 @@
+---
+import { Menu, X } from "@lucide/astro";
+import Logo from "@/components/icons/Logo.astro";
+import WhatsApp from "@/components/icons/WhatsApp.astro";
+import { WA_LINK } from "@/lib/site";
+
+const links = [
+	{ label: "Inicio", href: "/" },
+	{ label: "Planes", href: "/#precios" },
+	{ label: "Collabs", href: "/colaboraciones" },
+	{ label: "Herramientas", href: "/herramientas" },
+	{ label: "Blog", href: "/blog" },
+	{ label: "Contacto", href: "/contacto" },
+];
+
+const pathname = Astro.url.pathname.replace(/\.html$/, "").replace(/\/$/, "") || "/";
+const isActive = (href: string) => {
+	if (href.includes("#")) return false;
+	if (href === "/") return pathname === "/";
+	return pathname.startsWith(href);
+};
+---
+<div class="fixed top-4 left-0 right-0 z-50 flex justify-center px-4">
+	<nav
+		data-navbar
+		class="w-full max-w-4xl rounded-2xl border transition-all duration-300 border-transparent bg-[oklch(99.5%_0.003_12)]/70 backdrop-blur-lg data-[scrolled]:border-[oklch(92%_0.005_12)] data-[scrolled]:bg-[oklch(99.5%_0.003_12)]/90 data-[scrolled]:shadow-sm data-[scrolled]:backdrop-blur-xl"
+	>
+		<div class="flex items-center justify-between h-14 px-5">
+			<a href="/" class="flex items-center gap-2 shrink-0">
+				<Logo class="h-6 w-6" />
+				<span class="text-base font-semibold text-[oklch(22%_0.005_12)]">Nutralech</span>
+			</a>
+
+			<div class="hidden lg:flex items-center gap-1">
+				{
+					links.map((link) => (
+						<a
+							href={link.href}
+							aria-current={isActive(link.href) ? "page" : undefined}
+							class:list={[
+								"rounded-full px-3.5 py-1.5 text-sm transition-colors duration-150",
+								isActive(link.href)
+									? "bg-[#DA5F6F]/10 font-medium text-[#A63A49]"
+									: "text-[oklch(40%_0.005_12)] hover:text-[oklch(22%_0.005_12)]",
+							]}
+						>
+							{link.label}
+						</a>
+					))
+				}
+			</div>
+
+			<div class="flex items-center gap-3">
+				<a
+					href="/#precios"
+					class="hidden sm:inline-flex h-8 items-center rounded-full bg-[#C54B5B] px-3.5 text-xs font-medium text-white transition-colors duration-150 hover:bg-[#B03F4F]"
+				>
+					Ver planes
+				</a>
+				<a
+					href={WA_LINK}
+					target="_blank"
+					rel="noopener noreferrer"
+					class="hidden sm:inline-flex h-8 items-center gap-1.5 rounded-full bg-[oklch(95%_0.005_12)] px-3.5 text-xs font-medium text-[oklch(35%_0.005_12)] transition-colors duration-150 hover:bg-[#DA5F6F]/10 hover:text-[#C54B5B]"
+				>
+					<WhatsApp class="h-3.5 w-3.5" />
+					WhatsApp
+				</a>
+
+				<button
+					type="button"
+					data-menu-toggle
+					aria-expanded="false"
+					aria-controls="mobile-menu"
+					aria-label="Abrir menú"
+					class="group lg:hidden flex h-10 w-10 items-center justify-center rounded-full text-[oklch(40%_0.005_12)] transition-colors duration-150 hover:bg-[oklch(95%_0.005_12)]"
+				>
+					<Menu class="h-4 w-4 group-aria-expanded:hidden" />
+					<X class="h-4 w-4 hidden group-aria-expanded:block" />
+				</button>
+			</div>
+		</div>
+
+		<div id="mobile-menu" hidden class="lg:hidden border-t border-[oklch(94%_0.005_12)] px-5 py-3">
+			<nav class="flex flex-col gap-0.5" aria-label="Menú">
+				{
+					links.map((link) => (
+						<a
+							href={link.href}
+							aria-current={isActive(link.href) ? "page" : undefined}
+							class:list={[
+								"rounded-lg px-3 py-2.5 text-sm transition-colors duration-150",
+								isActive(link.href)
+									? "bg-[#DA5F6F]/10 font-medium text-[#A63A49]"
+									: "text-[oklch(35%_0.005_12)] hover:bg-[oklch(96%_0.005_12)]",
+							]}
+						>
+							{link.label}
+						</a>
+					))
+				}
+				<a
+					href="/#precios"
+					class="mt-2 flex items-center justify-center rounded-full bg-[#C54B5B] px-3 py-2.5 text-sm font-medium text-white hover:bg-[#B03F4F]"
+				>
+					Ver plan a distancia
+				</a>
+				<a
+					href={WA_LINK}
+					target="_blank"
+					rel="noopener noreferrer"
+					class="mt-1 flex items-center gap-2 rounded-lg px-3 py-2.5 text-sm text-[oklch(35%_0.005_12)] hover:bg-[oklch(96%_0.005_12)]"
+				>
+					<WhatsApp class="h-4 w-4" />
+					WhatsApp
+				</a>
+			</nav>
+		</div>
+	</nav>
+</div>
