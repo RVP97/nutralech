@@ -2,7 +2,7 @@
 
 | Step | Status | Document |
 |---|---|---|
-| Audit, fixes, Markdown versions and verification (Nov 2026) | Done on the preview; live after the www switch | [delivery-summary.md](delivery-summary.md) |
+| Audit, fixes, Markdown versions and verification (Nov 2026) | Live on www since 2026-11-01 | [delivery-summary.md](delivery-summary.md) |
 
 Skills screened for this pass:
 

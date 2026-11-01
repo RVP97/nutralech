@@ -1,6 +1,6 @@
 # SEO pass, November 2026: delivery summary
 
-**Status:** done on the code and checked on the preview (https://astro.nutralech.com, `noindex` on purpose). Production (www.nutralech.com) still runs the old Next.js site until the switch is approved.
+**Status:** live on www.nutralech.com since 2026-11-01. The sitemap was resubmitted in Search Console (domain property) the same day.
 **Scope:** all 34 indexable pages (home, 5 main pages, 11 calculators, 17 blog posts). No Search Console, analytics or backlink data were available, so nothing here measures rankings or traffic.
 
 ## What the audit found (facts, from the built HTML)
