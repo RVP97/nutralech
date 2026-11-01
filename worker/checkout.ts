@@ -20,7 +20,7 @@ class StripeError extends Error {
 	}
 }
 
-async function stripe<T>(env: Env, path: string, form?: Record<string, string>): Promise<T> {
+export async function stripe<T>(env: Env, path: string, form?: Record<string, string>): Promise<T> {
 	if (!env.STRIPE_SECRET_KEY) throw new StripeError("Stripe is not configured", 500);
 	const response = await fetch(`https://api.stripe.com/v1/${path}`, {
 		method: form ? "POST" : "GET",
@@ -36,13 +36,13 @@ async function stripe<T>(env: Env, path: string, form?: Record<string, string>):
 	return body;
 }
 
-interface Session {
+export interface CheckoutSession {
 	client_secret?: string;
 	status: string;
 	payment_status: string;
 	amount_total: number | null;
 	currency: string;
-	customer_details?: { email?: string | null } | null;
+	customer_details?: { email?: string | null; name?: string | null } | null;
 	payment_intent?: { id: string; latest_charge?: Charge | null } | null;
 	line_items?: { data: LineItem[] };
 }
@@ -67,7 +67,7 @@ export async function handleCheckout(request: Request, env: Env): Promise<Respon
 			const { priceId } = (await request.json().catch(() => ({}))) as { priceId?: string };
 			if (!priceId || typeof priceId !== "string") return json({ message: "Missing price_id" }, 400);
 			const origin = new URL(request.url).origin;
-			const session = await stripe<Session>(env, "checkout/sessions", {
+			const session = await stripe<CheckoutSession>(env, "checkout/sessions", {
 				ui_mode: "embedded",
 				"line_items[0][price]": priceId,
 				"line_items[0][quantity]": "1",
@@ -85,7 +85,7 @@ export async function handleCheckout(request: Request, env: Env): Promise<Respon
 			const sessionId = new URL(request.url).searchParams.get("session_id");
 			if (!sessionId || !/^cs_[A-Za-z0-9_]+$/.test(sessionId))
 				return json({ message: "Missing session_id" }, 400);
-			const session = await stripe<Session>(
+			const session = await stripe<CheckoutSession>(
 				env,
 				`checkout/sessions/${sessionId}?expand[]=line_items&expand[]=payment_intent.latest_charge`,
 			);

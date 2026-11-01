@@ -171,8 +171,31 @@ const dialogClass =
 </section>
 
 <script>
-	// Plan buttons open the payment dialog with Stripe's embedded checkout; Stripe.js is only
-	// downloaded on the first click.
+	// Plan buttons open the payment dialog with Stripe's embedded checkout. Stripe.js is not part
+	// of the page: it starts loading when the plans come near the screen or a plan button is
+	// pointed at or focused, so it is usually ready by the click.
+	const preload = () => void import("@/scripts/checkout").then((m) => m.preloadCheckout());
+	const intent = (event: Event) => {
+		if ((event.target as Element | null)?.closest?.("[data-checkout]")) preload();
+	};
+	document.addEventListener("pointerover", intent, { passive: true });
+	document.addEventListener("focusin", intent);
+	document.addEventListener("touchstart", intent, { passive: true });
+	let observer: IntersectionObserver | undefined;
+	document.addEventListener("astro:page-load", () => {
+		observer?.disconnect();
+		const plans = document.getElementById("precios");
+		if (!plans) return;
+		observer = new IntersectionObserver(
+			(entries) => {
+				if (!entries.some((e) => e.isIntersecting)) return;
+				observer?.disconnect();
+				preload();
+			},
+			{ rootMargin: "300px 0px" },
+		);
+		observer.observe(plans);
+	});
 	document.addEventListener("click", (event) => {
 		const button = (event.target as Element | null)?.closest?.<HTMLElement>("[data-checkout]");
 		if (!button?.dataset.checkout) return;

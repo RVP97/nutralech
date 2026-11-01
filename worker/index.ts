@@ -5,12 +5,14 @@
  *
  *   - POST /api/contact (Turnstile check + email through Mailroom)
  *   - /api/checkout_sessions (Stripe embedded checkout)
+ *   - POST /api/stripe/webhook (paid plans: the document to the buyer, a note to the team)
  *   - the redirects from next.config.mjs, and trailing slashes (308)
  *   - old /_next/image URLs → the original image
  *   - the 404 page, with a 404 status
  */
 import { handleCheckout } from "./checkout";
 import { handleContact } from "./contact";
+import { handleStripeWebhook } from "./stripe-webhook";
 
 export interface Env {
 	ASSETS: Fetcher;
@@ -18,6 +20,7 @@ export interface Env {
 	MAILROOM_API_KEY?: string;
 	TURNSTILE_SECRET_KEY?: string;
 	STRIPE_SECRET_KEY?: string;
+	STRIPE_WEBHOOK_SECRET?: string;
 }
 
 /** next.config.mjs redirects (all permanent: 301 because they set statusCode). */
@@ -50,6 +53,7 @@ export default {
 
 		if (pathname === "/api/contact") return handleContact(request, env);
 		if (pathname === "/api/checkout_sessions") return handleCheckout(request, env);
+		if (pathname === "/api/stripe/webhook") return handleStripeWebhook(request, env);
 
 		if (pathname === "/_next/image") {
 			const original = url.searchParams.get("url");

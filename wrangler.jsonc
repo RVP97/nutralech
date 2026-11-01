@@ -21,6 +21,7 @@
 	"observability": { "enabled": true },
 	"vars": { "MAILROOM_URL": "https://mailroom.vallepinto.com" }
 	// Secrets (wrangler secret put): MAILROOM_API_KEY (set by mailroom/scripts/connect-app.sh
-	// nutralech), TURNSTILE_SECRET_KEY, STRIPE_SECRET_KEY.
+	// nutralech), TURNSTILE_SECRET_KEY, STRIPE_SECRET_KEY, STRIPE_WEBHOOK_SECRET (of the Stripe
+	// webhook endpoint for /api/stripe/webhook).
 	// The Turnstile site key and Stripe publishable key are public and live in src/scripts/.
 }
