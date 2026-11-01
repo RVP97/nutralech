@@ -22,7 +22,3 @@
 
 /llms.txt
   Content-Type: text/plain; charset=utf-8
-
-# The preview host stays out of search results.
-https://astro.nutralech.com/*
-  X-Robots-Tag: noindex
