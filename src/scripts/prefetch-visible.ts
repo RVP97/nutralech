@@ -16,26 +16,37 @@ let onScreenImages = 0;
 
 function slowConnection(): boolean {
 	const c = (
-		navigator as Navigator & { connection?: { saveData?: boolean; effectiveType?: string } }
+		navigator as Navigator & {
+			connection?: { saveData?: boolean; effectiveType?: string };
+		}
 	).connection;
-	return !!c && (c.saveData === true || /2g/.test(c.effectiveType ?? ''));
+	return !!c && (c.saveData === true || /2g/.test(c.effectiveType ?? ""));
 }
 
 function pageUrl(link: HTMLAnchorElement): string | null {
-	if (link.dataset.astroReload !== undefined || (link.target && link.target !== '_self'))
+	if (
+		link.dataset.astroReload !== undefined ||
+		(link.target && link.target !== "_self")
+	)
 		return null;
-	if (link.hasAttribute('download') || link.origin !== location.origin) return null;
+	if (link.hasAttribute("download") || link.origin !== location.origin)
+		return null;
 	if (/^\/(api\/|_)|\.(md|xml|txt|pdf|json)$/.test(link.pathname)) return null;
 	if (link.pathname === location.pathname) return null;
 	return link.origin + link.pathname + link.search;
 }
 
-function fetchPage(url: string, priority: RequestPriority): Promise<string | null> {
+function fetchPage(
+	url: string,
+	priority: RequestPriority,
+): Promise<string | null> {
 	let page = pages.get(url);
 	if (!page) {
 		page = fetch(url, { priority })
 			.then((res) =>
-				res.ok && res.headers.get('content-type')?.includes('text/html') ? res.text() : null
+				res.ok && res.headers.get("content-type")?.includes("text/html")
+					? res.text()
+					: null,
 			)
 			.catch(() => null);
 		pages.set(url, page);
@@ -43,30 +54,61 @@ function fetchPage(url: string, priority: RequestPriority): Promise<string | nul
 	return page;
 }
 
+/**
+ * The page's high-priority images, each with its <picture> when it has one. Read straight from the
+ * HTML text: parsing a whole page (hundreds of KB) would hold up the main thread for tens of
+ * milliseconds per page, which shows as a stutter when it lands during a page transition.
+ */
+function mainImages(html: string, limit = 2): HTMLImageElement[] {
+	const found: HTMLImageElement[] = [];
+	const template = document.createElement("template");
+	for (
+		let at = html.indexOf('fetchpriority="high"');
+		at !== -1 && found.length < limit;
+	) {
+		const tagStart = html.lastIndexOf("<", at);
+		const tagEnd = html.indexOf(">", at);
+		// Only <img> tags (the head may preload the same photo with a <link fetchpriority="high">).
+		if (tagEnd !== -1 && html.startsWith("<img", tagStart)) {
+			const pictureStart = html.lastIndexOf("<picture", tagStart);
+			const inPicture =
+				pictureStart !== -1 &&
+				html.lastIndexOf("</picture>", tagStart) < pictureStart;
+			const pictureEnd = inPicture ? html.indexOf("</picture>", tagEnd) : -1;
+			template.innerHTML =
+				inPicture && pictureEnd !== -1
+					? html.slice(pictureStart, pictureEnd + "</picture>".length)
+					: html.slice(tagStart, tagEnd + 1);
+			const img = template.content.querySelector("img");
+			if (img) found.push(img);
+		}
+		at = html.indexOf('fetchpriority="high"', at + 1);
+	}
+	return found;
+}
+
 /** Preloads the page's high-priority images (AVIF when the page offers it). */
 function preloadMainImages(html: string) {
-	const doc = new DOMParser().parseFromString(html, 'text/html');
-	for (const img of [...doc.querySelectorAll<HTMLImageElement>('img[fetchpriority="high"]')].slice(
-		0,
-		2
-	)) {
-		const source = img.parentElement?.matches('picture')
-			? img.parentElement.querySelector<HTMLSourceElement>('source[type="image/avif"][srcset]')
+	for (const img of mainImages(html)) {
+		const source = img.parentElement?.matches("picture")
+			? img.parentElement.querySelector<HTMLSourceElement>(
+					'source[type="image/avif"][srcset]',
+				)
 			: null;
-		const srcset = source?.getAttribute('srcset') ?? img.getAttribute('srcset');
-		const sizes = source?.getAttribute('sizes') ?? img.getAttribute('sizes');
-		const key = srcset ?? img.getAttribute('src');
+		const srcset = source?.getAttribute("srcset") ?? img.getAttribute("srcset");
+		const sizes = source?.getAttribute("sizes") ?? img.getAttribute("sizes");
+		const key = srcset ?? img.getAttribute("src");
 		if (!key || warmedImages.has(key)) continue;
 		warmedImages.add(key);
-		const link = document.createElement('link');
-		link.rel = 'preload';
-		link.as = 'image';
-		link.fetchPriority = 'low';
-		if (source) link.type = 'image/avif';
+		const link = document.createElement("link");
+		link.rel = "preload";
+		link.as = "image";
+		link.fetchPriority = "low";
+		if (source) link.type = "image/avif";
 		if (srcset) {
 			link.imageSrcset = srcset;
 			if (sizes) link.imageSizes = sizes;
-		} else link.href = img.getAttribute('src') ?? '';
+		} else link.href = img.getAttribute("src") ?? "";
 		document.head.append(link);
 	}
 }
@@ -76,7 +118,7 @@ async function warm(link: HTMLAnchorElement, intent: boolean) {
 	if (!url) return;
 	const withImage = intent || onScreenImages < ON_SCREEN_IMAGE_LIMIT;
 	if (!intent && withImage && !pages.has(url)) onScreenImages++;
-	const html = await fetchPage(url, intent ? 'high' : 'low');
+	const html = await fetchPage(url, intent ? "high" : "low");
 	if (html && withImage) preloadMainImages(html);
 }
 
@@ -93,49 +135,56 @@ function observeLinks() {
 			void warm(entry.target as HTMLAnchorElement, false);
 		}
 	});
-	for (const link of document.querySelectorAll<HTMLAnchorElement>('a[href]')) {
+	for (const link of document.querySelectorAll<HTMLAnchorElement>("a[href]")) {
 		if (pageUrl(link)) observer.observe(link);
 	}
 }
 const whenIdle = (fn: () => void) =>
-	'requestIdleCallback' in window
+	"requestIdleCallback" in window
 		? requestIdleCallback(fn, { timeout: 3000 })
 		: setTimeout(fn, 1000);
 const start = () => whenIdle(observeLinks);
-if (document.readyState === 'complete') start();
-else window.addEventListener('load', start, { once: true });
-// Pages reached by client-side navigation (the document finished loading long before).
+if (document.readyState === "complete") start();
+else window.addEventListener("load", start, { once: true });
+// Pages reached by client-side navigation (the document finished loading long before): once the
+// page transition has finished, so prefetching never competes with it for the main thread.
 // Running twice is harmless: observeLinks starts over.
-document.addEventListener('astro:page-load', () => {
-	if (document.readyState === 'complete') start();
+let transition: Promise<unknown> = Promise.resolve();
+document.addEventListener("astro:before-swap", (e) => {
+	observer?.disconnect();
+	transition = e.viewTransition?.finished.catch(() => {}) ?? Promise.resolve();
 });
-document.addEventListener('astro:before-swap', () => observer?.disconnect());
+document.addEventListener("astro:page-load", () => {
+	if (document.readyState === "complete") void transition.then(start);
+});
 // A cached page is only reused for 60 s (public/_headers), so forget older fetches.
 setInterval(() => pages.clear(), 50_000);
 
 // --- Intent: hover (briefly), touch, keyboard focus. ---
 const linkFrom = (e: Event) =>
-	(e.target as Element | null)?.closest?.<HTMLAnchorElement>('a[href]');
+	(e.target as Element | null)?.closest?.<HTMLAnchorElement>("a[href]");
 let hoverTimer: ReturnType<typeof setTimeout> | undefined;
 document.addEventListener(
-	'pointerover',
+	"pointerover",
 	(e) => {
 		const link = linkFrom(e);
-		if (!link || (e as PointerEvent).pointerType === 'touch') return;
+		if (!link || (e as PointerEvent).pointerType === "touch") return;
 		clearTimeout(hoverTimer);
 		hoverTimer = setTimeout(() => void warm(link, true), 60);
 	},
-	{ passive: true }
+	{ passive: true },
 );
-document.addEventListener('pointerout', () => clearTimeout(hoverTimer), { passive: true });
-for (const type of ['touchstart', 'focusin'] as const) {
+document.addEventListener("pointerout", () => clearTimeout(hoverTimer), {
+	passive: true,
+});
+for (const type of ["touchstart", "focusin"] as const) {
 	document.addEventListener(
 		type,
 		(e) => {
 			const link = linkFrom(e);
 			if (link) void warm(link, true);
 		},
-		{ passive: true }
+		{ passive: true },
 	);
 }
 

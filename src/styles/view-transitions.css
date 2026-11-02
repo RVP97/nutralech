@@ -1,7 +1,8 @@
 /*
- * Page changes (src/scripts/view-transitions.ts). The old page fades out quickly and the new one
- * rises in; a card's photo grows into the new page's hero (or, going back, shrinks into its card).
- * Kept short on purpose: the page cannot be clicked while a transition plays.
+ * Page changes (src/scripts/view-transitions.ts). The new page fades in over the old one, which
+ * stays still underneath, so nothing moves, dips or flashes; a card's photo grows into the new
+ * page's hero (or, going back, shrinks into its card). Kept short on purpose: the page cannot be
+ * clicked while a transition plays.
  */
 
 /* The header, the mobile booking bar and the share button stay put instead of fading with the
@@ -19,11 +20,10 @@ html[data-astro-transition] [data-share] {
 ::view-transition-group(site-header),
 ::view-transition-group(booking-bar),
 ::view-transition-group(share-button) {
-	z-index: 2;
+	z-index: 10;
 	animation: none;
 }
-/* Swapped in one frame, with no crossfade, so the bar never looks doubled or stretched (its
-   promo line may be collapsed on the page being left and open on the new one). */
+/* Swapped in one frame, with no crossfade, so the bar never looks doubled. */
 ::view-transition-old(site-header),
 ::view-transition-old(booking-bar),
 ::view-transition-old(share-button) {
@@ -36,39 +36,41 @@ html[data-astro-transition] [data-share] {
 	animation: none;
 }
 
+/* The old page stays fully opaque under the new one while it fades in: no see-through dip in the
+   middle, no movement. */
 ::view-transition-old(root) {
-	animation: vt-out 0.18s ease both;
+	animation: none;
 }
 ::view-transition-new(root) {
-	animation: vt-in 0.38s 0.06s cubic-bezier(0.2, 0.75, 0.15, 1) both;
+	animation: vt-fade-in 0.32s ease both;
 }
 
+/* The flying photo: one frame that moves and resizes, with the photo cropped inside it like the
+   photos themselves (never stretched). Which snapshot shows when is set per flight by the script. */
 ::view-transition-group(vt-photo) {
 	z-index: 1;
 	animation-duration: 0.5s;
-	animation-timing-function: cubic-bezier(0.2, 0.75, 0.15, 1);
+	animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
 ::view-transition-image-pair(vt-photo) {
 	overflow: hidden;
 }
-/* Both snapshots fill the moving frame and are cropped like the photos themselves. */
 ::view-transition-old(vt-photo),
 ::view-transition-new(vt-photo) {
 	height: 100%;
 	object-fit: cover;
-	animation-duration: 0.3s;
-	animation-timing-function: ease;
+	animation: none;
+	mix-blend-mode: normal;
 }
 
-@keyframes vt-out {
-	to {
+@keyframes vt-fade-in {
+	from {
 		opacity: 0;
 	}
 }
-@keyframes vt-in {
-	from {
+@keyframes vt-fade-out {
+	to {
 		opacity: 0;
-		transform: translateY(12px);
 	}
 }
 
