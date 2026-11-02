@@ -10,9 +10,10 @@ import Seo from "@/components/Seo.astro";
 import Footer from "@/components/sections/Footer.astro";
 import Navbar from "@/components/sections/Navbar.astro";
 import { GTM_ID, GTM_SNIPPET } from "@/lib/gtm";
-import { SITE_JSON_LD, type PageSeo } from "@/lib/seo";
+import { type PageSeo, SITE_JSON_LD } from "@/lib/seo";
 import "@fontsource-variable/inter/wght.css";
 import "@/styles/global.css";
+import "@/styles/view-transitions.css";
 
 interface Props {
 	seo: PageSeo;
@@ -20,7 +21,7 @@ interface Props {
 
 const { seo } = Astro.props;
 ---
-<html lang="es" transition:animate="none">
+<html lang="es">
 	<head>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -30,12 +31,14 @@ const { seo } = Astro.props;
 		<slot name="head" />
 		{/* Client-side navigation: links swap the page in place instead of a full reload, and
 		   internal links are prefetched on hover, touch, or once on screen
-		   (scripts/prefetch-visible). Page scripts re-run their setup on each `astro:page-load`. */}
+		   (scripts/prefetch-visible). Page changes animate as view transitions
+		   (scripts/view-transitions). Page scripts re-run their setup on each `astro:page-load`. */}
 		<ClientRouter fallback="swap" />
 		<script is:inline set:html={`window.addEventListener('load',function(){setTimeout(function(){${GTM_SNIPPET}},0)});`} />
 		<script>
 			import "../scripts/site";
 			import "../scripts/prefetch-visible";
+			import "../scripts/view-transitions";
 		</script>
 	</head>
 	<body class="pt-24 flex flex-col min-h-screen">
