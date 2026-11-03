@@ -1,7 +1,8 @@
 // Writes resized copies of every raster image in public/ to dist/_img/<width>/<path>, the files
-// components/image.tsx's srcset points at (lib/image-variants.ts), plus an AVIF version of each at
-// <path>.avif for the <picture> source. Never upscales: widths above the original get the
-// original file (and an AVIF of it at full size). Results are cached between builds.
+// components/Picture.astro's srcset points at (lib/image-variants.ts), plus an AVIF version of each
+// at <path>.avif for the <picture> source. Never upscales: widths above the original get the
+// original file (and an AVIF of it at full size). Results are cached between builds, keyed by a
+// hash of the source file, so only new or changed photos are encoded.
 import { createHash } from 'node:crypto';
 import { copyFile, mkdir, readdir, readFile, stat, writeFile } from 'node:fs/promises';
 import { dirname, extname, join, relative } from 'node:path';
@@ -10,7 +11,10 @@ import sharp from 'sharp';
 const WIDTHS = [256, 384, 640, 750, 828, 1080, 1200, 1920]; // keep in sync with lib/image-variants.ts
 const PUBLIC = 'public';
 const OUT = 'dist/_img';
-const CACHE = 'node_modules/.cache/image-variants';
+// Inside Astro's cache folder because Workers Builds' build cache restores only
+// node_modules/.astro for Astro projects; anywhere else the cache is lost and every deploy
+// re-encodes every variant.
+const CACHE = 'node_modules/.astro/image-variants';
 const RASTER = new Set(['.webp', '.jpg', '.jpeg', '.png', '.avif']);
 // AVIF at 55 looks like WebP at 80 for these photos and is about half the size.
 const AVIF_QUALITY = 55;
